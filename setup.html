@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Setup · AliceCode Level 4</title>
+<title>Setup &amp; Workflow · AliceCode Level 4</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>💜</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -14,9 +14,9 @@
 <div class="wrap">
 
   <header class="hero" style="padding-bottom:16px">
-    <div class="badge">One-time setup · ~15 minutes</div>
-    <h1>🔧 Set Up Your Coding Agent</h1>
-    <p class="sub">We use <strong>opencode</strong> — a free AI coding agent that works inside your whole project, right in the terminal.</p>
+    <div class="badge">Your toolbox · lessons 2–3</div>
+    <h1>🔧 Setup &amp; Workflow</h1>
+    <p class="sub">Install <strong>opencode</strong>, understand tokens and costs, pick the right model, and put your apps online — for free.</p>
   </header>
 
   <section class="card reveal">
@@ -48,7 +48,7 @@
       </li>
       <li>
         <h3>Connect a free model</h3>
-        <p>Run <code>opencode auth login</code> and follow the steps on screen. We use the free model your instructor shows in class — ask if you're not sure which one to pick.</p>
+        <p>Run <code>opencode auth login</code> and follow the steps on screen. We use the <strong>free models</strong> (the ones marked <em>free</em> in the model list — $0). Ask Yan which one we're using this week.</p>
       </li>
       <li>
         <h3>Open a project and say hi</h3>
@@ -57,10 +57,98 @@
         <p style="margin-top:6px">First question to ask it: <em>"What does this project do?"</em> 😉</p>
       </li>
       <li>
+        <h3>Turn on your cost radar 💸</h3>
+        <p>opencode can tell you how many tokens you used and what they cost. Try:</p>
+        <p style="margin-top:6px"><code>opencode stats</code> — all your sessions · <code>opencode stats --days 7</code> — this week</p>
+        <p class="muted" style="margin-top:6px">Make it a habit: check your stats at the end of every lesson. On free models the cost is $0 — and we keep it that way. 😎</p>
+      </li>
+      <li>
         <h3>📸 Proof time</h3>
-        <p>Screenshot opencode answering your first question — that's your setup proof for the portfolio. Then tick the mission on the <a href="tasks.html">task board</a>!</p>
+        <p>Screenshot opencode answering your first question + your <code>opencode stats</code> — that's your setup proof for the portfolio. Then tick the mission on the <a href="tasks.html">task board</a>!</p>
       </li>
     </ol>
+  </section>
+
+  <section class="card reveal">
+    <h2>🔤 What is a token? (watch it happen)</h2>
+    <p>AI doesn't read words — it reads <strong>tokens</strong>: little pieces of words. Every message you send and every answer you get is counted in tokens. And tokens are what you <em>pay</em> for.</p>
+    <div class="tok-box">
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 10px">
+        <input type="text" id="tok-input" value="My flower shop site has 6 pink cards with a hover animation!" aria-label="Sentence to tokenize">
+        <button class="btn small" id="tok-btn">⚡ Tokenize</button>
+      </div>
+      <div class="tok-area" id="tok-area"></div>
+      <div class="tok-count" id="tok-count"></div>
+      <div class="cost-rows" id="cost-rows"></div>
+      <p class="muted" style="margin-top:10px; font-size:.82rem">This is a friendly imitation — real tokenizers split even smarter. Try the real one: <a href="https://platform.openai.com/tokenizer" target="_blank" rel="noopener">platform.openai.com/tokenizer</a>. Prices are examples per 1&nbsp;million tokens — they change all the time; always check the model list.</p>
+    </div>
+    <div class="s-note" style="margin-top:14px">💡 One chat message ≈ tens of tokens. A coding agent reading your whole project ≈ tens of <em>thousands</em>. That's why pros watch their token use — and why <code class="inline-code">opencode stats</code> exists.</div>
+  </section>
+
+  <section class="card reveal">
+    <h2>🧠 Which model should I pick?</h2>
+    <p class="muted" style="margin-bottom:14px">Models are like team members: different brains, different speeds, different prices.</p>
+    <div class="s-cards" style="grid-auto-flow:row; grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+      <div class="s-card c-green">
+        <h4>🆓 Free models (opencode)</h4>
+        <p>Big Pickle &amp; friends — the ones marked <em>free</em>.<br><strong>$0.</strong> Great for learning.<br>Sometimes needs more guidance.</p>
+      </div>
+      <div class="s-card c-pink">
+        <h4>⚡ Haiku-class</h4>
+        <p>The sprinter.<br>Fast and very cheap.<br>Perfect for small, clear tasks.</p>
+      </div>
+      <div class="s-card c-orange">
+        <h4>⚖️ Sonnet-class</h4>
+        <p>The everyday pro.<br>Smart, balanced price.<br>What most developers use daily.</p>
+      </div>
+      <div class="s-card c-dark">
+        <h4>🧠 Opus-class</h4>
+        <p>The deep thinker.<br>Hardest problems, highest price.<br>Save it for when you're truly stuck.</p>
+      </div>
+    </div>
+    <h3 style="margin-top:20px">Same prompt, different models 🌸</h3>
+    <p class="muted" style="margin-bottom:8px">We give each one our explicit flower-shop prompt. What usually happens:</p>
+    <table class="s-rows">
+      <tr><td>Free model</td><td>A good basic site. Might miss a detail or two — guide it, ask again. Cost: $0.</td></tr>
+      <tr><td>Haiku-class</td><td>Quick and clean on small asks; split big jobs into steps for it. Cost: tiny.</td></tr>
+      <tr><td>Sonnet-class</td><td>Solid site on the first try — understands the whole plan. Cost: cents.</td></tr>
+      <tr><td>Opus-class</td><td>Also nails the tricky parts (form checks, edge cases). Cost: the most.</td></tr>
+    </table>
+    <div class="s-note" style="margin-top:14px">👑 Our rule: <strong>start free, upgrade only when you're stuck</strong> — and check <code class="inline-code">opencode stats</code> before and after. Try the same prompt on two models and compare: that's a real engineer's experiment.</div>
+  </section>
+
+  <section class="card reveal">
+    <h2>🚀 Put your app online — Vercel (free)</h2>
+    <p class="muted" style="margin-bottom:12px">A project on your laptop is homework. A project with a LINK is a product. 💅</p>
+    <ol class="steps" style="margin-top:14px">
+      <li>
+        <h3>Push your project to GitHub</h3>
+        <p>Your code needs to live in a GitHub repo first (we do this in class).</p>
+      </li>
+      <li>
+        <h3>Sign in to Vercel with GitHub</h3>
+        <p>Go to <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> → <strong>Continue with GitHub</strong> → pick the <strong>Hobby</strong> plan (that's the free one).</p>
+      </li>
+      <li>
+        <h3>Import &amp; deploy</h3>
+        <p>Add New → Project → pick your repo → <strong>Deploy</strong>. That's it.</p>
+      </li>
+      <li>
+        <h3>Share your link 🎉</h3>
+        <p>You get <code>your-project.vercel.app</code> — send it to everyone. Every push to GitHub updates the site automatically.</p>
+      </li>
+    </ol>
+    <div class="free-tier-warning">
+      <h3>🚨 Free-tier rules (really important)</h3>
+      <ul class="s-lines">
+        <li>This year we use <strong>FREE tiers only</strong> — Vercel Hobby, opencode free models, Mongo free cluster.</li>
+        <li><strong>Never enter a credit card.</strong> If a site asks for one — stop and tell Yan.</li>
+        <li>Before you click, check the plan name says <strong>Free</strong> or <strong>Hobby</strong>.</li>
+        <li>A "free trial" that wants a card is NOT free. Skip it.</li>
+        <li>See an "upgrade" popup or a price? Screenshot it, close it, ask in class.</li>
+      </ul>
+      <p style="margin-top:10px; font-weight:700">Real engineers get surprise bills too. 😅 The habit of checking first is the skill.</p>
+    </div>
   </section>
 
   <section class="card reveal">
@@ -79,7 +167,7 @@
 
 </div>
 
-<footer class="footer">Made with 💜 for the Level 4 builders · AliceCode 2026–27</footer>
+<footer class="footer">Made with 💜 for the Level 4 builders · {Alice code} 2026–27</footer>
 
 <script src="lessons-data.js"></script>
 <script src="main.js"></script>
@@ -102,6 +190,68 @@
     { t: "  After: 3 real trends from today. Screenshot it! 📸", c: "ai", instant: true, after: 400 }
   ]);
   renderMemes(document.getElementById("memes"), MEMES.slice(6));
+
+  /* ---------- tokenizer animation ---------- */
+  (function () {
+    const COLORS = ["#D83474", "#674C9B", "#F2842C", "#2FB380", "#A43F86", "#0E7C9C"];
+    const area = document.getElementById("tok-area");
+    const countEl = document.getElementById("tok-count");
+    const costEl = document.getElementById("cost-rows");
+    const input = document.getElementById("tok-input");
+
+    // friendly pseudo-tokenizer: words split into ~4-char pieces, punctuation on its own
+    function pseudoTokens(text) {
+      const toks = [];
+      (text.match(/[A-Za-z֐-׿0-9]+|[^\sA-Za-z֐-׿0-9]/g) || []).forEach(w => {
+        if (w.length <= 5) { toks.push(w); return; }
+        for (let i = 0; i < w.length; i += 4) toks.push(w.slice(i, i + 4));
+      });
+      return toks;
+    }
+
+    const PRICES = [
+      ["🆓 Free model (opencode)", 0],
+      ["⚡ Small model (~$0.5 / 1M tokens)", 0.5],
+      ["⚖️ Medium model (~$3 / 1M tokens)", 3],
+      ["🧠 Big model (~$15 / 1M tokens)", 15]
+    ];
+
+    function fmt(c) {
+      if (c === 0) return "$0.00 — free!";
+      if (c < 0.0001) return "less than $0.0001";
+      return "$" + c.toFixed(4);
+    }
+
+    function tokenize() {
+      const toks = pseudoTokens(input.value || "hello world");
+      area.innerHTML = "";
+      countEl.textContent = "";
+      costEl.innerHTML = "";
+      toks.forEach((t, i) => {
+        const chip = document.createElement("span");
+        chip.className = "tok-chip";
+        chip.textContent = t;
+        chip.style.background = COLORS[i % COLORS.length];
+        chip.style.animationDelay = (i * 90) + "ms";
+        area.appendChild(chip);
+      });
+      setTimeout(() => {
+        countEl.innerHTML = `≈ <b>${toks.length} tokens</b> in that one sentence`;
+        costEl.innerHTML = PRICES.map(([name, per1m], i) => `
+          <div class="cost-row" style="animation-delay:${i * 180}ms">
+            <span>${name}</span><b>${fmt(toks.length * per1m / 1e6)}</b>
+          </div>`).join("") +
+          `<div class="cost-row total" style="animation-delay:${PRICES.length * 180}ms">
+            <span>…but an agent reading a whole project ≈ 50,000 tokens</span><b>50,000 × price 😮</b>
+          </div>`;
+      }, toks.length * 90 + 300);
+    }
+
+    document.getElementById("tok-btn").addEventListener("click", tokenize);
+    input.addEventListener("keydown", e => { if (e.key === "Enter") tokenize(); });
+    tokenize();
+  })();
+
   armReveal();
 </script>
 </body>

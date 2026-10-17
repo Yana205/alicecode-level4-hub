@@ -26,6 +26,7 @@ const LESSONS = [
     "Create a NEW collection about a topic you love.",
     "Insert 3 documents, each with a unique id.",
     "Find your documents with a query.",
+    "Prompt practice: ask an AI for one small change using at least 3 words from the keyword bank (flexbox, hover, id…).",
     "📸 Screenshot your before + after for the portfolio."
   ],
   slides: [
@@ -39,6 +40,24 @@ const LESSONS = [
         { h: "💼 A product", lines: ["Your agent is a product.", "Customers will want it."], color: "green" }
       ]},
       { note: "Big change: last year you learned code. This year you lead it." }
+    ]},
+    { kind: "content", title: "Your secret superpower 🦸‍♀️",
+      lead: "You already speak code. Most people asking AI for help — don't.", items: [
+      { cards: [
+        { h: "🧱 HTML", lines: ["tag · element · div", "button · input · form", "class · id · attribute"] },
+        { h: "🎨 CSS", lines: ["selector · flexbox · grid", "margin · padding · hover", "border-radius · transition · media query"], color: "orange" },
+        { h: "⚡ JS + DOM", lines: ["function · array · event", "querySelector · addEventListener", "innerHTML · classList · createElement"], color: "green" }
+      ]},
+      { note: "These words are PROMPT POWER. With them you ask an AI for EXACTLY what you want." }
+    ]},
+    { kind: "content", title: "Same wish, two prompts 🪄", items: [
+      { lines: [
+        "\"Make my button nicer\" 😐 → the AI guesses.",
+        "\"Round it with border-radius, add a hover",
+        "transition, center it with flexbox\" 😎 → the AI obeys.",
+        "Same AI. Your words made the difference."
+      ]},
+      { note: "Keep this keyword bank close — we use it all year. More on this next week! 🌸" }
     ]},
     { kind: "content", title: "The big build: TikTok Studio 📱",
       lead: "One shared project. We build it together, all year.", items: [
@@ -193,6 +212,7 @@ const LESSONS = [
     "Install opencode (guide on the Setup page).",
     "Open last year's big project and ask: \"What does this project do?\"",
     "Bug hunt: let the agent find the hidden bug. Fix. Run. Test.",
+    "Rewrite \"build me a website for my flower shop\" as an explicit prompt — at least 5 keywords (layout, colors, features).",
     "📸 Screenshot the error + the fix — before and after."
   ],
   slides: [
@@ -223,6 +243,19 @@ const LESSONS = [
         "That last step is the whole job."
       ]},
       { note: "Vibe coding = leading the AI, not typing every line." }
+    ]},
+    { kind: "beforeafter", title: "The flower shop test 🌸",
+      before: ["\"Build me a website", "for my flower shop.\"", "The AI guesses EVERYTHING. 😬"],
+      after: ["\"Navbar + hero + a grid of 6", "flower cards with hover, pink", "#D83474, contact form, responsive.\"", "Her exact vision. 💅"],
+      note: "Same AI, same minute. Different words → a completely different website." },
+    { kind: "content", title: "Why could she ask like that? 🧠", items: [
+      { lines: [
+        "Because last year you learned the REAL words:",
+        "flexbox · grid · hover · form · event · id · responsive",
+        "People without them get whatever the AI guesses.",
+        "You get YOUR design. That's your head start."
+      ]},
+      { note: "Explicit prompts = the superpower from lesson 1. Use the keyword bank!" }
     ]},
     { kind: "content", title: "Part 1 · The LLM challenge ✅",
       lead: "Remember sweating over this exercise? Watch.", items: [
@@ -341,7 +374,8 @@ const LESSONS = [
       { rows: [
         ["opencode docs", "opencode.ai/docs — install help + commands"],
         ["See tokens live", "platform.openai.com/tokenizer — paste text, see tokens"],
-        ["Prompt tricks", "promptingguide.ai — how pros write prompts"],
+        ["Tokens + costs", "our Setup page — animated tokenizer + what AI really costs"],
+        ["Deploy for free", "vercel.com — put your site online (guide on the Setup page)"],
         ["How LLMs work (video)", "search YouTube: \"Karpathy Intro to Large Language Models\""]
       ]}
     ]},
