@@ -14,6 +14,9 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `tasks.html` | Mission board with progress bar (saved in the browser) + link to the class Trello |
 | `setup.html` | opencode install guide + animated terminal demo |
 | `learn-more.html` | Curated free resources: W3Schools, freeCodeCamp, Frontend Masters, MongoDB U, YouTube |
+| `calendar.html` | The whole year — Thursday lessons + fixed events, with an .ics download |
+| `admin.html` | Instructor sign-in (fine-grained GitHub PAT, stored only in the browser) to lock/unlock lessons |
+| `locks.json` | Which lessons are hidden from students (`true` = locked). Edited by the admin page |
 
 ## Class Trello
 
@@ -21,7 +24,7 @@ Template board: https://trello.com/b/wPXqrlUT — teams copy it (Menu → More �
 
 ## Editing
 
-All lesson content lives in **`js/lessons-data.js`** — slides, missions and tutorial links per lesson. Edit that one file and every page updates. Design tokens are at the top of `css/style.css` (palette taken from the הסמכה 4 deck masters).
+All lesson content lives in **`lessons-data.js`** — slides, missions and tutorial links per lesson. Edit that one file and every page updates. Design tokens are at the top of `style.css` (palette taken from the הסמכה 4 deck masters).
 
 No build step. Push to `main` → GitHub Pages redeploys.
 

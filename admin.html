@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instructor · AliceCode Level 4</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🔑</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap" style="max-width:640px">
+
+  <header class="hero" style="padding-bottom:14px">
+    <div class="badge">Instructor area</div>
+    <h1>👩‍🏫 Admin</h1>
+    <p class="sub">Sign in with your GitHub account to lock and unlock lessons for the students.</p>
+  </header>
+
+  <section class="card admin-card" id="signin" style="display:none">
+    <h2>🔑 Sign in with GitHub</h2>
+    <p style="margin-bottom:12px">This page talks straight to the GitHub API from <em>your</em> browser. Your token is stored only on this device — it never goes to any server except github.com.</p>
+    <ol class="steps" style="margin:14px 0 6px">
+      <li>
+        <h3>Create a fine-grained token (once)</h3>
+        <p>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Settings → Fine-grained tokens</a>.<br>
+        Repository access: <strong>Only select repositories → alicecode-level4-hub</strong>.<br>
+        Permissions: <strong>Contents → Read and write</strong>. Nothing else.</p>
+      </li>
+      <li>
+        <h3>Paste it here</h3>
+        <p style="margin-bottom:8px"><input type="password" id="pat" placeholder="github_pat_…" autocomplete="off"></p>
+        <label style="font-weight:600; font-size:.9rem; cursor:pointer">
+          <input type="checkbox" id="remember" style="width:18px;height:18px;vertical-align:-3px"> Remember me on this device
+        </label>
+      </li>
+    </ol>
+    <button class="btn" id="signin-btn">Sign in</button>
+    <div class="admin-status" id="signin-status"></div>
+  </section>
+
+  <section class="card admin-card" id="panel" style="display:none">
+    <div class="admin-user" id="whoami"></div>
+    <div class="admin-status ok" id="save-status"></div>
+    <h2 style="margin-top:16px">🔒 Lesson locks</h2>
+    <p class="muted" style="margin-bottom:6px">Locked lessons disappear from the students' pages (lessons, calendar, tasks, direct links). You always see everything.</p>
+    <p class="muted" style="margin-bottom:14px">⏱️ After you flip a switch, students see the change when GitHub Pages redeploys — usually under a minute.</p>
+    <div id="lock-list"></div>
+    <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap">
+      <a class="btn small" href="lessons.html">View site as instructor</a>
+      <button class="btn small dark" id="signout-btn">Sign out</button>
+    </div>
+  </section>
+
+  <section class="card" style="font-size:.88rem">
+    <h3>🛡️ Good to know</h3>
+    <p class="muted">The lesson content lives in a public repository, so locking hides it from the site — it isn't encryption. For a class of curious 14-year-olds that's exactly enough mystery. 😉 If a token ever leaks, revoke it in GitHub settings; it can only touch this one repo.</p>
+  </section>
+
+</div>
+
+<footer class="footer">{Alice code} · instructor tools</footer>
+
+<script src="lessons-data.js"></script>
+<script src="main.js"></script>
+<script>
+(function () {
+  const API = "https://api.github.com";
+  const signin = document.getElementById("signin");
+  const panel = document.getElementById("panel");
+  const sStatus = document.getElementById("signin-status");
+  const saveStatus = document.getElementById("save-status");
+  let locksSha = null, locksData = {};
+
+  const hdrs = t => ({ Authorization: "Bearer " + t, Accept: "application/vnd.github+json" });
+  const b64e = s => btoa(unescape(encodeURIComponent(s)));
+  const b64d = s => decodeURIComponent(escape(atob(s.replace(/\n/g, ""))));
+
+  function setToken(t, remember) {
+    try {
+      sessionStorage.setItem(AC4_TOKEN_KEY, t);
+      if (remember) localStorage.setItem(AC4_TOKEN_KEY, t);
+    } catch (e) {}
+  }
+  function clearToken() {
+    try { sessionStorage.removeItem(AC4_TOKEN_KEY); localStorage.removeItem(AC4_TOKEN_KEY); } catch (e) {}
+  }
+
+  async function validate(t) {
+    const r = await fetch(API + "/user", { headers: hdrs(t) });
+    if (!r.ok) throw new Error("GitHub says: " + r.status + (r.status === 401 ? " — token not valid" : ""));
+    return r.json();
+  }
+
+  async function fetchLocks(t) {
+    const r = await fetch(`${API}/repos/${AC4_REPO}/contents/locks.json?ref=main&v=${Date.now()}`, { headers: hdrs(t), cache: "no-store" });
+    if (!r.ok) throw new Error("Could not read locks.json (" + r.status + ")");
+    const j = await r.json();
+    locksSha = j.sha;
+    locksData = JSON.parse(b64d(j.content));
+  }
+
+  async function saveLocks(t, msg) {
+    const r = await fetch(`${API}/repos/${AC4_REPO}/contents/locks.json`, {
+      method: "PUT",
+      headers: { ...hdrs(t), "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: msg,
+        content: b64e(JSON.stringify(locksData, null, 2) + "\n"),
+        sha: locksSha,
+        branch: "main"
+      })
+    });
+    if (!r.ok) {
+      const e = await r.json().catch(() => ({}));
+      throw new Error("Save failed (" + r.status + "): " + (e.message || ""));
+    }
+    const j = await r.json();
+    locksSha = j.content.sha;
+  }
+
+  function renderLocks(t) {
+    const list = document.getElementById("lock-list");
+    list.innerHTML = LESSONS.map(l => {
+      const locked = !!locksData[String(l.n)];
+      return `
+      <div class="lock-row">
+        <span style="font-size:1.3rem">${l.emoji}</span>
+        <span class="lr-name">Lesson ${l.n} · ${l.title}<br><span class="lr-date">Thursday ${l.date}</span></span>
+        <span style="font-weight:800; font-size:.78rem; color:${locked ? "var(--ink-soft)" : "var(--mint)"}" id="state-${l.n}">
+          ${locked ? "🔒 hidden" : "🔓 visible"}</span>
+        <label class="switch">
+          <input type="checkbox" data-n="${l.n}" ${locked ? "" : "checked"}>
+          <span class="sl"></span>
+        </label>
+      </div>`;
+    }).join("");
+
+    list.querySelectorAll("input[type=checkbox]").forEach(cb => {
+      cb.addEventListener("change", async () => {
+        const n = cb.dataset.n;
+        const nowLocked = !cb.checked;
+        const boxes = list.querySelectorAll("input");
+        boxes.forEach(b => b.disabled = true);
+        saveStatus.className = "admin-status";
+        saveStatus.textContent = "Saving…";
+        locksData[n] = nowLocked;
+        try {
+          await saveLocks(t, (nowLocked ? "🔒 Lock" : "🔓 Unlock") + " lesson " + n);
+          document.getElementById("state-" + n).innerHTML = nowLocked ? "🔒 hidden" : "🔓 visible";
+          document.getElementById("state-" + n).style.color = nowLocked ? "var(--ink-soft)" : "var(--mint)";
+          saveStatus.className = "admin-status ok";
+          saveStatus.textContent = `Saved ✓ Lesson ${n} is now ${nowLocked ? "hidden from" : "visible to"} students (live in ~1 min).`;
+        } catch (err) {
+          locksData[n] = !nowLocked;
+          cb.checked = !cb.checked;
+          saveStatus.className = "admin-status err";
+          saveStatus.textContent = "⚠️ " + err.message + " — nothing changed.";
+        }
+        boxes.forEach(b => b.disabled = false);
+      });
+    });
+  }
+
+  async function openPanel(t) {
+    const user = await validate(t);
+    await fetchLocks(t);
+    document.getElementById("whoami").innerHTML = `
+      <img src="${user.avatar_url}" alt="">
+      <div><h3 style="margin:0">Signed in as ${user.login}</h3>
+      <span class="muted" style="font-size:.85rem">GitHub account connected ✓</span></div>`;
+    renderLocks(t);
+    signin.style.display = "none";
+    panel.style.display = "block";
+  }
+
+  document.getElementById("signin-btn").addEventListener("click", async () => {
+    const t = document.getElementById("pat").value.trim();
+    if (!t) { sStatus.className = "admin-status err"; sStatus.textContent = "Paste a token first."; return; }
+    sStatus.className = "admin-status"; sStatus.textContent = "Checking with GitHub…";
+    try {
+      await validate(t);
+      setToken(t, document.getElementById("remember").checked);
+      await openPanel(t);
+    } catch (err) {
+      sStatus.className = "admin-status err";
+      sStatus.textContent = "⚠️ " + err.message;
+    }
+  });
+  document.getElementById("pat").addEventListener("keydown", e => {
+    if (e.key === "Enter") document.getElementById("signin-btn").click();
+  });
+
+  document.getElementById("signout-btn").addEventListener("click", () => {
+    clearToken(); location.reload();
+  });
+
+  const existing = adminToken();
+  if (existing) {
+    openPanel(existing).catch(() => { clearToken(); signin.style.display = "block"; });
+  } else {
+    signin.style.display = "block";
+  }
+})();
+</script>
+</body>
+</html>

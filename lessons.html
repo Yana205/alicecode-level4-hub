@@ -39,15 +39,29 @@
 <script src="lessons-data.js"></script>
 <script src="main.js"></script>
 <script>
-  document.getElementById("lesson-grid").innerHTML = LESSONS.map(l => `
-    <a class="lesson-card reveal" href="slides.html?n=${l.n}">
-      <span class="num">Lesson ${l.n} · ${l.date}</span>
-      <span class="emoji">${l.emoji}</span>
-      <h3>${l.title}</h3>
-      <p class="muted">${l.goal}</p>
-      <span class="cta">Open the presentation →</span>
-    </a>`).join("");
-  armReveal();
+  (async function () {
+    const locks = await loadLocks();
+    document.getElementById("lesson-grid").innerHTML = LESSONS.map(l => {
+      const lk = lessonLocked(locks, l.n);
+      if (lk && !isAdmin()) return `
+        <div class="lesson-card locked reveal">
+          <span class="num">Lesson ${l.n} · Thu ${l.date}</span>
+          <span class="emoji">🔒</span>
+          <h3>Top secret (for now)</h3>
+          <p class="muted">This one unlocks when we get there in class. No spoilers. 😉</p>
+          <span class="locked-pill">COMING SOON</span>
+        </div>`;
+      return `
+      <a class="lesson-card reveal" href="slides.html?n=${l.n}">
+        <span class="num">Lesson ${l.n} · Thu ${l.date}</span>
+        <span class="emoji">${l.emoji}</span>
+        <h3>${l.title}${lk ? ' <span class="locked-pill admin-locked-pill">🔒 students</span>' : ""}</h3>
+        <p class="muted">${l.goal}</p>
+        <span class="cta">Open the presentation →</span>
+      </a>`;
+    }).join("");
+    armReveal();
+  })();
 </script>
 </body>
 </html>

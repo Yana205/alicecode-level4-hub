@@ -1,12 +1,45 @@
 /* AliceCode Level 4 Hub — shared behavior */
 
-/* ---------- floating doodles (deck-style: braces, #, //, :>, constellation) ---------- */
+/* ============ admin + locks ============ */
+const AC4_TOKEN_KEY = "ac4-admin-token";
+const AC4_REPO = "Yana205/alicecode-level4-hub";
+
+function adminToken() {
+  try { return sessionStorage.getItem(AC4_TOKEN_KEY) || localStorage.getItem(AC4_TOKEN_KEY); }
+  catch (e) { return null; }
+}
+function isAdmin() { return !!adminToken(); }
+
+async function loadLocks() {
+  // Admin reads straight from the GitHub API (instant); students read the deployed file.
+  if (isAdmin()) {
+    try {
+      const r = await fetch(`https://api.github.com/repos/${AC4_REPO}/contents/locks.json`, {
+        headers: { Authorization: "Bearer " + adminToken(), Accept: "application/vnd.github+json" },
+        cache: "no-store"
+      });
+      if (r.ok) {
+        const j = await r.json();
+        return JSON.parse(decodeURIComponent(escape(atob(j.content))));
+      }
+    } catch (e) {}
+  }
+  try {
+    const r = await fetch("locks.json?v=" + Date.now(), { cache: "no-store" });
+    if (r.ok) return await r.json();
+  } catch (e) {}
+  return {};
+}
+function lessonLocked(locks, n) { return !!locks[String(n)]; }
+function lessonVisible(locks, n) { return isAdmin() || !lessonLocked(locks, n); }
+
+/* ============ floating doodles ============ */
 (function doodles() {
   const layer = document.createElement("div");
   layer.className = "doodles";
   layer.setAttribute("aria-hidden", "true");
   const marks = ["{", "}", "#", "//", ":>", "</>", "⚡", "{ }", "✦", ";"];
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < 14; i++) {
     const d = document.createElement("div");
     d.className = "doodle";
     d.textContent = marks[i % marks.length];
@@ -18,7 +51,6 @@
       animation-delay:${-(i * 1.3)}s;`;
     layer.appendChild(d);
   }
-  // constellation svg
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 300 300");
   svg.style.cssText = "position:absolute;left:-40px;top:20%;width:340px;opacity:.14;";
@@ -33,16 +65,24 @@
   document.body.prepend(layer);
 })();
 
-/* ---------- nav ---------- */
+/* ============ nav ============ */
 (function nav() {
-  const here = (location.pathname.split("/").pop() || "index.html").replace(".html", "");
-  const links = [
-    ["index", "🏠 Home"],
-    ["lessons", "📚 Lessons"],
-    ["tasks", "✅ Tasks"],
-    ["setup", "🔧 Setup"],
-    ["learn-more", "🌟 Learn More"]
+  const here = (location.pathname.split("/").pop() || "index.html").replace(".html", "") || "index";
+  const groups = [
+    { name: "Class", links: [
+      ["lessons", "📚", "Lessons"],
+      ["calendar", "🗓️", "Calendar"],
+      ["tasks", "✅", "Tasks"]
+    ]},
+    { name: "Help", links: [
+      ["setup", "🔧", "Setup"],
+      ["learn-more", "🌟", "Learn More"]
+    ]}
   ];
+  const isOn = p => p === here || (here === "slides" && p === "lessons");
+  const linkHTML = ([p, ic, label]) =>
+    `<a class="nl ${isOn(p) ? "active" : ""}" href="${p}.html"><span class="nl-ic">${ic}</span>${label}</a>`;
+
   const nav = document.createElement("nav");
   nav.className = "nav";
   nav.innerHTML = `
@@ -51,14 +91,42 @@
       <span class="brace">{</span>Alice code<span class="brace">}</span>
       <span class="lvl">LEVEL 4</span>
     </a>
-    <div class="links">
-      ${links.map(([p, label]) =>
-        `<a class="nl ${p === here || (here === "slides" && p === "lessons") ? "active" : ""}" href="${p}.html">${label}</a>`).join("")}
+    <div class="links desktop-links">
+      ${linkHTML(["index", "🏠", "Home"])}
+      ${groups.map(g => g.links.map(linkHTML).join("")).join("")}
+      <a class="nl admin-link ${here === "admin" ? "active" : ""}" href="admin.html" title="Instructor sign-in">👩‍🏫</a>
+    </div>
+    <button class="burger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-menu" id="mobile-menu">
+      ${linkHTML(["index", "🏠", "Home"])}
+      ${groups.map(g => `
+        <div class="mm-group">${g.name}</div>
+        ${g.links.map(linkHTML).join("")}`).join("")}
+      <div class="mm-group">Instructor</div>
+      <a class="nl ${here === "admin" ? "active" : ""}" href="admin.html"><span class="nl-ic">👩‍🏫</span>Instructor area</a>
     </div>`;
   document.body.insertBefore(nav, document.body.children[1]);
+
+  const burger = nav.querySelector(".burger");
+  const menu = nav.querySelector(".mobile-menu");
+  burger.addEventListener("click", () => {
+    const open = menu.classList.toggle("open");
+    burger.classList.toggle("open", open);
+    burger.setAttribute("aria-expanded", open);
+  });
+  menu.addEventListener("click", e => { if (e.target.closest("a")) menu.classList.remove("open"); });
+
+  if (isAdmin()) {
+    const b = document.createElement("div");
+    b.className = "admin-banner";
+    b.innerHTML = `👩‍🏫 Instructor mode — you can see locked lessons. <a href="admin.html">Manage locks</a>`;
+    document.body.insertBefore(b, nav.nextSibling);
+  }
 })();
 
-/* ---------- reveal on scroll ---------- */
+/* ============ reveal on scroll ============ */
 (function reveal() {
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("seen"); io.unobserve(e.target); }
@@ -68,7 +136,7 @@
   window.armReveal = arm;
 })();
 
-/* ---------- meme cards ---------- */
+/* ============ meme cards ============ */
 function renderMemes(el, list) {
   el.innerHTML = list.map(m => `
     <div class="meme ${m.theme} reveal">
@@ -79,7 +147,7 @@ function renderMemes(el, list) {
   if (window.armReveal) window.armReveal();
 }
 
-/* ---------- confetti ---------- */
+/* ============ confetti ============ */
 function confetti(x, y) {
   const bits = ["🎉", "✨", "💖", "⭐", "💜"];
   for (let i = 0; i < 10; i++) {
@@ -94,7 +162,7 @@ function confetti(x, y) {
   }
 }
 
-/* ---------- persistent checklists ---------- */
+/* ============ persistent checklists ============ */
 function bindChecklist(root, storeKey) {
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(storeKey) || "{}"); } catch (e) {}
@@ -112,7 +180,61 @@ function bindChecklist(root, storeKey) {
   });
 }
 
-/* ---------- terminal typing animation (loops forever) ---------- */
+/* ============ lesson flow modal ============ */
+function openFlowModal(n) {
+  const lesson = (typeof LESSONS !== "undefined") && LESSONS.find(l => l.n === n);
+  const flow = (typeof FLOWS !== "undefined") && FLOWS[n];
+  if (!lesson || !flow) return;
+  const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+  const stageBody = {
+    tease: `<p>${esc(flow.tease)}</p>`,
+    game: `<p><a class="btn small" href="${flow.game.url}" target="_blank" rel="noopener">🎮 ${esc(flow.game.name)} ↗</a></p>
+           <p class="muted">${esc(flow.game.note)}</p>`,
+    material: `<p>${esc(flow.material)}</p>`,
+    discussion: `<p>${esc(flow.discussion)}</p>`,
+    demo: `<p>${esc(flow.demo)}</p>`,
+    exercises: `<p>${esc(flow.exercises)}</p>`,
+    building: `<p>${esc(flow.building)}</p>
+      <div class="flow-sources">${flow.sources.map(s =>
+        `<a href="${s.url}" target="_blank" rel="noopener">🔗 ${esc(s.label)}</a>`).join("")}</div>
+      <div class="flow-start">🚦 <strong>How to start:</strong> ${esc(flow.start)}</div>`
+  };
+
+  const old = document.getElementById("flow-modal");
+  if (old) old.remove();
+  const wrap = document.createElement("div");
+  wrap.id = "flow-modal";
+  wrap.className = "modal-backdrop";
+  wrap.innerHTML = `
+    <div class="modal" role="dialog" aria-label="Lesson flow">
+      <button class="modal-x" aria-label="Close">✕</button>
+      <div class="modal-head">
+        <div class="badge" style="background:rgba(216,52,116,.1); border-color:var(--pink); color:var(--pink)">${esc(lesson.date)} · Thursday</div>
+        <h2>${lesson.emoji} Lesson ${lesson.n} — today's flow</h2>
+      </div>
+      <div class="flow-list">
+        ${FLOW_STAGES.map((st, i) => `
+          <div class="flow-stage">
+            <div class="fs-head">
+              <span class="fs-ic">${st.icon}</span>
+              <h3>${st.name}</h3>
+              <span class="fs-min">~${st.min}′</span>
+            </div>
+            <div class="fs-body">${stageBody[st.key] || ""}</div>
+          </div>`).join("")}
+      </div>
+    </div>`;
+  document.body.appendChild(wrap);
+  const close = () => wrap.remove();
+  wrap.addEventListener("click", e => { if (e.target === wrap) close(); });
+  wrap.querySelector(".modal-x").addEventListener("click", close);
+  document.addEventListener("keydown", function esck(e) {
+    if (e.key === "Escape") { close(); document.removeEventListener("keydown", esck); }
+  });
+}
+
+/* ============ terminal typing animation (loops forever) ============ */
 function runTerminal(bodyEl, script, opts = {}) {
   const speed = opts.speed || 26;
   let line = 0, ch = 0, out = [];
@@ -128,7 +250,7 @@ function runTerminal(bodyEl, script, opts = {}) {
     return `<span${cls}>${esc(text)}</span>`;
   }
   function step() {
-    if (line >= script.length) {           // loop: fade, clear, restart
+    if (line >= script.length) {
       setTimeout(() => {
         out = []; line = 0; ch = 0;
         render("");
@@ -137,7 +259,7 @@ function runTerminal(bodyEl, script, opts = {}) {
       return;
     }
     const item = script[line];
-    if (item.pause && ch === 0) {          // leading pause for this line
+    if (item.pause && ch === 0) {
       const p = item.pause; item.pause = 0;
       setTimeout(step, p);
       return;

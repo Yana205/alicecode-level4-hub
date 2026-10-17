@@ -55,14 +55,17 @@
 <script src="lessons-data.js"></script>
 <script src="main.js"></script>
 <script>
+(async function () {
+  const locks = await loadLocks();
+  const VIS = LESSONS.filter(l => lessonVisible(locks, l.n));
   const boards = document.getElementById("boards");
-  boards.innerHTML = LESSONS.map((l, idx) => `
+  boards.innerHTML = VIS.map((l, idx) => `
     <section class="card tight reveal ${idx === 0 ? "open" : ""}" id="board-${l.n}">
       <div class="mission-head" onclick="this.parentElement.classList.toggle('open')">
         <span class="emoji">${l.emoji}</span>
         <div>
-          <h3 style="margin:0">Lesson ${l.n} · ${l.title}</h3>
-          <span class="muted" style="font-size:.85rem">${l.date}</span>
+          <h3 style="margin:0">Lesson ${l.n} · ${l.title}${lessonLocked(locks, l.n) ? ' <span class="locked-pill admin-locked-pill">🔒 students</span>' : ""}</h3>
+          <span class="muted" style="font-size:.85rem">Thursday ${l.date}</span>
         </div>
         <span class="count" id="count-${l.n}"></span>
         <span class="arrow">›</span>
@@ -76,9 +79,9 @@
       </div>
     </section>`).join("");
 
-  function updateProgress() {
+  window.updateProgress = function updateProgress() {
     let done = 0, total = 0;
-    LESSONS.forEach(l => {
+    VIS.forEach(l => {
       const boxes = [...document.querySelectorAll(`#list-${l.n} input`)];
       const d = boxes.filter(b => b.checked).length;
       done += d; total += boxes.length;
@@ -89,9 +92,10 @@
     document.getElementById("total-label").textContent =
       pct === 100 ? "100% — QUEEN BEHAVIOR 👑🎉" : `${done} of ${total} missions done · ${pct}%`;
   }
-  LESSONS.forEach(l => bindChecklist(document.getElementById(`list-${l.n}`), `ac4-missions-l${l.n}`));
+  VIS.forEach(l => bindChecklist(document.getElementById(`list-${l.n}`), `ac4-missions-l${l.n}`));
   updateProgress();
   armReveal();
+})();
 </script>
 </body>
 </html>

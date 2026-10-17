@@ -12,7 +12,7 @@ const LESSONS = [
 /* ================= LESSON 1 ================= */
 {
   n: 1, emoji: "🚀", title: "Back to Building",
-  date: "19 Oct 2026", project: "P1 · Refresh: APIs + Databases",
+  date: "22 Oct 2026", project: "P1 · Refresh: APIs + Databases",
   goal: "Warm up APIs, understand why apps need databases, and build your own Mongo collection.",
   leaves: "Mongo exercises done + a new collection YOU created.",
   tutorial: [
@@ -30,7 +30,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 1 · Back to Building 🚀",
-      sub: "19 October 2026 · Project P1 · Refresh: APIs + Databases" },
+      sub: "22 October 2026 · Project P1 · Refresh: APIs + Databases" },
     { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then we build" },
     { kind: "content", title: "This year: from users to builders 💪", items: [
       { cards: [
@@ -179,7 +179,7 @@ const LESSONS = [
 /* ================= LESSON 2 ================= */
 {
   n: 2, emoji: "😎", title: "Vibe Coding",
-  date: "26 Oct 2026", project: "P1 · From LLMs to coding agents",
+  date: "29 Oct 2026", project: "P1 · From LLMs to coding agents",
   goal: "See what an LLM can (and can't) do, then install opencode and let it work inside a real project.",
   leaves: "opencode installed and answering + a bug found and fixed in a big project.",
   tutorial: [
@@ -197,7 +197,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 2 · Vibe Coding 😎",
-      sub: "26 October 2026 · Project P1 · From LLMs to coding agents" },
+      sub: "29 October 2026 · Project P1 · From LLMs to coding agents" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "We warmed up APIs: GET, JSON.",
@@ -363,7 +363,7 @@ const LESSONS = [
 /* ================= LESSON 3 ================= */
 {
   n: 3, emoji: "🛠️", title: "We Build an Agent",
-  date: "2 Nov 2026", project: "P2 · LangChain + the Studio begins",
+  date: "5 Nov 2026", project: "P2 · LangChain + the Studio begins",
   goal: "Understand what an agent is made of, build your first one, and start the Studio: Agent 1, the trend finder.",
   leaves: "Agent 1 of the Studio works — it finds real trends from today.",
   tutorial: [
@@ -381,7 +381,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 3 · We Build an Agent 🛠️",
-      sub: "2 November 2026 · Project P2 · LangChain + the Studio begins" },
+      sub: "5 November 2026 · Project P2 · LangChain + the Studio begins" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "An LLM solved your old exercise in seconds.",
@@ -546,7 +546,7 @@ const LESSONS = [
 /* ================= LESSON 4 ================= */
 {
   n: 4, emoji: "🧰", title: "Tool Time",
-  date: "9 Nov 2026", project: "P2 · Tools, Zod + Agent 2",
+  date: "12 Nov 2026", project: "P2 · Tools, Zod + Agent 2",
   goal: "Give agents great tools (and great descriptions), fix an agent that behaves badly, and build Agent 2.",
   leaves: "Agent 2 works + a confused agent fixed, with before/after proof.",
   tutorial: [
@@ -564,7 +564,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 4 · Tool Time 🧰",
-      sub: "9 November 2026 · Project P2 · Tools, Zod + Agent 2" },
+      sub: "12 November 2026 · Project P2 · Tools, Zod + Agent 2" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "You built your first agent with createAgent.",
@@ -714,7 +714,7 @@ const LESSONS = [
 /* ================= LESSON 5 ================= */
 {
   n: 5, emoji: "⛓️", title: "Agents in a Chain",
-  date: "16 Nov 2026", project: "P3 · The loop, the supervisor + shared memory",
+  date: "19 Nov 2026", project: "P3 · The loop, the supervisor + shared memory",
   goal: "Build a tiny agent loop by hand, then connect Agents 1 + 2 with a supervisor and a shared database.",
   leaves: "The 1→2 pipeline runs through a supervisor + writes to Mongo.",
   tutorial: [
@@ -732,7 +732,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 5 · Agents in a Chain ⛓️",
-      sub: "16 November 2026 · Project P3 · The loop, the supervisor + shared memory" },
+      sub: "19 November 2026 · Project P3 · The loop, the supervisor + shared memory" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "Tools = function + schema + description.",
@@ -865,7 +865,7 @@ const LESSONS = [
 /* ================= LESSON 6 ================= */
 {
   n: 6, emoji: "🎬", title: "Lights, Camera, Agent 3",
-  date: "23 Nov 2026", project: "P3 · The video maker + the Studio UI",
+  date: "26 Nov 2026", project: "P3 · The video maker + the Studio UI",
   goal: "Build Agent 3 — idea in, real video out — and give the Studio a screen that shows every step.",
   leaves: "The first video made by your pipeline + a UI that shows the steps.",
   tutorial: [
@@ -883,7 +883,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 6 · Lights, Camera, Agent 3 🎬",
-      sub: "23 November 2026 · Project P3 · The video maker + the Studio UI" },
+      sub: "26 November 2026 · Project P3 · The video maker + the Studio UI" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "You built the agent loop by hand. No more magic.",
@@ -1013,7 +1013,7 @@ const LESSONS = [
 /* ================= LESSON 7 ================= */
 {
   n: 7, emoji: "🏁", title: "Studio Grand Opening",
-  date: "30 Nov 2026", project: "P4 · Finish the Studio + hackathon prep",
+  date: "3 Dec 2026", project: "P4 · Finish the Studio + hackathon prep",
   goal: "Run the whole Studio end to end, add your own touch, and get your team ready for the hackathon.",
   leaves: "A complete Studio running + your team's hackathon plan.",
   tutorial: [
@@ -1031,7 +1031,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 7 · Studio Grand Opening 🏁",
-      sub: "30 November 2026 · Project P4 · Finish the Studio + hackathon prep" },
+      sub: "3 December 2026 · Project P4 · Finish the Studio + hackathon prep" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "Agent 3 made your first AI video. 🎬",
@@ -1174,4 +1174,168 @@ const MEMES = [
   { tag: "girl code", text: "Roses are red, my prompt is precise — my agent picked the right tool twice. 🌹", theme: "m-mint" },
   { tag: "mood", text: "Semicolon missing? Not anymore. We don't do mysteries, we do queries. 🔍", theme: "m-pink" },
   { tag: "girl boss", text: "Some girls collect stickers. We collect working pipelines. ⛓️✨", theme: "m-purple" }
+];
+
+/* ============================================================
+   FLOW — the AliceCode lesson structure, per lesson.
+   Same 7 beats every week: tease → game → material → discussion
+   → demo → easy exercises → project building blocks.
+   ============================================================ */
+
+const FLOW_STAGES = [
+  { key: "tease",      icon: "👀", name: "Spoiler of today",  min: 5  },
+  { key: "game",       icon: "🎮", name: "Social game",       min: 15 },
+  { key: "material",   icon: "📚", name: "Material",          min: 15 },
+  { key: "discussion", icon: "💬", name: "Discussion",        min: 5  },
+  { key: "demo",       icon: "🎩", name: "Demo",              min: 10 },
+  { key: "exercises",  icon: "✏️", name: "Prove it (easy!)",  min: 15 },
+  { key: "building",   icon: "🧱", name: "Build the project", min: 25 }
+];
+
+const FLOWS = {
+  1: {
+    tease: "How does Instagram remember your likes after you close it? Today you find out — and build an app-memory of your own.",
+    game: { name: "Skribbl.io — custom words", url: "https://skribbl.io",
+      note: "Draw & guess with OUR words: API, server, database, JSON, cloud, waiter, pizza…" },
+    material: "Slides: quick API refresh + why apps need databases.",
+    discussion: "Where does your favorite app keep its stuff? What would happen if it forgot everything every night?",
+    demo: "Yan opens a real Mongo database live and finds the most-liked video with ONE query.",
+    exercises: "4 tiny Mongo exercises — read, filter, count. Everyone finishes. 📸 screenshot your answer.",
+    building: "Create YOUR own collection (any topic you love), plan its fields, insert 3 documents with unique ids.",
+    sources: [
+      { label: "MongoDB basics", url: "https://www.mongodb.com/basics" },
+      { label: "JSON intro (W3Schools)", url: "https://www.w3schools.com/js/js_json_intro.asp" },
+      { label: "PokeAPI — a real API in your browser", url: "https://pokeapi.co" }
+    ],
+    start: "Start by writing on paper: what is one ROW in your collection? Which fields does it need?"
+  },
+  2: {
+    tease: "An AI solves YOUR exercise from last year — in seconds. Then you stop copy-pasting and become its boss.",
+    game: { name: "Gartic Phone", url: "https://garticphone.com",
+      note: "Broken telephone with drawings — exactly what happens when an AI loses context. 😉" },
+    material: "Slides: what LLMs can and can't do · tokens · context window · system prompt.",
+    discussion: "In the game — what got lost along the chain? The same thing happens in a long AI chat. Why?",
+    demo: "Fix a planted bug live, just by chatting with Gemini. No typing code.",
+    exercises: "Paste one old exercise into the LLM. Check its answer. Catch one thing it got wrong or didn't test.",
+    building: "Install opencode, open last year's big project, ask it \"What does this project do?\" — then hunt the hidden bug.",
+    sources: [
+      { label: "opencode docs", url: "https://opencode.ai/docs" },
+      { label: "See tokens live (tokenizer)", url: "https://platform.openai.com/tokenizer" },
+      { label: "Prompting guide", url: "https://www.promptingguide.ai" }
+    ],
+    start: "Start with the Setup page of this site — install takes ~10 minutes."
+  },
+  3: {
+    tease: "Today you switch sides: from USING agents to BUILDING one. The TikTok Studio officially begins.",
+    game: { name: "Robot & Operator (in pairs)", url: "https://skribbl.io",
+      note: "One girl is the robot, one gives exact commands — bad instructions = funny robot. (Or Skribbl with agent words.)" },
+    material: "Slides: what an agent is made of — model + prompt + tools + access.",
+    discussion: "Which agents did you meet in real life this week (support bots, recommendations…)? Who built them, and why?",
+    demo: "createAgent live: 7 lines of code → a talking agent.",
+    exercises: "Complete the half-built agent: give it a system prompt and one tool. Run it. Try to break it.",
+    building: "Agent 1 of the Studio: wire the Tavily search tool, make it find 3 REAL TikTok trends from today.",
+    sources: [
+      { label: "Nir's tutorial (our reference)", url: NIR_TUTORIAL },
+      { label: "LangChain JS", url: "https://js.langchain.com" },
+      { label: "Tavily", url: "https://www.tavily.com" }
+    ],
+    start: "Pull the Studio repo, open src/agents/, read Agent 1's file before you type anything."
+  },
+  4: {
+    tease: "Meet an agent that behaves SO badly… and fix it with nothing but better words. Then build Agent 2.",
+    game: { name: "Describe the Tool (Taboo style)", url: "https://codenames.game",
+      note: "Describe an everyday tool without saying its name — literally what .describe() does. (Or a quick Codenames round.)" },
+    material: "Slides: tool() + Zod + .describe() · the RTOC prompt recipe.",
+    discussion: "Think of a time bad instructions ruined a task for you. What would have fixed it — more effort, or clearer words?",
+    demo: "One empty .describe() → the agent picks the wrong tool. Fix the words → fixed agent. Before/after on screen.",
+    exercises: "Write ONE tool with Zod and clear describes. Make the agent use it correctly once.",
+    building: "Agent 2: takes a trend, writes one video idea. RTOC prompt + a save tool. Test with last week's real trends.",
+    sources: [
+      { label: "Zod", url: "https://zod.dev" },
+      { label: "LangChain tools guide", url: "https://js.langchain.com" },
+      { label: "Nir's tutorial — tools", url: NIR_TUTORIAL }
+    ],
+    start: "Before coding: write Agent 2's prompt in RTOC form on paper — Role, Task, Output, Constraints."
+  },
+  5: {
+    tease: "We open the magic box: every agent is… a loop. Then your agents start talking to each other.",
+    game: { name: "Gartic Phone — chain mode", url: "https://garticphone.com",
+      note: "A pipeline of players, each passing work to the next. Sound familiar? ⛓️" },
+    material: "Slides: the agent loop · the supervisor pattern · shared memory in Mongo.",
+    discussion: "What does a good team leader actually do? Now swap the people for agents — what changes?",
+    demo: "The loop built by hand in ~10 lines, then: \"createAgent is exactly this.\" 🤯",
+    exercises: "Build the mini loop in pairs (~30 min). Say the magic sentence out loud when it runs.",
+    building: "Wire the supervisor with Agents 1+2 as its tools, connect Mongo, run the full 1→2 chain with one command.",
+    sources: [
+      { label: "Nir's tutorial — supervisor", url: NIR_TUTORIAL },
+      { label: "MongoDB basics", url: "https://www.mongodb.com/basics" },
+      { label: "LangChain multi-agent", url: "https://js.langchain.com" }
+    ],
+    start: "Draw the pipeline on paper first: who calls whom, and what gets saved where?"
+  },
+  6: {
+    tease: "Tonight your pipeline makes its first REAL video. Lights, camera, Agent 3. 🎬",
+    game: { name: "TikTok Charades", url: "https://garticphone.com",
+      note: "Act a TikTok trend with no words — a bad prompt is charades; a good prompt says everything. (Or Gartic animation mode.)" },
+    material: "Slides: Agent 3 · writing video prompts (details beat vibes) · the Studio UI · LangGraph as a map.",
+    discussion: "What makes a video idea feel 'doable' for an AI? What's missing when we only give vibes?",
+    demo: "One idea → video prompt → a real AI video, live on screen. 🍿",
+    exercises: "Write the SAME video prompt two ways — vibes vs details. Compare what comes back.",
+    building: "Build Agent 3, wire the video-service call, run the full chain, open the UI and find yourself on the graph.",
+    sources: [
+      { label: "Nir's tutorial — bonus UI", url: NIR_TUTORIAL },
+      { label: "LangGraph JS", url: "https://langchain-ai.github.io/langgraphjs/" },
+      { label: "LangChain streaming", url: "https://js.langchain.com" }
+    ],
+    start: "Take YOUR video idea from last week — that's the one Agent 3 turns into a film tonight."
+  },
+  7: {
+    tease: "Grand opening: the full Studio runs end to end. And then… hackathon mode. 🔥",
+    game: { name: "Kahoot — semester recap quiz", url: "https://kahoot.it",
+      note: "Everything from week 1 to now. Winner picks the break playlist. 👑" },
+    material: "Slides: finishing touches · what makes a great hackathon idea · the team one-pager.",
+    discussion: "What was the hardest moment this semester — and what got you past it?",
+    demo: "The full run: trend → idea → video, all on the UI, no terminal.",
+    exercises: "Run the Studio yourself with no help. Edit one idea in the UI before it renders.",
+    building: "Pick ONE optional feature and build it. Then: team + idea + MVP one-pager for the hackathon.",
+    sources: [
+      { label: "Nir's tutorial — full reference", url: NIR_TUTORIAL },
+      { label: "LangChain JS", url: "https://js.langchain.com" },
+      { label: "Our class Trello", url: "https://trello.com/b/wPXqrlUT" }
+    ],
+    start: "Teams of 2–3. One sentence for the idea. The smallest demo that works. Write it down before you leave."
+  }
+};
+
+/* ============================================================
+   CALENDAR — the whole year. Lessons are Thursdays.
+   Fixed events (hackathon, judging) keep their official dates.
+   ============================================================ */
+
+const CALENDAR = [
+  { date: "2026-12-07", end: "2026-12-09", title: "The Hackathon", emoji: "🔥", kind: "event",
+    desc: "3 days at Hanukkah — day 1 together, days 2–3 on Zoom. You build something with the Studio's scope." },
+  { date: "2026-12-17", title: "Reflection + first evals", emoji: "🪞", kind: "lesson-extra",
+    desc: "Error analysis on the hackathon, 10 golden questions per agent. Student-led lessons begin!" },
+  { date: "2026-12-24", end: "2027-01-07", title: "P5 · The Smart Search", emoji: "🔍", kind: "block",
+    desc: "3 lessons: embeddings + semantic search over the Studio's archive." },
+  { date: "2027-01-14", end: "2027-01-28", title: "P6 · RAG", emoji: "📖", kind: "block",
+    desc: "3 lessons: retrieval, answers with sources, a taste of MCP." },
+  { date: "2027-01-28", title: "Semester 1 ends", emoji: "🏁", kind: "event",
+    desc: "Wrap-up with an evidence exhibition — all your before/afters on one wall." },
+  { date: "2027-02-04", end: "2027-02-11", title: "Guest parent + tech tour", emoji: "🚌", kind: "event",
+    desc: "Two special weeks — no new content, lots of inspiration." },
+  { date: "2027-03-18", title: "Parents' open lesson", emoji: "👨‍👩‍👧", kind: "event",
+    desc: "Parents come to class — you show them one live before/after moment." },
+  { date: "2027-03-25", title: "Purim — no lesson", emoji: "🎭", kind: "off" },
+  { date: "2027-04-22", end: "2027-04-29", title: "Pesach — no lessons", emoji: "🫓", kind: "off" },
+  { date: "2027-05-06", title: "Final project — working session 1", emoji: "🛠️", kind: "lesson-extra",
+    desc: "Your team's fork of the Studio. Build, build, build." },
+  { date: "2027-05-20", title: "Final project — working session 2", emoji: "🛠️", kind: "lesson-extra" },
+  { date: "2027-06-03", title: "Final project — rehearsal", emoji: "🎤", kind: "lesson-extra",
+    desc: "5-minute pitch, full dry run." },
+  { date: "2027-06-04", title: "JUDGING DAY", emoji: "🏆", kind: "event",
+    desc: "The big one. Your project, your pitch, your year on stage." },
+  { date: "2027-06-24", title: "Farewell", emoji: "🎉", kind: "event", desc: "Last meeting of the year. 🥹" },
+  { date: "2027-07-01", title: "Ceremony (July — date TBA)", emoji: "🎓", kind: "event", approx: true }
 ];

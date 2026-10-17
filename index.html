@@ -95,6 +95,12 @@
   <section class="card reveal">
     <h2>🚀 Quick doors</h2>
     <div class="grid">
+      <a class="lesson-card" href="calendar.html">
+        <span class="emoji">🗓️</span>
+        <h3>Calendar</h3>
+        <p class="muted">Every Thursday lesson + the whole year's events. Add it to your phone.</p>
+        <span class="cta">Open →</span>
+      </a>
       <a class="lesson-card" href="tasks.html">
         <span class="emoji">✅</span>
         <h3>Task board</h3>
@@ -127,21 +133,35 @@
 <script src="lessons-data.js"></script>
 <script src="main.js"></script>
 <script>
-  // roadmap
-  document.getElementById("roadmap").innerHTML =
-    LESSONS.map(l => `
-      <div class="tl-item">
-        <div class="dot">${l.n}</div>
-        <div class="when">${l.date}</div>
-        <h3><a href="slides.html?n=${l.n}">${l.emoji} ${l.title}</a></h3>
-        <p class="muted">${l.goal}</p>
-      </div>`).join("") + `
+  // roadmap (lock-aware)
+  (async function () {
+    const locks = await loadLocks();
+    document.getElementById("roadmap").innerHTML =
+      LESSONS.map(l => {
+        const lk = lessonLocked(locks, l.n);
+        if (lk && !isAdmin()) return `
+          <div class="tl-item">
+            <div class="dot">🔒</div>
+            <div class="when">Thursday ${l.date}</div>
+            <h3>Lesson ${l.n} — locked</h3>
+            <p class="muted">Unlocks when we get there. No spoilers. 😉</p>
+          </div>`;
+        return `
+        <div class="tl-item">
+          <div class="dot">${l.n}</div>
+          <div class="when">Thursday ${l.date}</div>
+          <h3><a href="slides.html?n=${l.n}">${l.emoji} ${l.title}</a>${lk ? ' <span class="locked-pill admin-locked-pill">🔒 students</span>' : ""}</h3>
+          <p class="muted">${l.goal}</p>
+        </div>`;
+      }).join("") + `
       <div class="tl-item special">
         <div class="dot">🔥</div>
         <div class="when">${HACKATHON.date}</div>
         <h3>${HACKATHON.emoji} ${HACKATHON.title}</h3>
         <p class="muted">${HACKATHON.desc}</p>
       </div>`;
+    armReveal();
+  })();
   renderMemes(document.getElementById("memes"), MEMES.slice(0, 6));
   armReveal();
 </script>

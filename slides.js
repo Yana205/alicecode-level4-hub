@@ -1,6 +1,6 @@
-/* AliceCode Level 4 Hub — slide viewer engine */
+/* AliceCode Level 4 Hub — slide viewer engine (v2: locks, flow modal, fullscreen, swipe) */
 
-(function () {
+(async function () {
   const params = new URLSearchParams(location.search);
   const n = Math.min(7, Math.max(1, parseInt(params.get("n") || "1", 10)));
   const lesson = LESSONS.find(l => l.n === n);
@@ -8,12 +8,38 @@
 
   document.title = `Lesson ${lesson.n} · ${lesson.title} — AliceCode Level 4`;
 
-  /* ---------- header ---------- */
   const head = document.getElementById("lesson-head");
+  const stageWrap = document.querySelector(".stage-wrap");
+  const below = document.getElementById("below");
+
+  /* ---------- lock gate ---------- */
+  const locks = await loadLocks();
+  const locked = lessonLocked(locks, n);
+  if (locked && !isAdmin()) {
+    head.innerHTML = `<div class="badge">Lesson ${lesson.n} of 7</div><h1>🔒 Not yet!</h1>`;
+    stageWrap.style.display = "none";
+    below.innerHTML = `
+      <div class="card lock-screen">
+        <span class="big-lock">🔒</span>
+        <h2>This lesson is still locked</h2>
+        <p class="muted" style="max-width:420px;margin:10px auto 18px">It unlocks when we get there in class — no spoilers. 😉 Check the calendar to see when.</p>
+        <a class="btn" href="calendar.html">🗓️ Open the calendar</a>
+        <a class="btn ghost dark" style="border-color:var(--pink);color:var(--pink);box-shadow:none" href="lessons.html">← All lessons</a>
+      </div>`;
+    return;
+  }
+
+  /* ---------- header ---------- */
   head.innerHTML = `
-    <div class="badge">Lesson ${lesson.n} of 7 · ${lesson.date}</div>
+    <div class="badge">Lesson ${lesson.n} of 7 · Thursday ${lesson.date}${locked ? ' · <b>🔒 locked for students</b>' : ""}</div>
     <h1>${lesson.emoji} ${lesson.title}</h1>
-    <p class="sub">${lesson.project}</p>`;
+    <p class="sub">${lesson.project}</p>
+    <div style="margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap">
+      <button class="btn small" id="flow-btn">📋 Today's flow</button>
+      <button class="btn small dark" id="fs-btn">⛶ Fullscreen</button>
+    </div>`;
+
+  document.getElementById("flow-btn").addEventListener("click", () => openFlowModal(n));
 
   /* ---------- build slides ---------- */
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
@@ -44,7 +70,6 @@
         </div>
         ${s.note ? `<div class="s-note">${esc(s.note)}</div>` : ""}
       </div>`;
-    /* content */
     const parts = (s.items || []).map(it => {
       if (it.lines) return `<ul class="s-lines">${it.lines.map(l => `<li>${esc(l)}</li>`).join("")}</ul>`;
       if (it.cards) return `<div class="s-cards">${it.cards.map(c => `
@@ -84,22 +109,45 @@
   document.getElementById("next").onclick = () => go(cur + 1);
   dots.onclick = e => { if (e.target.dataset.i) go(+e.target.dataset.i); };
   document.addEventListener("keydown", e => {
-    if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); go(cur + 1); }
-    if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1); }
+    if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); go(cur + 1); }
+    if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(cur - 1); }
+    if (e.key === "f" || e.key === "F") toggleFS();
   });
   stage.addEventListener("click", e => {
     if (e.target.closest("a")) return;
     go(cur + 1);
   });
+
+  /* swipe */
+  let tx = null, ty = null;
+  stage.addEventListener("touchstart", e => {
+    tx = e.touches[0].clientX; ty = e.touches[0].clientY;
+  }, { passive: true });
+  stage.addEventListener("touchend", e => {
+    if (tx === null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    const dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) go(cur + (dx < 0 ? 1 : -1));
+    tx = ty = null;
+  }, { passive: true });
+
+  /* fullscreen */
+  function toggleFS() {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (stageWrap.requestFullscreen) stageWrap.requestFullscreen();
+    else stageWrap.webkitRequestFullscreen && stageWrap.webkitRequestFullscreen();
+  }
+  document.getElementById("fs-btn").addEventListener("click", toggleFS);
   go(0);
 
-  /* ---------- below the deck: goal, missions, tutorial links ---------- */
-  const below = document.getElementById("below");
+  /* ---------- below the deck ---------- */
+  const flow = FLOWS[n];
   below.innerHTML = `
     <div class="card reveal">
       <h2>🎯 Today's goal</h2>
       <p>${esc(lesson.goal)}</p>
       <p style="margin-top:8px"><strong class="pink">You leave with:</strong> ${esc(lesson.leaves)}</p>
+      ${flow ? `<button class="btn small" style="margin-top:14px" onclick="openFlowModal(${n})">📋 See today's full flow</button>` : ""}
     </div>
 
     <div class="card reveal">

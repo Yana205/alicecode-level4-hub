@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calendar · AliceCode Level 4</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>💜</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="hero" style="padding-bottom:14px">
+    <div class="badge">Lessons every Thursday 💜</div>
+    <h1>🗓️ The AliceCode Calendar</h1>
+    <p class="sub">The whole year at a glance — lessons, the hackathon, special days and the road to judging day.</p>
+    <div style="margin-top:18px">
+      <button class="btn" id="ics-btn">📲 Add to my calendar (.ics)</button>
+    </div>
+  </header>
+
+  <div class="cal-legend">
+    <span class="l-lesson">Lesson (Thursday)</span>
+    <span class="l-event">Special event</span>
+    <span class="l-block">Lesson block</span>
+    <span class="l-off">Holiday — no lesson</span>
+  </div>
+
+  <div id="cal"></div>
+
+</div>
+
+<footer class="footer">Made with 💜 for the Level 4 builders · {Alice code} 2026–27</footer>
+
+<script src="lessons-data.js"></script>
+<script src="main.js"></script>
+<script>
+(async function () {
+  const locks = await loadLocks();
+  const esc = s => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+  /* merge lessons + fixed events into one dated list */
+  const items = [];
+  LESSONS.forEach(l => {
+    const d = new Date(l.date + " 17:00");
+    items.push({
+      dt: d, kind: "lesson", n: l.n,
+      title: `Lesson ${l.n} · ${l.title}`, emoji: l.emoji,
+      desc: l.goal
+    });
+  });
+  CALENDAR.forEach(ev => {
+    items.push({
+      dt: new Date(ev.date + "T12:00:00"), end: ev.end ? new Date(ev.end + "T12:00:00") : null,
+      kind: ev.kind, title: ev.title, emoji: ev.emoji, desc: ev.desc || "", approx: ev.approx
+    });
+  });
+  items.sort((a, b) => a.dt - b.dt);
+
+  const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const DOW = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+  const today = new Date(); today.setHours(0,0,0,0);
+  const fmtRange = it => it.end ? `${it.dt.getDate()}–${it.end.getDate()}` : it.dt.getDate();
+
+  const byMonth = {};
+  items.forEach(it => {
+    const k = it.dt.getFullYear() + "-" + it.dt.getMonth();
+    (byMonth[k] = byMonth[k] || []).push(it);
+  });
+
+  document.getElementById("cal").innerHTML = Object.entries(byMonth).map(([k, evs]) => {
+    const [y, m] = k.split("-").map(Number);
+    const lessonsCount = evs.filter(e => e.kind === "lesson" || e.kind === "lesson-extra").length;
+    return `
+    <section class="cal-month reveal">
+      <h2>${MONTHS[m]} ${y} ${lessonsCount ? `<span class="mcount">${lessonsCount} lesson${lessonsCount > 1 ? "s" : ""}</span>` : ""}</h2>
+      ${evs.map(it => {
+        const isToday = !it.end
+          ? it.dt.toDateString() === new Date().toDateString()
+          : (today >= new Date(it.dt).setHours(0,0,0,0) && today <= it.end);
+        const kindClass = it.kind === "lesson" || it.kind === "lesson-extra" ? "" :
+                          it.kind === "off" ? "k-off" : it.kind === "block" ? "k-block" : "k-event";
+        const dateBox = `
+          <div class="d">
+            <div class="dd">${fmtRange(it)}</div>
+            <div class="dw">${it.approx ? "TBA" : (it.end ? MONTHS[it.dt.getMonth()].slice(0,3) : DOW[it.dt.getDay()])}</div>
+          </div>`;
+        if (it.kind === "lesson") {
+          const lk = lessonLocked(locks, it.n);
+          if (lk && !isAdmin()) {
+            return `<div class="cal-ev ${isToday ? "today" : ""}">
+              ${dateBox}
+              <div><h3>🔒 Lesson ${it.n} <span class="locked-pill">LOCKED</span></h3>
+              <p>Unlocks when we get there. No spoilers. 😉</p></div></div>`;
+          }
+          return `<a class="cal-ev ${isToday ? "today" : ""}" href="slides.html?n=${it.n}">
+            ${dateBox}
+            <div><h3>${it.emoji} ${esc(it.title)}${lk ? ' <span class="locked-pill admin-locked-pill">🔒 students</span>' : ""}</h3>
+            <p>${esc(it.desc)}</p></div></a>`;
+        }
+        return `<div class="cal-ev ${kindClass} ${isToday ? "today" : ""}">
+          ${dateBox}
+          <div><h3>${it.emoji} ${esc(it.title)}</h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ""}</div></div>`;
+      }).join("")}
+    </section>`;
+  }).join("");
+  armReveal();
+
+  /* .ics download — all-day events, so no wrong hours */
+  document.getElementById("ics-btn").addEventListener("click", () => {
+    const pad = x => String(x).padStart(2, "0");
+    const dstr = d => d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate());
+    const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//AliceCode Level 4//EN", "CALSCALE:GREGORIAN"];
+    items.forEach((it, i) => {
+      if (it.approx) return;
+      const end = new Date((it.end || it.dt).getTime() + 86400000); // DTEND is exclusive
+      lines.push("BEGIN:VEVENT",
+        `UID:ac4-${i}@alicecode-level4-hub`,
+        `DTSTAMP:${dstr(new Date())}T000000Z`,
+        `DTSTART;VALUE=DATE:${dstr(it.dt)}`,
+        `DTEND;VALUE=DATE:${dstr(end)}`,
+        `SUMMARY:${(it.emoji + " AliceCode: " + it.title).replace(/,/g, "\\,")}`,
+        "END:VEVENT");
+    });
+    lines.push("END:VCALENDAR");
+    const blob = new Blob([lines.join("\r\n")], { type: "text/calendar" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "alicecode-level4.ics";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+})();
+</script>
+</body>
+</html>
