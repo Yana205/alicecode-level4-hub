@@ -90,7 +90,7 @@
           </div>`;
         if (it.kind === "lesson") {
           const lk = lessonLocked(locks, it.n);
-          if (lk && !isAdmin()) {
+          if (lk && !canView()) {
             return `<div class="cal-ev ${isToday ? "today" : ""}">
               ${dateBox}
               <div><h3>🔒 Lesson ${it.n} <span class="locked-pill">LOCKED</span></h3>

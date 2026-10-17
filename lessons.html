@@ -43,14 +43,14 @@
     const locks = await loadLocks();
     document.getElementById("lesson-grid").innerHTML = LESSONS.map(l => {
       const lk = lessonLocked(locks, l.n);
-      if (lk && !isAdmin()) return `
-        <div class="lesson-card locked reveal">
+      if (lk && !canView()) return `
+        <a class="lesson-card locked reveal" href="slides.html?n=${l.n}">
           <span class="num">Lesson ${l.n} · Thu ${l.date}</span>
           <span class="emoji">🔒</span>
           <h3>Top secret (for now)</h3>
-          <p class="muted">This one unlocks when we get there in class. No spoilers. 😉</p>
+          <p class="muted">Unlocks when we get there in class. Have the magic password? Tap to enter it. 🪄</p>
           <span class="locked-pill">COMING SOON</span>
-        </div>`;
+        </a>`;
       return `
       <a class="lesson-card reveal" href="slides.html?n=${l.n}">
         <span class="num">Lesson ${l.n} · Thu ${l.date}</span>

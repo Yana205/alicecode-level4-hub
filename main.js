@@ -10,6 +10,20 @@ function adminToken() {
 }
 function isAdmin() { return !!adminToken(); }
 
+/* magic view-password: opens locked lessons on this device (spoiler-level, not security) */
+const AC4_UNLOCK_KEY = "ac4-magic-unlock";
+function isUnlocked() {
+  try { return localStorage.getItem(AC4_UNLOCK_KEY) === "yes"; } catch (e) { return false; }
+}
+function tryPassword(p) {
+  if ((p || "").trim().toLowerCase() === atob("dW5sb2NrcGxlYXNl")) {
+    try { localStorage.setItem(AC4_UNLOCK_KEY, "yes"); } catch (e) {}
+    return true;
+  }
+  return false;
+}
+function relock() { try { localStorage.removeItem(AC4_UNLOCK_KEY); } catch (e) {} }
+
 async function loadLocks() {
   // Admin reads straight from the GitHub API (instant); students read the deployed file.
   if (isAdmin()) {
@@ -31,7 +45,8 @@ async function loadLocks() {
   return {};
 }
 function lessonLocked(locks, n) { return !!locks[String(n)]; }
-function lessonVisible(locks, n) { return isAdmin() || !lessonLocked(locks, n); }
+function canView() { return isAdmin() || isUnlocked(); }
+function lessonVisible(locks, n) { return canView() || !lessonLocked(locks, n); }
 
 /* ============ floating doodles ============ */
 (function doodles() {
@@ -123,6 +138,12 @@ function lessonVisible(locks, n) { return isAdmin() || !lessonLocked(locks, n); 
     b.className = "admin-banner";
     b.innerHTML = `👩‍🏫 Instructor mode — you can see locked lessons. <a href="admin.html">Manage locks</a>`;
     document.body.insertBefore(b, nav.nextSibling);
+  } else if (isUnlocked()) {
+    const b = document.createElement("div");
+    b.className = "admin-banner";
+    b.innerHTML = `🔓 Magic password active — locked lessons are visible on this device. <a href="#" id="relock-link">Lock again</a>`;
+    document.body.insertBefore(b, nav.nextSibling);
+    b.querySelector("#relock-link").addEventListener("click", e => { e.preventDefault(); relock(); location.reload(); });
   }
 })();
 

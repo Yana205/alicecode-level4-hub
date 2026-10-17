@@ -15,7 +15,7 @@
   /* ---------- lock gate ---------- */
   const locks = await loadLocks();
   const locked = lessonLocked(locks, n);
-  if (locked && !isAdmin()) {
+  if (locked && !canView()) {
     head.innerHTML = `<div class="badge">Lesson ${lesson.n} of 7</div><h1>🔒 Not yet!</h1>`;
     stageWrap.style.display = "none";
     below.innerHTML = `
@@ -23,9 +23,21 @@
         <span class="big-lock">🔒</span>
         <h2>This lesson is still locked</h2>
         <p class="muted" style="max-width:420px;margin:10px auto 18px">It unlocks when we get there in class — no spoilers. 😉 Check the calendar to see when.</p>
-        <a class="btn" href="calendar.html">🗓️ Open the calendar</a>
+        <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px">
+          <input type="password" id="magic-pass" placeholder="Magic password 🪄" autocomplete="off"
+                 style="padding:12px 16px; border:2px solid #E8DCF0; border-radius:14px; font-family:var(--font-body); font-weight:600; outline:none; width:210px">
+          <button class="btn small" id="magic-btn">Unlock</button>
+        </div>
+        <p class="admin-status err" id="magic-status" style="text-align:center"></p>
+        <a class="btn ghost dark" style="border-color:var(--pink);color:var(--pink);box-shadow:none" href="calendar.html">🗓️ Calendar</a>
         <a class="btn ghost dark" style="border-color:var(--pink);color:var(--pink);box-shadow:none" href="lessons.html">← All lessons</a>
       </div>`;
+    const tryIt = () => {
+      if (tryPassword(document.getElementById("magic-pass").value)) location.reload();
+      else document.getElementById("magic-status").textContent = "Hmm, that's not it. Ask your instructor. 😉";
+    };
+    document.getElementById("magic-btn").addEventListener("click", tryIt);
+    document.getElementById("magic-pass").addEventListener("keydown", e => { if (e.key === "Enter") tryIt(); });
     return;
   }
 
@@ -37,9 +49,16 @@
     <div style="margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap">
       <button class="btn small" id="flow-btn">📋 Today's flow</button>
       <button class="btn small dark" id="fs-btn">⛶ Fullscreen</button>
+      <button class="btn small ghost" style="box-shadow:none" id="pptx-btn">⬇️ PowerPoint</button>
     </div>`;
 
   document.getElementById("flow-btn").addEventListener("click", () => openFlowModal(n));
+  document.getElementById("pptx-btn").addEventListener("click", async function () {
+    this.disabled = true; const was = this.textContent; this.textContent = "⏳ Building…";
+    try { await downloadPPTX(n); this.textContent = "✅ Downloaded!"; }
+    catch (e) { this.textContent = "⚠️ Try again"; console.error(e); }
+    setTimeout(() => { this.textContent = was; this.disabled = false; }, 2500);
+  });
 
   /* ---------- build slides ---------- */
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");

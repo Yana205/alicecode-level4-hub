@@ -139,7 +139,7 @@
     document.getElementById("roadmap").innerHTML =
       LESSONS.map(l => {
         const lk = lessonLocked(locks, l.n);
-        if (lk && !isAdmin()) return `
+        if (lk && !canView()) return `
           <div class="tl-item">
             <div class="dot">🔒</div>
             <div class="when">Thursday ${l.date}</div>
