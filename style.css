@@ -707,3 +707,8 @@ a.cal-ev:hover { transform: translateX(4px); }
   background: rgba(224,79,95,.06); border-radius: 18px; padding: 18px 20px;
 }
 .free-tier-warning h3 { color: var(--red); margin-bottom: 8px; }
+
+/* ---------- official AliceCode logo ---------- */
+.logo-img { height: 38px; width: auto; display: block; }
+.hero-logo { width: min(340px, 72vw); height: auto; margin: 0 auto 6px; display: block; filter: drop-shadow(0 4px 14px rgba(0,0,0,.18)); }
+@media (max-width: 860px) { .logo-img { height: 32px; } }
