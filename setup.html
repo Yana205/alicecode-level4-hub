@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup · AliceCode Level 4</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>💜</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="hero" style="padding-bottom:16px">
+    <div class="badge">One-time setup · ~15 minutes</div>
+    <h1>🔧 Set Up Your Coding Agent</h1>
+    <p class="sub">We use <strong>opencode</strong> — a free AI coding agent that works inside your whole project, right in the terminal.</p>
+  </header>
+
+  <section class="card reveal">
+    <h2>👀 What it looks like when it works</h2>
+    <p class="muted" style="margin-bottom:14px">This is a real opencode session (it loops — just watch):</p>
+    <div class="terminal">
+      <div class="term-bar">
+        <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+        <span class="title">opencode — tiktok-studio</span>
+      </div>
+      <div class="term-body" id="term-demo"></div>
+    </div>
+    <p class="muted center" style="margin-top:12px">You describe. The agent reads, searches, edits and proves. <strong class="pink">You check.</strong> That's the job.</p>
+  </section>
+
+  <section class="card reveal">
+    <h2>🪜 Install, step by step</h2>
+    <ol class="steps" style="margin-top:16px">
+      <li>
+        <h3>Install Node.js (if you don't have it)</h3>
+        <p>Download the <strong>LTS</strong> version from <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> and install it like any app. To check it worked, open a terminal and type:</p>
+        <p style="margin-top:6px"><code>node --version</code> — you should see a number like <code>v22…</code></p>
+      </li>
+      <li>
+        <h3>Install opencode</h3>
+        <p>In the terminal, run:</p>
+        <p style="margin-top:6px"><code>npm install -g opencode-ai</code></p>
+        <p class="muted" style="margin-top:6px">Full install guide with other options: <a href="https://opencode.ai/docs" target="_blank" rel="noopener">opencode.ai/docs</a></p>
+      </li>
+      <li>
+        <h3>Connect a free model</h3>
+        <p>Run <code>opencode auth login</code> and follow the steps on screen. We use the free model your instructor shows in class — ask if you're not sure which one to pick.</p>
+      </li>
+      <li>
+        <h3>Open a project and say hi</h3>
+        <p>Go into any project folder and start it:</p>
+        <p style="margin-top:6px"><code>cd my-project</code> then <code>opencode</code></p>
+        <p style="margin-top:6px">First question to ask it: <em>"What does this project do?"</em> 😉</p>
+      </li>
+      <li>
+        <h3>📸 Proof time</h3>
+        <p>Screenshot opencode answering your first question — that's your setup proof for the portfolio. Then tick the mission on the <a href="tasks.html">task board</a>!</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="card reveal">
+    <h2>🆘 If something breaks</h2>
+    <ul class="s-lines">
+      <li>"command not found" after install → close the terminal and open a new one.</li>
+      <li>Permission errors on install → ask your instructor; we fix it together in 2 minutes.</li>
+      <li>Stuck 5 minutes? Ask. That's the rule. 💜</li>
+    </ul>
+  </section>
+
+  <section class="reveal">
+    <h2 class="white center" style="margin-bottom:16px">⚡ Terminal queens</h2>
+    <div class="meme-strip" id="memes"></div>
+  </section>
+
+</div>
+
+<footer class="footer">Made with 💜 for the Level 4 builders · AliceCode 2026–27</footer>
+
+<script src="lessons-data.js"></script>
+<script src="main.js"></script>
+<script>
+  runTerminal(document.getElementById("term-demo"), [
+    { t: "$ ", instant: true, c: "dim" },
+    { t: "opencode", c: "u", after: 500 },
+    { t: "✻ opencode ready — reading tiktok-studio…", c: "dim", instant: true, pause: 400, after: 700 },
+    { t: "> What does this project do?", c: "u", after: 600 },
+    { t: "  ⏳ reading package.json, src/agents/…", c: "dim", instant: true, after: 900 },
+    { t: "  It's an AI studio with 3 agents: one finds TikTok", c: "ai", instant: true, after: 160 },
+    { t: "  trends, one writes video ideas, one makes videos.", c: "ai", instant: true, after: 800 },
+    { t: "> Find the bug in the trends agent", c: "u", after: 600 },
+    { t: "  🔍 searching src/agents/trend-finder…", c: "dim", instant: true, after: 1000 },
+    { t: "  Found it! The search tool's describe() is empty,", c: "ai", instant: true, after: 160 },
+    { t: "  so the agent never knows when to use it.", c: "ai", instant: true, after: 800 },
+    { t: "> Fix it and show me before/after", c: "u", after: 600 },
+    { t: "  ✏️  editing tools.ts — adding a clear description", c: "dim", instant: true, after: 900 },
+    { t: "  ✅ Fixed. Before: agent answered \"I can't browse\".", c: "ai", instant: true, after: 160 },
+    { t: "  After: 3 real trends from today. Screenshot it! 📸", c: "ai", instant: true, after: 400 }
+  ]);
+  renderMemes(document.getElementById("memes"), MEMES.slice(6));
+  armReveal();
+</script>
+</body>
+</html>

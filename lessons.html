@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lessons · AliceCode Level 4</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>💜</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="hero" style="padding-bottom:20px">
+    <div class="badge">Semester 1 · before the hackathon</div>
+    <h1>📚 The Lessons</h1>
+    <p class="sub">Seven lessons from zero to a full AI studio. Click one to open its presentation, missions and links.</p>
+  </header>
+
+  <div class="grid" id="lesson-grid"></div>
+
+  <section class="card reveal" id="hackathon" style="margin-top:26px; border: 3px solid var(--pink)">
+    <h2>🔥 7–9 December · The Hackathon</h2>
+    <p>Three days at Hanukkah. Day 1 together in class, days 2–3 on Zoom. You build something with the Studio's scope — your idea, your agents, your demo in front of everyone. A celebration, not a test. 🎉</p>
+    <p style="margin-top:10px"><strong class="pink">Get ready:</strong> lesson 7 ends with your team's plan — idea, MVP, who builds what.</p>
+  </section>
+
+  <section class="card reveal">
+    <h2>🧭 After the hackathon</h2>
+    <p class="muted">Week 9: reflection + your first agent evals. Then P5 (smart search with embeddings) and P6 (RAG — agents that answer with sources). And from week 9, <strong>you</strong> start teaching too: every pair gives one short lesson. More on all of this after December. 😉</p>
+  </section>
+
+</div>
+
+<footer class="footer">Made with 💜 for the Level 4 builders · AliceCode 2026–27</footer>
+
+<script src="lessons-data.js"></script>
+<script src="main.js"></script>
+<script>
+  document.getElementById("lesson-grid").innerHTML = LESSONS.map(l => `
+    <a class="lesson-card reveal" href="slides.html?n=${l.n}">
+      <span class="num">Lesson ${l.n} · ${l.date}</span>
+      <span class="emoji">${l.emoji}</span>
+      <h3>${l.title}</h3>
+      <p class="muted">${l.goal}</p>
+      <span class="cta">Open the presentation →</span>
+    </a>`).join("");
+  armReveal();
+</script>
+</body>
+</html>

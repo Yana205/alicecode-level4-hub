@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Task Board · AliceCode Level 4</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>💜</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .progress-bar { background: rgba(255,255,255,.25); border-radius: 999px; height: 18px; overflow: hidden; margin-top: 14px; }
+  .progress-bar .fill { height: 100%; background: linear-gradient(90deg, var(--pink), #FF79A8); border-radius: 999px; width: 0%; transition: width .6s cubic-bezier(.2,.9,.3,1.3); }
+  .mission-head { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .mission-head .emoji { font-size: 1.7rem; }
+  .mission-head .count { margin-left: auto; font-weight: 800; color: var(--pink); white-space: nowrap; }
+  .mission-body { display: none; margin-top: 10px; }
+  .card.open .mission-body { display: block; }
+  .mission-head .arrow { transition: transform .25s; font-weight: 800; color: var(--pink); }
+  .card.open .arrow { transform: rotate(90deg); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="hero" style="padding-bottom:16px">
+    <div class="badge">Your missions · the page remembers you ✨</div>
+    <h1>✅ Task Board</h1>
+    <p class="sub">Every lesson's missions in one place. Tick as you build — and watch your bar fill up.</p>
+    <div class="progress-bar" style="max-width:560px; margin:18px auto 0"><div class="fill" id="total-fill"></div></div>
+    <p id="total-label" style="margin-top:8px; font-weight:800"></p>
+  </header>
+
+  <div id="boards"></div>
+
+  <section class="card reveal" style="border:3px solid var(--pink)">
+    <h2>📋 Team board on Trello</h2>
+    <p>Working as a team at the hackathon (and before)? We have a shared Trello template: lists for every project block, a card for every mission.</p>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px">
+      <a class="btn" id="trello-link" href="https://trello.com/b/wPXqrlUT" target="_blank" rel="noopener">Open the class Trello board</a>
+    </div>
+    <p class="muted" style="margin-top:12px">How to use it: open the board → Menu → <strong>More → Copy board</strong> → name it after your team. Now drag cards from <em>To Do</em> → <em>Doing</em> → <em>Done 🎉</em>.</p>
+  </section>
+
+  <section class="card reveal">
+    <h2>📸 The proof habit</h2>
+    <p>One rule all year: <strong class="pink">before/after screenshots for every claim.</strong> Broken thing → screenshot. Fixed thing → screenshot. That pair is your proof, your portfolio, and your showcase material for June. Collect them like stickers.</p>
+  </section>
+
+</div>
+
+<footer class="footer">Made with 💜 for the Level 4 builders · AliceCode 2026–27</footer>
+
+<script src="lessons-data.js"></script>
+<script src="main.js"></script>
+<script>
+  const boards = document.getElementById("boards");
+  boards.innerHTML = LESSONS.map((l, idx) => `
+    <section class="card tight reveal ${idx === 0 ? "open" : ""}" id="board-${l.n}">
+      <div class="mission-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="emoji">${l.emoji}</span>
+        <div>
+          <h3 style="margin:0">Lesson ${l.n} · ${l.title}</h3>
+          <span class="muted" style="font-size:.85rem">${l.date}</span>
+        </div>
+        <span class="count" id="count-${l.n}"></span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="mission-body">
+        <ul class="check-list" id="list-${l.n}">
+          ${l.missions.map((m, i) => `
+            <li><input type="checkbox" id="l${l.n}-m${i}"><label for="l${l.n}-m${i}">${m}</label></li>`).join("")}
+        </ul>
+        <a class="btn small" href="slides.html?n=${l.n}" style="margin-top:8px">Open lesson ${l.n} →</a>
+      </div>
+    </section>`).join("");
+
+  function updateProgress() {
+    let done = 0, total = 0;
+    LESSONS.forEach(l => {
+      const boxes = [...document.querySelectorAll(`#list-${l.n} input`)];
+      const d = boxes.filter(b => b.checked).length;
+      done += d; total += boxes.length;
+      document.getElementById(`count-${l.n}`).textContent = `${d}/${boxes.length}`;
+    });
+    const pct = total ? Math.round(done / total * 100) : 0;
+    document.getElementById("total-fill").style.width = pct + "%";
+    document.getElementById("total-label").textContent =
+      pct === 100 ? "100% — QUEEN BEHAVIOR 👑🎉" : `${done} of ${total} missions done · ${pct}%`;
+  }
+  LESSONS.forEach(l => bindChecklist(document.getElementById(`list-${l.n}`), `ac4-missions-l${l.n}`));
+  updateProgress();
+  armReveal();
+</script>
+</body>
+</html>
