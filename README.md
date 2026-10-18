@@ -17,7 +17,8 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `learn-more.html` | Curated free resources: W3Schools, freeCodeCamp, Frontend Masters, MongoDB U, YouTube |
 | `calendar.html` | The whole year — Thursday lessons + fixed events, with an .ics download |
 | `admin.html` | Instructor sign-in (fine-grained GitHub PAT, stored only in the browser) to lock/unlock lessons |
-| `demos.js` | Live slide demos for Lesson 1: chat vs. agent race, TikTok Studio loop, live PokeAPI fetch, to-do "forget vs. remember" lab |
+| `demos.js` | Live slide demos for Lesson 1: chat vs. agent race, TikTok Studio loop, live PokeAPI fetch |
+| `db-demo.html` + `db-demo.jsx` | "Variables vs. Database" slides as **React + Tailwind** components (`VariablesForget`, `MongoRemembers`). Shown in the deck in a frame; open `db-demo.html` alone to see both |
 | `api/tasks.js` | Tiny Vercel function behind the "MongoDB remembers" slide (needs `MONGODB_URI`, see below) |
 | `SLIDE-UPGRADE-RULES.md` | Before/after of the Lesson 1 Button Lab upgrade + the global "juice" rules for all decks |
 | `locks.json` | Which lessons are hidden from students (`true` = locked). Edited by the admin page |
@@ -28,7 +29,7 @@ Template board: https://trello.com/b/wPXqrlUT — teams copy it (Menu → More �
 
 ## Connect the real MongoDB (Lesson 1 · "MongoDB remembers" slide)
 
-Until this is set up, the slide runs in **demo mode** (badge: 🟡 *demo · saved in this browser*). Once connected the badge turns 🟢 *live · MongoDB Atlas* and every device in class shares the same tasks.
+Until this is set up, the slide runs in **demo mode** (badge: 🟡 *demo · simulated database*). Once connected the badge turns 🟢 *live · MongoDB Atlas* and every device in class shares the same tasks.
 
 1. Create a free **M0** cluster on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register).
 2. *Database Access* → add a user + password. *Network Access* → allow `0.0.0.0/0` (Vercel has no fixed IP).

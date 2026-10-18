@@ -8,31 +8,6 @@ const demoWait = ms => new Promise(r => setTimeout(r, ms));
 const demoReduced = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 function demoOnShow(el, fn) { const s = el.closest(".slide"); if (s) s.addEventListener("slide-on", fn); }
 
-/* the classic "wah wah wahhh" for the Oh-no moment */
-function demoSadTrombone() {
-  if (typeof labSoundOn === "function" && !labSoundOn()) return;
-  try {
-    labAudio = labAudio || new (window.AudioContext || window.webkitAudioContext)();
-    const t0 = labAudio.currentTime;
-    [392, 370, 349, 330].forEach((f, i) => {
-      const o = labAudio.createOscillator(), g = labAudio.createGain();
-      o.type = "sawtooth"; o.frequency.value = f;
-      const t = t0 + i * 0.32, d = i === 3 ? 0.9 : 0.3;
-      if (i === 3) { /* wobble on the last note */
-        const lfo = labAudio.createOscillator(), lg = labAudio.createGain();
-        lfo.frequency.value = 6; lg.gain.value = 9;
-        lfo.connect(lg).connect(o.frequency); lfo.start(t); lfo.stop(t + d);
-      }
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.09, t + 0.03);
-      g.gain.setValueAtTime(0.09, t + d - 0.1);
-      g.gain.linearRampToValueAtTime(0, t + d);
-      o.connect(g).connect(labAudio.destination);
-      o.start(t); o.stop(t + d);
-    });
-  } catch (e) {}
-}
-
 const DEMOS = {};
 
 /* ============================================================
@@ -301,169 +276,15 @@ DEMOS.liveFetch = function (el) {
 };
 
 /* ============================================================
-   D · To-do lab — "Variables forget" vs "MongoDB remembers"
+   D · Variables vs. Database — React + Tailwind components
+   (db-demo.jsx) shown in a frame so Tailwind stays out of the deck.
+   The frame loads the first time its slide is shown.
    ============================================================ */
-
-/* task store: real MongoDB through /api/tasks when the server has
-   MONGODB_URI, otherwise this browser's storage (labelled honestly) */
-const TASK_STORE = {
-  mode: null,
-  local: [],
-  async init() {
-    if (this.mode) return this.mode;
-    try {
-      const r = await fetch("api/tasks", { cache: "no-store" });
-      const j = r.ok && (r.headers.get("content-type") || "").includes("json") ? await r.json() : null;
-      if (j && j.ok) return (this.mode = "live");
-    } catch (e) {}
-    try { this.local = JSON.parse(localStorage.getItem("ac4-demo-tasks") || "[]"); } catch (e) { this.local = []; }
-    return (this.mode = "local");
-  },
-  save() { try { localStorage.setItem("ac4-demo-tasks", JSON.stringify(this.local)); } catch (e) {} },
-  async list() {
-    if (this.mode === "live") { const r = await fetch("api/tasks", { cache: "no-store" }); return (await r.json()).docs || []; }
-    return this.local.slice();
-  },
-  async add(text) {
-    if (this.mode === "live") {
-      const r = await fetch("api/tasks", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
-      const j = await r.json(); if (!j.ok) throw new Error(j.error); return j.doc;
-    }
-    const hex = n => Array.from({ length: n }, () => "0123456789abcdef"[Math.random() * 16 | 0]).join("");
-    const doc = { _id: (Date.now() / 1000 | 0).toString(16) + hex(16), text, done: false, createdAt: new Date().toISOString() };
-    this.local.push(doc); this.save(); return doc;
-  },
-  async remove(id) {
-    if (this.mode === "live") { await fetch(`api/tasks?id=${encodeURIComponent(id)}`, { method: "DELETE" }); return; }
-    this.local = id === "all" ? [] : this.local.filter(d => d._id !== id); this.save();
-  }
-};
-
-function todoShell(el, side, refreshLabel) {
-  el.innerHTML = `
-    <div class="td">
-      <div class="td-app">
-        <div class="td-bar">📝 My To-Do <span class="td-mode"></span></div>
-        <div class="td-form">
-          <input class="td-input" type="text" maxlength="60" placeholder="Finish homework" aria-label="New task" autocomplete="off">
-          <button class="btn small td-add">+ Add task</button>
-        </div>
-        <ul class="td-list"></ul>
-        <button class="td-refresh">${refreshLabel}</button>
-        <div class="td-overlay"></div>
-      </div>
-      ${side}
-    </div>`;
-  return {
-    input: el.querySelector(".td-input"), list: el.querySelector(".td-list"),
-    app: el.querySelector(".td-app"), overlay: el.querySelector(".td-overlay"),
-    refresh: el.querySelector(".td-refresh"), mode: el.querySelector(".td-mode")
-  };
+function demoFrame(el, part) {
+  const src = `db-demo.html?part=${part}&embed=1`;
+  el.innerHTML = `<iframe class="demo-frame" title="Live demo" loading="lazy"></iframe>`;
+  const frame = el.querySelector("iframe");
+  demoOnShow(el, () => { if (!frame.getAttribute("src")) frame.src = src; });
 }
-const TODO_HINTS = ["Finish homework", "Feed cat", "Practice the dance", "Text grandma 💜"];
-
-DEMOS.todoForget = function (el) {
-  const ui = todoShell(el, `
-    <div class="td-side terminal">
-      <div class="term-bar"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
-        <span class="title">🧠 memory (RAM) — a plain variable</span></div>
-      <pre class="td-ram"></pre>
-    </div>`, "🔄 Refresh page");
-  ui.refresh.classList.add("danger");
-  const ram = el.querySelector(".td-ram");
-  let tasks = [];
-
-  function draw() {
-    ui.list.innerHTML = tasks.length ? tasks.map(t => `<li>${demoEsc(t)}</li>`).join("") : `<li class="td-empty">No tasks yet — add one!</li>`;
-    ram.innerHTML = `<span class="c-kw">let</span> tasks = [${tasks.length ? "\n" + tasks.map(t => `  <span class="j-str">"${demoEsc(t)}"</span>`).join(",\n") + "\n" : ""}];`;
-    ui.input.placeholder = TODO_HINTS[tasks.length % TODO_HINTS.length];
-  }
-  function add() {
-    const t = ui.input.value.trim() || ui.input.placeholder;
-    tasks.push(t.slice(0, 60)); ui.input.value = ""; draw();
-  }
-  async function refresh() {
-    ui.app.classList.add("reloading"); ui.overlay.innerHTML = `<div class="td-spin"></div>`;
-    await demoWait(700);
-    const had = tasks.length;
-    tasks = []; draw();
-    ui.app.classList.remove("reloading");
-    if (!had) { ui.overlay.innerHTML = ""; return; }
-    ram.innerHTML += `  <span class="c-com">// memory wiped 💨</span>`;
-    ui.overlay.innerHTML = `<div class="td-ohno">😱 Oh no!<small>Everything is gone.</small></div>`;
-    ui.app.classList.remove("shake"); void ui.app.offsetWidth; ui.app.classList.add("shake");
-    demoSadTrombone();
-    setTimeout(() => { ui.overlay.innerHTML = ""; }, 2200);
-  }
-  el.querySelector(".td-add").addEventListener("click", add);
-  ui.input.addEventListener("keydown", e => { if (e.key === "Enter") add(); });
-  ui.refresh.addEventListener("click", refresh);
-  draw();
-};
-
-DEMOS.todoMongo = function (el) {
-  const ui = todoShell(el, `
-    <div class="td-side atlas">
-      <div class="at-top">🍃 <b>MongoDB Atlas</b> <span>alicecode › <b>tasks</b></span></div>
-      <div class="at-tabs"><span class="on">Documents</span><span>Aggregations</span><span>Indexes</span></div>
-      <div class="at-count"></div>
-      <div class="at-docs"></div>
-    </div>`, "🔄 Refresh page");
-  ui.refresh.classList.add("calm");
-  const docsEl = el.querySelector(".at-docs"), count = el.querySelector(".at-count");
-  let docs = [];
-
-  function docHTML(d, fresh) {
-    const id = String(d._id);
-    return `<div class="at-doc${fresh ? " fresh" : ""}">
-      <div><span class="at-k">_id</span>: <span class="at-oid">ObjectId('${demoEsc(id)}')</span></div>
-      <div><span class="at-k">text</span>: <span class="j-str">"${demoEsc(d.text)}"</span></div>
-      <div><span class="at-k">done</span>: <span class="j-num">${d.done ? "true" : "false"}</span></div>
-      <div><span class="at-k">createdAt</span>: <span class="at-date">${demoEsc(String(d.createdAt).replace(/\.\d+Z$/, "Z"))}</span></div>
-    </div>`;
-  }
-  function draw(freshId) {
-    ui.list.innerHTML = docs.length ? docs.map(d => `<li>${demoEsc(d.text)}<button class="td-x" data-id="${demoEsc(String(d._id))}" aria-label="Delete">✕</button></li>`).join("")
-      : `<li class="td-empty">No tasks yet — add one!</li>`;
-    docsEl.innerHTML = docs.map(d => docHTML(d, String(d._id) === freshId)).join("") || `<div class="at-none">No documents yet.</div>`;
-    count.innerHTML = `QUERY RESULTS: <b>${docs.length ? `1-${docs.length} OF ${docs.length}` : "0"}</b> <button class="at-clear" title="Delete all documents">🧹 clear</button>`;
-    if (freshId) docsEl.scrollTop = docsEl.scrollHeight;
-    ui.input.placeholder = TODO_HINTS[docs.length % TODO_HINTS.length];
-  }
-  async function load() { docs = await TASK_STORE.list(); }
-  async function add() {
-    const t = (ui.input.value.trim() || ui.input.placeholder).slice(0, 60);
-    ui.input.value = "";
-    try { const d = await TASK_STORE.add(t); docs.push(d); draw(String(d._id)); }
-    catch (e) { ui.overlay.innerHTML = `<div class="td-ohno small">⚠️ ${demoEsc(e.message || "Could not save")}</div>`; setTimeout(() => ui.overlay.innerHTML = "", 2200); }
-  }
-  async function refresh() {
-    ui.app.classList.add("reloading"); docs = []; draw();
-    ui.overlay.innerHTML = `<div class="td-spin"></div><div class="td-loading">Loading from MongoDB…</div>`;
-    await demoWait(800);
-    await load();
-    ui.app.classList.remove("reloading");
-    ui.overlay.innerHTML = docs.length ? `<div class="td-yay">🎉 Still here!<small>The database remembered.</small></div>` : "";
-    draw();
-    if (docs.length) {
-      if (typeof labChime === "function") labChime(LAB_WIN_NOTES);
-      if (typeof labSparkle === "function") labSparkle(el, ui.list, 16);
-    }
-    setTimeout(() => { ui.overlay.innerHTML = ""; }, 1800);
-  }
-  el.addEventListener("click", async e => {
-    const x = e.target.closest(".td-x"), clear = e.target.closest(".at-clear");
-    if (x) { await TASK_STORE.remove(x.dataset.id); docs = docs.filter(d => String(d._id) !== x.dataset.id); draw(); }
-    if (clear) { await TASK_STORE.remove("all"); docs = []; draw(); }
-  });
-  el.querySelector(".td-add").addEventListener("click", add);
-  ui.input.addEventListener("keydown", e => { if (e.key === "Enter") add(); });
-  ui.refresh.addEventListener("click", refresh);
-
-  TASK_STORE.init().then(async mode => {
-    ui.mode.textContent = mode === "live" ? "🟢 live · MongoDB Atlas" : "🟡 demo · saved in this browser";
-    ui.mode.title = mode === "live" ? "Connected to the real database" : "No database connected yet — tasks are saved in this browser";
-    try { await load(); } catch (e) {}
-    draw();
-  });
-};
+DEMOS.dbBefore = el => demoFrame(el, "before");
+DEMOS.dbAfter = el => demoFrame(el, "after");

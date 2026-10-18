@@ -124,18 +124,18 @@ const LESSONS = [
         { h: "A database remembers", lines: ["Saved. Organized.", "Fast to search."], color: "green" }
       ]}
     ]},
-    { kind: "demo", demo: "todoForget", title: "Before: variables forget 😱",
+    { kind: "demo", demo: "dbBefore", title: "Before: variables forget 😱",
       sub: "Add 2 tasks. Then press the red button. Watch closely…",
       offline: [
         "A to-do list that keeps tasks in a variable: let tasks = [ ];",
         "Add \"Finish homework\" and \"Feed cat\" → refresh the page →",
         "the list is EMPTY. Variables live in memory — and memory forgets. 😱"
       ] },
-    { kind: "demo", demo: "todoMongo", title: "After: MongoDB remembers 🧠",
+    { kind: "demo", demo: "dbAfter", title: "After: MongoDB remembers 🧠",
       sub: "Same app, now with a database. Add a task — watch the document appear.",
       offline: [
-        "The same to-do list, but every task is saved in MongoDB.",
-        "Add a task → a JSON document appears in the database.",
+        "The same to-do list, plus the backend: db.collection('tasks').insertOne(...)",
+        "Add a task → it shoots to MongoDB and a JSON document appears.",
         "Refresh the page → the tasks come back. The database remembered. 🎉"
       ] },
     { kind: "content", title: "What does a good table look like?", items: [
