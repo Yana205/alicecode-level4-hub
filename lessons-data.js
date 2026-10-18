@@ -27,6 +27,8 @@ const LESSONS = [
     "Insert 3 documents, each with a unique id.",
     "Find your documents with a query.",
     "Prompt practice: ask an AI for one small change using at least 3 words from the keyword bank (flexbox, hover, id…).",
+    "Connect the Idea Tracker to MongoDB: add an idea, restart the server — it's still there.",
+    "Find YOUR document in MongoDB Atlas with a filter. 🔍",
     "📸 Screenshot your before + after for the portfolio."
   ],
   slides: [
@@ -115,6 +117,28 @@ const LESSONS = [
         "console.log(data.abilities); // Boom. Live data from the internet.",
         "📮 Postman does exactly this — just in a fancier app."
       ] },
+    { kind: "demo", demo: "toolsOfTrade", title: "Tools of the trade: Postman + JSON 🧰",
+      sub: "Pros test an API in Postman first — then write the same request in code.",
+      offline: [
+        "📮 Postman = the industry tool for testing APIs before you write code.",
+        "GET https://pokeapi.co/api/v2/pokemon/pikachu → Send → the JSON answer.",
+        "Same request in code: const res = await fetch(url); const data = await res.json();",
+        "JSON = JavaScript Object Notation: the universal box APIs pack data in.",
+        "Messy one-line JSON → auto-format → neat keys and values (like a recipe card)."
+      ] },
+    { kind: "content", title: "The Builder's Toolkit (Resources) 🚀",
+      lead: "From class to real developer tools.", items: [
+      { links: [
+        { h: "🎓 Frontend Masters", url: "https://frontendmasters.com",
+          text: "Pro web-dev courses — learn from the engineers who built Netflix and Spotify." },
+        { h: "🔥 freeCodeCamp", url: "https://www.freecodecamp.org", color: "orange",
+          text: "The ultimate free, interactive coding curriculum on the internet." },
+        { h: "📖 W3Schools", url: "https://www.w3schools.com", color: "green",
+          text: "The dictionary for HTML, CSS and JavaScript. Keep it open while you code." },
+        { h: "📱 Instagram + TikTok creators", url: "https://www.instagram.com/explore/tags/learntocode/", color: "purple",
+          text: "Fill your feed with code: follow tech educators (#learntocode) so you learn while scrolling." }
+      ]}
+    ]},
     { kind: "section", title: "How does an app remember you? 🤔",
       sub: "Close Instagram. Open it again. Your likes are still there. HOW?" },
     { kind: "content", title: "Why a database? 💾", items: [
@@ -153,6 +177,23 @@ const LESSONS = [
     { kind: "newword", term: "MongoDB",
       meaning: "A database that stores documents — they look just like JSON.",
       extra: "collection = a folder of documents · document = one row" },
+    { kind: "demo", demo: "dbExercise", title: "Connect the wires: a live database 🔌",
+      sub: "Your app forgets on restart. 3 steps and MongoDB remembers.",
+      offline: [
+        "1 · Clone: npx degit Yana205/alicecode-level4-hub/starter/idea-tracker idea-tracker → cd idea-tracker → npm install",
+        "2 · Add code: .env → MONGODB_URI=… (from your teacher)",
+        "   server.js → await db.collection(\"ideas\").insertOne(idea);",
+        "   server.js → const all = await db.collection(\"ideas\").find().sort({ createdAt: -1 }).toArray();",
+        "3 · Test: npm start → add an idea → Ctrl+C → npm start → refresh. Still there? 🎉"
+      ] },
+    { kind: "demo", demo: "vaultFind", title: "Find it in the vault 🔍",
+      sub: "Your idea is in MongoDB now. Go find YOUR document.",
+      offline: [
+        "1 · Log in at cloud.mongodb.com (your teacher invited you)",
+        "2 · Browse Collections → alicecode › ideas",
+        "3 · Filter: { \"name\": \"YourName\" } → Apply",
+        "4 · 📸 Screenshot your document — proof it's in the vault!"
+      ] },
     { kind: "content", title: "Part 1 · Task ✅",
       lead: "Clean and small. Everyone finishes this one.", items: [
       { lines: [
@@ -224,19 +265,6 @@ const LESSONS = [
         ["collection", "a folder of documents in MongoDB"],
         ["document", "one row of data — looks like JSON"],
         ["unique id", "a number/name no other row has"]
-      ]}
-    ]},
-    { kind: "content", title: "Keep Building (Resources) 🚀",
-      lead: "From class to real developer tools.", items: [
-      { links: [
-        { h: "🎓 Frontend Masters", url: "https://frontendmasters.com",
-          text: "For when you want to learn from the engineers who built Netflix and Spotify." },
-        { h: "🔥 freeCodeCamp", url: "https://www.freecodecamp.org", color: "orange",
-          text: "The best free, interactive coding paths on the internet." },
-        { h: "📖 W3Schools", url: "https://www.w3schools.com", color: "green",
-          text: "Your ultimate dictionary for HTML, CSS, and JavaScript. Keep it open while you code." },
-        { h: "📱 Instagram creators", url: "https://www.instagram.com/explore/tags/learntocode/", color: "purple",
-          text: "Fill your feed with code. Follow tech educators so you learn while scrolling." }
       ]}
     ]}
   ]

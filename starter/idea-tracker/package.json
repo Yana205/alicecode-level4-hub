@@ -1,0 +1,16 @@
+{
+  "name": "idea-tracker",
+  "private": true,
+  "description": "AliceCode Level 4 · Lesson 1 exercise — connect a TikTok Idea Tracker to MongoDB",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^5.1.0",
+    "mongodb": "^6.10.0"
+  }
+}

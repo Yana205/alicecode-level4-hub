@@ -70,3 +70,18 @@ Lesson 2 (Flower Shop Lab) doesn't have these fields yet, so it still looks the 
 ### How to add a demo slide
 In `lessons-data.js`: `{ kind: "demo", demo: "<name>", title, sub, offline: [ ...lines for PowerPoint ] }`.
 In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the slide sends a `slide-on` event each time it's shown, so you can replay it. Clicks inside a demo never change slides.
+
+---
+
+## Part 4 · API tools + the live database exercise
+
+| Slide | What it adds |
+|---|---|
+| **14 · Tools of the trade: Postman + JSON 🧰** (new) | Left: a Postman-style window (GET + URL + **Send** = a real call) with the same request written as `fetch` code underneath; the URL in the code updates as you edit. Right: "JSON = JavaScript Object Notation". A messy one-line recipe JSON → **✨ Auto-format** → neat colored JSON + a recipe card built from it. |
+| **15 · The Builder's Toolkit (Resources)** (moved from the last slide) | Frontend Masters, freeCodeCamp, W3Schools, Instagram + TikTok creators. |
+| **22 · Connect the wires: a live database 🔌** (new) | Tabs **Clone → Add code → Test** with copy buttons (degit command, `.env`, the `insertOne` / `find` lines), plus a looping "expected result" animation: terminal + browser, add → Ctrl+C → restart → refresh → "Still there!". The app is `starter/idea-tracker/`. |
+| **23 · Find it in the vault 🔍** (new) | Atlas steps + a working mock filter bar: type `{ "name": "Maya" }` → Apply → your document lights up. Teaches case-sensitivity and valid JSON. Shows the real `ideas` collection when the hub has `MONGODB_URI`. |
+
+14. **Concept → tool → practice.** After a live demo (fetch), show the pro tool that does the same thing (Postman), then give a hands-on exercise with real code.
+15. **A video can be a script.** Show the "expected result" as a short looping animation on the slide, so it never goes out of date.
+16. **Exercises ship with a starter.** Every hands-on slide links a tiny project in `starter/` with 🎯 STEP comments in the code, so students change only the lines that teach the idea.

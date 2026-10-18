@@ -6,6 +6,15 @@
 const demoEsc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const demoWait = ms => new Promise(r => setTimeout(r, ms));
 const demoReduced = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* pretty, colored JSON (hotKey gets a glow, to link it to the code) */
+function demoJSON(v, hotKey, ind = "") {
+  const pad = ind + "  ";
+  if (Array.isArray(v)) return v.length ? `[\n${v.map(x => pad + demoJSON(x, hotKey, pad)).join(",\n")}\n${ind}]` : "[]";
+  if (v && typeof v === "object") return `{\n${Object.entries(v).map(([k, x]) =>
+    `${pad}<span class="j-key${k === hotKey ? " j-hot" : ""}">"${demoEsc(k)}"</span>: ${demoJSON(x, hotKey, pad)}`).join(",\n")}\n${ind}}`;
+  if (typeof v === "string") return `<span class="j-str">"${demoEsc(v)}"</span>`;
+  return `<span class="j-num">${v}</span>`;
+}
 function demoOnShow(el, fn) { const s = el.closest(".slide"); if (s) s.addEventListener("slide-on", fn); }
 
 const DEMOS = {};
@@ -219,15 +228,6 @@ DEMOS.liveFetch = function (el) {
   const clean = () => input.value.trim().toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "") || "pikachu";
   let run = 0;
 
-  function jsonHTML(v, ind = "") {
-    const pad = ind + "  ";
-    if (Array.isArray(v)) return v.length ? `[\n${v.map(x => pad + jsonHTML(x, pad)).join(",\n")}\n${ind}]` : "[]";
-    if (v && typeof v === "object") return `{\n${Object.entries(v).map(([k, x]) =>
-      `${pad}<span class="j-key${k === "abilities" ? " j-hot" : ""}">"${demoEsc(k)}"</span>: ${jsonHTML(x, pad)}`).join(",\n")}\n${ind}}`;
-    if (typeof v === "string") return `<span class="j-str">"${demoEsc(v)}"</span>`;
-    return `<span class="j-num">${v}</span>`;
-  }
-
   async function go() {
     const name = clean(), me = ++run;
     nameEl.textContent = name;
@@ -258,7 +258,7 @@ DEMOS.liveFetch = function (el) {
           <div><b class="lf-pname">${demoEsc(d.name)}</b> <span class="lf-id">#${d.id}</span><br>
           ${slim.types.map(t => `<span class="lf-type">${demoEsc(t)}</span>`).join("")}<br>
           <span class="lf-ab">abilities: ${slim.abilities.map(a => demoEsc(a.ability.name)).join(" · ")}</span></div></div>
-        <pre class="lf-json">${jsonHTML(slim)}</pre>
+        <pre class="lf-json">${demoJSON(slim, "abilities")}</pre>
         <div class="lf-more">The real answer is ${Math.round(raw.length / 1024)} KB of JSON — we show the important part.</div>`;
       log.classList.add("lit");
       if (typeof labChime === "function") labChime([880, 1175]);
@@ -288,3 +288,248 @@ function demoFrame(el, part) {
 }
 DEMOS.dbBefore = el => demoFrame(el, "before");
 DEMOS.dbAfter = el => demoFrame(el, "after");
+
+/* ============================================================
+   C+ · Tools of the trade — Postman next to fetch, and JSON auto-format
+   ============================================================ */
+DEMOS.toolsOfTrade = function (el) {
+  const RECIPE = {
+    recipe: "Pink pancakes", emoji: "🥞", minutes: 15, serves: 2, vegan: false,
+    ingredients: ["1 cup flour", "1 egg", "1 cup milk", "2 tbsp beet juice 💗"],
+    steps: ["Mix everything", "Cook 2 min each side", "Add sprinkles ✨"]
+  };
+  el.innerHTML = `
+    <div class="tt">
+      <div class="tt-pm">
+        <div class="pm-top"><b>📮 Postman</b><span class="pm-tab">GET · pikachu</span></div>
+        <div class="pm-req">
+          <span class="pm-method">GET</span>
+          <input class="pm-url" value="https://pokeapi.co/api/v2/pokemon/pikachu" spellcheck="false" aria-label="Request URL">
+          <button class="pm-send">Send</button>
+        </div>
+        <div class="pm-res">
+          <div class="pm-status">Body · press <b>Send</b> to call the API</div>
+          <pre class="pm-body"></pre>
+        </div>
+        <div class="pm-same">↕ the same request, in code</div>
+        <pre class="pm-code"><span class="c-kw">const</span> res = <span class="c-kw">await</span> <span class="c-fn">fetch</span>(<span class="c-str">'<span class="pm-u"></span>'</span>);
+<span class="c-kw">const</span> data = <span class="c-kw">await</span> res.<span class="c-fn">json</span>();</pre>
+      </div>
+      <div class="tt-json">
+        <div class="tj-head"><b>JSON</b> = <b>J</b>ava<b>S</b>cript <b>O</b>bject <b>N</b>otation — the universal box APIs pack data in.</div>
+        <div class="tj-stage">
+          <pre class="tj-raw">${demoEsc(JSON.stringify(RECIPE))}</pre>
+          <pre class="tj-pretty">${demoJSON(RECIPE)}</pre>
+          <div class="tj-card">
+            <div class="tj-emoji">${RECIPE.emoji}</div>
+            <h4>${RECIPE.recipe}</h4>
+            <div class="tj-chips"><span>⏱ ${RECIPE.minutes} min</span><span>🍽 serves ${RECIPE.serves}</span></div>
+            <b>Ingredients</b><ul>${RECIPE.ingredients.map(i => `<li>${demoEsc(i)}</li>`).join("")}</ul>
+            <b>Steps</b><ol>${RECIPE.steps.map(s => `<li>${demoEsc(s)}</li>`).join("")}</ol>
+          </div>
+        </div>
+        <button class="btn small tj-btn">✨ Auto-format</button>
+      </div>
+    </div>`;
+
+  const url = el.querySelector(".pm-url"), u = el.querySelector(".pm-u");
+  const status = el.querySelector(".pm-status"), body = el.querySelector(".pm-body");
+  const stage = el.querySelector(".tj-stage"), fmt = el.querySelector(".tj-btn");
+  let run = 0;
+
+  const syncUrl = () => { u.textContent = url.value.trim(); };
+  async function send() {
+    const me = ++run, t0 = performance.now();
+    status.innerHTML = "⏳ Sending…"; body.innerHTML = "";
+    try {
+      const r = await fetch(url.value.trim());
+      const raw = await r.text(), ms = Math.round(performance.now() - t0);
+      if (me !== run) return;
+      status.innerHTML = `Status: <b class="${r.ok ? "ok" : "bad"}">${r.status} ${r.ok ? "OK" : "Error"}</b> · Time: <b>${ms} ms</b> · Size: <b>${Math.max(1, Math.round(raw.length / 1024))} KB</b>`;
+      let data; try { data = JSON.parse(raw); } catch (e) { body.textContent = raw.slice(0, 2000); return; }
+      /* Postman shows it all; we keep the first part so the slide stays fast */
+      const keep = Array.isArray(data) ? data.slice(0, 5) : Object.fromEntries(Object.entries(data).filter(([, v]) => !Array.isArray(v) || v.length < 6).slice(0, 10));
+      body.innerHTML = demoJSON(keep);
+    } catch (e) {
+      if (me !== run) return;
+      status.innerHTML = `<b class="bad">Could not get any response</b> · check the URL and your internet`;
+    }
+  }
+  url.addEventListener("input", syncUrl);
+  url.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+  el.querySelector(".pm-send").addEventListener("click", send);
+  fmt.addEventListener("click", () => {
+    const on = stage.classList.toggle("formatted");
+    fmt.textContent = on ? "↺ Show raw" : "✨ Auto-format";
+    if (on) {
+      if (typeof labChime === "function") labChime([880, 1175]);
+      if (typeof labSparkle === "function") labSparkle(el, el.querySelector(".tj-card"), 12);
+    }
+  });
+  demoOnShow(el, () => { stage.classList.remove("formatted"); fmt.textContent = "✨ Auto-format"; });
+  syncUrl();
+};
+
+/* ============================================================
+   D+ · The live database exercise — 3 steps + an animated "expected result"
+   ============================================================ */
+DEMOS.dbExercise = function (el) {
+  const REPO = "Yana205/alicecode-level4-hub";
+  const code = (lines, label) => `<div class="ex-code"><button class="ex-copy" title="Copy">📋 copy</button>${label ? `<span class="ex-file">${label}</span>` : ""}<pre>${lines}</pre></div>`;
+  const STEPS = [
+    { h: "📥 1 · Clone", body: `
+        <p>Get the starter app — a <b>TikTok Idea Tracker</b>:</p>
+        ${code(`npx degit ${REPO}/starter/idea-tracker idea-tracker
+cd idea-tracker
+npm install`)}
+        <p class="ex-small">No Node.js? <a href="https://codespaces.new/${REPO}" target="_blank" rel="noopener">Open in GitHub Codespaces ↗</a> → <code>cd starter/idea-tracker</code></p>` },
+    { h: "🔌 2 · Add code", body: `
+        <p>Make a <code>.env</code> file with the class string (your teacher has it):</p>
+        ${code(`MONGODB_URI=mongodb+srv://…`, ".env")}
+        <p>In <code>server.js</code>, swap the 🎯 lines for:</p>
+        ${code(`await db.collection("ideas").insertOne(idea);`, "STEP 2a")}
+        ${code(`const all = await db.collection("ideas")
+  .find().sort({ createdAt: -1 }).toArray();`, "STEP 2b")}` },
+    { h: "✅ 3 · Test", body: `
+        ${code(`npm start`)}
+        <ol class="ex-list">
+          <li>Open <b>localhost:3000</b> → add an idea</li>
+          <li>Stop the server: <kbd>Ctrl</kbd> + <kbd>C</kbd></li>
+          <li><code>npm start</code> again → refresh the page</li>
+          <li>Still there? 🎉 <b>The database remembered.</b></li>
+        </ol>` }
+  ];
+  el.innerHTML = `
+    <div class="ex">
+      <div class="ex-left">
+        <div class="ex-tabs">${STEPS.map((s, i) => `<button class="ex-tab${i ? "" : " on"}" data-i="${i}">${s.h}</button>`).join("")}</div>
+        ${STEPS.map((s, i) => `<div class="ex-panel${i ? "" : " on"}" data-i="${i}">${s.body}</div>`).join("")}
+      </div>
+      <div class="ex-right">
+        <div class="ex-vid-head">🎬 Expected result <button class="ex-replay">↺ replay</button></div>
+        <div class="terminal ex-term"><div class="term-bar"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span><span class="title">terminal</span></div><pre class="ex-term-body"></pre></div>
+        <div class="ex-browser">
+          <div class="ex-url">🔒 localhost:3000 <span class="ex-reload">⟳</span></div>
+          <div class="ex-page">
+            <b class="ex-title">📱 TikTok Idea Tracker</b>
+            <div class="ex-form"><span class="ex-typing"></span><span class="ex-add">+ Add idea</span></div>
+            <ul class="ex-ideas"></ul>
+            <div class="ex-badge"></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  el.querySelectorAll(".ex-tab").forEach(t => t.addEventListener("click", () => {
+    el.querySelectorAll(".ex-tab, .ex-panel").forEach(x => x.classList.toggle("on", x.dataset.i === t.dataset.i));
+  }));
+  el.querySelectorAll(".ex-copy").forEach(b => b.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(b.parentElement.querySelector("pre").textContent); b.textContent = "✅ copied"; }
+    catch (e) { b.textContent = "select + copy"; }
+    setTimeout(() => { b.textContent = "📋 copy"; }, 1500);
+  }));
+
+  /* the "video": a scripted loop of terminal + browser */
+  const term = el.querySelector(".ex-term-body"), typing = el.querySelector(".ex-typing");
+  const ideas = el.querySelector(".ex-ideas"), badge = el.querySelector(".ex-badge"), page = el.querySelector(".ex-page");
+  const slide = el.closest(".slide");
+  let run = 0;
+  const line = (t, cls = "") => { term.innerHTML += `<span class="${cls}">${demoEsc(t)}</span>\n`; term.scrollTop = term.scrollHeight; };
+  async function type(text, me) { for (let i = 1; i <= text.length; i++) { if (me !== run) return; typing.textContent = text.slice(0, i); await demoWait(45); } }
+  async function play() {
+    const me = ++run, ok = () => me === run && (!slide || slide.classList.contains("on"));
+    term.innerHTML = ""; ideas.innerHTML = ""; typing.textContent = ""; badge.textContent = "";
+    line("$ npm start", "t-dim"); await demoWait(500); if (!ok()) return;
+    line("🍃 Connected to MongoDB", "t-ok"); line("🚀 Idea Tracker running on http://localhost:3000", "t-ok"); await demoWait(700); if (!ok()) return;
+    await type("POV: your mom's 2003 closet is back", me); await demoWait(300); if (!ok()) return;
+    ideas.innerHTML = `<li><b>Maya</b> POV: your mom's 2003 closet is back</li>`; typing.textContent = ""; await demoWait(1100); if (!ok()) return;
+    line("^C", "t-run"); line("(server stopped)", "t-dim"); await demoWait(800); if (!ok()) return;
+    line("$ npm start", "t-dim"); await demoWait(500); line("🍃 Connected to MongoDB", "t-ok"); line("🚀 Idea Tracker running on http://localhost:3000", "t-ok"); await demoWait(600); if (!ok()) return;
+    page.classList.add("reloading"); ideas.innerHTML = ""; await demoWait(700); if (!ok()) return;
+    page.classList.remove("reloading");
+    ideas.innerHTML = `<li><b>Maya</b> POV: your mom's 2003 closet is back</li>`;
+    badge.textContent = "✅ Still there! The database remembered.";
+    await demoWait(3200);
+    if (ok()) play(); // loop like a GIF while the slide is open
+  }
+  el.querySelector(".ex-replay").addEventListener("click", play);
+  demoOnShow(el, play);
+};
+
+/* ============================================================
+   D++ · Verifying in the vault — find YOUR document with a filter
+   ============================================================ */
+DEMOS.vaultFind = function (el) {
+  const now = Date.now();
+  const SAMPLE = [
+    ["Noa", "Day in my life as a coder 💻"], ["Lia", "3 study tips that actually work"], ["Maya", "POV: your mom's 2003 closet is back"],
+    ["Tamar", "Cat reacts to my dance 🐱"], ["Shira", "Pasta hack in 30 seconds"], ["Yael", "Rating every y2k trend"]
+  ].map(([name, idea], i) => ({ _id: (Math.floor(now / 1000) - i * 97).toString(16) + "a1c0de" + String(i).padStart(10, "0"), name, idea, createdAt: new Date(now - i * 97000).toISOString() }));
+
+  el.innerHTML = `
+    <div class="vf">
+      <ol class="vf-steps">
+        <li>Log in at <a href="https://cloud.mongodb.com" target="_blank" rel="noopener">cloud.mongodb.com ↗</a> <small>(your teacher invited you)</small></li>
+        <li>Click <b>Browse Collections</b></li>
+        <li>Open <b>alicecode › ideas</b></li>
+        <li>Filter: <code>{ "name": "YourName" }</code> → <b>Apply</b></li>
+        <li>📸 Screenshot <b>your</b> document — proof it's in the vault!</li>
+      </ol>
+      <div class="vf-atlas">
+        <div class="vf-top">🍃 <b>MongoDB Atlas</b> <span>alicecode › <b>ideas</b></span> <i class="vf-mode"></i></div>
+        <div class="vf-bar">
+          <span class="vf-label">Filter</span>
+          <input class="vf-input" placeholder="{ field: 'value' }" spellcheck="false" aria-label="Filter">
+          <button class="vf-apply">Apply</button><button class="vf-reset">Reset</button>
+        </div>
+        <div class="vf-msg"></div>
+        <div class="vf-docs"></div>
+      </div>
+    </div>`;
+
+  const input = el.querySelector(".vf-input"), docsEl = el.querySelector(".vf-docs"), msg = el.querySelector(".vf-msg");
+  let docs = SAMPLE;
+
+  /* Atlas accepts relaxed JSON like { name: 'Noa' } — so do we */
+  function parse(text) {
+    const t = text.trim(); if (!t) return {};
+    try { return JSON.parse(t); } catch (e) {}
+    return JSON.parse(t.replace(/'/g, '"').replace(/([{,]\s*)([A-Za-z_$][\w$]*)\s*:/g, '$1"$2":'));
+  }
+  function draw(list, hit) {
+    msg.innerHTML = `QUERY RESULTS: <b>${list.length ? `1-${list.length} OF ${list.length}` : "0"}</b>`;
+    docsEl.innerHTML = list.map(d => `
+      <div class="vf-doc${hit ? " hit" : ""}">
+        <div><span class="at-k">_id</span>: <span class="at-oid">ObjectId('${demoEsc(String(d._id))}')</span></div>
+        <div><span class="at-k">name</span>: <span class="at-s">"${demoEsc(d.name)}"</span></div>
+        <div><span class="at-k">idea</span>: <span class="at-s">"${demoEsc(d.idea)}"</span></div>
+        <div><span class="at-k">createdAt</span>: <span class="at-d">${demoEsc(String(d.createdAt).replace(/\.\d+Z$/, "Z"))}</span></div>
+      </div>`).join("") || `<div class="vf-none">No documents match this filter.</div>`;
+  }
+  function apply() {
+    let q;
+    try { q = parse(input.value); } catch (e) { msg.innerHTML = `<b class="bad">🤔 That filter isn't valid — check the { } and the quotes.</b>`; docsEl.innerHTML = ""; return; }
+    const match = (d, ci) => Object.entries(q).every(([k, v]) => ci ? String(d[k]).toLowerCase() === String(v).toLowerCase() : d[k] === v);
+    const list = docs.filter(d => match(d, false));
+    draw(list, Object.keys(q).length > 0 && list.length > 0);
+    if (!list.length && docs.some(d => match(d, true))) msg.innerHTML += ` · <b class="bad">MongoDB is case-sensitive — check capital letters!</b>`;
+    if (Object.keys(q).length && list.length) {
+      if (typeof labChime === "function") labChime([880, 1175, 1568]);
+      if (typeof labSparkle === "function") labSparkle(el, docsEl, 12);
+    }
+  }
+  el.querySelector(".vf-apply").addEventListener("click", apply);
+  input.addEventListener("keydown", e => { if (e.key === "Enter") apply(); });
+  el.querySelector(".vf-reset").addEventListener("click", () => { input.value = ""; draw(docs); });
+
+  /* the real class collection when the hub has MONGODB_URI, otherwise sample documents */
+  fetch("api/ideas", { cache: "no-store" })
+    .then(r => r.ok && (r.headers.get("content-type") || "").includes("json") ? r.json() : null)
+    .catch(() => null)
+    .then(j => {
+      const live = !!(j && j.ok);
+      if (live) docs = j.docs;
+      el.querySelector(".vf-mode").textContent = live ? "🟢 live" : "🟡 sample data";
+      draw(docs);
+    });
+};

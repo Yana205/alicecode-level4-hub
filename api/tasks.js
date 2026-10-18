@@ -3,15 +3,14 @@
    DELETE ?id=<id>|all removes. Needs MONGODB_URI in the Vercel project
    settings; without it the slide falls back to the browser's storage. */
 
-const { MongoClient, ObjectId } = require("mongodb");
+const { ObjectId } = require("mongodb");
+const { database } = require("./_db");
 
 const MAX_DOCS = 50;
-let clientPromise = null;
 
 function tasks() {
-  if (!process.env.MONGODB_URI) return null;
-  clientPromise = clientPromise || new MongoClient(process.env.MONGODB_URI).connect();
-  return clientPromise.then(c => c.db(process.env.MONGODB_DB || "alicecode").collection("tasks"));
+  const db$ = database();
+  return db$ && db$.then(db => db.collection("tasks"));
 }
 
 module.exports = async (req, res) => {
@@ -50,7 +49,6 @@ module.exports = async (req, res) => {
     res.setHeader("Allow", "GET, POST, DELETE");
     return res.status(405).json({ ok: false, error: "method not allowed" });
   } catch (e) {
-    clientPromise = null; // reconnect on the next request
     return res.status(500).json({ ok: false, error: "database error" });
   }
 };

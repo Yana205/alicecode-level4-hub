@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok Idea Tracker</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>💡</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app">
+  <h1>📱 TikTok Idea Tracker</h1>
+  <p class="sub">Save your video ideas. Then restart the server — are they still here?</p>
+
+  <form id="form" class="card">
+    <input id="name" placeholder="Your name" maxlength="30" autocomplete="off" required>
+    <input id="idea" placeholder="Your idea, e.g. POV: your mom's 2003 closet is back" maxlength="120" autocomplete="off" required>
+    <button>+ Add idea</button>
+  </form>
+  <p id="error" class="error" hidden></p>
+
+  <ul id="list"></ul>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
