@@ -13,22 +13,20 @@ const LESSONS = [
 {
   n: 1, emoji: "🚀", title: "Back to Building",
   date: "22 Oct 2026", project: "P1 · Refresh: APIs + Databases",
-  goal: "Warm up APIs, understand why apps need databases, and build your own Mongo collection.",
-  leaves: "Mongo exercises done + a new collection YOU created.",
+  goal: "Warm up APIs, understand why apps need databases, and connect a real app to MongoDB.",
+  leaves: "Mongo exercises done + an app that remembers, with YOUR document in the database.",
   tutorial: [
     { label: "MongoDB basics — short and friendly", url: "https://www.mongodb.com/basics" },
     { label: "JSON intro on W3Schools", url: "https://www.w3schools.com/js/js_json_intro.asp" },
     { label: "Play with a real API: PokeAPI", url: "https://pokeapi.co" }
   ],
   missions: [
+    "Prompt practice: ask an AI for one small change using at least 3 words from the keyword bank (flexbox, hover, id…).",
     "Open the ready-made Mongo database and finish the 4 small exercises (read, filter, count).",
     "Find: which video has the most likes?",
-    "Create a NEW collection about a topic you love.",
-    "Insert 3 documents, each with a unique id.",
-    "Find your documents with a query.",
-    "Prompt practice: ask an AI for one small change using at least 3 words from the keyword bank (flexbox, hover, id…).",
     "Connect the Idea Tracker to MongoDB: add an idea, restart the server — it's still there.",
     "Find YOUR document in MongoDB Atlas with a filter. 🔍",
+    "⭐ Bonus: create your own collection, insert 3 documents with unique ids, find them with a query.",
     "📸 Screenshot your before + after for the portfolio."
   ],
   slides: [
@@ -50,26 +48,6 @@ const LESSONS = [
         "🤖 Agent builder: your script wakes up at 8 AM, finds trends with an API,",
         "writes the script, makes the image and emails it to you — before your coffee is done. ☕"
       ] },
-    { kind: "content", title: "Your secret superpower 🦸‍♀️",
-      lead: "You already speak code. Most people asking AI for help — don't.", items: [
-      { cards: [
-        { h: "🧱 HTML", lines: ["tag · element · div", "button · input · form", "class · id · attribute"] },
-        { h: "🎨 CSS", lines: ["selector · flexbox · grid", "margin · padding · hover", "border-radius · transition · media query"], color: "orange" },
-        { h: "⚡ JS + DOM", lines: ["function · array · event", "querySelector · addEventListener", "innerHTML · classList · createElement"], color: "green" }
-      ]},
-      { note: "These words are PROMPT POWER. With them you ask an AI for EXACTLY what you want." }
-    ]},
-    { kind: "content", title: "Same wish, two prompts 🪄", items: [
-      { lines: [
-        "\"Make my button nicer\" 😐 → the AI guesses.",
-        "\"Round it with border-radius, add a hover transition,",
-        "center it with flexbox\" 😎 → the AI obeys.",
-        "Same AI. Your words made the difference."
-      ]},
-      { note: "Don't believe it? Next slide — we try it LIVE. 🧪" }
-    ]},
-    { kind: "lab", title: "🧪 The Button Lab",
-      sub: "Same wish, two prompts — live. Then YOU take the keyboard." },
     { kind: "demo", demo: "studioLoop", title: "The big build: TikTok Studio 📱",
       sub: "One shared project. We build it together, all year. Click to run it!",
       offline: [
@@ -87,12 +65,32 @@ const LESSONS = [
       ]},
       { note: "7–9 December: HACKATHON! You build something like this. 🔥" }
     ]},
+    { kind: "content", title: "Your secret superpower 🦸‍♀️",
+      lead: "You already speak code. Most people asking AI for help — don't.", items: [
+      { cards: [
+        { h: "🧱 HTML", lines: ["tag · element · div", "button · input · form", "class · id · attribute"] },
+        { h: "🎨 CSS", lines: ["selector · flexbox · grid", "margin · padding · hover", "border-radius · transition · media query"], color: "orange" },
+        { h: "⚡ JS + DOM", lines: ["function · array · event", "querySelector · addEventListener", "innerHTML · classList · createElement"], color: "green" }
+      ]},
+      { note: "These words are PROMPT POWER. With them you ask an AI for EXACTLY what you want." }
+    ]},
+    { kind: "content", title: "Same wish, two prompts 🪄",
+      lead: "Same AI. Two prompts. Which one makes the better button?", items: [
+      { lines: [
+        "Prompt A: \"Make my button nicer\" 😐",
+        "Prompt B: \"gradient background + pill border-radius + hover transition + soft box-shadow + flexbox center\" 😎",
+        "Vote now: A or B? 🙋‍♀️"
+      ]},
+      { note: "Next slide — we test both LIVE. 🧪" }
+    ]},
+    { kind: "lab", title: "🧪 The Button Lab",
+      sub: "Same wish, two prompts — live. Then YOU take the keyboard." },
     { kind: "content", title: "Steps today", items: [
       { lines: [
         "20 min · game",
         "Part 1 · APIs refresh + why databases exist",
         "Break ☕",
-        "Part 2 · you create your own database",
+        "Part 2 · connect a real app to MongoDB 🔌",
         "Last 15 min · \"Explain to me\" 🗣️"
       ]}
     ]},
@@ -115,7 +113,7 @@ const LESSONS = [
         "const response = await fetch('https://pokeapi.co/api/v2/pokemon/pikachu');",
         "const data = await response.json();",
         "console.log(data.abilities); // Boom. Live data from the internet.",
-        "📮 Postman does exactly this — just in a fancier app."
+        "📮 Next: Postman — the pro tool that does this without code."
       ] },
     { kind: "demo", demo: "toolsOfTrade", title: "Tools of the trade: Postman + JSON 🧰",
       sub: "Pros test an API in Postman first — then write the same request in code.",
@@ -126,28 +124,8 @@ const LESSONS = [
         "JSON = JavaScript Object Notation: the universal box APIs pack data in.",
         "Messy one-line JSON → auto-format → neat keys and values (like a recipe card)."
       ] },
-    { kind: "content", title: "The Builder's Toolkit (Resources) 🚀",
-      lead: "From class to real developer tools.", items: [
-      { links: [
-        { h: "🎓 Frontend Masters", url: "https://frontendmasters.com",
-          text: "Pro web-dev courses — learn from the engineers who built Netflix and Spotify." },
-        { h: "🔥 freeCodeCamp", url: "https://www.freecodecamp.org", color: "orange",
-          text: "The ultimate free, interactive coding curriculum on the internet." },
-        { h: "📖 W3Schools", url: "https://www.w3schools.com", color: "green",
-          text: "The dictionary for HTML, CSS and JavaScript. Keep it open while you code." },
-        { h: "📱 Instagram + TikTok creators", url: "https://www.instagram.com/explore/tags/learntocode/", color: "purple",
-          text: "Fill your feed with code: follow tech educators (#learntocode) so you learn while scrolling." }
-      ]}
-    ]},
     { kind: "section", title: "How does an app remember you? 🤔",
       sub: "Close Instagram. Open it again. Your likes are still there. HOW?" },
-    { kind: "content", title: "Why a database? 💾", items: [
-      { cards: [
-        { h: "Variables forget", lines: ["Close the app →", "memory is gone."], color: "red" },
-        { h: "Files get messy", lines: ["1000 videos in one file?", "Good luck searching. 😅"], color: "orange" },
-        { h: "A database remembers", lines: ["Saved. Organized.", "Fast to search."], color: "green" }
-      ]}
-    ]},
     { kind: "demo", demo: "dbBefore", title: "Before: variables forget 😱",
       sub: "Add 2 tasks. Then press the red button. Watch closely…",
       offline: [
@@ -155,6 +133,9 @@ const LESSONS = [
         "Add \"Finish homework\" and \"Feed cat\" → refresh the page →",
         "the list is EMPTY. Variables live in memory — and memory forgets. 😱"
       ] },
+    { kind: "newword", term: "MongoDB",
+      meaning: "A database that stores documents — they look just like JSON.",
+      extra: "collection = a folder of documents · document = one row" },
     { kind: "demo", demo: "dbAfter", title: "After: MongoDB remembers 🧠",
       sub: "Same app, now with a database. Add a task — watch the document appear.",
       offline: [
@@ -162,6 +143,13 @@ const LESSONS = [
         "Add a task → it shoots to MongoDB and a JSON document appears.",
         "Refresh the page → the tasks come back. The database remembered. 🎉"
       ] },
+    { kind: "content", title: "Why a database? 💾", items: [
+      { cards: [
+        { h: "Variables forget", lines: ["Close the app →", "memory is gone."], color: "red" },
+        { h: "Files get messy", lines: ["1000 videos in one file?", "Good luck searching. 😅"], color: "orange" },
+        { h: "A database remembers", lines: ["Saved. Organized.", "Fast to search."], color: "green" }
+      ]}
+    ]},
     { kind: "content", title: "What does a good table look like?", items: [
       { code: [
         '{ "id": 1, "title": "cat dance", "likes": 5021 }',
@@ -174,26 +162,6 @@ const LESSONS = [
         "All rows share the same fields"
       ]}
     ]},
-    { kind: "newword", term: "MongoDB",
-      meaning: "A database that stores documents — they look just like JSON.",
-      extra: "collection = a folder of documents · document = one row" },
-    { kind: "demo", demo: "dbExercise", title: "Connect the wires: a live database 🔌",
-      sub: "Your app forgets on restart. 3 steps and MongoDB remembers.",
-      offline: [
-        "1 · Clone: npx degit Yana205/alicecode-level4-hub/starter/idea-tracker idea-tracker → cd idea-tracker → npm install",
-        "2 · Add code: .env → MONGODB_URI=… (from your teacher)",
-        "   server.js → await db.collection(\"ideas\").insertOne(idea);",
-        "   server.js → const all = await db.collection(\"ideas\").find().sort({ createdAt: -1 }).toArray();",
-        "3 · Test: npm start → add an idea → Ctrl+C → npm start → refresh. Still there? 🎉"
-      ] },
-    { kind: "demo", demo: "vaultFind", title: "Find it in the vault 🔍",
-      sub: "Your idea is in MongoDB now. Go find YOUR document.",
-      offline: [
-        "1 · Log in at cloud.mongodb.com (your teacher invited you)",
-        "2 · Browse Collections → alicecode › ideas",
-        "3 · Filter: { \"name\": \"YourName\" } → Apply",
-        "4 · 📸 Screenshot your document — proof it's in the vault!"
-      ] },
     { kind: "content", title: "Part 1 · Task ✅",
       lead: "Clean and small. Everyone finishes this one.", items: [
       { lines: [
@@ -209,8 +177,29 @@ const LESSONS = [
       after: ["One query.", "One exact answer.", "Two seconds. ⚡"],
       note: "📸 Screenshot your query + answer — first proof of the year!" },
     { kind: "section", title: "Break ☕", sub: "30 minutes — you earned it" },
-    { kind: "content", title: "Part 2 · Your own database 🔧",
-      lead: "Now the real thing: build, don't just read.", items: [
+    { kind: "demo", demo: "dbExercise", title: "Part 2 · Connect the wires 🔌",
+      sub: "Now YOU build it: your app forgets on restart — 3 steps and MongoDB remembers.",
+      offline: [
+        "1 · Clone: npx degit Yana205/alicecode-level4-hub/starter/idea-tracker idea-tracker → cd idea-tracker → npm install",
+        "2 · Add code: .env → MONGODB_URI=… (from your teacher)",
+        "   server.js → await db.collection(\"ideas\").insertOne(idea);",
+        "   server.js → const all = await db.collection(\"ideas\").find().sort({ createdAt: -1 }).toArray();",
+        "3 · Test: npm start → add an idea → Ctrl+C → npm start → refresh. Still there? 🎉"
+      ] },
+    { kind: "demo", demo: "vaultFind", title: "Find it in the vault 🔍",
+      sub: "Your idea is in MongoDB now. Go find YOUR document.",
+      offline: [
+        "1 · Log in at cloud.mongodb.com (your teacher invited you)",
+        "2 · Browse Collections → alicecode › ideas",
+        "3 · Filter: { \"name\": \"YourName\" } → Apply",
+        "4 · 📸 Screenshot your document — proof it's in the vault!"
+      ] },
+    { kind: "beforeafter", title: "Proof time 📸",
+      before: ["Restart the server…", "…your ideas are gone. 😢"],
+      after: ["Restart + refresh: still there!", "Your document, found in Atlas. 🔍"],
+      note: "📸 Before + after screenshots go in your portfolio." },
+    { kind: "content", title: "Bonus ⭐ Your own collection 🔧",
+      lead: "Finished early? Build one more — any topic you love.", items: [
       { lines: [
         "Create a NEW collection. Yours. Any topic you love.",
         "Plan first: what fields must a row have?",
@@ -218,10 +207,6 @@ const LESSONS = [
         "Insert 3 documents. Then find them with a query."
       ]}
     ]},
-    { kind: "beforeafter", title: "Proof time 📸",
-      before: ["Your collection: empty.", "A query finds nothing."],
-      after: ["3 documents with ids.", "Your query finds them all. 🎉"],
-      note: "📸 Before + after screenshots go in your portfolio." },
     { kind: "content", title: "Explain to me 🗣️",
       lead: "Last 15 minutes — the best part.", items: [
       { lines: [
@@ -232,10 +217,10 @@ const LESSONS = [
     ]},
     { kind: "content", title: "What we learned today", items: [
       { lines: [
-        "APIs = how apps ask for data (GET).",
-        "Databases = how apps remember.",
-        "MongoDB: collections hold documents, like JSON.",
-        "You created your own collection. 💪"
+        "APIs = how apps ask for data (GET). Postman tests them.",
+        "JSON = the box data travels in.",
+        "Variables forget. Databases remember.",
+        "You connected a real app to MongoDB — and found your document. 💪"
       ]}
     ]},
     { kind: "content", title: "Next time 👀", items: [
@@ -246,19 +231,25 @@ const LESSONS = [
       ]},
       { note: "Next week the AI starts working for you. 🤖" }
     ]},
-    { kind: "content", title: "Want more? 📚",
-      lead: "Not homework. Only if you're curious.", items: [
-      { rows: [
-        ["MongoDB basics", "mongodb.com/basics — short and friendly"],
-        ["What is an API (video)", "search YouTube: \"APIs for beginners freeCodeCamp\""],
-        ["JSON practice", "w3schools.com/js/js_json_intro.asp"],
-        ["Play with a real API", "pokeapi.co — open it in your browser!"]
+    { kind: "content", title: "The Builder's Toolkit (Resources) 🚀",
+      lead: "Keep building at home — not homework, only if you're curious.", items: [
+      { links: [
+        { h: "🎓 Frontend Masters", url: "https://frontendmasters.com",
+          text: "Pro web-dev courses — learn from the engineers who built Netflix and Spotify." },
+        { h: "🔥 freeCodeCamp", url: "https://www.freecodecamp.org", color: "orange",
+          text: "The ultimate free, interactive coding curriculum on the internet." },
+        { h: "📖 W3Schools", url: "https://www.w3schools.com", color: "green",
+          text: "The dictionary for HTML, CSS and JavaScript. Keep it open while you code." },
+        { h: "📱 Instagram + TikTok creators", url: "https://www.instagram.com/explore/tags/learntocode/", color: "purple",
+          text: "Fill your feed with code: follow tech educators (#learntocode) so you learn while scrolling." }
       ]}
     ]},
     { kind: "content", title: "Glossary 📖", items: [
       { rows: [
         ["API", "a way for apps to talk to each other"],
         ["GET", "an API request that asks for data"],
+        ["fetch()", "the JavaScript way to call an API"],
+        ["Postman", "an app to test APIs without code"],
         ["JSON", "the format the internet uses to send data"],
         ["database", "where an app keeps data long-term"],
         ["MongoDB", "the database we use this year"],
@@ -1308,17 +1299,17 @@ const FLOWS = {
     tease: "How does Instagram remember your likes after you close it? Today you find out — and build an app-memory of your own.",
     game: { name: "Skribbl.io — custom words", url: "https://skribbl.io",
       note: "Draw & guess with OUR words: API, server, database, JSON, cloud, waiter, pizza…" },
-    material: "Slides: quick API refresh + why apps need databases.",
+    material: "Slides: API refresh (live fetch, Postman, JSON) + why apps need databases (live demos).",
     discussion: "Where does your favorite app keep its stuff? What would happen if it forgot everything every night?",
     demo: "Yan opens a real Mongo database live and finds the most-liked video with ONE query.",
     exercises: "4 tiny Mongo exercises — read, filter, count. Everyone finishes. 📸 screenshot your answer.",
-    building: "Create YOUR own collection (any topic you love), plan its fields, insert 3 documents with unique ids.",
+    building: "Connect the TikTok Idea Tracker to MongoDB (Clone → Add code → Test), then find YOUR document in Atlas. Bonus: your own collection.",
     sources: [
       { label: "MongoDB basics", url: "https://www.mongodb.com/basics" },
       { label: "JSON intro (W3Schools)", url: "https://www.w3schools.com/js/js_json_intro.asp" },
       { label: "PokeAPI — a real API in your browser", url: "https://pokeapi.co" }
     ],
-    start: "Start by writing on paper: what is one ROW in your collection? Which fields does it need?"
+    start: "Start with step 1 on the \"Connect the wires\" slide — clone the starter and run npm install."
   },
   2: {
     tease: "An AI solves YOUR exercise from last year — in seconds. Then you stop copy-pasting and become its boss.",

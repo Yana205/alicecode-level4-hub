@@ -214,7 +214,7 @@ DEMOS.liveFetch = function (el) {
 <span class="c-kw">const</span> response = <span class="c-kw">await</span> <span class="c-fn">fetch</span>(<span class="c-str">'https://pokeapi.co/api/v2/pokemon/<b class="lf-name">pikachu</b>'</span>);
 <span class="c-kw">const</span> data = <span class="c-kw">await</span> response.<span class="c-fn">json</span>();
 <span class="lf-log">console.<span class="c-fn">log</span>(data.<b>abilities</b>);</span> <span class="c-com">// Boom. Live data from the internet.</span></pre>
-        <div class="lf-postman">📮 <b>Postman</b> does exactly this — just in a fancier app.</div>
+        <div class="lf-postman">📮 Next: <b>Postman</b> — the pro tool that does this without code.</div>
       </div>
       <div class="lf-right terminal">
         <div class="term-bar"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>

@@ -85,3 +85,27 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 14. **Concept → tool → practice.** After a live demo (fetch), show the pro tool that does the same thing (Postman), then give a hands-on exercise with real code.
 15. **A video can be a script.** Show the "expected result" as a short looping animation on the slide, so it never goes out of date.
 16. **Exercises ship with a starter.** Every hands-on slide links a tiny project in `starter/` with 🎯 STEP comments in the code, so students change only the lines that teach the idea.
+
+---
+
+## Lesson 1 · final order (32 slides) — slide numbers above are from earlier versions
+
+| Part | Slides |
+|---|---|
+| **Opening** | 1 Title · 2 Game 🎮 |
+| **This year** | 3 Users → builders · 4 Chatting vs. building · 5 TikTok Studio loop · 6 Road to the hackathon |
+| **Your superpower** | 7 Secret superpower · 8 Same wish, two prompts (**vote A or B**) · 9 Button Lab (test it live) |
+| **Today** | 10 Steps today |
+| **Part 1 · APIs** | 11 API waiter · 12 Locked door vs. master key · 13 Live fetch · 14 Postman + JSON |
+| **Part 1 · Databases** | 15 How does an app remember you? · 16 Before: variables forget · 17 NEW WORD MongoDB · 18 After: MongoDB remembers · 19 Why a database? (recap) · 20 A good table · 21 Part 1 task · 22 Proof |
+| **Break** | 23 ☕ |
+| **Part 2 · Build** | 24 Connect the wires (exercise) · 25 Find it in the vault · 26 Proof · 27 Bonus: your own collection |
+| **Wrap-up** | 28 Explain to me · 29 What we learned · 30 Next time · 31 Builder's Toolkit (resources) · 32 Glossary |
+
+What changed in the reorder:
+- **No duplicates:** "Want more?" merged into the Builder's Toolkit, which moved to the end (one resources slide). "Same wish" no longer repeats the Lab — it's a vote, the Lab is the test. The live-fetch slide hands off to Postman instead of explaining it twice.
+- **Story order:** year vision → superpower → today's plan → Part 1 → Break → Part 2 → wrap-up.
+- **Databases: feel → name → fix → recap.** The "forget" demo comes first, then the word MongoDB, then the "remember" demo, then the "Why a database?" cards as a recap.
+- **Part 2 is the live exercise.** "Create your own collection" became a bonus for fast finishers. The agenda, Part 2 proof, recap, missions, lesson goal and "Today's flow" all match.
+
+17. **One slide, one job.** If two slides say the same thing, merge them or give one a new job (predict → test, teach → recap).
