@@ -2,7 +2,8 @@
 
 The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year program where ~10 amazing builders go *from users to builders* of AI agents.
 
-**Live site:** https://yana205.github.io/alicecode-level4-hub/
+**Live site:** https://alicecode-level4-hub.vercel.app (Vercel, auto-deploys on every push)
+**Backup mirror:** https://yana205.github.io/alicecode-level4-hub/ (GitHub Pages)
 
 ## What's inside
 
