@@ -830,6 +830,9 @@ a.cal-ev:hover { transform: translateX(4px); }
   background: transparent; color: #fff; font: inherit; outline: none;
 }
 .yt-input::placeholder { color: #B9A7D3; }
+.lab-bubble .yt-run { padding: 6px 14px; font-size: .9em; background: linear-gradient(135deg, #2FB380, #0E7C5B); box-shadow: 0 4px 12px rgba(47,179,128,.45); }
+.yt-msg { width: 100%; color: #FFD166; font-weight: 700; font-size: .9em; }
+.yt-msg:empty { display: none; }
 .yt-words { display: flex; gap: 6px; flex-wrap: wrap; }
 .yt-chip {
   font-family: var(--font-code); font-size: .85em; padding: 2px 9px; border-radius: 999px;

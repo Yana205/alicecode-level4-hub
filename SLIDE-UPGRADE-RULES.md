@@ -22,7 +22,7 @@ before and after, then turns that into rules we can use on every other deck and 
 | **Color-coded feedback** | The *Before* editor turns **dull gray**, with no colors. The *After* editor **pops**: syntax highlighting (tags pink, selectors yellow, properties cyan, numbers orange, colors mint) and a neon frame. Better words = better code, and you can see it. |
 | **Prompt bubble: anatomy of a prompt** | A chat bubble shows the prompt. Vague prompt = plain gray text. Pro prompt = every tech word (`gradient`, `border-radius`, `hover`, `transition`, `transform`, `box-shadow`, `flexbox`, `center`) in **bold neon**. |
 | **The arrow** | When the code finishes typing, a glowing dashed arrow goes from **`transition`** in the prompt to the **`transition:`** line in the CSS, and that line glows. Hover or tap any other neon word and the arrow moves to *its* line. |
-| **Live Edit Challenge** | A third button: **🎯 "Your Turn"**. It shows an empty prompt box plus 3 new words: `text-shadow` · `animation` · `outline`. A word glows orange when the student says it in the prompt, and turns green ✓ when it's really in the CSS. All 3 in → sparkles + chime + "Superpower proven!" |
+| **Live Edit Challenge** | A third button: **🎯 "Your Turn"**. It shows an empty prompt box plus 3 new words: `text-shadow` · `animation` · `outline`. A word glows orange when the student says it in the prompt, and turns green ✓ when it's really in the CSS. **▶ Run** (or Enter) plays the AI: for every word in the prompt it writes that CSS into the code, and the preview updates. No tech words → "🤖 I can only guess!". All 3 in → sparkles + chime + "Superpower proven!" |
 | **Micro-interactions** | Switching to the pro prompt plays a short rising **chime** (synthesized, no files) and a **sparkle burst** from the button. When the code lands, the preview **pops** with more sparkles. 🔊/🔇 toggle; animations turn off for *reduce motion* users. |
 | **Active state** | The prompt button that's running has a ring, so the room can see which prompt is "on". |
 
@@ -44,6 +44,6 @@ The Lab engine (`lab.js`) turns the juice on **per preset**. A preset gets it wh
 - `vague.prompt`: the plain prompt text for the bubble
 - `explicit.prompt`: the pro prompt. Write `{word}` or `{word|css-property}` to make a neon word linked to that CSS line (`{hover|:hover}` points to a selector)
 - `explicit.arrow`: which word gets the default arrow
-- `yourTurn`: `{ label, words: [...], win: "..." }` for the challenge
+- `yourTurn`: `{ label, words: [...], win: "...", css: { word: "declaration" }, keyframes: { word: "@keyframes …" } }` for the challenge (`css` is what ▶ Run writes for each word)
 
 Lesson 2 (Flower Shop Lab) doesn't have these fields yet, so it still looks the same as before. To upgrade it, add the fields. No engine changes needed.

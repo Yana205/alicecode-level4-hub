@@ -64,7 +64,16 @@ const LAB_PRESETS = {
     yourTurn: {
       label: "🎯 \"Your Turn\"",
       words: ["text-shadow", "animation", "outline"],
-      win: "🦸‍♀️ Superpower proven! 3 new words → 3 new looks."
+      win: "🦸‍♀️ Superpower proven! 3 new words → 3 new looks.",
+      /* what the "AI" writes when ▶ Run sees each word in the prompt */
+      css: {
+        "text-shadow": "text-shadow: 0 0 8px #fff, 0 2px 0 #FF9A9E;",
+        "animation": "animation: float 2s ease-in-out infinite;",
+        "outline": "outline: 3px dashed #FF79A8;\n    outline-offset: 5px;"
+      },
+      keyframes: {
+        "animation": "@keyframes float {\n    0%, 100% { translate: 0 0; }\n    50% { translate: 0 -10px; }\n  }"
+      }
     }
   },
   2: {
@@ -286,8 +295,13 @@ function initButtonLab(container, n, embedded) {
     else if (m === "yourturn") {
       bubble.innerHTML = `<span class="who">🎯 Your Turn</span>
         <input class="yt-input" type="text" placeholder="Write your prompt… use all 3 words →" aria-label="Your prompt">
-        <span class="yt-words">${P.yourTurn.words.map(w => `<span class="yt-chip" data-w="${w}">${w}</span>`).join("")}</span>`;
-      bubble.querySelector(".yt-input").addEventListener("input", checkYourTurn);
+        <button class="btn small yt-run" type="button">▶ Run</button>
+        <span class="yt-words">${P.yourTurn.words.map(w => `<span class="yt-chip" data-w="${w}">${w}</span>`).join("")}</span>
+        <span class="yt-msg"></span>`;
+      const input = bubble.querySelector(".yt-input");
+      input.addEventListener("input", checkYourTurn);
+      input.addEventListener("keydown", e => { if (e.key === "Enter") runPrompt(); });
+      bubble.querySelector(".yt-run").addEventListener("click", runPrompt);
     }
     else bubble.innerHTML = `<span class="who">💬 Prompt</span><span class="txt dim">Pick a prompt above 👆 — same AI, different words.</span>`;
   }
@@ -332,6 +346,40 @@ function initButtonLab(container, n, embedded) {
     const sx = Math.max(box.left - H.left + 2, x2 - 70);
     arrowPath.setAttribute("d", `M${x1},${y1} C${x1},${y1 + 70} ${sx},${y2} ${x2},${y2}`);
     svg.classList.add("on");
+  }
+
+  /* ---- ▶ Run: the "AI" obeys the student's prompt ---- */
+  function runPrompt() {
+    const Y = P.yourTurn, msg = bubble.querySelector(".yt-msg");
+    const said = bubble.querySelector(".yt-input").value.toLowerCase();
+    const has = w => new RegExp(`(^|[\\s;{])${w}\\s*:`).test(ta.value.replace(/\/\*[\s\S]*?\*\//g, ""));
+    const asked = Y.words.filter(w => said.includes(w));
+    const fresh = asked.filter(w => !has(w));
+    if (!asked.length) { msg.textContent = `🤖 No tech words… I can only guess! Try: ${Y.words.join(" · ")}`; return; }
+    if (!fresh.length) { msg.textContent = "🤖 Already in your code! Add another word."; return; }
+    let code = ta.value;
+    const marker = "  /* 🎯 Your words → your code */\n  button {\n";
+    if (!code.includes(marker)) {
+      const block = `${marker}  }\n`;
+      code = /\n?\s*\/\* 🎯 Your turn:[^*]*\*\/\n?/.test(code)
+        ? code.replace(/\n?\s*\/\* 🎯 Your turn:[^*]*\*\/\n?/, "\n\n" + block)
+        : code.replace("</style>", block + "</style>");
+    }
+    const decls = fresh.map(w => "    " + Y.css[w] + "\n").join("");
+    code = code.replace(marker, marker + decls);
+    fresh.forEach(w => {
+      const kf = Y.keyframes && Y.keyframes[w];
+      if (kf && !code.includes(kf.split("{")[0])) code = code.replace("</style>", `\n  ${kf}\n</style>`);
+    });
+    code = code.replace(/\n{3,}/g, "\n\n");
+    clearInterval(typeTimer);
+    ta.value = code; render(); paint();
+    const tok = findToken(fresh[0]);
+    if (tok) { ta.scrollTop = Math.max(0, tok.offsetTop - ta.clientHeight / 3); hl.scrollTop = ta.scrollTop; }
+    msg.textContent = `🤖 The AI obeyed: added ${fresh.join(" + ")}`;
+    labChime(LAB_UPGRADE_NOTES);
+    labSparkle(container, previewWrap, 14);
+    checkYourTurn();
   }
 
   /* ---- live edit challenge ---- */
