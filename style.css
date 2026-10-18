@@ -717,6 +717,23 @@ a.cal-ev:hover { transform: translateX(4px); }
 .s-visual { text-align: center; }
 .s-visual img { max-height: 34vh; max-width: 70%; border-radius: 14px; box-shadow: 0 6px 20px rgba(43,16,74,.18); }
 .s-visual.missing img { display: none; }
+/* a loaded picture takes only the space the text leaves, so nothing spills off the card */
+.s-body.vis-top > .s-visual:not(.missing) { flex: 1 1 0; min-height: 70px; display: flex; justify-content: center; }
+.s-body.vis-top > .s-visual:not(.missing) img { height: 100%; max-height: none; max-width: 100%; width: auto; object-fit: contain; }
+.s-body.vis-top > :not(.s-visual) { flex: none; }
+.s-body.vis-row { flex-direction: column; }
+.s-body.vis-row .s-col { display: flex; flex-direction: column; gap: clamp(8px, 1.6vw, 16px); }
+.s-body.vis-row:has(> .s-visual:not(.missing)) {
+  display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: clamp(12px, 2.4vw, 28px); min-height: 0;
+}
+.s-body.vis-row > .s-visual:not(.missing) { min-height: 0; height: 100%; display: flex; align-items: center; justify-content: center; }
+.s-body.vis-row > .s-visual:not(.missing) img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+@media (max-width: 700px) {
+  .s-body.vis-top > .s-visual:not(.missing) { flex: none; }
+  .s-body.vis-top > .s-visual:not(.missing) img { height: auto; max-height: 28vh; }
+  .s-body.vis-row:has(> .s-visual:not(.missing)) { grid-template-columns: 1fr; }
+  .s-body.vis-row > .s-visual:not(.missing) img { max-height: 28vh; }
+}
 .s-visual:not(.missing) .s-vis-ph, .s-visual:not(.missing) .s-vis-chip { display: none; }
 .s-vis-ph {
   border: 2.5px dashed var(--pink-soft); border-radius: 14px;

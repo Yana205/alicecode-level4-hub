@@ -1393,7 +1393,9 @@ const VISUALS = {
     "Quick refresh: what is an API? 🌐": { id: "v1-1", prompt: "A waiter carrying a pizza between a phone screen (customer) and a kitchen (server), restaurant scene." },
     "Why a database? 💾": { id: "v1-2", prompt: "Left: an app character forgetting (papers flying away); right: a friendly vault/filing robot keeping everything safe." },
     "Your secret superpower 🦸‍♀️": { id: "v1-3", prompt: "A teen girl superhero, cape made of code brackets, floating icons: HTML tag, paint palette, lightning bolt." },
-    "The big build: TikTok Studio 📱": { id: "v1-4", prompt: "Three cute robots on a conveyor belt: one with a magnifying glass, one with a lightbulb, one with a film clapper." }
+    "The big build: TikTok Studio 📱": { id: "v1-4", prompt: "Three cute robots on a conveyor belt: one with a magnifying glass, one with a lightbulb, one with a film clapper." },
+    "Same wish, two prompts 🪄": { id: "v1-5", prompt: "Two comic panels: a girl at a laptop gives a vague prompt and a gray robot shrugs; then she gives a precise prompt and a glowing purple robot cheers." },
+    "Steps today": { id: "v1-6", prompt: "Four icons on lavender: a pink game controller, a purple database stack, a coffee mug, a glowing lightbulb." }
   },
   2: {
     "But the AI misses things 🙈": { id: "v2-1", prompt: "A blindfolded robot at a desk holding one paper, a whole messy project bookshelf behind it that it cannot see." },

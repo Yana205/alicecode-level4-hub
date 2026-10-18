@@ -40,7 +40,12 @@ async function downloadPPTX(n) {
   const visOk = {};
   await Promise.all(Object.entries(visMap).map(async ([title, v]) => {
     const p = `assets/lesson-${n}/${v.id}.png`;
-    try { const r = await fetch(p, { method: "HEAD" }); if (r.ok) visOk[title] = p; } catch (e) {}
+    try {
+      const r = await fetch(p, { method: "HEAD" });
+      if (!r.ok) return;
+      const img = new Image(); img.src = p; await img.decode();
+      visOk[title] = { path: p, ratio: img.naturalWidth / img.naturalHeight };
+    } catch (e) {}
   }));
 
   const pptx = new PptxGenJS();
@@ -193,8 +198,8 @@ async function downloadPPTX(n) {
       y += 0.26;
     }
     if (visOk[sl.title]) {
-      const ih = 1.75, iw = ih * 16 / 9;
-      s.addImage({ path: visOk[sl.title], x: (W - iw) / 2, y, w: iw, h: ih });
+      const v = visOk[sl.title], ih = 1.75, iw = ih * v.ratio; // keep the picture's own shape
+      s.addImage({ path: v.path, x: (W - iw) / 2, y, w: iw, h: ih });
       y += ih + 0.14;
     }
     addItems(s, sl.items, y);

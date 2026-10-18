@@ -120,7 +120,14 @@
     return `
       <h2 class="s-title">${esc(s.title)}</h2>
       ${s.lead ? `<div class="s-lead">${esc(s.lead)}</div>` : ""}
-      <div class="s-body">${visualHTML(s.title)}${parts}</div>`;
+      ${(() => {
+        const vis = visualHTML(s.title);
+        if (!vis) return `<div class="s-body">${parts}</div>`;
+        /* text-only slides put the picture beside the text; card slides stack it on top */
+        const row = !(s.items || []).some(it => it.cards || it.code || it.rows);
+        return row ? `<div class="s-body vis-row">${vis}<div class="s-col">${parts}</div></div>`
+                   : `<div class="s-body vis-top">${vis}${parts}</div>`;
+      })()}`;
   }
 
   const stage = document.getElementById("stage");
