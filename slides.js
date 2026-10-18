@@ -64,6 +64,20 @@
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
   const colorClass = c => "c-" + (c || "pink");
 
+  /* visual slot (Upgrade B): real image if it exists, else placeholder */
+  function visualHTML(title) {
+    const v = (typeof VISUALS !== "undefined") && VISUALS[n] && VISUALS[n][title];
+    if (!v) return "";
+    const src = `assets/lesson-${n}/${v.id}.png`;
+    const ph = canView()
+      ? `<div class="s-vis-ph"><b>🎨 Visual placeholder · ${v.id}</b>
+           <span>${esc(VISUAL_STYLE)} ${esc(v.prompt)}</span>
+           <i>Generate with Gemini → upload as <code>${src}</code> (GitHub → Add file → Upload files inside that folder)</i></div>`
+      : `<div class="s-vis-chip">🎨 illustration coming soon</div>`;
+    return `<div class="s-visual"><img src="${src}" alt="" loading="lazy"
+      onerror="this.closest('.s-visual').classList.add('missing')">${ph}</div>`;
+  }
+
   function slideHTML(s) {
     if (s.kind === "title") return `
       <div class="brace-art">{ }</div>
@@ -102,7 +116,7 @@
     return `
       <h2 class="s-title">${esc(s.title)}</h2>
       ${s.lead ? `<div class="s-lead">${esc(s.lead)}</div>` : ""}
-      <div class="s-body">${parts}</div>`;
+      <div class="s-body">${visualHTML(s.title)}${parts}</div>`;
   }
 
   const stage = document.getElementById("stage");
@@ -161,7 +175,10 @@
 
   /* ---------- below the deck ---------- */
   const flow = FLOWS[n];
+  const hasLab = (typeof LAB_PRESETS !== "undefined") && LAB_PRESETS[n];
   below.innerHTML = `
+    ${hasLab ? `<div class="card reveal lab-card" id="button-lab"></div>` : ""}`;
+  below.innerHTML += `
     <div class="card reveal">
       <h2>🎯 Today's goal</h2>
       <p>${esc(lesson.goal)}</p>
@@ -199,5 +216,6 @@
     </div>`;
 
   bindChecklist(document.getElementById("mission-list"), `ac4-missions-l${lesson.n}`);
+  if (hasLab) initButtonLab(document.getElementById("button-lab"), n);
   if (window.armReveal) window.armReveal();
 })();

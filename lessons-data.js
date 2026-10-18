@@ -1373,3 +1373,55 @@ const CALENDAR = [
   { date: "2027-06-24", title: "Farewell", emoji: "🎉", kind: "event", desc: "Last meeting of the year. 🥹" },
   { date: "2027-07-01", title: "Ceremony (July — date TBA)", emoji: "🎓", kind: "event", approx: true }
 ];
+
+/* ============================================================
+   VISUALS — illustration slots per slide (Upgrade B).
+   Keyed by lesson number → exact slide title.
+   Image file convention: assets/lesson-N/<id>.png
+   Until the image exists, instructors see a placeholder with the
+   Gemini prompt; students see a subtle "coming soon" chip.
+   ============================================================ */
+
+const VISUAL_STYLE = "Flat friendly cartoon illustration, rounded shapes, purple-to-magenta gradient (#674C9B to #A43F86), hot pink accents (#D83474), soft pink details, diverse teen girls when people appear, NO text in the image, 16:9.";
+
+const VISUALS = {
+  1: {
+    "Quick refresh: what is an API? 🌐": { id: "v1-1", prompt: "A waiter carrying a pizza between a phone screen (customer) and a kitchen (server), restaurant scene." },
+    "Why a database? 💾": { id: "v1-2", prompt: "Left: an app character forgetting (papers flying away); right: a friendly vault/filing robot keeping everything safe." },
+    "Your secret superpower 🦸‍♀️": { id: "v1-3", prompt: "A teen girl superhero, cape made of code brackets, floating icons: HTML tag, paint palette, lightning bolt." },
+    "The big build: TikTok Studio 📱": { id: "v1-4", prompt: "Three cute robots on a conveyor belt: one with a magnifying glass, one with a lightbulb, one with a film clapper." }
+  },
+  2: {
+    "But the AI misses things 🙈": { id: "v2-1", prompt: "A blindfolded robot at a desk holding one paper, a whole messy project bookshelf behind it that it cannot see." },
+    "3 new words 🧠": { id: "v2-2", prompt: "A sentence breaking into colorful puzzle pieces flowing into a robot's head." },
+    "Meet the coding agent 🤝": { id: "v2-3", prompt: "A robot with many arms working across multiple open files and screens at once." },
+    "Why could she ask like that? 🧠": { id: "v2-4", prompt: "Split image: sad generic gray website vs joyful pink flower-shop website, on the same laptop." }
+  },
+  3: {
+    "Agents are everywhere 🌍": { id: "v3-1", prompt: "Three friendly robots: one with a headset (support), one with a magnifying glass and newspapers (research), one with a keyboard (coding)." },
+    "What is an agent made of? 🧩": { id: "v3-2", prompt: "Robot anatomy diagram style: glowing brain, clipboard job description, tool belt, key." },
+    "Your first agent 🐣": { id: "v3-3", prompt: "A baby robot hatching from an egg, a girl's hands assembling it from 3 glowing parts." },
+    "The TikTok Studio starts NOW 📱": { id: "v3-4", prompt: "A robot with a radar dish scanning floating trending symbols: music notes, dance figures, hearts." }
+  },
+  4: {
+    "A tool is a promise 🤝": { id: "v4-1", prompt: "An open toolbox where every tool has a bright clear name tag." },
+    "The confused agent 😵‍💫": { id: "v4-2", prompt: "A dizzy robot holding a fork trying to hammer a nail, tools with blank smudged labels scattered around." },
+    "Write prompts like a boss · RTOC 📋": { id: "v4-3", prompt: "A recipe card held by a girl in a chef hat, four ingredient bowls in a row." },
+    "Part 2 · Agent 2: the idea maker 💡": { id: "v4-4", prompt: "A robot with a giant lightbulb head turning a trend card into a film storyboard." }
+  },
+  5: {
+    "What's inside createAgent? 🔍": { id: "v5-1", prompt: "A circular conveyor loop labeled by icons only (question, action, check), a little robot running laps on it." },
+    "The supervisor pattern 👩‍💼": { id: "v5-2", prompt: "A clipboard team-lead robot pointing, two worker robots saluting." },
+    "Part 2 · Shared memory 🧠": { id: "v5-3", prompt: "Two robots both plugging cables into one glowing heart-shaped database." }
+  },
+  6: {
+    "The missing piece 🧩": { id: "v6-1", prompt: "A director robot with a clapperboard and beret, a film reel turning into a phone video." },
+    "A prompt for video 🎥": { id: "v6-2", prompt: "Split: a blurry dream cloud vs a sharp detailed storyboard of a fluffy orange cat dancing in a pink kitchen." },
+    "Find yourself on the map 🗺️": { id: "v6-3", prompt: "A subway-style map of glowing nodes connected by pink lines, girls pointing at stations." }
+  },
+  7: {
+    "Look how far you've come 🥹": { id: "v7-1", prompt: "A mountain path from a tiny seedling at the bottom to a shining studio building on the peak, little flags along the way." },
+    "Part 1 · Task ✅ Grand opening": { id: "v7-2", prompt: "Ribbon-cutting in front of a neon studio sign, confetti, a team of girls with their three robots." },
+    "Part 2 · HACKATHON 🔥": { id: "v7-3", prompt: "A planning war-room table: map, sticky notes, three girls planning, a rocket model in the middle." }
+  }
+};

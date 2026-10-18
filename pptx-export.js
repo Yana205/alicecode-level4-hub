@@ -35,6 +35,14 @@ async function downloadPPTX(n) {
   const BODY_TOP = CARD.y + 0.78, BODY_BOT = CARD.y + CARD.h - 0.18;
   const HEAD = "Arial", BODY = "Arial", MONO = "Courier New";
 
+  /* Upgrade B: embed generated visuals when the image file exists */
+  const visMap = (typeof VISUALS !== "undefined" && VISUALS[n]) || {};
+  const visOk = {};
+  await Promise.all(Object.entries(visMap).map(async ([title, v]) => {
+    const p = `assets/lesson-${n}/${v.id}.png`;
+    try { const r = await fetch(p, { method: "HEAD" }); if (r.ok) visOk[title] = p; } catch (e) {}
+  }));
+
   const pptx = new PptxGenJS();
   pptx.defineLayout({ name: "WIDE", width: W, height: H });
   pptx.layout = "WIDE";
@@ -173,6 +181,11 @@ async function downloadPPTX(n) {
     if (sl.lead) {
       s.addText(sl.lead, { x: MX, y: y - 0.2, w: CW, h: 0.32, align: "center", fontFace: BODY, bold: true, fontSize: 12, color: PINK });
       y += 0.26;
+    }
+    if (visOk[sl.title]) {
+      const ih = 1.75, iw = ih * 16 / 9;
+      s.addImage({ path: visOk[sl.title], x: (W - iw) / 2, y, w: iw, h: ih });
+      y += ih + 0.14;
     }
     addItems(s, sl.items, y);
   });
