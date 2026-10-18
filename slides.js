@@ -47,7 +47,7 @@
     <h1>${lesson.emoji} ${lesson.title}</h1>
     <p class="sub">${lesson.project}</p>
     <div style="margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap">
-      <button class="btn small" id="flow-btn">📋 Today's flow</button>
+      <button class="btn small" id="flow-btn">📋 Today's flow${lesson.missionsInFlow ? " + tasks" : ""}</button>
       <button class="btn small dark" id="fs-btn">⛶ Fullscreen</button>
       <button class="btn small ghost" style="box-shadow:none" id="pptx-btn">⬇️ PowerPoint</button>
     </div>`;
@@ -215,9 +215,10 @@
       <h2>🎯 Today's goal</h2>
       <p>${esc(lesson.goal)}</p>
       <p style="margin-top:8px"><strong class="pink">You leave with:</strong> ${esc(lesson.leaves)}</p>
-      ${flow ? `<button class="btn small" style="margin-top:14px" onclick="openFlowModal(${n})">📋 See today's full flow</button>` : ""}
+      ${flow ? `<button class="btn small" style="margin-top:14px" onclick="openFlowModal(${n})">📋 See today's full flow${lesson.missionsInFlow ? " + tasks" : ""}</button>` : ""}
     </div>
 
+    ${lesson.missionsInFlow && flow ? "" : `
     <div class="card reveal">
       <h2>✅ Your missions</h2>
       <p class="muted" style="margin-bottom:10px">Tick them off as you go — the page remembers you. ✨</p>
@@ -225,7 +226,7 @@
         ${lesson.missions.map((m, i) => `
           <li><input type="checkbox" id="l${lesson.n}-m${i}"><label for="l${lesson.n}-m${i}">${esc(m)}</label></li>`).join("")}
       </ul>
-    </div>
+    </div>`}
 
     <div class="card reveal">
       <h2>🔗 Tutorial links for today's steps</h2>
@@ -247,7 +248,8 @@
                      : `<a class="btn dark" href="lessons.html#hackathon">🔥 The Hackathon</a>`}
     </div>`;
 
-  bindChecklist(document.getElementById("mission-list"), `ac4-missions-l${lesson.n}`);
+  const missionList = document.getElementById("mission-list");
+  if (missionList) bindChecklist(missionList, `ac4-missions-l${lesson.n}`);
   if (hasLab) initButtonLab(document.getElementById("button-lab"), n);
   if (window.armReveal) window.armReveal();
 })();

@@ -536,6 +536,9 @@ p  { line-height: 1.65; }
 .flow-list { margin-top: 14px; }
 .flow-stage { border-left: 4px solid var(--pink-soft); padding: 0 0 16px 16px; position: relative; }
 .flow-stage:last-child { padding-bottom: 0; }
+.flow-tasks { border-left-color: var(--mint); }
+.flow-tasks .fs-body { background: #F3FBF7; border-radius: 14px; padding: 10px 12px; }
+.flow-tasks .check-list { margin-top: 6px; }
 .flow-stage::before {
   content: ""; position: absolute; left: -9px; top: 4px;
   width: 14px; height: 14px; border-radius: 50%;

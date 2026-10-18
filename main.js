@@ -248,9 +248,24 @@ function openFlowModal(n) {
             </div>
             <div class="fs-body">${stageBody[st.key] || ""}</div>
           </div>`).join("")}
+        ${lesson.missionsInFlow ? `
+          <div class="flow-stage flow-tasks">
+            <div class="fs-head">
+              <span class="fs-ic">✅</span>
+              <h3>Today's tasks</h3>
+            </div>
+            <div class="fs-body">
+              <p class="muted">Tick them off as you go — the page remembers you. ✨</p>
+              <ul class="check-list" id="flow-mission-list">
+                ${lesson.missions.map((m, i) => `
+                  <li><input type="checkbox" id="l${lesson.n}-m${i}"><label for="l${lesson.n}-m${i}">${esc(m)}</label></li>`).join("")}
+              </ul>
+            </div>
+          </div>` : ""}
       </div>
     </div>`;
   document.body.appendChild(wrap);
+  if (lesson.missionsInFlow) bindChecklist(wrap.querySelector("#flow-mission-list"), `ac4-missions-l${lesson.n}`);
   const close = () => wrap.remove();
   wrap.addEventListener("click", e => { if (e.target === wrap) close(); });
   wrap.querySelector(".modal-x").addEventListener("click", close);

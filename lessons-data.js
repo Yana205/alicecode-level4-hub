@@ -12,6 +12,7 @@ const LESSONS = [
 /* ================= LESSON 1 ================= */
 {
   n: 1, emoji: "🚀", title: "Back to Building",
+  missionsInFlow: true, // the task checklist lives inside "Today's flow", not on the page
   date: "22 Oct 2026", project: "P1 · Refresh: APIs + Databases",
   goal: "Warm up APIs, understand why apps need databases, and connect a real app to MongoDB.",
   leaves: "Mongo exercises done + an app that remembers, with YOUR document in the database.",
