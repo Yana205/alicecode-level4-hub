@@ -86,6 +86,10 @@
     if (s.kind === "section") return `
       <h1>${esc(s.title)}</h1>
       <div class="sub">${esc(s.sub || "")}</div>`;
+    if (s.kind === "lab") return `
+      <h2 class="s-title">${esc(s.title)}</h2>
+      ${s.sub ? `<div class="s-lead">${esc(s.sub)}</div>` : ""}
+      <div class="lab-embed"></div>`;
     if (s.kind === "newword") return `
       <div class="s-newword">
         <div class="nw-tag">✨ NEW WORD ✨</div>
@@ -142,13 +146,19 @@
   document.getElementById("next").onclick = () => go(cur + 1);
   dots.onclick = e => { if (e.target.dataset.i) go(+e.target.dataset.i); };
   document.addEventListener("keydown", e => {
+    if (e.target.closest && e.target.closest("textarea, input")) return; // typing in the Lab
     if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); go(cur + 1); }
     if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(cur - 1); }
     if (e.key === "f" || e.key === "F") toggleFS();
   });
   stage.addEventListener("click", e => {
-    if (e.target.closest("a")) return;
+    if (e.target.closest("a, .lab-embed, button, textarea, input")) return;
     go(cur + 1);
+  });
+
+  /* lab slides: init the playground inside the deck */
+  stage.querySelectorAll(".slide.k-lab .lab-embed").forEach(el => {
+    if (typeof initButtonLab === "function") initButtonLab(el, n, true);
   });
 
   /* swipe */

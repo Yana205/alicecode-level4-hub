@@ -144,6 +144,16 @@ async function downloadPPTX(n) {
     if (sl.kind === "title") { titleSlide(sl); return; }
     if (sl.kind === "section") { sectionSlide(sl); return; }
 
+    if (sl.kind === "lab") {
+      const s = contentBase(sl.title);
+      s.addShape("roundRect", { x: MX, y: BODY_TOP + 0.5, w: CW, h: 1.5, rectRadius: 0.1, fill: { color: LAV } });
+      s.addText([
+        { text: (sl.sub || "Live playground.") + "\n", options: { bold: true } },
+        { text: `Open it live: alicecode-level4-hub.vercel.app → Lessons → Lesson ${lesson.n}`, options: {} }
+      ], { x: MX + 0.3, y: BODY_TOP + 0.5, w: CW - 0.6, h: 1.5, align: "center", valign: "middle", fontFace: BODY, fontSize: 14, color: PURPLE, lineSpacingMultiple: 1.3 });
+      s.addText("🧪 This one happens in the browser, not on a slide.", { x: MX, y: BODY_TOP + 2.3, w: CW, h: 0.4, align: "center", fontFace: BODY, bold: true, fontSize: 12, color: PINK });
+      return;
+    }
     if (sl.kind === "newword") {
       const s = pptx.addSlide();
       s.background = { path: "tpl-content.png" };

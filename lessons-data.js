@@ -53,12 +53,14 @@ const LESSONS = [
     { kind: "content", title: "Same wish, two prompts 🪄", items: [
       { lines: [
         "\"Make my button nicer\" 😐 → the AI guesses.",
-        "\"Round it with border-radius, add a hover",
-        "transition, center it with flexbox\" 😎 → the AI obeys.",
+        "\"Round it with border-radius, add a hover transition,",
+        "center it with flexbox\" 😎 → the AI obeys.",
         "Same AI. Your words made the difference."
       ]},
-      { note: "Keep this keyword bank close — we use it all year. More on this next week! 🌸" }
+      { note: "Don't believe it? Next slide — we try it LIVE. 🧪" }
     ]},
+    { kind: "lab", title: "🧪 The Button Lab",
+      sub: "Same wish, two prompts — live. Then YOU take the keyboard." },
     { kind: "content", title: "The big build: TikTok Studio 📱",
       lead: "One shared project. We build it together, all year.", items: [
       { cards: [
@@ -257,6 +259,8 @@ const LESSONS = [
       ]},
       { note: "Explicit prompts = the superpower from lesson 1. Use the keyword bank!" }
     ]},
+    { kind: "lab", title: "🌸 The Flower Shop Lab",
+      sub: "One vague prompt vs one explicit prompt — a whole site, live." },
     { kind: "content", title: "Part 1 · The LLM challenge ✅",
       lead: "Remember sweating over this exercise? Watch.", items: [
       { lines: [

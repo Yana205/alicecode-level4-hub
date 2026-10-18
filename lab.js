@@ -110,12 +110,12 @@ const LAB_PRESETS = {
   }
 };
 
-function initButtonLab(container, n) {
+function initButtonLab(container, n, embedded) {
   const P = LAB_PRESETS[n];
   if (!P) return;
   container.innerHTML = `
-    <h2>${P.title}</h2>
-    <p class="muted" style="margin-bottom:12px">${P.intro}</p>
+    ${embedded ? "" : `<h2>${P.title}</h2>
+    <p class="muted" style="margin-bottom:12px">${P.intro}</p>`}
     <div class="lab-buttons">
       <button class="btn small" data-lab="vague">${P.vague.label}</button>
       <button class="btn small" data-lab="explicit">${P.explicit.label}</button>

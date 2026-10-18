@@ -750,3 +750,17 @@ a.cal-ev:hover { transform: translateX(4px); }
 .lab-preview-bar { background: #F6EDF9; font-weight: 800; font-size: .78rem; padding: 7px 12px; color: var(--ink-soft); }
 .lab-preview { flex: 1; border: none; width: 100%; min-height: 300px; background: #fff; }
 @media (max-width: 760px) { .lab-split { grid-template-columns: 1fr; } }
+
+/* ---------- Lab inside the deck ---------- */
+.slide.k-lab { padding: clamp(14px, 2.5vw, 28px); }
+.slide.k-lab .s-title { text-align: center; }
+.slide.k-lab .s-lead { text-align: center; }
+.slide.k-lab .lab-embed { flex: 1; display: flex; flex-direction: column; min-height: 0; margin-top: 8px; }
+.slide.k-lab .lab-buttons { justify-content: center; margin-bottom: 8px; }
+.slide.k-lab .lab-split { flex: 1; min-height: 0; }
+.slide.k-lab .lab-editor { min-height: 0; font-size: clamp(.68rem, 1.3vw, .85rem); }
+.slide.k-lab .lab-preview { min-height: 0; }
+.slide.k-lab .lab-buttons .btn.small { font-size: clamp(.68rem, 1.3vw, .9rem); padding: 7px 13px; }
+@media (max-width: 700px) {
+  .slide.k-lab .lab-split { min-height: 420px; }
+}
