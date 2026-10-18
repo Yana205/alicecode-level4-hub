@@ -47,3 +47,26 @@ The Lab engine (`lab.js`) turns the juice on **per preset**. A preset gets it wh
 - `yourTurn`: `{ label, words: [...], win: "...", css: { word: "declaration" }, keyframes: { word: "@keyframes …" } }` for the challenge (`css` is what ▶ Run writes for each word)
 
 Lesson 2 (Flower Shop Lab) doesn't have these fields yet, so it still looks the same as before. To upgrade it, add the fields. No engine changes needed.
+
+---
+
+## Part 2 · Lesson 1 live demos (before → after)
+
+| Slide | BEFORE | AFTER (live on the slide) |
+|---|---|---|
+| **3.5 · Chatting vs. building 🤖** (new) | — | Split screen. Left (gray): a mouse slowly types, copies, pastes and saves while a clock counts to **20 min**. Right (glowing terminal): `[Agent 1: Task Complete]` → `[Agent 2: Running]` → … → `[Done] 08:00:42`. Replays every time the slide opens. |
+| **TikTok Studio** | 3 static boxes | A 3-click loop: **1** a JSON answer drops in (`"trend": "y2k fashion"`), **2** a robot thinks and types *"Writing script..."*, **3** a TikTok phone pops up with the image + script (sparkle + chime). Click 4 loops. |
+| **APIs** | 1 slide (waiter), then a jump | + **"A locked door vs. the master key 🔑"** (empty hardcoded app vs. live data) + **"Live: fetch a real API ⚡"**: type a Pokémon, press *Fetch REST API*, live JSON fills the right side. The name in the `fetch(…)` URL updates as you type, and `console.log(data.abilities)` lights up with the same color as `"abilities"` in the answer. Postman note. |
+| **Databases** | Cards: "variables forget / a database remembers" | + **"Before: variables forget 😱"**: add tasks → red *Refresh page* → list wiped, "Oh no!" + sad trombone, the RAM panel shows `let tasks = [];`. + **"After: MongoDB remembers 🧠"**: same app, every task pops in as a JSON document in a MongoDB Atlas view; refresh → tasks come back, "Still here! 🎉". |
+| **Keep Building (Resources) 🚀** (new, last) | — | 4 clickable cards: Frontend Masters, freeCodeCamp, W3Schools, Instagram creators. |
+
+### More global rules (from Part 2)
+9. **Feel it, don't explain it.** If a concept has a "moment" (data disappears, data comes back, an API answers), build that moment as a live widget on the slide.
+10. **Before and after are twin slides.** Same UI, one change (no database → database). The only difference on screen is the thing you're teaching.
+11. **Show the machine.** Next to the app, show what's happening underneath (RAM variable, database documents, JSON answer) and update it live.
+12. **Be honest about "live".** When a demo can't reach its real service it says so (🟡 demo badge, "no internet" message) instead of faking it.
+13. **Every live slide still works in PowerPoint** as plain text (`offline` lines) plus a "open it in the browser" note.
+
+### How to add a demo slide
+In `lessons-data.js`: `{ kind: "demo", demo: "<name>", title, sub, offline: [ ...lines for PowerPoint ] }`.
+In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the slide sends a `slide-on` event each time it's shown, so you can replay it. Clicks inside a demo never change slides.

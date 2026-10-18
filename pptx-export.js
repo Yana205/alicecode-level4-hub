@@ -104,6 +104,7 @@ async function downloadPPTX(n) {
     if (it.note) return 0.52;
     if (it.code) return it.code.length * 0.23 + 0.28;
     if (it.rows) return it.rows.length * 0.31 + 0.08;
+    if (it.links) return Math.ceil(it.links.length / 2) * 1.05;
     return 0;
   }
 
@@ -135,6 +136,16 @@ async function downloadPPTX(n) {
       } else if (it.code) {
         s.addShape("roundRect", { x: MX, y, w: CW, h, rectRadius: 0.08, fill: { color: DARKBG } });
         s.addText(join(it.code), { x: MX + 0.2, y: y + 0.07, w: CW - 0.4, h: h - 0.14, fontFace: MONO, fontSize: 10, color: CODE_FG, valign: "top", lineSpacingMultiple: 1.05 });
+      } else if (it.links) {
+        /* 2-column grid of clickable cards */
+        const gap = 0.16, cw = (CW - gap) / 2, rows = Math.ceil(it.links.length / 2), ch = (h - gap * (rows - 1)) / rows;
+        it.links.forEach((c, i) => {
+          const cx = MX + (i % 2) * (cw + gap), cy = y + Math.floor(i / 2) * (ch + gap), col = HEAD_COLORS[c.color || "pink"];
+          s.addShape("roundRect", { x: cx, y: cy, w: cw, h: ch, rectRadius: 0.09, fill: { color: LAV } });
+          s.addText([{ text: c.h, options: { hyperlink: { url: c.url } } }], { x: cx + 0.1, y: cy + 0.05, w: cw - 0.2, h: 0.32, fontFace: HEAD, bold: true, fontSize: 12, color: col });
+          s.addText(c.text, { x: cx + 0.1, y: cy + 0.36, w: cw - 0.2, h: ch - 0.62, valign: "top", fontFace: BODY, fontSize: 10, color: PURPLE });
+          s.addText([{ text: c.url.replace(/^https?:\/\/(www\.)?/, "") + " ↗", options: { hyperlink: { url: c.url } } }], { x: cx + 0.1, y: cy + ch - 0.28, w: cw - 0.2, h: 0.24, fontFace: BODY, bold: true, fontSize: 8.5, color: PINK });
+        });
       } else if (it.rows) {
         s.addTable(it.rows.map(r => ([
           { text: r[0], options: { bold: true, color: PINK, fontFace: HEAD, fontSize: 10 } },
@@ -157,6 +168,16 @@ async function downloadPPTX(n) {
         { text: `Open it live: alicecode-level4-hub.vercel.app → Lessons → Lesson ${lesson.n}`, options: {} }
       ], { x: MX + 0.3, y: BODY_TOP + 0.5, w: CW - 0.6, h: 1.5, align: "center", valign: "middle", fontFace: BODY, fontSize: 14, color: PURPLE, lineSpacingMultiple: 1.3 });
       s.addText("🧪 This one happens in the browser, not on a slide.", { x: MX, y: BODY_TOP + 2.3, w: CW, h: 0.4, align: "center", fontFace: BODY, bold: true, fontSize: 12, color: PINK });
+      return;
+    }
+    if (sl.kind === "demo") {
+      /* live demos can't run inside PowerPoint: show what happens + where to open it */
+      const s = contentBase(sl.title);
+      if (sl.sub) s.addText(sl.sub, { x: MX, y: BODY_TOP - 0.2, w: CW, h: 0.32, align: "center", fontFace: BODY, bold: true, fontSize: 12, color: PINK });
+      addItems(s, [
+        ...(sl.offline ? [{ lines: sl.offline }] : []),
+        { note: `🧪 Live demo — open it in the browser: alicecode-level4-hub.vercel.app → Lesson ${lesson.n}` }
+      ], BODY_TOP + 0.2);
       return;
     }
     if (sl.kind === "newword") {

@@ -90,6 +90,10 @@
       <h2 class="s-title">${esc(s.title)}</h2>
       ${s.sub ? `<div class="s-lead">${esc(s.sub)}</div>` : ""}
       <div class="lab-embed"></div>`;
+    if (s.kind === "demo") return `
+      <h2 class="s-title">${esc(s.title)}</h2>
+      ${s.sub ? `<div class="s-lead">${esc(s.sub)}</div>` : ""}
+      <div class="demo-embed" data-demo="${esc(s.demo)}"></div>`;
     if (s.kind === "newword") return `
       <div class="s-newword">
         <div class="nw-tag">✨ NEW WORD ✨</div>
@@ -111,6 +115,10 @@
       if (it.lines) return `<ul class="s-lines">${it.lines.map(l => `<li>${esc(l)}</li>`).join("")}</ul>`;
       if (it.cards) return `<div class="s-cards">${it.cards.map(c => `
         <div class="s-card ${colorClass(c.color)}"><h4>${esc(c.h)}</h4><p>${c.lines.map(esc).join("<br>")}</p></div>`).join("")}</div>`;
+      if (it.links) return `<div class="s-links">${it.links.map(c => `
+        <a class="s-card s-link ${colorClass(c.color)}" href="${c.url}" target="_blank" rel="noopener">
+          <h4>${esc(c.h)}</h4><p>${esc(c.text)}</p>
+          <span class="s-link-url">${esc(c.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))} ↗</span></a>`).join("")}</div>`;
       if (it.note) return `<div class="s-note">${esc(it.note)}</div>`;
       if (it.code) return `<div class="s-code">${it.code.map(esc).join("\n")}</div>`;
       if (it.rows) return `<table class="s-rows">${it.rows.map(r => `
@@ -124,7 +132,7 @@
         const vis = visualHTML(s.title);
         if (!vis) return `<div class="s-body">${parts}</div>`;
         /* text-only slides put the picture beside the text; card slides stack it on top */
-        const row = !(s.items || []).some(it => it.cards || it.code || it.rows);
+        const row = !(s.items || []).some(it => it.cards || it.code || it.rows || it.links);
         return row ? `<div class="s-body vis-row">${vis}<div class="s-col">${parts}</div></div>`
                    : `<div class="s-body vis-top">${vis}${parts}</div>`;
       })()}`;
@@ -148,6 +156,7 @@
     counter.textContent = `${cur + 1} / ${slides.length}`;
     document.getElementById("prev").disabled = cur === 0;
     document.getElementById("next").disabled = cur === slides.length - 1;
+    slides[cur].dispatchEvent(new CustomEvent("slide-on")); // live demos replay when shown
   }
   document.getElementById("prev").onclick = () => go(cur - 1);
   document.getElementById("next").onclick = () => go(cur + 1);
@@ -159,13 +168,19 @@
     if (e.key === "f" || e.key === "F") toggleFS();
   });
   stage.addEventListener("click", e => {
-    if (e.target.closest("a, .lab-embed, button, textarea, input")) return;
+    if (e.target.closest("a, .lab-embed, .demo-embed, button, textarea, input")) return;
     go(cur + 1);
   });
 
   /* lab slides: init the playground inside the deck */
   stage.querySelectorAll(".slide.k-lab .lab-embed").forEach(el => {
     if (typeof initButtonLab === "function") initButtonLab(el, n, true);
+  });
+
+  /* demo slides: live widgets (demos.js) */
+  stage.querySelectorAll(".slide.k-demo .demo-embed").forEach(el => {
+    const make = (typeof DEMOS !== "undefined") && DEMOS[el.dataset.demo];
+    if (make) make(el);
   });
 
   /* swipe */

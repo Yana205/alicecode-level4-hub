@@ -41,6 +41,13 @@ const LESSONS = [
       ]},
       { note: "Big change: last year you learned code. This year you lead it." }
     ]},
+    { kind: "demo", demo: "agentRace", title: "Chatting vs. building 🤖",
+      sub: "Same job. Left: you click for 20 minutes. Right: your agent does it at 8 AM.",
+      offline: [
+        "😩 AI chat user: type a prompt → wait → copy → paste → ask for an image → save… 20 minutes of clicking.",
+        "🤖 Agent builder: your script wakes up at 8 AM, finds trends with an API,",
+        "writes the script, makes the image and emails it to you — before your coffee is done. ☕"
+      ] },
     { kind: "content", title: "Your secret superpower 🦸‍♀️",
       lead: "You already speak code. Most people asking AI for help — don't.", items: [
       { cards: [
@@ -61,15 +68,14 @@ const LESSONS = [
     ]},
     { kind: "lab", title: "🧪 The Button Lab",
       sub: "Same wish, two prompts — live. Then YOU take the keyboard." },
-    { kind: "content", title: "The big build: TikTok Studio 📱",
-      lead: "One shared project. We build it together, all year.", items: [
-      { cards: [
-        { h: "1️⃣ Trend finder", lines: ["Agent 1 searches:", "what is hot on TikTok today?"] },
-        { h: "2️⃣ Idea maker", lines: ["Agent 2 turns a trend", "into one video idea."], color: "orange" },
-        { h: "3️⃣ Video maker", lines: ["Agent 3 sends the idea", "to a video service."], color: "green" }
-      ]},
-      { note: "Three agents + a database + a screen that shows it all." }
-    ]},
+    { kind: "demo", demo: "studioLoop", title: "The big build: TikTok Studio 📱",
+      sub: "One shared project. We build it together, all year. Click to run it!",
+      offline: [
+        "1️⃣ Trend finder — an API answers: { \"trend\": \"y2k fashion\" }",
+        "2️⃣ Idea maker — a robot thinks… \"Writing script...\"",
+        "3️⃣ Video maker — a TikTok with the image + script pops up.",
+        "Three agents + a database + a screen that shows it all."
+      ] },
     { kind: "content", title: "The road to the hackathon 🗓️", items: [
       { lines: [
         "Weeks 1–2 · P1: refresh APIs and databases",
@@ -97,6 +103,18 @@ const LESSONS = [
       ]},
       { note: "GET = \"please give me data\". The answer comes as JSON." }
     ]},
+    { kind: "beforeafter", title: "A locked door vs. the master key 🔑",
+      before: ["Your app looks amazing…", "…but it's empty. 🫙", "It only knows what you hardcode into it."],
+      after: ["Your app asks the internet.", "Real data. Live. Always fresh.", "fetch() is your master key. 🔑"],
+      note: "REST API = a web address that answers with data (JSON). Pokémon, weather, TikTok trends…" },
+    { kind: "demo", demo: "liveFetch", title: "Live: fetch a real API ⚡",
+      sub: "Type a Pokémon. Press the button. The internet answers.",
+      offline: [
+        "const response = await fetch('https://pokeapi.co/api/v2/pokemon/pikachu');",
+        "const data = await response.json();",
+        "console.log(data.abilities); // Boom. Live data from the internet.",
+        "📮 Postman does exactly this — just in a fancier app."
+      ] },
     { kind: "section", title: "How does an app remember you? 🤔",
       sub: "Close Instagram. Open it again. Your likes are still there. HOW?" },
     { kind: "content", title: "Why a database? 💾", items: [
@@ -106,6 +124,20 @@ const LESSONS = [
         { h: "A database remembers", lines: ["Saved. Organized.", "Fast to search."], color: "green" }
       ]}
     ]},
+    { kind: "demo", demo: "todoForget", title: "Before: variables forget 😱",
+      sub: "Add 2 tasks. Then press the red button. Watch closely…",
+      offline: [
+        "A to-do list that keeps tasks in a variable: let tasks = [ ];",
+        "Add \"Finish homework\" and \"Feed cat\" → refresh the page →",
+        "the list is EMPTY. Variables live in memory — and memory forgets. 😱"
+      ] },
+    { kind: "demo", demo: "todoMongo", title: "After: MongoDB remembers 🧠",
+      sub: "Same app, now with a database. Add a task — watch the document appear.",
+      offline: [
+        "The same to-do list, but every task is saved in MongoDB.",
+        "Add a task → a JSON document appears in the database.",
+        "Refresh the page → the tasks come back. The database remembered. 🎉"
+      ] },
     { kind: "content", title: "What does a good table look like?", items: [
       { code: [
         '{ "id": 1, "title": "cat dance", "likes": 5021 }',
@@ -192,6 +224,19 @@ const LESSONS = [
         ["collection", "a folder of documents in MongoDB"],
         ["document", "one row of data — looks like JSON"],
         ["unique id", "a number/name no other row has"]
+      ]}
+    ]},
+    { kind: "content", title: "Keep Building (Resources) 🚀",
+      lead: "From class to real developer tools.", items: [
+      { links: [
+        { h: "🎓 Frontend Masters", url: "https://frontendmasters.com",
+          text: "For when you want to learn from the engineers who built Netflix and Spotify." },
+        { h: "🔥 freeCodeCamp", url: "https://www.freecodecamp.org", color: "orange",
+          text: "The best free, interactive coding paths on the internet." },
+        { h: "📖 W3Schools", url: "https://www.w3schools.com", color: "green",
+          text: "Your ultimate dictionary for HTML, CSS, and JavaScript. Keep it open while you code." },
+        { h: "📱 Instagram creators", url: "https://www.instagram.com/explore/tags/learntocode/", color: "purple",
+          text: "Fill your feed with code. Follow tech educators so you learn while scrolling." }
       ]}
     ]}
   ]
@@ -1393,7 +1438,6 @@ const VISUALS = {
     "Quick refresh: what is an API? 🌐": { id: "v1-1", prompt: "A waiter carrying a pizza between a phone screen (customer) and a kitchen (server), restaurant scene." },
     "Why a database? 💾": { id: "v1-2", prompt: "Left: an app character forgetting (papers flying away); right: a friendly vault/filing robot keeping everything safe." },
     "Your secret superpower 🦸‍♀️": { id: "v1-3", prompt: "A teen girl superhero, cape made of code brackets, floating icons: HTML tag, paint palette, lightning bolt." },
-    "The big build: TikTok Studio 📱": { id: "v1-4", prompt: "Three cute robots on a conveyor belt: one with a magnifying glass, one with a lightbulb, one with a film clapper." },
     "Same wish, two prompts 🪄": { id: "v1-5", prompt: "Two comic panels: a girl at a laptop gives a vague prompt and a gray robot shrugs; then she gives a precise prompt and a glowing purple robot cheers." },
     "Steps today": { id: "v1-6", prompt: "Four icons on lavender: a pink game controller, a purple database stack, a coffee mug, a glowing lightbulb." }
   },

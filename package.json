@@ -1,0 +1,8 @@
+{
+  "name": "alicecode-level4-hub",
+  "private": true,
+  "description": "Static site + one Vercel function (api/tasks.js) for the MongoDB slide demo. No build step.",
+  "dependencies": {
+    "mongodb": "^6.10.0"
+  }
+}
