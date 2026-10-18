@@ -17,6 +17,7 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `learn-more.html` | Curated free resources: W3Schools, freeCodeCamp, Frontend Masters, MongoDB U, YouTube |
 | `calendar.html` | The whole year — Thursday lessons + fixed events, with an .ics download |
 | `admin.html` | Instructor sign-in (fine-grained GitHub PAT, stored only in the browser) to lock/unlock lessons |
+| `SLIDE-UPGRADE-RULES.md` | Before/after of the Lesson 1 Button Lab upgrade + the global "juice" rules for all decks |
 | `locks.json` | Which lessons are hidden from students (`true` = locked). Edited by the admin page |
 
 ## Class Trello
