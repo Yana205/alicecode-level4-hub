@@ -15,7 +15,8 @@ function demoJSON(v, hotKey, ind = "") {
   if (typeof v === "string") return `<span class="j-str">"${demoEsc(v)}"</span>`;
   return `<span class="j-num">${v}</span>`;
 }
-function demoOnShow(el, fn) { const s = el.closest(".slide"); if (s) s.addEventListener("slide-on", fn); }
+/* a demo lives on a slide or in a lab panel below the deck; both fire "slide-on" when shown */
+function demoOnShow(el, fn) { const s = el.closest(".slide, .lab-panel"); if (s) s.addEventListener("slide-on", fn); }
 
 const DEMOS = {};
 
@@ -432,7 +433,7 @@ npm install`)}
   /* the "video": a scripted loop of terminal + browser */
   const term = el.querySelector(".ex-term-body"), typing = el.querySelector(".ex-typing");
   const ideas = el.querySelector(".ex-ideas"), badge = el.querySelector(".ex-badge"), page = el.querySelector(".ex-page");
-  const slide = el.closest(".slide");
+  const slide = el.closest(".slide, .lab-panel");
   let run = 0;
   const line = (t, cls = "") => { term.innerHTML += `<span class="${cls}">${demoEsc(t)}</span>\n`; term.scrollTop = term.scrollHeight; };
   async function type(text, me) { for (let i = 1; i <= text.length; i++) { if (me !== run) return; typing.textContent = text.slice(0, i); await demoWait(45); } }

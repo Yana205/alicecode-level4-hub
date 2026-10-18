@@ -109,3 +109,11 @@ What changed in the reorder:
 - **Part 2 is the live exercise.** "Create your own collection" became a bonus for fast finishers. The agenda, Part 2 proof, recap, missions, lesson goal and "Today's flow" all match.
 
 17. **One slide, one job.** If two slides say the same thing, merge them or give one a new job (predict → test, teach → recap).
+
+---
+
+## Labs & live demos below the deck
+Every lesson page lists **all** its labs and live demos (any `kind: "lab"` or `kind: "demo"` slide) in one card under the slides:
+‹ › arrows, the lab's name + description in big text, numbered name chips to jump, "▶ show on slide N" to jump the deck there, and ⛶ fullscreen. Each lab is built the first time it's opened and remembers which one you looked at last. New demo slides show up there automatically.
+
+18. **Every live slide is also a tool.** An instructor should be able to open any lab without hunting through the deck.

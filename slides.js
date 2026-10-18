@@ -207,9 +207,31 @@
 
   /* ---------- below the deck ---------- */
   const flow = FLOWS[n];
-  const hasLab = (typeof LAB_PRESETS !== "undefined") && LAB_PRESETS[n];
-  below.innerHTML = `
-    ${hasLab ? `<div class="card reveal lab-card" id="button-lab"></div>` : ""}`;
+  /* every lab + live demo in this deck, in slide order */
+  const labs = lesson.slides.map((s, i) => ({ s, i })).filter(({ s }) =>
+    (s.kind === "lab" && typeof LAB_PRESETS !== "undefined" && LAB_PRESETS[n]) ||
+    (s.kind === "demo" && typeof DEMOS !== "undefined" && DEMOS[s.demo]));
+  below.innerHTML = labs.length ? `
+    <div class="card reveal labs-card" id="labs">
+      <div class="labs-top">
+        <h2>🧪 Labs &amp; live demos <span class="labs-count">${labs.length}</span></h2>
+        <button class="btn small ghost labs-fs" title="Fullscreen">⛶</button>
+      </div>
+      <p class="muted">Every lab from today's slides, ready to use on its own. ‹ › to switch.</p>
+      <div class="labs-nav">
+        <button class="labs-arrow" data-dir="-1" aria-label="Previous lab">‹</button>
+        <div class="labs-now">
+          <div class="labs-name"></div>
+          <div class="labs-meta"><span class="labs-pos"></span> · <button class="labs-jump"></button></div>
+          <div class="labs-sub"></div>
+        </div>
+        <button class="labs-arrow" data-dir="1" aria-label="Next lab">›</button>
+      </div>
+      <div class="labs-chips">${labs.map(({ s }, k) => `<button class="labs-chip" data-k="${k}">${k + 1} · ${esc(s.title)}</button>`).join("")}</div>
+      <div class="labs-panels">${labs.map(({ s }, k) => `
+        <div class="lab-panel k-${s.kind}" data-k="${k}">${s.kind === "lab" ? `<div class="lab-embed"></div>` : `<div class="demo-embed" data-demo="${esc(s.demo)}"></div>`}</div>`).join("")}
+      </div>
+    </div>` : "";
   below.innerHTML += `
     <div class="card reveal">
       <h2>🎯 Today's goal</h2>
@@ -250,6 +272,46 @@
 
   const missionList = document.getElementById("mission-list");
   if (missionList) bindChecklist(missionList, `ac4-missions-l${lesson.n}`);
-  if (hasLab) initButtonLab(document.getElementById("button-lab"), n);
+  if (labs.length) initLabs();
+
+  /* ---------- labs carousel: ‹ › through every lab, built on first view ---------- */
+  function initLabs() {
+    const card = document.getElementById("labs");
+    const panels = [...card.querySelectorAll(".lab-panel")], chips = [...card.querySelectorAll(".labs-chip")];
+    const built = new Set(), key = `ac4-labs-l${n}`;
+    let k = 0;
+    try { k = Math.min(labs.length - 1, Math.max(0, +localStorage.getItem(key) || 0)); } catch (e) {}
+
+    function build(j) {
+      if (built.has(j)) return;
+      built.add(j);
+      const el = panels[j].firstElementChild, s = labs[j].s;
+      if (s.kind === "lab") initButtonLab(el, n, true);
+      else DEMOS[s.demo](el);
+    }
+    function show(j) {
+      k = (j + labs.length) % labs.length;
+      build(k);
+      const { s, i } = labs[k];
+      panels.forEach((p, x) => p.classList.toggle("on", x === k));
+      chips.forEach((c, x) => c.classList.toggle("on", x === k));
+      card.querySelector(".labs-name").textContent = s.title;
+      card.querySelector(".labs-sub").textContent = s.sub || "";
+      card.querySelector(".labs-pos").textContent = `${k + 1} of ${labs.length}`;
+      card.querySelector(".labs-jump").textContent = `▶ show on slide ${i + 1}`;
+      panels[k].dispatchEvent(new CustomEvent("slide-on")); // demos replay like on the slide
+      try { localStorage.setItem(key, k); } catch (e) {}
+    }
+    card.querySelectorAll(".labs-arrow").forEach(b => b.addEventListener("click", () => show(k + +b.dataset.dir)));
+    chips.forEach(c => c.addEventListener("click", () => show(+c.dataset.k)));
+    card.querySelector(".labs-jump").addEventListener("click", () => {
+      go(labs[k].i); stageWrap.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    card.querySelector(".labs-fs").addEventListener("click", () => {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else card.requestFullscreen && card.requestFullscreen();
+    });
+    show(k);
+  }
   if (window.armReveal) window.armReveal();
 })();

@@ -753,7 +753,6 @@ a.cal-ev:hover { transform: translateX(4px); }
 }
 
 /* ---------- Button Lab (Upgrade C) ---------- */
-.lab-card:fullscreen { background: #fff; overflow-y: auto; padding: 30px; }
 .lab-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
 .lab-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; min-height: 340px; }
 .lab-editor-wrap { display: flex; flex-direction: column; }
@@ -1172,4 +1171,37 @@ kbd { background: #fff; border: 1px solid #CFC9D6; border-bottom-width: 2px; bor
 }
 @media (prefers-reduced-motion: reduce) {
   .sl-robot, .sl-art span, .sl-arrow, .sl-think { animation: none; }
+}
+
+/* ============================================================
+   Labs carousel below the deck — every lab/demo of the lesson
+   ============================================================ */
+.labs-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.labs-count { display: inline-block; background: var(--pink); color: #fff; border-radius: 999px; font-size: .55em; padding: 2px 10px; vertical-align: middle; }
+.labs-fs { box-shadow: none; border-color: var(--pink); color: var(--pink); }
+.labs-nav { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; margin: 14px 0 10px; }
+.labs-arrow { width: 46px; height: 46px; border-radius: 50%; border: none; background: var(--pink); color: #fff; font-size: 1.6rem; font-weight: 800; line-height: 1; cursor: pointer; box-shadow: 0 6px 16px rgba(216,52,116,.4); transition: transform .15s; }
+.labs-arrow:hover { transform: scale(1.1); }
+.labs-now { text-align: center; min-width: 0; }
+.labs-name { font-family: var(--font-head); font-weight: 800; font-size: clamp(1.15rem, 2.6vw, 1.6rem); color: var(--ink); animation: pop-in .3s ease; }
+.labs-meta { font-weight: 800; font-size: .85rem; color: var(--pink); }
+.labs-jump { border: none; background: none; color: var(--pink); font: inherit; text-decoration: underline; cursor: pointer; padding: 0; }
+.labs-sub { color: var(--ink-soft); font-weight: 600; font-size: .92rem; margin-top: 2px; }
+.labs-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 14px; }
+.labs-chip { border: 2px solid var(--pink-soft); background: #fff; color: var(--ink); border-radius: 999px; padding: 4px 12px; font: 700 .8rem var(--font-body); cursor: pointer; transition: all .15s; }
+.labs-chip:hover { border-color: var(--pink); }
+.labs-chip.on { background: var(--pink); border-color: var(--pink); color: #fff; }
+.lab-panel { display: none; }
+.lab-panel.on { display: flex; flex-direction: column; height: clamp(460px, 52vw, 580px); }
+.lab-panel .demo-embed { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 8px; position: relative; font-size: clamp(.7rem, 1.1vw, .9rem); }
+.lab-panel .lab-embed { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.lab-panel .lab-buttons { justify-content: center; }
+.lab-panel .lab-split { flex: 1; min-height: 0; }
+.lab-panel .lab-code, .lab-panel .lab-preview { min-height: 0; }
+.labs-card:fullscreen { background: #fff; overflow-y: auto; padding: 24px; }
+.labs-card:fullscreen .lab-panel.on { height: calc(100vh - 250px); }
+@media (max-width: 700px) {
+  .lab-panel.on { height: auto; min-height: 640px; }
+  .lab-panel .lab-split { min-height: 420px; }
+  .labs-arrow { width: 38px; height: 38px; font-size: 1.3rem; }
 }
