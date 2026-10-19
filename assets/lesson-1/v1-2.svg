@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 560" width="1600" height="560" font-family="Nunito, 'Baloo 2', system-ui, sans-serif">
+  <!-- AliceCode L1 · "Why a database?" — how an app remembers: app → server → MongoDB.
+       Source for v1-2.png (rendered 2x). Edit here, then re-render. -->
+  <defs>
+    <marker id="ar-pink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#D83474"/></marker>
+    <marker id="ar-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#12924F"/></marker>
+    <linearGradient id="phone" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#674C9B"/><stop offset="1" stop-color="#B43F82"/></linearGradient>
+    <linearGradient id="cyl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E3FCF0"/><stop offset=".5" stop-color="#F6FFFA"/><stop offset="1" stop-color="#DDF7EA"/></linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="560" rx="28" fill="#FBF8FE"/>
+
+  <!-- ============ 1 · the app ============ -->
+  <text x="190" y="54" text-anchor="middle" font-family="'Baloo 2', Nunito, sans-serif" font-weight="800" font-size="34" fill="#3B1F5C">📱 Your app</text>
+  <rect x="100" y="80" width="180" height="330" rx="30" fill="url(#phone)"/>
+  <rect x="114" y="104" width="152" height="282" rx="18" fill="#fff"/>
+  <rect x="134" y="124" width="112" height="112" rx="14" fill="#F3EAFD"/>
+  <text x="190" y="196" text-anchor="middle" font-size="54">🐱</text>
+  <text x="190" y="270" text-anchor="middle" font-weight="800" font-size="24" fill="#3B1F5C">cat dance</text>
+  <text x="190" y="312" text-anchor="middle" font-weight="800" font-size="28" fill="#D83474">❤️ 5,021</text>
+  <rect x="140" y="336" width="100" height="32" rx="16" fill="#D83474"/>
+  <text x="190" y="359" text-anchor="middle" font-weight="800" font-size="19" fill="#fff">Like</text>
+  <text x="190" y="446" text-anchor="middle" font-weight="700" font-size="22" fill="#6B5590">what you see</text>
+  <text x="190" y="474" text-anchor="middle" font-weight="700" font-size="22" fill="#6B5590">and tap</text>
+
+  <!-- ============ 2 · the server ============ -->
+  <text x="755" y="54" text-anchor="middle" font-family="'Baloo 2', Nunito, sans-serif" font-weight="800" font-size="34" fill="#3B1F5C">⚙️ Server</text>
+  <rect x="590" y="80" width="330" height="200" rx="22" fill="#241436"/>
+  <circle cx="618" cy="104" r="7" fill="#E04F5F"/><circle cx="640" cy="104" r="7" fill="#FFD166"/><circle cx="662" cy="104" r="7" fill="#2FB380"/>
+  <text x="612" y="150" font-family="'JetBrains Mono', monospace" font-size="21" fill="#EDE4FA"><tspan fill="#FFD166">app.post</tspan>('<tspan fill="#9FF0C8">/like</tspan>')</text>
+  <text x="612" y="186" font-family="'JetBrains Mono', monospace" font-size="21" fill="#EDE4FA">→ <tspan fill="#FFD166">insertOne</tspan>(…)</text>
+  <text x="612" y="230" font-family="'JetBrains Mono', monospace" font-size="21" fill="#EDE4FA"><tspan fill="#FFD166">app.get</tspan>('<tspan fill="#9FF0C8">/videos</tspan>')</text>
+  <text x="612" y="266" font-family="'JetBrains Mono', monospace" font-size="21" fill="#EDE4FA">→ <tspan fill="#FFD166">find</tspan>()</text>
+
+  <!-- RAM: forgets -->
+  <rect x="590" y="320" width="330" height="150" rx="22" fill="#FFF0F2" stroke="#E04F5F" stroke-width="3" stroke-dasharray="10 7"/>
+  <text x="755" y="360" text-anchor="middle" font-weight="800" font-size="25" fill="#E04F5F">🧠 RAM (variables)</text>
+  <text x="755" y="400" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="22" fill="#3B1F5C">let likes = 5021</text>
+  <text x="755" y="444" text-anchor="middle" font-weight="800" font-size="23" fill="#E04F5F">✗ wiped on restart</text>
+
+  <!-- ============ 3 · MongoDB ============ -->
+  <text x="1335" y="54" text-anchor="middle" font-family="'Baloo 2', Nunito, sans-serif" font-weight="800" font-size="34" fill="#3B1F5C">🍃 MongoDB</text>
+  <path d="M1110 108 v300 a225 34 0 0 0 450 0 v-300" fill="url(#cyl)" stroke="#12924F" stroke-width="3"/>
+  <ellipse cx="1335" cy="108" rx="225" ry="34" fill="#C9F4DE" stroke="#12924F" stroke-width="3"/>
+  <text x="1335" y="116" text-anchor="middle" font-weight="800" font-size="21" fill="#00684A">database: studio</text>
+  <text x="1136" y="178" font-weight="800" font-size="22" fill="#00684A">📁 collection: videos</text>
+  <g font-family="'JetBrains Mono', monospace" font-size="17" fill="#001E2B">
+    <rect x="1132" y="196" width="406" height="50" rx="12" fill="#fff" stroke="#00ED64" stroke-width="3"/>
+    <text x="1146" y="227">{ <tspan fill="#016BF8">title</tspan>: <tspan fill="#12924F">"cat dance"</tspan>, <tspan fill="#016BF8">likes</tspan>: <tspan fill="#B45AF2">5021</tspan> }</text>
+    <rect x="1132" y="258" width="406" height="50" rx="12" fill="#fff" stroke="#C1E7D0" stroke-width="2"/>
+    <text x="1146" y="289">{ <tspan fill="#016BF8">title</tspan>: <tspan fill="#12924F">"pasta hack"</tspan>, <tspan fill="#016BF8">likes</tspan>: <tspan fill="#B45AF2">812</tspan> }</text>
+    <rect x="1132" y="320" width="406" height="50" rx="12" fill="#fff" stroke="#C1E7D0" stroke-width="2"/>
+    <text x="1146" y="351">{ <tspan fill="#016BF8">title</tspan>: <tspan fill="#12924F">"study tips"</tspan>, <tspan fill="#016BF8">likes</tspan>: <tspan fill="#B45AF2">4433</tspan> }</text>
+  </g>
+  <text x="1335" y="398" text-anchor="middle" font-weight="700" font-size="19" fill="#5C6C75">each box = one document (like JSON)</text>
+  <text x="1335" y="478" text-anchor="middle" font-weight="800" font-size="24" fill="#12924F">💾 saved on disk · ✓ survives restart</text>
+
+  <!-- ============ arrows: 1-2 go right (save), 3-4 come back (read) ============ -->
+  <g font-weight="800" font-size="21">
+    <path d="M296 160 H574" stroke="#D83474" stroke-width="5" fill="none" marker-end="url(#ar-pink)"/>
+    <circle cx="340" cy="160" r="17" fill="#D83474"/><text x="340" y="167" text-anchor="middle" fill="#fff">1</text>
+    <text x="456" y="146" text-anchor="middle" fill="#D83474">tap ❤️ → request</text>
+
+    <path d="M936 160 H1094" stroke="#D83474" stroke-width="5" fill="none" marker-end="url(#ar-pink)"/>
+    <circle cx="972" cy="160" r="17" fill="#D83474"/><text x="972" y="167" text-anchor="middle" fill="#fff">2</text>
+    <text x="1030" y="146" text-anchor="middle" fill="#D83474">save</text>
+
+    <path d="M1094 240 H936" stroke="#12924F" stroke-width="5" fill="none" marker-end="url(#ar-green)"/>
+    <circle cx="1058" cy="240" r="17" fill="#12924F"/><text x="1058" y="247" text-anchor="middle" fill="#fff">3</text>
+    <text x="1012" y="276" text-anchor="middle" fill="#12924F">read</text>
+
+    <path d="M574 240 H296" stroke="#12924F" stroke-width="5" fill="none" marker-end="url(#ar-green)"/>
+    <circle cx="538" cy="240" r="17" fill="#12924F"/><text x="538" y="247" text-anchor="middle" fill="#fff">4</text>
+    <text x="430" y="276" text-anchor="middle" fill="#12924F">JSON → show it</text>
+  </g>
+
+  <!-- bottom line -->
+  <text x="800" y="536" text-anchor="middle" font-weight="800" font-size="24" fill="#3B1F5C">Close the app, restart the server — the likes come back from the database. 🎉</text>
+</svg>

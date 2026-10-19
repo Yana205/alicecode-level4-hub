@@ -7,6 +7,10 @@
 
 const NIR_TUTORIAL = "https://github.com/nirkaufman/refernce-project-js/tree/main/tutorial";
 
+/* The class database login shown on the Part 1 slide. Leave empty and the teacher pastes it in class
+   (saved only in that browser). Anything written here is PUBLIC on the website and on GitHub. */
+const CLASS_DB = { studentUri: "" };
+
 const LESSONS = [
 
 /* ================= LESSON 1 ================= */
@@ -23,7 +27,7 @@ const LESSONS = [
   ],
   missions: [
     "Prompt practice: ask an AI for one small change using at least 3 words from the keyword bank (flexbox, hover, id…).",
-    "Open the ready-made Mongo database and finish the 4 small exercises (read, filter, count).",
+    "Open the ready-made Mongo database (alicecode › videos) and finish the 4 small exercises: read, filter, count, sort.",
     "Find: which video has the most likes?",
     "Connect the Idea Tracker to MongoDB: add an idea, restart the server — it's still there.",
     "Find YOUR document in MongoDB Atlas with a filter. 🔍",
@@ -163,16 +167,15 @@ const LESSONS = [
         "All rows share the same fields"
       ]}
     ]},
-    { kind: "content", title: "Part 1 · Task ✅",
-      lead: "Clean and small. Everyone finishes this one.", items: [
-      { lines: [
-        "Open the ready-made Mongo database.",
-        "4 small exercises: read, filter, count.",
-        "Find: which video has the most likes?",
-        "Stuck 5 minutes? Ask. That's the rule."
-      ]},
-      { note: "Goal: read data like a pro. 💜" }
-    ]},
+    { kind: "demo", demo: "readyDb", title: "Part 1 · Task ✅",
+      sub: "The ready-made database: 30 TikTok videos. Read, filter, count, sort. Stuck 5 minutes? Ask.",
+      offline: [
+        "Log in at cloud.mongodb.com → Browse Collections → alicecode › videos",
+        "1 · 👀 Read: how many videos are there?",
+        "2 · 🔍 Filter: only dance videos → { \"category\": \"dance\" }",
+        "3 · 🔢 Count: more than 10,000 likes → { \"likes\": { \"$gt\": 10000 } }",
+        "4 · 🏆 Sort: which video has the most likes? → sort { \"likes\": -1 }"
+      ] },
     { kind: "beforeafter", title: "Proof time 📸",
       before: ["You scroll the data", "and guess the answer.", "Slow. Maybe wrong."],
       after: ["One query.", "One exact answer.", "Two seconds. ⚡"],
@@ -233,16 +236,16 @@ const LESSONS = [
       { note: "Next week the AI starts working for you. 🤖" }
     ]},
     { kind: "content", title: "The Builder's Toolkit (Resources) 🚀",
-      lead: "Keep building at home — not homework, only if you're curious.", items: [
+      lead: "Your path: look it up → practice → go pro → learn every day. Not homework!", items: [
       { links: [
-        { h: "🎓 Frontend Masters", url: "https://frontendmasters.com",
-          text: "Pro web-dev courses — learn from the engineers who built Netflix and Spotify." },
-        { h: "🔥 freeCodeCamp", url: "https://www.freecodecamp.org", color: "orange",
-          text: "The ultimate free, interactive coding curriculum on the internet." },
-        { h: "📖 W3Schools", url: "https://www.w3schools.com", color: "green",
-          text: "The dictionary for HTML, CSS and JavaScript. Keep it open while you code." },
-        { h: "📱 Instagram + TikTok creators", url: "https://www.instagram.com/explore/tags/learntocode/", color: "purple",
-          text: "Fill your feed with code: follow tech educators (#learntocode) so you learn while scrolling." }
+        { h: "1 · 📖 W3Schools", url: "https://www.w3schools.com", color: "green",
+          text: "Look it up: the dictionary for HTML, CSS and JavaScript. Keep it open while you code." },
+        { h: "2 · 🔥 freeCodeCamp", url: "https://www.freecodecamp.org", color: "orange",
+          text: "Practice: the best free, interactive coding paths on the internet." },
+        { h: "3 · 🎓 Frontend Masters", url: "https://frontendmasters.com",
+          text: "Go pro: courses from the engineers who built Netflix and Spotify." },
+        { h: "4 · 📱 Instagram creators", url: "https://www.instagram.com/explore/tags/learntocode/", color: "purple",
+          text: "Every day: fill your feed with code — follow tech educators and learn while scrolling." }
       ]}
     ]},
     { kind: "content", title: "Glossary 📖", items: [
@@ -1303,7 +1306,7 @@ const FLOWS = {
     material: "Slides: API refresh (live fetch, Postman, JSON) + why apps need databases (live demos).",
     discussion: "Where does your favorite app keep its stuff? What would happen if it forgot everything every night?",
     demo: "Yan opens a real Mongo database live and finds the most-liked video with ONE query.",
-    exercises: "4 tiny Mongo exercises — read, filter, count. Everyone finishes. 📸 screenshot your answer.",
+    exercises: "4 tiny exercises on the ready-made videos collection — read, filter, count, sort. Everyone finishes. 📸 screenshot your answer.",
     building: "Connect the TikTok Idea Tracker to MongoDB (Clone → Add code → Test), then find YOUR document in Atlas. Bonus: your own collection.",
     sources: [
       { label: "MongoDB basics", url: "https://www.mongodb.com/basics" },
@@ -1456,7 +1459,7 @@ const VISUAL_STYLE = "Flat friendly cartoon illustration, rounded shapes, purple
 const VISUALS = {
   1: {
     "Quick refresh: what is an API? 🌐": { id: "v1-1", prompt: "A waiter carrying a pizza between a phone screen (customer) and a kitchen (server), restaurant scene." },
-    "Why a database? 💾": { id: "v1-2", prompt: "Left: an app character forgetting (papers flying away); right: a friendly vault/filing robot keeping everything safe." },
+    "Why a database? 💾": { id: "v1-2", prompt: "Diagram: app → server → MongoDB (source: assets/lesson-1/v1-2.svg)." },
     "Your secret superpower 🦸‍♀️": { id: "v1-3", prompt: "A teen girl superhero, cape made of code brackets, floating icons: HTML tag, paint palette, lightning bolt." },
     "Same wish, two prompts 🪄": { id: "v1-5", prompt: "Two comic panels: a girl at a laptop gives a vague prompt and a gray robot shrugs; then she gives a precise prompt and a glowing purple robot cheers." },
     "Steps today": { id: "v1-6", prompt: "Four icons on lavender: a pink game controller, a purple database stack, a coffee mug, a glowing lightbulb." }

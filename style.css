@@ -1099,7 +1099,7 @@ a.cal-ev:hover { transform: translateX(4px); }
 .ex-panel p { margin: 4px 0; font-weight: 600; }
 .ex-panel code, .vf-steps code { background: #F3EAF7; border-radius: 5px; padding: 0 5px; font: .9em var(--font-code); color: var(--ink); }
 .ex-code { position: relative; background: #241436; border-radius: 10px; margin: 4px 0 6px; }
-.ex-code pre { margin: 0; padding: 8px 10px; color: #9FF0C8; font: .82em/1.5 var(--font-code); white-space: pre-wrap; word-break: break-all; }
+.ex-code pre { margin: 0; padding: 8px 76px 8px 10px; color: #9FF0C8; font: .82em/1.5 var(--font-code); white-space: pre-wrap; word-break: break-all; }
 .ex-file { display: block; padding: 4px 10px 0; color: #8E7BB0; font: 700 .72em var(--font-code); }
 .ex-copy { position: absolute; top: 4px; right: 6px; border: none; background: rgba(255,255,255,.12); color: #EDE4FA; border-radius: 6px; padding: 1px 7px; font: 700 .72em var(--font-body); cursor: pointer; }
 .ex-copy:hover { background: var(--pink); }
@@ -1150,6 +1150,28 @@ kbd { background: #fff; border: 1px solid #CFC9D6; border-bottom-width: 2px; bor
 .at-k { color: #016BF8; } .at-oid { color: #00684A; } .at-s { color: #12924F; } .at-d { color: #B45AF2; }
 .vf-none { text-align: center; padding: 18px 0; color: #889397; font-weight: 700; }
 
+/* Part 1 · ready-made database: class login + exercises + practice copy */
+.rd { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1.15fr; gap: 12px; }
+.rd-left { display: flex; flex-direction: column; gap: 8px; min-height: 0; overflow: auto; }
+.cdb { background: #001E2B; color: #E8EDEB; border-radius: 14px; padding: 8px 12px; display: flex; flex-direction: column; gap: 5px; }
+.cdb-head { font-family: var(--font-head); font-weight: 800; color: #00ED64; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.cdb-head span { font-family: var(--font-body); font-size: .8em; color: #C1C7C6; } .cdb-head b { color: #fff; }
+.cdb-row { font-size: .85em; } .cdb-row a { color: #00ED64; font-weight: 800; } .cdb-row small { color: #889397; }
+.cdb-uri { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.cdb-val { flex: 1; min-width: 0; background: rgba(255,255,255,.08); border-radius: 7px; padding: 4px 8px; font: .78em var(--font-code); color: #fff; word-break: break-all; }
+.cdb-in { flex: 1; min-width: 0; padding: 5px 8px; border-radius: 7px; border: 1.5px dashed #00ED64; background: transparent; color: #fff; font: .8em var(--font-code); outline: none; }
+.cdb-in::placeholder { color: #889397; }
+.cdb-btn { border: none; border-radius: 7px; padding: 4px 9px; background: #00ED64; color: #001E2B; font: 800 .78em var(--font-body); cursor: pointer; }
+.cdb-note { width: 100%; color: #889397; font-size: .72em; }
+.rd-ex { margin: 0; padding: 8px 12px 8px 30px; background: #E5DBFD; border-radius: 14px; color: #43317E; display: flex; flex-direction: column; gap: 6px; font-weight: 600; line-height: 1.35; }
+.rd-ex b { color: var(--ink); }
+.rd-try { display: block; margin-top: 2px; border: 1.5px solid var(--pink-soft); background: #fff; color: var(--ink); border-radius: 8px; padding: 1px 8px; font: 700 .8em var(--font-body); cursor: pointer; text-align: left; }
+.rd-try:hover { border-color: var(--pink); }
+.rd-try code { font: .95em var(--font-code); color: var(--pink); }
+.rd-ans details { background: #FFF8E5; border-radius: 10px; padding: 5px 10px; font-size: .82em; font-weight: 700; color: var(--ink); }
+.rd-ans summary { cursor: pointer; color: #B7791F; }
+.rd-atlas .vf-bar + .vf-bar { border-top: none; padding-top: 0; }
+
 /* Part 3 · clickable resource cards */
 .s-links { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(8px, 1.4vw, 14px); }
 .s-link { text-decoration: none; display: flex; flex-direction: column; text-align: left; transition: transform .2s, box-shadow .2s; }
@@ -1159,7 +1181,7 @@ kbd { background: #fff; border: 1px solid #CFC9D6; border-bottom-width: 2px; bor
 
 @media (max-width: 700px) {
   .slide.k-demo { overflow-y: auto; }
-  .race, .lf, .td, .tt, .ex, .vf { grid-template-columns: 1fr; }
+  .race, .lf, .td, .tt, .ex, .vf, .rd { grid-template-columns: 1fr; }
   .tj-stage.formatted { grid-template-columns: 1fr; }
   .ex-right { min-height: 340px; } .tt-pm { min-height: 360px; }
   .race { grid-template-rows: 260px 220px; }

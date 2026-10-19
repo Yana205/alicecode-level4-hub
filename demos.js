@@ -16,6 +16,41 @@ function demoJSON(v, hotKey, ind = "") {
   return `<span class="j-num">${v}</span>`;
 }
 /* a demo lives on a slide or in a lab panel below the deck; both fire "slide-on" when shown */
+/* Atlas accepts relaxed JSON like { name: 'Noa' } — so do we */
+function demoParseQuery(text) {
+  const t = String(text || "").trim(); if (!t) return {};
+  try { return JSON.parse(t); } catch (e) {}
+  return JSON.parse(t.replace(/'/g, '"').replace(/([{,]\s*)(\$?[A-Za-z_][\w$]*)\s*:/g, '$1"$2":'));
+}
+/* equality plus $gt $gte $lt $lte $ne $in — enough for class; ci = ignore capital letters */
+function demoMatch(doc, q, ci) {
+  const norm = v => ci && typeof v === "string" ? v.toLowerCase() : v;
+  return Object.entries(q).every(([k, cond]) => {
+    const v = norm(doc[k]);
+    if (cond && typeof cond === "object" && !Array.isArray(cond)) return Object.entries(cond).every(([op, x]) => {
+      x = norm(x);
+      if (op === "$gt") return v > x; if (op === "$gte") return v >= x;
+      if (op === "$lt") return v < x; if (op === "$lte") return v <= x;
+      if (op === "$ne") return v !== x; if (op === "$in") return Array.isArray(x) && x.map(norm).includes(v);
+      throw new Error("unknown operator " + op);
+    });
+    return v === norm(cond);
+  });
+}
+function demoSort(list, s) {
+  const [[k, dir] = []] = Object.entries(s || {});
+  return k ? list.slice().sort((a, b) => (a[k] > b[k] ? 1 : a[k] < b[k] ? -1 : 0) * (dir < 0 ? -1 : 1)) : list;
+}
+
+/* the class database: the student connection string the teacher pastes on the Part 1 slide.
+   Kept in this browser only (or CLASS_DB.studentUri in lessons-data.js, if you choose to publish it). */
+const CLASS_DB_KEY = "ac4-class-db";
+function classDbUri() {
+  if (typeof CLASS_DB !== "undefined" && CLASS_DB.studentUri) return CLASS_DB.studentUri;
+  try { return localStorage.getItem(CLASS_DB_KEY) || ""; } catch (e) { return ""; }
+}
+const classDbMasked = u => u.replace(/(\/\/[^:\/]+:)[^@]+@/, "$1••••••@");
+
 function demoOnShow(el, fn) { const s = el.closest(".slide, .lab-panel"); if (s) s.addEventListener("slide-on", fn); }
 
 const DEMOS = {};
@@ -386,7 +421,7 @@ npm install`)}
         <p class="ex-small">No Node.js? <a href="https://codespaces.new/${REPO}" target="_blank" rel="noopener">Open in GitHub Codespaces ↗</a> → <code>cd starter/idea-tracker</code></p>` },
     { h: "🔌 2 · Add code", body: `
         <p>Make a <code>.env</code> file with the class string (your teacher has it):</p>
-        ${code(`MONGODB_URI=mongodb+srv://…`, ".env")}
+        ${code(`MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher pastes it on the Part 1 slide)"}`, ".env")}
         <p>In <code>server.js</code>, swap the 🎯 lines for:</p>
         ${code(`await db.collection("ideas").insertOne(idea);`, "STEP 2a")}
         ${code(`const all = await db.collection("ideas")
@@ -455,6 +490,9 @@ npm install`)}
   }
   el.querySelector(".ex-replay").addEventListener("click", play);
   demoOnShow(el, play);
+  /* the .env line picks up the class string the teacher pasted on the Part 1 slide */
+  const envPre = [...el.querySelectorAll(".ex-file")].find(x => x.textContent === ".env").nextElementSibling;
+  demoOnShow(el, () => { envPre.textContent = `MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher pastes it on the Part 1 slide)"}`; });
 };
 
 /* ============================================================
@@ -491,12 +529,6 @@ DEMOS.vaultFind = function (el) {
   const input = el.querySelector(".vf-input"), docsEl = el.querySelector(".vf-docs"), msg = el.querySelector(".vf-msg");
   let docs = SAMPLE;
 
-  /* Atlas accepts relaxed JSON like { name: 'Noa' } — so do we */
-  function parse(text) {
-    const t = text.trim(); if (!t) return {};
-    try { return JSON.parse(t); } catch (e) {}
-    return JSON.parse(t.replace(/'/g, '"').replace(/([{,]\s*)([A-Za-z_$][\w$]*)\s*:/g, '$1"$2":'));
-  }
   function draw(list, hit) {
     msg.innerHTML = `QUERY RESULTS: <b>${list.length ? `1-${list.length} OF ${list.length}` : "0"}</b>`;
     docsEl.innerHTML = list.map(d => `
@@ -509,8 +541,8 @@ DEMOS.vaultFind = function (el) {
   }
   function apply() {
     let q;
-    try { q = parse(input.value); } catch (e) { msg.innerHTML = `<b class="bad">🤔 That filter isn't valid — check the { } and the quotes.</b>`; docsEl.innerHTML = ""; return; }
-    const match = (d, ci) => Object.entries(q).every(([k, v]) => ci ? String(d[k]).toLowerCase() === String(v).toLowerCase() : d[k] === v);
+    try { q = demoParseQuery(input.value); } catch (e) { msg.innerHTML = `<b class="bad">🤔 That filter isn't valid — check the { } and the quotes.</b>`; docsEl.innerHTML = ""; return; }
+    const match = (d, ci) => demoMatch(d, q, ci);
     const list = docs.filter(d => match(d, false));
     draw(list, Object.keys(q).length > 0 && list.length > 0);
     if (!list.length && docs.some(d => match(d, true))) msg.innerHTML += ` · <b class="bad">MongoDB is case-sensitive — check capital letters!</b>`;
@@ -533,4 +565,114 @@ DEMOS.vaultFind = function (el) {
       el.querySelector(".vf-mode").textContent = live ? "🟢 live" : "🟡 sample data";
       draw(docs);
     });
+};
+
+/* ============================================================
+   Part 1 · the ready-made database — class login + 4 exercises + a practice copy
+   ============================================================ */
+DEMOS.readyDb = function (el) {
+  const EX = [
+    { ic: "👀", h: "Read", q: "How many videos are there?", f: "", s: "" },
+    { ic: "🔍", h: "Filter", q: "Show only the dance videos.", f: '{ "category": "dance" }', s: "" },
+    { ic: "🔢", h: "Count", q: "How many have more than 10,000 likes?", f: '{ "likes": { "$gt": 10000 } }', s: "" },
+    { ic: "🏆", h: "Sort", q: "Which video has the MOST likes?", f: "", s: '{ "likes": -1 }' }
+  ];
+  el.innerHTML = `
+    <div class="rd">
+      <div class="rd-left">
+        <div class="cdb">
+          <div class="cdb-head">🔑 Class database <span>alicecode › <b>videos</b></span></div>
+          <div class="cdb-row">Log in: <a href="https://cloud.mongodb.com" target="_blank" rel="noopener">cloud.mongodb.com ↗</a> <small>(your teacher invited you)</small></div>
+          <div class="cdb-uri"></div>
+        </div>
+        <ol class="rd-ex">${EX.map((x, i) => `
+          <li><b>${x.ic} ${x.h}</b> ${x.q}
+            ${x.f || x.s ? `<button class="rd-try" data-i="${i}">${x.f ? `Filter <code>${demoEsc(x.f)}</code>` : `Sort <code>${demoEsc(x.s)}</code>`}</button>` : ""}
+          </li>`).join("")}
+        </ol>
+        <div class="rd-ans"></div>
+      </div>
+      <div class="vf-atlas rd-atlas">
+        <div class="vf-top">🍃 <b>MongoDB Atlas</b> <span>alicecode › <b>videos</b></span> <i class="vf-mode">practice copy</i></div>
+        <div class="vf-bar"><span class="vf-label">Filter</span><input class="vf-input rd-f" placeholder="{ field: 'value' }" spellcheck="false" aria-label="Filter"></div>
+        <div class="vf-bar"><span class="vf-label">Sort</span><input class="vf-input rd-s" placeholder="{ field: -1 }" spellcheck="false" aria-label="Sort">
+          <button class="vf-apply">Apply</button><button class="vf-reset">Reset</button></div>
+        <div class="vf-msg"></div>
+        <div class="vf-docs"></div>
+      </div>
+    </div>`;
+
+  const f = el.querySelector(".rd-f"), s = el.querySelector(".rd-s");
+  const msg = el.querySelector(".vf-msg"), docsEl = el.querySelector(".vf-docs"), uriEl = el.querySelector(".cdb-uri");
+  let videos = [];
+
+  /* 🔑 the student connection string: paste once, copy many times */
+  function drawUri(editing) {
+    const uri = classDbUri(), fixed = typeof CLASS_DB !== "undefined" && CLASS_DB.studentUri;
+    if (uri && !editing) {
+      uriEl.innerHTML = `<code class="cdb-val">${demoEsc(classDbMasked(uri))}</code>
+        <button class="cdb-btn" data-a="show" title="Show / hide the password">👁</button>
+        <button class="cdb-btn" data-a="copy">📋 copy</button>
+        ${fixed ? "" : `<button class="cdb-btn" data-a="edit" title="Change">✎</button>`}`;
+    } else {
+      uriEl.innerHTML = `<input class="cdb-in" placeholder="Teacher: paste the student connection string" spellcheck="false" value="${demoEsc(uri)}">
+        <button class="cdb-btn" data-a="save">Save</button>`;
+    }
+    uriEl.insertAdjacentHTML("beforeend", `<small class="cdb-note">${fixed ? "Set in lessons-data.js" : "Saved in this browser only — never on the website."}</small>`);
+  }
+  uriEl.addEventListener("click", async e => {
+    const a = e.target.dataset && e.target.dataset.a; if (!a) return;
+    if (a === "save") {
+      const v = uriEl.querySelector(".cdb-in").value.trim();
+      try { v ? localStorage.setItem(CLASS_DB_KEY, v) : localStorage.removeItem(CLASS_DB_KEY); } catch (err) {}
+      drawUri();
+    }
+    if (a === "edit") drawUri(true);
+    if (a === "show") { const c = uriEl.querySelector(".cdb-val"); c.textContent = c.textContent.includes("••") ? classDbUri() : classDbMasked(classDbUri()); }
+    if (a === "copy") {
+      try { await navigator.clipboard.writeText(classDbUri()); e.target.textContent = "✅ copied"; } catch (err) { e.target.textContent = "select + copy"; }
+      setTimeout(() => { e.target.textContent = "📋 copy"; }, 1500);
+    }
+  });
+  uriEl.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.classList.contains("cdb-in")) uriEl.querySelector('[data-a="save"]').click(); });
+
+  /* the practice copy: same 30 videos as the real class database */
+  function draw(list, hit) {
+    msg.innerHTML = `QUERY RESULTS: <b>${list.length ? `1-${list.length} OF ${list.length}` : "0"}</b>`;
+    docsEl.innerHTML = list.map((d, i) => `
+      <div class="vf-doc${hit && i === 0 ? " hit" : ""}">
+        <div><span class="at-k">_id</span>: <span class="at-d">${d._id}</span> · <span class="at-k">title</span>: <span class="at-s">"${demoEsc(d.title)}"</span></div>
+        <div><span class="at-k">category</span>: <span class="at-s">"${demoEsc(d.category)}"</span> · <span class="at-k">likes</span>: <span class="at-d">${d.likes}</span> · <span class="at-k">views</span>: <span class="at-d">${d.views}</span></div>
+      </div>`).join("") || `<div class="vf-none">No documents match this filter.</div>`;
+  }
+  function apply() {
+    let q, so;
+    try { q = demoParseQuery(f.value); so = demoParseQuery(s.value); }
+    catch (e) { msg.innerHTML = `<b class="bad">🤔 That isn't valid — check the { } and the quotes.</b>`; docsEl.innerHTML = ""; return; }
+    try {
+      const list = demoSort(videos.filter(d => demoMatch(d, q)), so);
+      draw(list, Object.keys(q).length || Object.keys(so).length);
+      if (!list.length && videos.some(d => demoMatch(d, q, true))) msg.innerHTML += ` · <b class="bad">MongoDB is case-sensitive — check capital letters!</b>`;
+    } catch (e) { msg.innerHTML = `<b class="bad">🤔 ${demoEsc(e.message)}</b>`; docsEl.innerHTML = ""; }
+  }
+  el.querySelector(".vf-apply").addEventListener("click", apply);
+  [f, s].forEach(i => i.addEventListener("keydown", e => { if (e.key === "Enter") apply(); }));
+  el.querySelector(".vf-reset").addEventListener("click", () => { f.value = ""; s.value = ""; draw(videos); });
+  el.querySelectorAll(".rd-try").forEach(b => b.addEventListener("click", () => {
+    const x = EX[+b.dataset.i]; f.value = x.f; s.value = x.s; apply();
+  }));
+
+  fetch("starter/class-db/videos.json").then(r => r.json()).then(list => {
+    videos = list.map(d => ({ ...d, postedAt: d.postedAt && d.postedAt.$date }));
+    draw(videos);
+    /* answers: only for the instructor (admin or unlocked) */
+    if (typeof canView === "function" && canView()) {
+      const top = demoSort(videos, { likes: -1 })[0];
+      el.querySelector(".rd-ans").innerHTML = `<details><summary>👩‍🏫 Answers (only you see this)</summary>
+        1 · ${videos.length} videos · 2 · ${videos.filter(d => d.category === "dance").length} dance ·
+        3 · ${videos.filter(d => d.likes > 10000).length} over 10,000 · 4 · "${demoEsc(top.title)}" (${top.likes} ❤️)</details>`;
+    }
+  }).catch(() => { msg.textContent = "Couldn't load the practice copy — use the real one in Atlas."; });
+
+  drawUri();
 };

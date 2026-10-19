@@ -1,0 +1,482 @@
+[
+  {
+    "_id": 1,
+    "title": "cat dance",
+    "creator": "@mochi.cat",
+    "category": "pets",
+    "likes": 5021,
+    "views": 61000,
+    "durationSec": 15,
+    "hashtags": [
+      "#cat",
+      "#dance"
+    ],
+    "postedAt": {
+      "$date": "2026-10-08T17:00:00Z"
+    }
+  },
+  {
+    "_id": 2,
+    "title": "pasta hack",
+    "creator": "@chef.noa",
+    "category": "food",
+    "likes": 812,
+    "views": 9400,
+    "durationSec": 30,
+    "hashtags": [
+      "#food",
+      "#hack"
+    ],
+    "postedAt": {
+      "$date": "2026-09-27T18:00:00Z"
+    }
+  },
+  {
+    "_id": 3,
+    "title": "study tips",
+    "creator": "@lia.studies",
+    "category": "study",
+    "likes": 4433,
+    "views": 52000,
+    "durationSec": 45,
+    "hashtags": [
+      "#study",
+      "#school"
+    ],
+    "postedAt": {
+      "$date": "2026-09-16T19:00:00Z"
+    }
+  },
+  {
+    "_id": 4,
+    "title": "y2k outfit check",
+    "creator": "@tamar.style",
+    "category": "fashion",
+    "likes": 48200,
+    "views": 610000,
+    "durationSec": 20,
+    "hashtags": [
+      "#y2k",
+      "#fashion"
+    ],
+    "postedAt": {
+      "$date": "2026-09-05T20:00:00Z"
+    }
+  },
+  {
+    "_id": 5,
+    "title": "robot dance challenge",
+    "creator": "@shira.moves",
+    "category": "dance",
+    "likes": 22150,
+    "views": 300000,
+    "durationSec": 18,
+    "hashtags": [
+      "#dance",
+      "#challenge"
+    ],
+    "postedAt": {
+      "$date": "2026-10-12T21:00:00Z"
+    }
+  },
+  {
+    "_id": 6,
+    "title": "5-minute pizza",
+    "creator": "@chef.noa",
+    "category": "food",
+    "likes": 13900,
+    "views": 170000,
+    "durationSec": 35,
+    "hashtags": [
+      "#food",
+      "#pizza"
+    ],
+    "postedAt": {
+      "$date": "2026-10-01T22:00:00Z"
+    }
+  },
+  {
+    "_id": 7,
+    "title": "dog vs mirror",
+    "creator": "@rex.the.dog",
+    "category": "pets",
+    "likes": 31800,
+    "views": 420000,
+    "durationSec": 12,
+    "hashtags": [
+      "#dog",
+      "#funny"
+    ],
+    "postedAt": {
+      "$date": "2026-09-20T16:00:00Z"
+    }
+  },
+  {
+    "_id": 8,
+    "title": "coding in 60 seconds",
+    "creator": "@maya.codes",
+    "category": "tech",
+    "likes": 9870,
+    "views": 140000,
+    "durationSec": 60,
+    "hashtags": [
+      "#coding",
+      "#tech"
+    ],
+    "postedAt": {
+      "$date": "2026-09-09T17:00:00Z"
+    }
+  },
+  {
+    "_id": 9,
+    "title": "dance tutorial for beginners",
+    "creator": "@shira.moves",
+    "category": "dance",
+    "likes": 17400,
+    "views": 230000,
+    "durationSec": 40,
+    "hashtags": [
+      "#dance",
+      "#tutorial"
+    ],
+    "postedAt": {
+      "$date": "2026-10-16T18:00:00Z"
+    }
+  },
+  {
+    "_id": 10,
+    "title": "bubble tea at home",
+    "creator": "@yael.eats",
+    "category": "food",
+    "likes": 6120,
+    "views": 80000,
+    "durationSec": 28,
+    "hashtags": [
+      "#food",
+      "#drinks"
+    ],
+    "postedAt": {
+      "$date": "2026-10-05T19:00:00Z"
+    }
+  },
+  {
+    "_id": 11,
+    "title": "school morning routine",
+    "creator": "@lia.studies",
+    "category": "study",
+    "likes": 2890,
+    "views": 41000,
+    "durationSec": 50,
+    "hashtags": [
+      "#study",
+      "#routine"
+    ],
+    "postedAt": {
+      "$date": "2026-09-24T20:00:00Z"
+    }
+  },
+  {
+    "_id": 12,
+    "title": "thrift flip jeans",
+    "creator": "@tamar.style",
+    "category": "fashion",
+    "likes": 11300,
+    "views": 150000,
+    "durationSec": 32,
+    "hashtags": [
+      "#fashion",
+      "#diy"
+    ],
+    "postedAt": {
+      "$date": "2026-09-13T21:00:00Z"
+    }
+  },
+  {
+    "_id": 13,
+    "title": "parrot sings a pop song",
+    "creator": "@kiwi.bird",
+    "category": "pets",
+    "likes": 26600,
+    "views": 380000,
+    "durationSec": 16,
+    "hashtags": [
+      "#bird",
+      "#music"
+    ],
+    "postedAt": {
+      "$date": "2026-09-02T22:00:00Z"
+    }
+  },
+  {
+    "_id": 14,
+    "title": "basketball trick shot",
+    "creator": "@dana.hoops",
+    "category": "sport",
+    "likes": 8450,
+    "views": 120000,
+    "durationSec": 14,
+    "hashtags": [
+      "#sport",
+      "#basketball"
+    ],
+    "postedAt": {
+      "$date": "2026-10-09T16:00:00Z"
+    }
+  },
+  {
+    "_id": 15,
+    "title": "funny fails compilation",
+    "creator": "@lol.zone",
+    "category": "comedy",
+    "likes": 19900,
+    "views": 290000,
+    "durationSec": 45,
+    "hashtags": [
+      "#funny",
+      "#fails"
+    ],
+    "postedAt": {
+      "$date": "2026-09-28T17:00:00Z"
+    }
+  },
+  {
+    "_id": 16,
+    "title": "build a website in 3 minutes",
+    "creator": "@maya.codes",
+    "category": "tech",
+    "likes": 7330,
+    "views": 99000,
+    "durationSec": 58,
+    "hashtags": [
+      "#coding",
+      "#web"
+    ],
+    "postedAt": {
+      "$date": "2026-09-17T18:00:00Z"
+    }
+  },
+  {
+    "_id": 17,
+    "title": "salsa in the kitchen",
+    "creator": "@shira.moves",
+    "category": "dance",
+    "likes": 3990,
+    "views": 47000,
+    "durationSec": 22,
+    "hashtags": [
+      "#dance",
+      "#salsa"
+    ],
+    "postedAt": {
+      "$date": "2026-09-06T19:00:00Z"
+    }
+  },
+  {
+    "_id": 18,
+    "title": "hamster obstacle course",
+    "creator": "@tiny.paws",
+    "category": "pets",
+    "likes": 14750,
+    "views": 205000,
+    "durationSec": 25,
+    "hashtags": [
+      "#hamster",
+      "#cute"
+    ],
+    "postedAt": {
+      "$date": "2026-10-13T20:00:00Z"
+    }
+  },
+  {
+    "_id": 19,
+    "title": "exam stress hacks",
+    "creator": "@lia.studies",
+    "category": "study",
+    "likes": 5660,
+    "views": 73000,
+    "durationSec": 38,
+    "hashtags": [
+      "#study",
+      "#exams"
+    ],
+    "postedAt": {
+      "$date": "2026-10-02T21:00:00Z"
+    }
+  },
+  {
+    "_id": 20,
+    "title": "rainbow cookies",
+    "creator": "@yael.eats",
+    "category": "food",
+    "likes": 2310,
+    "views": 30000,
+    "durationSec": 33,
+    "hashtags": [
+      "#food",
+      "#baking"
+    ],
+    "postedAt": {
+      "$date": "2026-09-21T22:00:00Z"
+    }
+  },
+  {
+    "_id": 21,
+    "title": "gym day vlog",
+    "creator": "@dana.hoops",
+    "category": "sport",
+    "likes": 1890,
+    "views": 26000,
+    "durationSec": 55,
+    "hashtags": [
+      "#sport",
+      "#vlog"
+    ],
+    "postedAt": {
+      "$date": "2026-09-10T16:00:00Z"
+    }
+  },
+  {
+    "_id": 22,
+    "title": "teacher impressions",
+    "creator": "@lol.zone",
+    "category": "comedy",
+    "likes": 12640,
+    "views": 175000,
+    "durationSec": 30,
+    "hashtags": [
+      "#funny",
+      "#school"
+    ],
+    "postedAt": {
+      "$date": "2026-10-17T17:00:00Z"
+    }
+  },
+  {
+    "_id": 23,
+    "title": "phone setup tour",
+    "creator": "@tech.tal",
+    "category": "tech",
+    "likes": 4120,
+    "views": 56000,
+    "durationSec": 48,
+    "hashtags": [
+      "#tech",
+      "#phone"
+    ],
+    "postedAt": {
+      "$date": "2026-10-06T18:00:00Z"
+    }
+  },
+  {
+    "_id": 24,
+    "title": "k-pop dance cover",
+    "creator": "@shira.moves",
+    "category": "dance",
+    "likes": 28900,
+    "views": 400000,
+    "durationSec": 35,
+    "hashtags": [
+      "#dance",
+      "#kpop"
+    ],
+    "postedAt": {
+      "$date": "2026-09-25T19:00:00Z"
+    }
+  },
+  {
+    "_id": 25,
+    "title": "hip hop basics",
+    "creator": "@street.steps",
+    "category": "dance",
+    "likes": 950,
+    "views": 12000,
+    "durationSec": 50,
+    "hashtags": [
+      "#dance",
+      "#hiphop"
+    ],
+    "postedAt": {
+      "$date": "2026-09-14T20:00:00Z"
+    }
+  },
+  {
+    "_id": 26,
+    "title": "matching outfits with mom",
+    "creator": "@tamar.style",
+    "category": "fashion",
+    "likes": 7780,
+    "views": 101000,
+    "durationSec": 24,
+    "hashtags": [
+      "#fashion",
+      "#family"
+    ],
+    "postedAt": {
+      "$date": "2026-09-03T21:00:00Z"
+    }
+  },
+  {
+    "_id": 27,
+    "title": "soccer skills",
+    "creator": "@dana.hoops",
+    "category": "sport",
+    "likes": 10020,
+    "views": 133000,
+    "durationSec": 19,
+    "hashtags": [
+      "#sport",
+      "#soccer"
+    ],
+    "postedAt": {
+      "$date": "2026-10-10T22:00:00Z"
+    }
+  },
+  {
+    "_id": 28,
+    "title": "sister prank",
+    "creator": "@lol.zone",
+    "category": "comedy",
+    "likes": 3350,
+    "views": 44000,
+    "durationSec": 21,
+    "hashtags": [
+      "#funny",
+      "#prank"
+    ],
+    "postedAt": {
+      "$date": "2026-09-29T16:00:00Z"
+    }
+  },
+  {
+    "_id": 29,
+    "title": "AI drew my cat",
+    "creator": "@tech.tal",
+    "category": "tech",
+    "likes": 15200,
+    "views": 220000,
+    "durationSec": 27,
+    "hashtags": [
+      "#ai",
+      "#cat"
+    ],
+    "postedAt": {
+      "$date": "2026-09-18T17:00:00Z"
+    }
+  },
+  {
+    "_id": 30,
+    "title": "sushi rolling",
+    "creator": "@chef.noa",
+    "category": "food",
+    "likes": 640,
+    "views": 8000,
+    "durationSec": 41,
+    "hashtags": [
+      "#food",
+      "#sushi"
+    ],
+    "postedAt": {
+      "$date": "2026-09-07T18:00:00Z"
+    }
+  }
+]
