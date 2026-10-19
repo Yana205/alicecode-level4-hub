@@ -114,6 +114,6 @@ What changed in the reorder:
 
 ## Labs & live demos below the deck
 Every lesson page lists **all** its labs and live demos (any `kind: "lab"` or `kind: "demo"` slide) in one card under the slides:
-‹ › arrows, the lab's name + description in big text, numbered name chips to jump, "▶ show on slide N" to jump the deck there, and ⛶ fullscreen. Each lab is built the first time it's opened and remembers which one you looked at last. New demo slides show up there automatically.
+‹ › arrows, the lab's name + description in big text, numbered name chips to jump, "▶ show on slide N" to jump the deck there, and ⛶ fullscreen. The card starts **closed** (just the name chips); clicking a name opens that lab, ✕ Close folds it back. Each lab is built the first time it's opened. New demo slides show up there automatically.
 
 18. **Every live slide is also a tool.** An instructor should be able to open any lab without hunting through the deck.

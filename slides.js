@@ -212,12 +212,15 @@
     (s.kind === "lab" && typeof LAB_PRESETS !== "undefined" && LAB_PRESETS[n]) ||
     (s.kind === "demo" && typeof DEMOS !== "undefined" && DEMOS[s.demo]));
   below.innerHTML = labs.length ? `
-    <div class="card reveal labs-card" id="labs">
+    <div class="card reveal labs-card closed" id="labs">
       <div class="labs-top">
         <h2>🧪 Labs &amp; live demos <span class="labs-count">${labs.length}</span></h2>
-        <button class="btn small ghost labs-fs" title="Fullscreen">⛶</button>
+        <div class="labs-tools">
+          <button class="btn small ghost labs-fs" title="Fullscreen">⛶</button>
+          <button class="btn small dark labs-close">✕ Close</button>
+        </div>
       </div>
-      <p class="muted">Every lab from today's slides, ready to use on its own. ‹ › to switch.</p>
+      <p class="muted labs-hint">Click a lab to open it here — no need to find it in the slides.</p>
       <div class="labs-nav">
         <button class="labs-arrow" data-dir="-1" aria-label="Previous lab">‹</button>
         <div class="labs-now">
@@ -278,9 +281,8 @@
   function initLabs() {
     const card = document.getElementById("labs");
     const panels = [...card.querySelectorAll(".lab-panel")], chips = [...card.querySelectorAll(".labs-chip")];
-    const built = new Set(), key = `ac4-labs-l${n}`;
+    const built = new Set();
     let k = 0;
-    try { k = Math.min(labs.length - 1, Math.max(0, +localStorage.getItem(key) || 0)); } catch (e) {}
 
     function build(j) {
       if (built.has(j)) return;
@@ -290,6 +292,7 @@
       else DEMOS[s.demo](el);
     }
     function show(j) {
+      card.classList.remove("closed");
       k = (j + labs.length) % labs.length;
       build(k);
       const { s, i } = labs[k];
@@ -300,7 +303,12 @@
       card.querySelector(".labs-pos").textContent = `${k + 1} of ${labs.length}`;
       card.querySelector(".labs-jump").textContent = `▶ show on slide ${i + 1}`;
       panels[k].dispatchEvent(new CustomEvent("slide-on")); // demos replay like on the slide
-      try { localStorage.setItem(key, k); } catch (e) {}
+    }
+    function close() {
+      if (document.fullscreenElement === card) document.exitFullscreen();
+      card.classList.add("closed");
+      panels.forEach(p => p.classList.remove("on")); // looping demos stop when their panel is off
+      chips.forEach(c => c.classList.remove("on"));
     }
     card.querySelectorAll(".labs-arrow").forEach(b => b.addEventListener("click", () => show(k + +b.dataset.dir)));
     chips.forEach(c => c.addEventListener("click", () => show(+c.dataset.k)));
@@ -311,7 +319,7 @@
       if (document.fullscreenElement) document.exitFullscreen();
       else card.requestFullscreen && card.requestFullscreen();
     });
-    show(k);
+    card.querySelector(".labs-close").addEventListener("click", close);
   }
   if (window.armReveal) window.armReveal();
 })();
