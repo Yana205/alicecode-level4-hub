@@ -1201,6 +1201,7 @@ kbd { background: #fff; border: 1px solid #CFC9D6; border-bottom-width: 2px; bor
 
 /* Part 3 · clickable resource cards */
 .s-links { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(8px, 1.4vw, 14px); }
+.s-links.n3 { grid-template-columns: repeat(3, 1fr); }
 .s-link { text-decoration: none; display: flex; flex-direction: column; text-align: left; transition: transform .2s, box-shadow .2s; }
 .s-link:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(103,76,155,.25); }
 .s-link p { color: var(--ink); flex: 1; }
@@ -1216,7 +1217,7 @@ kbd { background: #fff; border: 1px solid #CFC9D6; border-bottom-width: 2px; bor
   .sl-arrow { transform: rotate(90deg); }
   .demo-frame { min-height: 620px; }
   .lf-right { min-height: 260px; }
-  .s-links { grid-template-columns: 1fr; }
+  .s-links, .s-links.n3 { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   .sl-robot, .sl-art span, .sl-arrow, .sl-think { animation: none; }

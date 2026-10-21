@@ -58,7 +58,7 @@ Lesson 2 (Flower Shop Lab) doesn't have these fields yet, so it still looks the 
 | **TikTok Studio** | 3 static boxes | A 3-click loop: **1** a JSON answer drops in (`"trend": "y2k fashion"`), **2** a robot thinks and types *"Writing script..."*, **3** a TikTok phone pops up with the image + script (sparkle). Click 4 loops. |
 | **APIs** | 1 slide (waiter), then a jump | + **"A locked door vs. the master key 🔑"** (empty hardcoded app vs. live data) + **"Live: fetch a real API ⚡"**: type a Pokémon, press *Fetch REST API*, live JSON fills the right side. The name in the `fetch(…)` URL updates as you type, and `console.log(data.abilities)` lights up with the same color as `"abilities"` in the answer. Postman note. |
 | **Databases** | Cards: "variables forget / a database remembers" | Two **React + Tailwind** slides (`db-demo.jsx`). **"Before: variables forget 😱"**: app UI + RAM editor (`let tasks = [...]` grows as you add). *Refresh Page* → glitch + "RELOADING…" → both sides wiped, "Oh no!" + a shake. **"After: MongoDB remembers 🧠"**: app UI + backend editor (`db.collection('tasks').insertOne(...)`) + MongoDB Atlas view (Documents / Table). Add → a pink beam shoots app → database and the document lands. *Refresh Page* → app goes blank, "Fetching…", the `find()` block glows, a green beam comes back and the list refills: "🎉 Still here!" |
-| **Keep Building (Resources) 🚀** (new, last) | — | 4 clickable cards: Frontend Masters, freeCodeCamp, W3Schools, Instagram creators. |
+| **Keep Building (Resources) 🚀** (new, last) | — | Clickable cards: Frontend Masters, freeCodeCamp, W3Schools (the social-media creators card was removed later). |
 
 ### More global rules (from Part 2)
 9. **Feel it, don't explain it.** If a concept has a "moment" (data disappears, data comes back, an API answers), build that moment as a live widget on the slide.
@@ -78,7 +78,7 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 | Slide | What it adds |
 |---|---|
 | **14 · Tools of the trade: Postman + JSON 🧰** (new) | Left: a Postman-style window (GET + URL + **Send** = a real call) with the same request written as `fetch` code underneath; the URL in the code updates as you edit. Right: "JSON = JavaScript Object Notation". A messy one-line recipe JSON → **✨ Auto-format** → neat colored JSON + a recipe card built from it. |
-| **15 · The Builder's Toolkit (Resources)** (moved from the last slide) | Frontend Masters, freeCodeCamp, W3Schools, Instagram + TikTok creators. |
+| **15 · The Builder's Toolkit (Resources)** (moved from the last slide) | Frontend Masters, freeCodeCamp, W3Schools (social-media creators removed). |
 | **22 · Connect the wires: a live database 🔌** (new) | Tabs **Clone → Add code → Test** with copy buttons (degit command, `.env`, the `insertOne` / `find` lines), plus a looping "expected result" animation: terminal + browser, add → Ctrl+C → restart → refresh → "Still there!". The app is `starter/idea-tracker/`. |
 | **23 · Find it in the vault 🔍** (new) | Atlas steps + a working mock filter bar: type `{ "name": "Maya" }` → Apply → your document lights up. Teaches case-sensitivity and valid JSON. Shows the real `ideas` collection when the hub has `MONGODB_URI`. |
 
@@ -88,25 +88,25 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 
 ---
 
-## Lesson 1 · final order (37 slides) — slide numbers above are from earlier versions
+## Lesson 1 · final order (48 slides) — slide numbers above are from earlier versions
 
-💬 = a "Let's talk" discussion slide (the students answer first, the next slide reveals it).
+💬 = a "Let's talk" discussion slide. **Every new topic opens with one**: the students say what they think and why, then the next slide reveals it.
 
 | Part | Slides |
 |---|---|
 | **Opening** | 1 Title · 2 Steps today (the schedule) · 3 Game 🎮 |
-| **This year** | 4 💬 How did you use AI this summer? · 5 Users → builders · 6 Chatting vs. building · 7 TikTok Studio loop · 8 Road to the hackathon |
-| **Your superpower** | 9 💬 Same AI, amazing code vs. junk: why? · 10 Secret superpower · 11 Same wish, two prompts (**vote A or B**) · 12 Button Lab (test it live) |
-| **Part 1 · APIs** | 13 💬 Your app is empty: how does it get real data? · 14 Locked door vs. master key · 15 API waiter · 16 Live fetch · 17 Postman + JSON |
-| **Part 1 · Databases** | 18 💬 How does Instagram remember you? · 19 Before: variables forget · 20 NEW WORD MongoDB · 21 After: MongoDB remembers · 22 Why a database? (recap) · 23 💬 What do you save about each video? · 24 A good table · 25 Part 1 task · 26 Proof |
-| **Break** | 27 ☕ |
-| **Part 2 · Build** | 28 💬 What does the forgetting app need? · 29 Connect the wires (exercise) · 30 Find it in the vault · 31 Proof · 32 Bonus: your own collection |
-| **Wrap-up** | 33 Explain to me · 34 What we learned · 35 Glossary · 36 Builder's Toolkit (resources) · 37 Next time |
+| **This year** | 4 💬 How did you use AI this summer? · 5 Users → builders · 6 💬 Chatting vs. an AI that works while you sleep? · 7 Chatting vs. building · 8 💬 Robots that make TikToks: what jobs? · 9 TikTok Studio loop · 10 💬 What happens at a hackathon? · 11 Road to the hackathon |
+| **Your superpower** | 12 💬 Same AI, amazing code vs. junk: why? · 13 Secret superpower · 14 Same wish, two prompts (**vote A or B**) · 15 Button Lab (test it live) |
+| **Part 1 · APIs** | 16 💬 Your app is empty: how does it get real data? · 17 Locked door vs. master key · 18 💬 Who carries the question to the server? · 19 API waiter · 20 💬 "pikachu" + a button: what's sent, what comes back? · 21 Live fetch · 22 💬 How do you test an API before coding? · 23 Postman + JSON |
+| **Part 1 · Databases** | 24 💬 How does Instagram remember you? (+ predict a refresh) · 25 Before: variables forget · 26 💬 Where CAN an app keep data? · 27 NEW WORD MongoDB · 28 💬 Predict: same app + database, refresh · 29 After: MongoDB remembers · 30 💬 Variables, file or database: which and why? · 31 Why a database? · 32 💬 What do you save about each video? · 33 A good table · 34 💬 Most likes, without scrolling? · 35 Part 1 task · 36 Proof |
+| **Break** | 37 ☕ |
+| **Part 2 · Build** | 38 💬 What does the forgetting app need? · 39 Connect the wires (exercise) · 40 💬 How do you find YOUR document? · 41 Find it in the vault · 42 Proof · 43 Bonus: your own collection |
+| **Wrap-up** | 44 Explain to me · 45 What we learned · 46 Glossary · 47 Builder's Toolkit (W3Schools · freeCodeCamp · Frontend Masters) · 48 Next time |
 
 What changed in the second reorder:
 - **The schedule comes first.** "Steps today" is slide 2, right after the title, with the spoiler of the day and every part of the lesson (also the year intro and the superpower, which the old list skipped).
 - **Problem before answer.** APIs start with the locked door (an empty app), then the waiter explains how an API works.
-- **💬 Talk before every reveal.** Six discussion slides; "How does an app remember you?" turned from a section slide into one.
+- **💬 Talk before every reveal.** A discussion slide opens every new topic (17 in all); "How does an app remember you?" turned from a section slide into one.
 - **End on the hook.** Glossary and resources come before "Next time", so the last thing they see is next week.
 
 ---
@@ -130,4 +130,4 @@ Every lesson page lists **all** its labs and live demos (any `kind: "lab"` or `k
 18. **Every live slide is also a tool.** An instructor should be able to open any lab without hunting through the deck.
 
 ## Discussion slides
-19. **Talk first, reveal second.** Before a new idea, put a `kind: "discuss"` slide with an open question. The students answer (think → partner → share), then the next slide shows the answer. Fields: `q` (the question), `hints` (2–3 small nudges, optional), `sec` (talk timer, default 60), `how` (optional, replaces "Think · Tell your partner · Share"). On the web the ⏱ button starts the timer and resets each time the slide opens; in PowerPoint it's the question, the hints and the note.
+19. **Talk first, reveal second.** Before every new topic (not just the big ones), put a `kind: "discuss"` slide with an open question. The students answer (think → partner → share), then the next slide shows the answer. Fields: `q` (the question), `hints` (2–3 small nudges, optional), `sec` (talk timer, default 60), `how` (optional, replaces "Think · Tell your partner · Share"). On the web the ⏱ button starts the timer and resets each time the slide opens; in PowerPoint it's the question, the hints and the note.

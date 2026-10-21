@@ -104,7 +104,7 @@ async function downloadPPTX(n) {
     if (it.note) return 0.52;
     if (it.code) return it.code.length * 0.23 + 0.28;
     if (it.rows) return it.rows.length * 0.31 + 0.08;
-    if (it.links) return Math.ceil(it.links.length / 2) * 1.05;
+    if (it.links) return it.links.length === 3 ? 1.6 : Math.ceil(it.links.length / 2) * 1.05;
     return 0;
   }
 
@@ -137,10 +137,11 @@ async function downloadPPTX(n) {
         s.addShape("roundRect", { x: MX, y, w: CW, h, rectRadius: 0.08, fill: { color: DARKBG } });
         s.addText(join(it.code), { x: MX + 0.2, y: y + 0.07, w: CW - 0.4, h: h - 0.14, fontFace: MONO, fontSize: 10, color: CODE_FG, valign: "top", lineSpacingMultiple: 1.05 });
       } else if (it.links) {
-        /* 2-column grid of clickable cards */
-        const gap = 0.16, cw = (CW - gap) / 2, rows = Math.ceil(it.links.length / 2), ch = (h - gap * (rows - 1)) / rows;
+        /* grid of clickable cards: 3 in one row, otherwise 2 columns */
+        const cols = it.links.length === 3 ? 3 : 2;
+        const gap = 0.16, cw = (CW - gap * (cols - 1)) / cols, rows = Math.ceil(it.links.length / cols), ch = (h - gap * (rows - 1)) / rows;
         it.links.forEach((c, i) => {
-          const cx = MX + (i % 2) * (cw + gap), cy = y + Math.floor(i / 2) * (ch + gap), col = HEAD_COLORS[c.color || "pink"];
+          const cx = MX + (i % cols) * (cw + gap), cy = y + Math.floor(i / cols) * (ch + gap), col = HEAD_COLORS[c.color || "pink"];
           s.addShape("roundRect", { x: cx, y: cy, w: cw, h: ch, rectRadius: 0.09, fill: { color: LAV } });
           s.addText([{ text: c.h, options: { hyperlink: { url: c.url } } }], { x: cx + 0.1, y: cy + 0.05, w: cw - 0.2, h: 0.32, fontFace: HEAD, bold: true, fontSize: 12, color: col });
           s.addText(c.text, { x: cx + 0.1, y: cy + 0.36, w: cw - 0.2, h: ch - 0.62, valign: "top", fontFace: BODY, fontSize: 10, color: PURPLE });

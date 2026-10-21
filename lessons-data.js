@@ -60,6 +60,8 @@ const LESSONS = [
       ]},
       { note: "Big change: last year you learned code. This year you lead it." }
     ]},
+    { kind: "discuss", q: "Chatting with AI vs. an AI that does the whole job while you sleep. What's the difference?",
+      hints: ["Who does the clicking?", "Which one would you rather have? Why?"] },
     { kind: "demo", demo: "agentRace", title: "Chatting vs. building 🤖",
       sub: "Same job. Left: you click for 20 minutes. Right: your agent does it at 8 AM.",
       offline: [
@@ -67,6 +69,8 @@ const LESSONS = [
         "🤖 Agent builder: your script wakes up at 8 AM, finds trends with an API,",
         "writes the script, makes the image and emails it to you — before your coffee is done. ☕"
       ] },
+    { kind: "discuss", q: "Imagine robots that make TikToks for you. What jobs would you give them?",
+      hints: ["Who finds what's trending?", "Who writes the idea?", "Who makes the video?"] },
     { kind: "demo", demo: "studioLoop", title: "The big build: TikTok Studio 📱",
       sub: "One shared project. We build it together, all year. Click to run it!",
       offline: [
@@ -75,6 +79,8 @@ const LESSONS = [
         "3️⃣ Video maker — a TikTok with the image + script pops up.",
         "Three agents + a database + a screen that shows it all."
       ] },
+    { kind: "discuss", q: "Hackathon: what do you think happens there?",
+      hints: ["Hack + marathon = ?", "How long does it take to build a whole product?"] },
     { kind: "content", title: "The road to the hackathon 🗓️", items: [
       { lines: [
         "Weeks 1–2 · P1: refresh APIs and databases",
@@ -112,6 +118,8 @@ const LESSONS = [
       before: ["Your app looks amazing…", "…but it's empty. 🫙", "It only knows what you hardcode into it."],
       after: ["Your app asks the internet.", "Real data. Live. Always fresh.", "fetch() is your master key. 🔑"],
       note: "REST API = a web address that answers with data (JSON). Pokémon, weather, TikTok trends…" },
+    { kind: "discuss", q: "Your app asks a server for data. Who carries the question — and brings back the answer?",
+      hints: ["Think of a restaurant 🍕", "You · the waiter · the kitchen: who is who?"] },
     { kind: "content", title: "Quick refresh: what is an API? 🌐",
       lead: "You know this — let's warm it up.", items: [
       { cards: [
@@ -121,6 +129,8 @@ const LESSONS = [
       ]},
       { note: "GET = \"please give me data\". The answer comes as JSON." }
     ]},
+    { kind: "discuss", q: "You type \"pikachu\" and press a button. What does your app send? What comes back?",
+      hints: ["A web address?", "A picture? Text? A box of data?"] },
     { kind: "demo", demo: "liveFetch", title: "Live: fetch a real API ⚡",
       sub: "Type a Pokémon. Press the button. The internet answers.",
       offline: [
@@ -129,6 +139,8 @@ const LESSONS = [
         "console.log(data.abilities); // Boom. Live data from the internet.",
         "📮 Next: Postman — the pro tool that does this without code."
       ] },
+    { kind: "discuss", q: "Before you write any code — how could you check that an API really works?",
+      hints: ["Is there a tool for that?", "What would a messy answer look like?"] },
     { kind: "demo", demo: "toolsOfTrade", title: "Tools of the trade: Postman + JSON 🧰",
       sub: "Pros test an API in Postman first — then write the same request in code.",
       offline: [
@@ -139,7 +151,7 @@ const LESSONS = [
         "Messy one-line JSON → auto-format → neat keys and values (like a recipe card)."
       ] },
     { kind: "discuss", q: "Close Instagram. Open it again. Your likes are still there. HOW? 🤔",
-      hints: ["Where does your favorite app keep its stuff?", "What if it forgot everything every night?"] },
+      hints: ["Where does your favorite app keep its stuff?", "What if it forgot everything every night?", "Predict: a to-do app + refresh the page = ?"] },
     { kind: "demo", demo: "dbBefore", title: "Before: variables forget 😱",
       sub: "Add 2 tasks. Then press the red button. Watch closely…",
       offline: [
@@ -147,9 +159,13 @@ const LESSONS = [
         "Add \"Finish homework\" and \"Feed cat\" → refresh the page →",
         "the list is EMPTY. Variables live in memory — and memory forgets. 😱"
       ] },
+    { kind: "discuss", q: "Variables forget. So where CAN an app keep data so it survives a refresh?",
+      hints: ["A file?", "The cloud?", "Something with a special name…"] },
     { kind: "newword", term: "MongoDB",
       meaning: "A database that stores documents — they look just like JSON.",
       extra: "collection = a folder of documents · document = one row" },
+    { kind: "discuss", q: "Predict: the same app, now with a database. We refresh again. What happens now? Why?",
+      hints: ["What changed?", "Where do the tasks come back from?"] },
     { kind: "demo", demo: "dbAfter", title: "After: MongoDB remembers 🧠",
       sub: "Same app, now with a database. Add a task — watch the document appear.",
       offline: [
@@ -157,6 +173,8 @@ const LESSONS = [
         "Add a task → it shoots to MongoDB and a JSON document appears.",
         "Refresh the page → the tasks come back. The database remembered. 🎉"
       ] },
+    { kind: "discuss", q: "Variables, a file or a database: which one would YOU pick for a big app? Why?",
+      hints: ["Which one forgets?", "Which one gets messy?", "Which one is fast to search?"] },
     { kind: "content", title: "Why a database? 💾", items: [
       { cards: [
         { h: "Variables forget", lines: ["Close the app →", "memory is gone."], color: "red" },
@@ -178,6 +196,8 @@ const LESSONS = [
         "All rows share the same fields"
       ]}
     ]},
+    { kind: "discuss", q: "30 videos. Which one has the most likes? How would you find out — without scrolling?",
+      hints: ["Can you ask the data a question?", "What would you sort by?"] },
     { kind: "demo", demo: "readyDb", title: "Part 1 · Task ✅",
       sub: "The ready-made database: 30 TikTok videos. Read, filter, count, sort. Stuck 5 minutes? Ask.",
       offline: [
@@ -203,6 +223,8 @@ const LESSONS = [
         "   server.js → const all = await db.collection(\"ideas\").find().sort({ createdAt: -1 }).toArray();",
         "3 · Test: npm start → add an idea → Ctrl+C → npm start → refresh. Still there? 🎉"
       ] },
+    { kind: "discuss", q: "Everyone's ideas are in one big collection. How do you find YOUR one?",
+      hints: ["What makes your document different?", "How did we find only the dance videos?"] },
     { kind: "demo", demo: "vaultFind", title: "Find it in the vault 🔍",
       sub: "Your idea is in MongoDB now. Go find YOUR document.",
       offline: [
@@ -255,16 +277,14 @@ const LESSONS = [
       ]}
     ]},
     { kind: "content", title: "The Builder's Toolkit (Resources) 🚀",
-      lead: "Your path: look it up → practice → go pro → learn every day. Not homework!", items: [
+      lead: "Your path: look it up → practice → go pro. Not homework!", items: [
       { links: [
         { h: "1 · 📖 W3Schools", url: "https://www.w3schools.com", color: "green",
           text: "Look it up: the dictionary for HTML, CSS and JavaScript. Keep it open while you code." },
         { h: "2 · 🔥 freeCodeCamp", url: "https://www.freecodecamp.org", color: "orange",
           text: "Practice: the best free, interactive coding paths on the internet." },
         { h: "3 · 🎓 Frontend Masters", url: "https://frontendmasters.com",
-          text: "Go pro: courses from the engineers who built Netflix and Spotify." },
-        { h: "4 · 📱 Instagram creators", url: "https://www.instagram.com/explore/tags/learntocode/", color: "purple",
-          text: "Every day: fill your feed with code — follow tech educators and learn while scrolling." }
+          text: "Go pro: courses from the engineers who built Netflix and Spotify." }
       ]}
     ]},
     { kind: "content", title: "Next time 👀", items: [

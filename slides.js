@@ -128,7 +128,7 @@
       if (it.lines) return `<ul class="s-lines">${it.lines.map(l => `<li>${esc(l)}</li>`).join("")}</ul>`;
       if (it.cards) return `<div class="s-cards">${it.cards.map(c => `
         <div class="s-card ${colorClass(c.color)}"><h4>${esc(c.h)}</h4><p>${c.lines.map(esc).join("<br>")}</p></div>`).join("")}</div>`;
-      if (it.links) return `<div class="s-links">${it.links.map(c => `
+      if (it.links) return `<div class="s-links n${it.links.length}">${it.links.map(c => `
         <a class="s-card s-link ${colorClass(c.color)}" href="${c.url}" target="_blank" rel="noopener">
           <h4>${esc(c.h)}</h4><p>${esc(c.text)}</p>
           <span class="s-link-url">${esc(c.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))} ↗</span></a>`).join("")}</div>`;
