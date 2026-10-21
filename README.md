@@ -23,6 +23,7 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `starter/idea-tracker/` | Lesson 1 exercise: a TikTok Idea Tracker (Express + MongoDB) students clone with `npx degit Yana205/alicecode-level4-hub/starter/idea-tracker` and connect to the class database. Its README has the teacher setup |
 | `api/ideas.js` | Read-only view of the class `ideas` collection for the "Find it in the vault" slide |
 | `api/tasks.js` | Tiny Vercel function behind the "MongoDB remembers" slide (needs `MONGODB_URI`, see below) |
+| `api/class-db.js` | Open `/api/class-db` to set up + check the class database from the browser (loads the 30 videos if missing, tests insert/find/delete) |
 | `SLIDE-UPGRADE-RULES.md` | Before/after of the Lesson 1 Button Lab upgrade + the global "juice" rules for all decks |
 | `locks.json` | Which lessons are hidden from students (`true` = locked). Edited by the admin page |
 
