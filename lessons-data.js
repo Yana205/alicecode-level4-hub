@@ -1537,6 +1537,6 @@ const VISUALS = {
   7: {
     "Look how far you've come 🥹": { id: "v7-1", prompt: "A mountain path from a tiny seedling at the bottom to a shining studio building on the peak, little flags along the way." },
     "Part 1 · Task ✅ Grand opening": { id: "v7-2", prompt: "Ribbon-cutting in front of a neon studio sign, confetti, a team of girls with their three robots." },
-    "Part 2 · HACKATHON 🔥": { id: "v7-3", prompt: "Ribbon-cutting in front of a neon studio sign, confetti, a team of girls with their three robots." }
+    "Part 2 · HACKATHON 🔥": { id: "v7-3", prompt: "A planning war-room table: map, sticky notes, three girls planning, a rocket model in the middle." }
   }
 };
