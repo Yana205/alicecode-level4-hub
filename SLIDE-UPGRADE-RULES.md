@@ -88,19 +88,30 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 
 ---
 
-## Lesson 1 · final order (32 slides) — slide numbers above are from earlier versions
+## Lesson 1 · final order (37 slides) — slide numbers above are from earlier versions
+
+💬 = a "Let's talk" discussion slide (the students answer first, the next slide reveals it).
 
 | Part | Slides |
 |---|---|
-| **Opening** | 1 Title · 2 Game 🎮 |
-| **This year** | 3 Users → builders · 4 Chatting vs. building · 5 TikTok Studio loop · 6 Road to the hackathon |
-| **Your superpower** | 7 Secret superpower · 8 Same wish, two prompts (**vote A or B**) · 9 Button Lab (test it live) |
-| **Today** | 10 Steps today |
-| **Part 1 · APIs** | 11 API waiter · 12 Locked door vs. master key · 13 Live fetch · 14 Postman + JSON |
-| **Part 1 · Databases** | 15 How does an app remember you? · 16 Before: variables forget · 17 NEW WORD MongoDB · 18 After: MongoDB remembers · 19 Why a database? (recap) · 20 A good table · 21 Part 1 task · 22 Proof |
-| **Break** | 23 ☕ |
-| **Part 2 · Build** | 24 Connect the wires (exercise) · 25 Find it in the vault · 26 Proof · 27 Bonus: your own collection |
-| **Wrap-up** | 28 Explain to me · 29 What we learned · 30 Next time · 31 Builder's Toolkit (resources) · 32 Glossary |
+| **Opening** | 1 Title · 2 Steps today (the schedule) · 3 Game 🎮 |
+| **This year** | 4 💬 How did you use AI this summer? · 5 Users → builders · 6 Chatting vs. building · 7 TikTok Studio loop · 8 Road to the hackathon |
+| **Your superpower** | 9 💬 Same AI, amazing code vs. junk: why? · 10 Secret superpower · 11 Same wish, two prompts (**vote A or B**) · 12 Button Lab (test it live) |
+| **Part 1 · APIs** | 13 💬 Your app is empty: how does it get real data? · 14 Locked door vs. master key · 15 API waiter · 16 Live fetch · 17 Postman + JSON |
+| **Part 1 · Databases** | 18 💬 How does Instagram remember you? · 19 Before: variables forget · 20 NEW WORD MongoDB · 21 After: MongoDB remembers · 22 Why a database? (recap) · 23 💬 What do you save about each video? · 24 A good table · 25 Part 1 task · 26 Proof |
+| **Break** | 27 ☕ |
+| **Part 2 · Build** | 28 💬 What does the forgetting app need? · 29 Connect the wires (exercise) · 30 Find it in the vault · 31 Proof · 32 Bonus: your own collection |
+| **Wrap-up** | 33 Explain to me · 34 What we learned · 35 Glossary · 36 Builder's Toolkit (resources) · 37 Next time |
+
+What changed in the second reorder:
+- **The schedule comes first.** "Steps today" is slide 2, right after the title, with the spoiler of the day and every part of the lesson (also the year intro and the superpower, which the old list skipped).
+- **Problem before answer.** APIs start with the locked door (an empty app), then the waiter explains how an API works.
+- **💬 Talk before every reveal.** Six discussion slides; "How does an app remember you?" turned from a section slide into one.
+- **End on the hook.** Glossary and resources come before "Next time", so the last thing they see is next week.
+
+---
+
+### Earlier reorder (32 slides)
 
 What changed in the reorder:
 - **No duplicates:** "Want more?" merged into the Builder's Toolkit, which moved to the end (one resources slide). "Same wish" no longer repeats the Lab — it's a vote, the Lab is the test. The live-fetch slide hands off to Postman instead of explaining it twice.
@@ -117,3 +128,6 @@ Every lesson page lists **all** its labs and live demos (any `kind: "lab"` or `k
 ‹ › arrows, the lab's name + description in big text, numbered name chips to jump, "▶ show on slide N" to jump the deck there, and ⛶ fullscreen. The card starts **closed** (just the name chips); clicking a name opens that lab, ✕ Close folds it back. Each lab is built the first time it's opened. New demo slides show up there automatically.
 
 18. **Every live slide is also a tool.** An instructor should be able to open any lab without hunting through the deck.
+
+## Discussion slides
+19. **Talk first, reveal second.** Before a new idea, put a `kind: "discuss"` slide with an open question. The students answer (think → partner → share), then the next slide shows the answer. Fields: `q` (the question), `hints` (2–3 small nudges, optional), `sec` (talk timer, default 60), `how` (optional, replaces "Think · Tell your partner · Share"). On the web the ⏱ button starts the timer and resets each time the slide opens; in PowerPoint it's the question, the hints and the note.

@@ -37,7 +37,21 @@ const LESSONS = [
   slides: [
     { kind: "title", title: "Lesson 1 · Back to Building 🚀",
       sub: "22 October 2026 · Project P1 · Refresh: APIs + Databases" },
+    { kind: "content", title: "Steps today",
+      lead: "Spoiler: by the end, YOUR app remembers — like Instagram does. 👀", items: [
+      { lines: [
+        "🎮 Game · 20 min",
+        "🚀 This year + your superpower",
+        "🌐 Part 1 · APIs + databases",
+        "☕ Break · 30 min",
+        "🔌 Part 2 · your app + MongoDB",
+        "🗣️ Explain to me · last 15 min"
+      ]},
+      { note: "💬 A \"Let's talk\" slide? You answer FIRST!" }
+    ]},
     { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then we build" },
+    { kind: "discuss", q: "This summer — how did YOU use AI?",
+      hints: ["Did you just chat with it?", "Did it ever do a whole job FOR you?", "What do you wish it could do?"] },
     { kind: "content", title: "This year: from users to builders 💪", items: [
       { cards: [
         { h: "🤖 AI tools", lines: ["You code with AI tools,", "like real developers do."] },
@@ -70,6 +84,8 @@ const LESSONS = [
       ]},
       { note: "7–9 December: HACKATHON! You build something like this. 🔥" }
     ]},
+    { kind: "discuss", q: "Two girls ask the same AI for the same button. One gets amazing code, one gets junk. Why?",
+      hints: ["Luck?", "A better AI?", "Or… the words they used? 🤔"] },
     { kind: "content", title: "Your secret superpower 🦸‍♀️",
       lead: "You already speak code. Most people asking AI for help — don't.", items: [
       { cards: [
@@ -90,15 +106,12 @@ const LESSONS = [
     ]},
     { kind: "lab", title: "🧪 The Button Lab",
       sub: "Same wish, two prompts — live. Then YOU take the keyboard." },
-    { kind: "content", title: "Steps today", items: [
-      { lines: [
-        "20 min · game",
-        "Part 1 · APIs refresh + why databases exist",
-        "Break ☕",
-        "Part 2 · connect a real app to MongoDB 🔌",
-        "Last 15 min · \"Explain to me\" 🗣️"
-      ]}
-    ]},
+    { kind: "discuss", q: "Your app looks amazing — but it's empty. How can it show REAL data: weather, Pokémon, TikTok trends?",
+      hints: ["Where does that data live?", "How would your app ask for it?"] },
+    { kind: "beforeafter", title: "A locked door vs. the master key 🔑",
+      before: ["Your app looks amazing…", "…but it's empty. 🫙", "It only knows what you hardcode into it."],
+      after: ["Your app asks the internet.", "Real data. Live. Always fresh.", "fetch() is your master key. 🔑"],
+      note: "REST API = a web address that answers with data (JSON). Pokémon, weather, TikTok trends…" },
     { kind: "content", title: "Quick refresh: what is an API? 🌐",
       lead: "You know this — let's warm it up.", items: [
       { cards: [
@@ -108,10 +121,6 @@ const LESSONS = [
       ]},
       { note: "GET = \"please give me data\". The answer comes as JSON." }
     ]},
-    { kind: "beforeafter", title: "A locked door vs. the master key 🔑",
-      before: ["Your app looks amazing…", "…but it's empty. 🫙", "It only knows what you hardcode into it."],
-      after: ["Your app asks the internet.", "Real data. Live. Always fresh.", "fetch() is your master key. 🔑"],
-      note: "REST API = a web address that answers with data (JSON). Pokémon, weather, TikTok trends…" },
     { kind: "demo", demo: "liveFetch", title: "Live: fetch a real API ⚡",
       sub: "Type a Pokémon. Press the button. The internet answers.",
       offline: [
@@ -129,8 +138,8 @@ const LESSONS = [
         "JSON = JavaScript Object Notation: the universal box APIs pack data in.",
         "Messy one-line JSON → auto-format → neat keys and values (like a recipe card)."
       ] },
-    { kind: "section", title: "How does an app remember you? 🤔",
-      sub: "Close Instagram. Open it again. Your likes are still there. HOW?" },
+    { kind: "discuss", q: "Close Instagram. Open it again. Your likes are still there. HOW? 🤔",
+      hints: ["Where does your favorite app keep its stuff?", "What if it forgot everything every night?"] },
     { kind: "demo", demo: "dbBefore", title: "Before: variables forget 😱",
       sub: "Add 2 tasks. Then press the red button. Watch closely…",
       offline: [
@@ -155,6 +164,8 @@ const LESSONS = [
         { h: "A database remembers", lines: ["Saved. Organized.", "Fast to search."], color: "green" }
       ]}
     ]},
+    { kind: "discuss", q: "You must save 1,000 TikTok videos. What do you need to save about EACH one?",
+      hints: ["Shout out the fields: title? likes? …", "Two videos have the same title. How do you tell them apart?"], sec: 90 },
     { kind: "content", title: "What does a good table look like?", items: [
       { code: [
         '{ "id": 1, "title": "cat dance", "likes": 5021 }',
@@ -181,6 +192,8 @@ const LESSONS = [
       after: ["One query.", "One exact answer.", "Two seconds. ⚡"],
       note: "📸 Screenshot your query + answer — first proof of the year!" },
     { kind: "section", title: "Break ☕", sub: "30 minutes — you earned it" },
+    { kind: "discuss", q: "Remember the app that forgot everything? What does it need so it remembers?",
+      hints: ["Which database?", "What happens when you add an idea?", "…and when you open the page again?"] },
     { kind: "demo", demo: "dbExercise", title: "Part 2 · Connect the wires 🔌",
       sub: "Now YOU build it: your app forgets on restart — 3 steps and MongoDB remembers.",
       offline: [
@@ -227,13 +240,19 @@ const LESSONS = [
         "You connected a real app to MongoDB — and found your document. 💪"
       ]}
     ]},
-    { kind: "content", title: "Next time 👀", items: [
-      { lines: [
-        "An AI solves one of YOUR old exercises. Live.",
-        "We fix a bug just by chatting with it.",
-        "You install a coding agent: opencode."
-      ]},
-      { note: "Next week the AI starts working for you. 🤖" }
+    { kind: "content", title: "Glossary 📖", items: [
+      { rows: [
+        ["API", "a way for apps to talk to each other"],
+        ["GET", "an API request that asks for data"],
+        ["fetch()", "the JavaScript way to call an API"],
+        ["Postman", "an app to test APIs without code"],
+        ["JSON", "the format the internet uses to send data"],
+        ["database", "where an app keeps data long-term"],
+        ["MongoDB", "the database we use this year"],
+        ["collection", "a folder of documents in MongoDB"],
+        ["document", "one row of data — looks like JSON"],
+        ["unique id", "a number/name no other row has"]
+      ]}
     ]},
     { kind: "content", title: "The Builder's Toolkit (Resources) 🚀",
       lead: "Your path: look it up → practice → go pro → learn every day. Not homework!", items: [
@@ -248,19 +267,13 @@ const LESSONS = [
           text: "Every day: fill your feed with code — follow tech educators and learn while scrolling." }
       ]}
     ]},
-    { kind: "content", title: "Glossary 📖", items: [
-      { rows: [
-        ["API", "a way for apps to talk to each other"],
-        ["GET", "an API request that asks for data"],
-        ["fetch()", "the JavaScript way to call an API"],
-        ["Postman", "an app to test APIs without code"],
-        ["JSON", "the format the internet uses to send data"],
-        ["database", "where an app keeps data long-term"],
-        ["MongoDB", "the database we use this year"],
-        ["collection", "a folder of documents in MongoDB"],
-        ["document", "one row of data — looks like JSON"],
-        ["unique id", "a number/name no other row has"]
-      ]}
+    { kind: "content", title: "Next time 👀", items: [
+      { lines: [
+        "An AI solves one of YOUR old exercises. Live.",
+        "We fix a bug just by chatting with it.",
+        "You install a coding agent: opencode."
+      ]},
+      { note: "Next week the AI starts working for you. 🤖" }
     ]}
   ]
 },
@@ -1304,7 +1317,7 @@ const FLOWS = {
     game: { name: "Skribbl.io — custom words", url: "https://skribbl.io",
       note: "Draw & guess with OUR words: API, server, database, JSON, cloud, waiter, pizza…" },
     material: "Slides: API refresh (live fetch, Postman, JSON) + why apps need databases (live demos).",
-    discussion: "Where does your favorite app keep its stuff? What would happen if it forgot everything every night?",
+    discussion: "A 💬 Let's talk slide before every big idea — they answer first, then the slide reveals it. The big one: where does your favorite app keep its stuff? What would happen if it forgot everything every night?",
     demo: "Yan opens a real Mongo database live and finds the most-liked video with ONE query.",
     exercises: "4 tiny exercises on the ready-made videos collection — read, filter, count, sort. Everyone finishes. 📸 screenshot your answer.",
     building: "Connect the TikTok Idea Tracker to MongoDB (Clone → Add code → Test), then find YOUR document in Atlas. Bonus: your own collection.",

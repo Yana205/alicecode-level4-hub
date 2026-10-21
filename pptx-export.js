@@ -191,6 +191,17 @@ async function downloadPPTX(n) {
       return;
     }
 
+    if (sl.kind === "discuss") {
+      const s = contentBase("💬 Let's talk");
+      s.addText("You first, then we reveal.", { x: MX, y: BODY_TOP - 0.2, w: CW, h: 0.32, align: "center", fontFace: BODY, bold: true, fontSize: 12, color: PINK });
+      addItems(s, [
+        { lines: [sl.q] },
+        ...(sl.hints ? [{ lines: sl.hints }] : []),
+        { note: sl.how || "🤔 Think · 👯‍♀️ Tell your partner · 🙋‍♀️ Share with the class" }
+      ], BODY_TOP + 0.2);
+      return;
+    }
+
     if (sl.kind === "beforeafter") {
       const s = contentBase(sl.title);
       /* template two-column: left white box w/ colored border, right lavender */

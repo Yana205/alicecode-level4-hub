@@ -101,6 +101,19 @@
         <div class="nw-meaning">${esc(s.meaning)}</div>
         ${s.extra ? `<div class="nw-extra">${esc(s.extra)}</div>` : ""}
       </div>`;
+    if (s.kind === "discuss") {
+      const sec = s.sec || 60, clock = `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
+      return `
+      <div class="s-discuss">
+        <div class="dq-tag">💬 LET'S TALK · you first, then we reveal</div>
+        <div class="dq-q">${esc(s.q)}</div>
+        ${s.hints ? `<ul class="dq-hints">${s.hints.map(h => `<li>${esc(h)}</li>`).join("")}</ul>` : ""}
+        <div class="dq-foot">
+          <span class="dq-how">${esc(s.how || "🤔 Think · 👯‍♀️ Tell your partner · 🙋‍♀️ Share with the class")}</span>
+          <button class="dq-timer" data-sec="${sec}" title="Start / reset the talk timer">⏱ ${clock}</button>
+        </div>
+      </div>`;
+    }
     if (s.kind === "beforeafter") return `
       <h2 class="s-title">${esc(s.title)}</h2>
       <div class="s-body">
@@ -181,6 +194,24 @@
   stage.querySelectorAll(".slide.k-demo .demo-embed").forEach(el => {
     const make = (typeof DEMOS !== "undefined") && DEMOS[el.dataset.demo];
     if (make) make(el);
+  });
+
+  /* discussion slides: tap the timer to start talk time, tap again to reset */
+  stage.querySelectorAll(".dq-timer").forEach(btn => {
+    const sec = +btn.dataset.sec, fmt = t => `⏱ ${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
+    let iv = null;
+    const reset = () => { clearInterval(iv); iv = null; btn.textContent = fmt(sec); btn.classList.remove("run", "done"); };
+    btn.addEventListener("click", () => {
+      if (iv || btn.classList.contains("done")) { reset(); return; }
+      let left = sec;
+      btn.classList.add("run");
+      iv = setInterval(() => {
+        left--;
+        btn.textContent = fmt(left);
+        if (left <= 0) { clearInterval(iv); iv = null; btn.classList.replace("run", "done"); btn.textContent = "⏰ Time! Share 🙋‍♀️"; }
+      }, 1000);
+    });
+    btn.closest(".slide").addEventListener("slide-on", reset);
   });
 
   /* swipe */
