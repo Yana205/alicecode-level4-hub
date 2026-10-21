@@ -42,7 +42,7 @@ function demoSort(list, s) {
   return k ? list.slice().sort((a, b) => (a[k] > b[k] ? 1 : a[k] < b[k] ? -1 : 0) * (dir < 0 ? -1 : 1)) : list;
 }
 
-/* the class database: the student connection string the teacher pastes on the Part 1 slide.
+/* the class database: the student connection string the teacher pastes on the Connect slide.
    Kept in this browser only (or CLASS_DB.studentUri in lessons-data.js, if you choose to publish it). */
 const CLASS_DB_KEY = "ac4-class-db";
 function classDbUri() {
@@ -52,6 +52,44 @@ function classDbUri() {
 const classDbMasked = u => u.replace(/(\/\/[^:\/]+:)[^@]+@/, "$1••••••@");
 
 function demoOnShow(el, fn) { const s = el.closest(".slide, .lab-panel"); if (s) s.addEventListener("slide-on", fn); }
+
+/* 🔑 the student connection string box: the teacher pastes it once, the girls copy it.
+   Shows the user + password under it; every box redraws when its slide is shown. */
+function classDbBox(uriEl) {
+  const credOf = u => { const m = u.match(/\/\/([^:\/]+):([^@]+)@/); return m ? { user: decodeURIComponent(m[1]), pw: decodeURIComponent(m[2]) } : null; };
+  let shown = false;
+  function draw(editing) {
+    const uri = classDbUri(), fixed = typeof CLASS_DB !== "undefined" && CLASS_DB.studentUri, cred = uri && credOf(uri);
+    if (uri && !editing) {
+      uriEl.innerHTML = `<code class="cdb-val">${demoEsc(shown ? uri : classDbMasked(uri))}</code>
+        <button class="cdb-btn" data-a="show" title="Show / hide the password">👁</button>
+        <button class="cdb-btn" data-a="copy">📋 copy</button>
+        ${fixed ? "" : `<button class="cdb-btn" data-a="edit" title="Change">✎</button>`}
+        ${cred ? `<span class="cdb-cred">👤 <b>${demoEsc(cred.user)}</b> · 🔒 <code>${demoEsc(shown ? cred.pw : "••••••")}</code></span>` : ""}`;
+    } else {
+      uriEl.innerHTML = `<input class="cdb-in" placeholder="Teacher: paste the student connection string" spellcheck="false" value="${demoEsc(uri)}">
+        <button class="cdb-btn" data-a="save">Save</button>`;
+    }
+    uriEl.insertAdjacentHTML("beforeend", `<small class="cdb-note">${fixed ? "Set in lessons-data.js" : "Saved in this browser only — never on the website."}</small>`);
+  }
+  uriEl.addEventListener("click", async e => {
+    const a = e.target.dataset && e.target.dataset.a; if (!a) return;
+    if (a === "save") {
+      const v = uriEl.querySelector(".cdb-in").value.trim();
+      try { v ? localStorage.setItem(CLASS_DB_KEY, v) : localStorage.removeItem(CLASS_DB_KEY); } catch (err) {}
+      draw();
+    }
+    if (a === "edit") draw(true);
+    if (a === "show") { shown = !shown; draw(); }
+    if (a === "copy") {
+      try { await navigator.clipboard.writeText(classDbUri()); e.target.textContent = "✅ copied"; } catch (err) { e.target.textContent = "select + copy"; }
+      setTimeout(() => { e.target.textContent = "📋 copy"; }, 1500);
+    }
+  });
+  uriEl.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.classList.contains("cdb-in")) uriEl.querySelector('[data-a="save"]').click(); });
+  demoOnShow(uriEl, () => { shown = false; draw(); });
+  draw();
+}
 
 const DEMOS = {};
 
@@ -417,7 +455,7 @@ npm install`)}
         <p class="ex-small">No Node.js? <a href="https://codespaces.new/${REPO}" target="_blank" rel="noopener">Open in GitHub Codespaces ↗</a> → <code>cd starter/idea-tracker</code></p>` },
     { h: "🔌 2 · Add code", body: `
         <p>Make a <code>.env</code> file with the class string (your teacher has it):</p>
-        ${code(`MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher pastes it on the Part 1 slide)"}`, ".env")}
+        ${code(`MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher pastes it on the Connect slide)"}`, ".env")}
         <p>In <code>server.js</code>, swap the 🎯 lines for:</p>
         ${code(`await db.collection("ideas").insertOne(idea);`, "STEP 2a")}
         ${code(`const all = await db.collection("ideas")
@@ -486,9 +524,9 @@ npm install`)}
   }
   el.querySelector(".ex-replay").addEventListener("click", play);
   demoOnShow(el, play);
-  /* the .env line picks up the class string the teacher pasted on the Part 1 slide */
+  /* the .env line picks up the class string the teacher pasted on the Connect slide */
   const envPre = [...el.querySelectorAll(".ex-file")].find(x => x.textContent === ".env").nextElementSibling;
-  demoOnShow(el, () => { envPre.textContent = `MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher pastes it on the Part 1 slide)"}`; });
+  demoOnShow(el, () => { envPre.textContent = `MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher pastes it on the Connect slide)"}`; });
 };
 
 /* ============================================================
@@ -504,10 +542,9 @@ DEMOS.vaultFind = function (el) {
   el.innerHTML = `
     <div class="vf">
       <ol class="vf-steps">
-        <li>Log in at <a href="https://cloud.mongodb.com" target="_blank" rel="noopener">cloud.mongodb.com ↗</a> <small>(your teacher invited you)</small></li>
-        <li>Click <b>Browse Collections</b></li>
-        <li>Open <b>alicecode › ideas</b></li>
-        <li>Filter: <code>{ "name": "YourName" }</code> → <b>Apply</b></li>
+        <li>Open <b>MongoDB Compass</b> → your class connection</li>
+        <li>Open <b>alicecode › ideas</b> → refresh ↻</li>
+        <li>Filter: <code>{ "name": "YourName" }</code> → <b>Find</b></li>
         <li>📸 Screenshot <b>your</b> document — proof it's in the vault!</li>
       </ol>
       <div class="vf-atlas">
@@ -563,6 +600,26 @@ DEMOS.vaultFind = function (el) {
 };
 
 /* ============================================================
+   Connect to the class database — lean steps + the 🔑 box
+   ============================================================ */
+DEMOS.classDbConnect = function (el) {
+  el.innerHTML = `
+    <div class="cc">
+      <ol class="cc-steps">
+        <li>📥 Download <b>MongoDB Compass</b> (free):<br><a href="https://www.mongodb.com/try/download/compass" target="_blank" rel="noopener">mongodb.com/try/download/compass ↗</a></li>
+        <li>➕ <b>Add new connection</b> → paste the class string → <b>Connect</b></li>
+        <li>🗂️ Open <b>alicecode › videos</b></li>
+        <li>🔧 Part 2: the <b>same</b> string goes in your <code>.env</code> as <code>MONGODB_URI=</code></li>
+      </ol>
+      <div class="cdb">
+        <div class="cdb-head">🔑 Class database <span>database <b>alicecode</b></span></div>
+        <div class="cdb-uri"></div>
+      </div>
+    </div>`;
+  classDbBox(el.querySelector(".cdb-uri"));
+};
+
+/* ============================================================
    Part 1 · the ready-made database — class login + 4 exercises + a practice copy
    ============================================================ */
 DEMOS.readyDb = function (el) {
@@ -577,7 +634,7 @@ DEMOS.readyDb = function (el) {
       <div class="rd-left">
         <div class="cdb">
           <div class="cdb-head">🔑 Class database <span>alicecode › <b>videos</b></span></div>
-          <div class="cdb-row">Log in: <a href="https://cloud.mongodb.com" target="_blank" rel="noopener">cloud.mongodb.com ↗</a> <small>(your teacher invited you)</small></div>
+          <div class="cdb-row">Open in <b>MongoDB Compass</b> → paste → Connect <small>(next to this: the practice copy)</small></div>
           <div class="cdb-uri"></div>
         </div>
         <ol class="rd-ex">${EX.map((x, i) => `
@@ -600,36 +657,6 @@ DEMOS.readyDb = function (el) {
   const f = el.querySelector(".rd-f"), s = el.querySelector(".rd-s");
   const msg = el.querySelector(".vf-msg"), docsEl = el.querySelector(".vf-docs"), uriEl = el.querySelector(".cdb-uri");
   let videos = [];
-
-  /* 🔑 the student connection string: paste once, copy many times */
-  function drawUri(editing) {
-    const uri = classDbUri(), fixed = typeof CLASS_DB !== "undefined" && CLASS_DB.studentUri;
-    if (uri && !editing) {
-      uriEl.innerHTML = `<code class="cdb-val">${demoEsc(classDbMasked(uri))}</code>
-        <button class="cdb-btn" data-a="show" title="Show / hide the password">👁</button>
-        <button class="cdb-btn" data-a="copy">📋 copy</button>
-        ${fixed ? "" : `<button class="cdb-btn" data-a="edit" title="Change">✎</button>`}`;
-    } else {
-      uriEl.innerHTML = `<input class="cdb-in" placeholder="Teacher: paste the student connection string" spellcheck="false" value="${demoEsc(uri)}">
-        <button class="cdb-btn" data-a="save">Save</button>`;
-    }
-    uriEl.insertAdjacentHTML("beforeend", `<small class="cdb-note">${fixed ? "Set in lessons-data.js" : "Saved in this browser only — never on the website."}</small>`);
-  }
-  uriEl.addEventListener("click", async e => {
-    const a = e.target.dataset && e.target.dataset.a; if (!a) return;
-    if (a === "save") {
-      const v = uriEl.querySelector(".cdb-in").value.trim();
-      try { v ? localStorage.setItem(CLASS_DB_KEY, v) : localStorage.removeItem(CLASS_DB_KEY); } catch (err) {}
-      drawUri();
-    }
-    if (a === "edit") drawUri(true);
-    if (a === "show") { const c = uriEl.querySelector(".cdb-val"); c.textContent = c.textContent.includes("••") ? classDbUri() : classDbMasked(classDbUri()); }
-    if (a === "copy") {
-      try { await navigator.clipboard.writeText(classDbUri()); e.target.textContent = "✅ copied"; } catch (err) { e.target.textContent = "select + copy"; }
-      setTimeout(() => { e.target.textContent = "📋 copy"; }, 1500);
-    }
-  });
-  uriEl.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.classList.contains("cdb-in")) uriEl.querySelector('[data-a="save"]').click(); });
 
   /* the practice copy: same 30 videos as the real class database */
   function draw(list, hit) {
@@ -667,7 +694,7 @@ DEMOS.readyDb = function (el) {
         1 · ${videos.length} videos · 2 · ${videos.filter(d => d.category === "dance").length} dance ·
         3 · ${videos.filter(d => d.likes > 10000).length} over 10,000 · 4 · "${demoEsc(top.title)}" (${top.likes} ❤️)</details>`;
     }
-  }).catch(() => { msg.textContent = "Couldn't load the practice copy — use the real one in Atlas."; });
+  }).catch(() => { msg.textContent = "Couldn't load the practice copy — use the real one in Compass."; });
 
-  drawUri();
+  classDbBox(uriEl);
 };
