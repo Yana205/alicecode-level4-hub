@@ -7,7 +7,7 @@
 
 const NIR_TUTORIAL = "https://github.com/nirkaufman/refernce-project-js/tree/main/tutorial";
 
-/* The class database login shown on the Part 1 slide. Leave empty and the teacher pastes it in class
+/* The class database login shown on the Connect + Part 1 slides. Leave empty and the teacher pastes it in class
    (saved only in that browser). Anything written here is PUBLIC on the website and on GitHub. */
 const CLASS_DB = { studentUri: "" };
 
@@ -30,7 +30,7 @@ const LESSONS = [
     "Open the ready-made Mongo database (alicecode › videos) and finish the 4 small exercises: read, filter, count, sort.",
     "Find: which video has the most likes?",
     "Connect the Idea Tracker to MongoDB: add an idea, restart the server — it's still there.",
-    "Find YOUR document in MongoDB Atlas with a filter. 🔍",
+    "Find YOUR document in MongoDB Compass with a filter. 🔍",
     "⭐ Bonus: create your own collection, insert 3 documents with unique ids, find them with a query.",
     "📸 Screenshot your before + after for the portfolio."
   ],
@@ -198,10 +198,19 @@ const LESSONS = [
     ]},
     { kind: "discuss", q: "30 videos. Which one has the most likes? How would you find out — without scrolling?",
       hints: ["Can you ask the data a question?", "What would you sort by?"] },
+    { kind: "demo", demo: "classDbConnect", title: "🔑 Connect to the class database",
+      sub: "Same login for everyone — Part 1 AND Part 2.",
+      offline: [
+        "1 · Download MongoDB Compass (free): mongodb.com/try/download/compass",
+        "2 · Add new connection → paste the class string → Connect",
+        "3 · Open alicecode › videos",
+        "4 · Part 2: the same string goes in your .env as MONGODB_URI=",
+        "🔑 The class string is on the live slide (the teacher pastes it there)."
+      ] },
     { kind: "demo", demo: "readyDb", title: "Part 1 · Task ✅",
       sub: "The ready-made database: 30 TikTok videos. Read, filter, count, sort. Stuck 5 minutes? Ask.",
       offline: [
-        "Log in at cloud.mongodb.com → Browse Collections → alicecode › videos",
+        "MongoDB Compass → your class connection → alicecode › videos",
         "1 · 👀 Read: how many videos are there?",
         "2 · 🔍 Filter: only dance videos → { \"category\": \"dance\" }",
         "3 · 🔢 Count: more than 10,000 likes → { \"likes\": { \"$gt\": 10000 } }",
@@ -228,14 +237,14 @@ const LESSONS = [
     { kind: "demo", demo: "vaultFind", title: "Find it in the vault 🔍",
       sub: "Your idea is in MongoDB now. Go find YOUR document.",
       offline: [
-        "1 · Log in at cloud.mongodb.com (your teacher invited you)",
-        "2 · Browse Collections → alicecode › ideas",
-        "3 · Filter: { \"name\": \"YourName\" } → Apply",
+        "1 · MongoDB Compass → your class connection",
+        "2 · alicecode › ideas → refresh ↻",
+        "3 · Filter: { \"name\": \"YourName\" } → Find",
         "4 · 📸 Screenshot your document — proof it's in the vault!"
       ] },
     { kind: "beforeafter", title: "Proof time 📸",
       before: ["Restart the server…", "…your ideas are gone. 😢"],
-      after: ["Restart + refresh: still there!", "Your document, found in Atlas. 🔍"],
+      after: ["Restart + refresh: still there!", "Your document, found with a filter. 🔍"],
       note: "📸 Before + after screenshots go in your portfolio." },
     { kind: "content", title: "Bonus ⭐ Your own collection 🔧",
       lead: "Finished early? Build one more — any topic you love.", items: [
@@ -1340,7 +1349,7 @@ const FLOWS = {
     discussion: "A 💬 Let's talk slide before every big idea — they answer first, then the slide reveals it. The big one: where does your favorite app keep its stuff? What would happen if it forgot everything every night?",
     demo: "Yan opens a real Mongo database live and finds the most-liked video with ONE query.",
     exercises: "4 tiny exercises on the ready-made videos collection — read, filter, count, sort. Everyone finishes. 📸 screenshot your answer.",
-    building: "Connect the TikTok Idea Tracker to MongoDB (Clone → Add code → Test), then find YOUR document in Atlas. Bonus: your own collection.",
+    building: "Connect the TikTok Idea Tracker to MongoDB (Clone → Add code → Test), then find YOUR document in Compass. Bonus: your own collection.",
     sources: [
       { label: "MongoDB basics", url: "https://www.mongodb.com/basics" },
       { label: "JSON intro (W3Schools)", url: "https://www.w3schools.com/js/js_json_intro.asp" },
@@ -1528,6 +1537,6 @@ const VISUALS = {
   7: {
     "Look how far you've come 🥹": { id: "v7-1", prompt: "A mountain path from a tiny seedling at the bottom to a shining studio building on the peak, little flags along the way." },
     "Part 1 · Task ✅ Grand opening": { id: "v7-2", prompt: "Ribbon-cutting in front of a neon studio sign, confetti, a team of girls with their three robots." },
-    "Part 2 · HACKATHON 🔥": { id: "v7-3", prompt: "A planning war-room table: map, sticky notes, three girls planning, a rocket model in the middle." }
+    "Part 2 · HACKATHON 🔥": { id: "v7-3", prompt: "Ribbon-cutting in front of a neon studio sign, confetti, a team of girls with their three robots." }
   }
 };
