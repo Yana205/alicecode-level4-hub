@@ -97,7 +97,7 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 | **Opening** | 1 Title · 2 Steps today (the schedule) · 3 Game 🎮 |
 | **This year** | 4 💬 How did you use AI this summer? · 5 Users → builders · 6 💬 Chatting vs. an AI that works while you sleep? · 7 Chatting vs. building · 8 💬 Robots that make TikToks: what jobs? · 9 TikTok Studio loop · 10 💬 What happens at a hackathon? · 11 Road to the hackathon |
 | **Your superpower** | 12 💬 Same AI, amazing code vs. junk: why? · 13 Secret superpower · 14 Same wish, two prompts (**vote A or B**) · 15 Button Lab (test it live) |
-| **Part 1 · APIs** | 16 💬 Your app is empty: how does it get real data? · 17 Locked door vs. master key · 18 💬 Who carries the question to the server? · 19 API waiter · 20 💬 "pikachu" + a button: what's sent, what comes back? · 21 Live fetch · 22 💬 How do you test an API before coding? · 23 Postman + JSON |
+| **Part 1 · APIs** | 16 💬 Do you remember what an API is? · 17 API waiter (the answer) · 18 💬 Your app is empty: how does it get real data? · 19 Locked door vs. master key · 20 💬 "pikachu" + a button: what's sent, what comes back? · 21 Live fetch · 22 💬 How do you test an API before coding? · 23 Postman + JSON |
 | **Part 1 · Databases** | 24 💬 How does Instagram remember you? (+ predict a refresh) · 25 Before: variables forget · 26 💬 Where CAN an app keep data? · 27 NEW WORD MongoDB · 28 💬 Predict: same app + database, refresh · 29 After: MongoDB remembers · 30 💬 Variables, file or database: which and why? · 31 Why a database? · 32 💬 What do you save about each video? · 33 A good table · 34 💬 Most likes, without scrolling? · 35 Part 1 task · 36 Proof |
 | **Break** | 37 ☕ |
 | **Part 2 · Build** | 38 💬 What does the forgetting app need? · 39 Connect the wires (exercise) · 40 💬 How do you find YOUR document? · 41 Find it in the vault · 42 Proof · 43 Bonus: your own collection |
@@ -105,7 +105,7 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 
 What changed in the second reorder:
 - **The schedule comes first.** "Steps today" is slide 2, right after the title, with the spoiler of the day and every part of the lesson (also the year intro and the superpower, which the old list skipped).
-- **Problem before answer.** APIs start with the locked door (an empty app), then the waiter explains how an API works.
+- **Recall before reveal.** APIs start with "Do you remember what an API is?", then the waiter slide is the answer, then the locked door shows why it matters.
 - **💬 Talk before every reveal.** A discussion slide opens every new topic (17 in all); "How does an app remember you?" turned from a section slide into one.
 - **End on the hook.** Glossary and resources come before "Next time", so the last thing they see is next week.
 

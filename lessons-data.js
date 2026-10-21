@@ -112,16 +112,10 @@ const LESSONS = [
     ]},
     { kind: "lab", title: "🧪 The Button Lab",
       sub: "Same wish, two prompts — live. Then YOU take the keyboard." },
-    { kind: "discuss", q: "Your app looks amazing — but it's empty. How can it show REAL data: weather, Pokémon, TikTok trends?",
-      hints: ["Where does that data live?", "How would your app ask for it?"] },
-    { kind: "beforeafter", title: "A locked door vs. the master key 🔑",
-      before: ["Your app looks amazing…", "…but it's empty. 🫙", "It only knows what you hardcode into it."],
-      after: ["Your app asks the internet.", "Real data. Live. Always fresh.", "fetch() is your master key. 🔑"],
-      note: "REST API = a web address that answers with data (JSON). Pokémon, weather, TikTok trends…" },
-    { kind: "discuss", q: "Your app asks a server for data. Who carries the question — and brings back the answer?",
-      hints: ["Think of a restaurant 🍕", "You · the waiter · the kitchen: who is who?"] },
+    { kind: "discuss", q: "Do you remember what an API is? 🤔",
+      hints: ["Explain it in your own words", "Where have you used one?", "What does GET mean?"] },
     { kind: "content", title: "Quick refresh: what is an API? 🌐",
-      lead: "You know this — let's warm it up.", items: [
+      lead: "Did you remember? Here's the answer. 🎯", items: [
       { cards: [
         { h: "You (the app)", lines: ["\"One pizza, please!\"", "You ask for data."] },
         { h: "The API (waiter)", lines: ["Takes your request", "to the kitchen."], color: "orange" },
@@ -129,6 +123,12 @@ const LESSONS = [
       ]},
       { note: "GET = \"please give me data\". The answer comes as JSON." }
     ]},
+    { kind: "discuss", q: "Your app looks amazing — but it's empty. How can it show REAL data: weather, Pokémon, TikTok trends?",
+      hints: ["Where does that data live?", "How would your app ask for it?"] },
+    { kind: "beforeafter", title: "A locked door vs. the master key 🔑",
+      before: ["Your app looks amazing…", "…but it's empty. 🫙", "It only knows what you hardcode into it."],
+      after: ["Your app asks the internet.", "Real data. Live. Always fresh.", "fetch() is your master key. 🔑"],
+      note: "REST API = a web address that answers with data (JSON). Pokémon, weather, TikTok trends…" },
     { kind: "discuss", q: "You type \"pikachu\" and press a button. What does your app send? What comes back?",
       hints: ["A web address?", "A picture? Text? A box of data?"] },
     { kind: "demo", demo: "liveFetch", title: "Live: fetch a real API ⚡",
