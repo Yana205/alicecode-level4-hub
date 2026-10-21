@@ -3,7 +3,7 @@
    then the girls edit the code themselves. No server, no libraries.
    Presets with a `prompt` also get the "juice": dull vs highlighted editor,
    prompt bubble with neon keywords + arrow to the CSS, Your Turn challenge,
-   sparkle + chime on the upgrade. */
+   sparkle on the upgrade. */
 
 const LAB_PRESETS = {
   1: {
@@ -166,29 +166,6 @@ function labPromptHTML(prompt) {
     (_, w, t) => `<b class="kw" data-target="${t || w}" tabindex="0">${w}</b>`);
 }
 
-/* sound: a short rising chime, synthesized (no files) */
-let labAudio = null;
-function labSoundOn() { try { return localStorage.getItem("ac4-lab-sound") !== "off"; } catch (e) { return true; } }
-function labChime(notes) {
-  if (!labSoundOn()) return;
-  try {
-    labAudio = labAudio || new (window.AudioContext || window.webkitAudioContext)();
-    const t0 = labAudio.currentTime;
-    notes.forEach((f, i) => {
-      const o = labAudio.createOscillator(), g = labAudio.createGain();
-      o.type = "triangle"; o.frequency.value = f;
-      const t = t0 + i * 0.07;
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.18, t + 0.01);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
-      o.connect(g).connect(labAudio.destination);
-      o.start(t); o.stop(t + 0.5);
-    });
-  } catch (e) {}
-}
-const LAB_UPGRADE_NOTES = [784, 988, 1175, 1568];
-const LAB_WIN_NOTES = [523, 659, 784, 1047, 1319];
-
 /* sparkle burst centered on an element */
 function labSparkle(host, target, count = 18) {
   if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -221,7 +198,6 @@ function initButtonLab(container, n, embedded) {
       <button class="btn small" data-lab="explicit">${P.explicit.label}</button>
       ${P.yourTurn ? `<button class="btn small lab-yt-btn" data-lab="yourturn">${P.yourTurn.label}</button>` : ""}
       <button class="btn small dark" data-lab="reset">↺ Reset</button>
-      ${juice ? `<button class="btn small ghost lab-icon" data-lab="sound" title="Sound on/off">${labSoundOn() ? "🔊" : "🔇"}</button>` : ""}
       <button class="btn small ghost lab-icon" data-lab="fs">⛶</button>
     </div>
     ${juice ? `<div class="lab-bubble" aria-live="polite"></div>` : ""}
@@ -377,7 +353,6 @@ function initButtonLab(container, n, embedded) {
     const tok = findToken(fresh[0]);
     if (tok) { ta.scrollTop = Math.max(0, tok.offsetTop - ta.clientHeight / 3); hl.scrollTop = ta.scrollTop; }
     msg.textContent = `🤖 The AI obeyed: added ${fresh.join(" + ")}`;
-    labChime(LAB_UPGRADE_NOTES);
     labSparkle(container, previewWrap, 14);
     checkYourTurn();
   }
@@ -397,7 +372,6 @@ function initButtonLab(container, n, embedded) {
     });
     if (done === P.yourTurn.words.length && !won) {
       won = true;
-      labChime(LAB_WIN_NOTES);
       labSparkle(container, previewWrap, 26);
       const msg = document.createElement("span");
       msg.className = "yt-win"; msg.textContent = P.yourTurn.win;
@@ -432,7 +406,7 @@ function initButtonLab(container, n, embedded) {
   container.querySelector('[data-lab="explicit"]').addEventListener("click", function () {
     const upgrade = juice && mode !== "explicit";
     setMode("explicit");
-    if (upgrade) { labChime(LAB_UPGRADE_NOTES); labSparkle(container, this, 14); }
+    if (upgrade) labSparkle(container, this, 14);
     typeIn(P.explicit.code, () => {
       if (!juice) return;
       previewWrap.classList.remove("pop"); void previewWrap.offsetWidth; previewWrap.classList.add("pop");
@@ -450,13 +424,6 @@ function initButtonLab(container, n, embedded) {
   });
   container.querySelector('[data-lab="reset"]').addEventListener("click", () => {
     clearInterval(typeTimer); setMode("start"); setCode(P.start);
-  });
-  const snd = container.querySelector('[data-lab="sound"]');
-  if (snd) snd.addEventListener("click", () => {
-    const on = !labSoundOn();
-    try { localStorage.setItem("ac4-lab-sound", on ? "on" : "off"); } catch (e) {}
-    document.querySelectorAll('[data-lab="sound"]').forEach(b => b.textContent = on ? "🔊" : "🔇");
-    if (on) labChime([1047]);
   });
   container.querySelector('[data-lab="fs"]').addEventListener("click", () => {
     if (document.fullscreenElement) document.exitFullscreen();

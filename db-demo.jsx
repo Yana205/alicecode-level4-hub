@@ -21,35 +21,6 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 const reducedMotion = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 const HINTS = ["Finish homework", "Feed cat", "Practice the dance", "Text grandma 💜"];
 
-/* sound — shares the deck's 🔊/🔇 switch */
-const soundOn = () => { try { return localStorage.getItem("ac4-lab-sound") !== "off"; } catch (e) { return true; } };
-let audioCtx = null;
-function playNotes(notes, { type = "triangle", gap = 0.07, len = 0.45, vol = 0.16, wobbleLast = false } = {}) {
-  if (!soundOn()) return;
-  try {
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const t0 = audioCtx.currentTime;
-    notes.forEach((f, i) => {
-      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-      const last = wobbleLast && i === notes.length - 1, t = t0 + i * gap, d = last ? 0.9 : len;
-      o.type = type; o.frequency.value = f;
-      if (last) { /* the "wahhh" wobble */
-        const lfo = audioCtx.createOscillator(), lg = audioCtx.createGain();
-        lfo.frequency.value = 6; lg.gain.value = 9;
-        lfo.connect(lg).connect(o.frequency); lfo.start(t); lfo.stop(t + d);
-      }
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(vol, t + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.001, t + d);
-      o.connect(g).connect(audioCtx.destination);
-      o.start(t); o.stop(t + d + 0.05);
-    });
-  } catch (e) {}
-}
-const chime = () => playNotes([523, 659, 784, 1047, 1319]);
-const zap = () => playNotes([1175, 1568], { len: 0.2, vol: 0.1 });
-const sadTrombone = () => playNotes([392, 370, 349, 330], { type: "sawtooth", gap: 0.32, len: 0.3, vol: 0.08, wobbleLast: true });
-
 /* the database: real MongoDB through /api/tasks, or simulated in this browser */
 const LOCAL_KEY = "ac4-demo-tasks";
 const store = {
@@ -171,7 +142,6 @@ function VariablesForget() {
     setFreshAt(-1);
     if (!had) { setPhase("idle"); return; }
     setPhase("gone");
-    sadTrombone();
     await wait(2400);
     setPhase("idle");
   };
@@ -356,7 +326,7 @@ function MongoRemembers() {
     setError("");
     setAppTasks(t => [...t, { text }]);            // shows on the page right away
     setLastText(text); setHot("insert");
-    shoot(appRef, dbRef, "#FF79A8"); zap();
+    shoot(appRef, dbRef, "#FF79A8");
     await wait(reducedMotion() ? 0 : 620);          // the beam lands…
     try {
       const doc = await store.insertOne(text);     // …and the document appears in MongoDB
@@ -385,11 +355,10 @@ function MongoRemembers() {
     await wait(450);
     setPhase("fetching"); setHot("find");
     const [list] = await Promise.all([store.find().catch(() => docs), wait(1100)]);
-    if (list.length) { shoot(dbRef, appRef, "#00ED64"); zap(); }
+    if (list.length) shoot(dbRef, appRef, "#00ED64");
     await wait(reducedMotion() ? 0 : 650);
     setPhase("back"); setDocs(list);
     for (const d of list) { setAppTasks(t => [...t, d]); await wait(130); }
-    if (list.length) chime();
     await wait(1500);
     setPhase("idle"); setHot(null);
   };

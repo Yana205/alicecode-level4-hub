@@ -1,7 +1,7 @@
 /* AliceCode Level 4 — live slide demos (Part 2 upgrades)
    A slide with kind:"demo" renders <div class="demo-embed" data-demo="name">,
    and DEMOS[name](el) builds it. Demos replay when their slide is shown
-   (the slide fires a "slide-on" event). Sounds reuse the Lab's chime + mute. */
+   (the slide fires a "slide-on" event). */
 
 const demoEsc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const demoWait = ms => new Promise(r => setTimeout(r, ms));
@@ -129,7 +129,6 @@ DEMOS.agentRace = function (el) {
       await demoWait(cls === "run" ? 380 : 260);
     }
     $(".race-agent").classList.add("won");
-    if (typeof labChime === "function") labChime(LAB_UPGRADE_NOTES);
   }
 
   async function playChat(me) {
@@ -225,7 +224,6 @@ DEMOS.studioLoop = function (el) {
     set(n);
     if (n === 2) think(run);
     if (n === 3) {
-      if (typeof labChime === "function") labChime(LAB_UPGRADE_NOTES);
       if (typeof labSparkle === "function") labSparkle(el, el.querySelector(".sl-phone"), 18);
     }
   }
@@ -297,7 +295,6 @@ DEMOS.liveFetch = function (el) {
         <pre class="lf-json">${demoJSON(slim, "abilities")}</pre>
         <div class="lf-more">The real answer is ${Math.round(raw.length / 1024)} KB of JSON — we show the important part.</div>`;
       log.classList.add("lit");
-      if (typeof labChime === "function") labChime([880, 1175]);
     } catch (e) {
       if (me !== run) return;
       status.textContent = `GET /pokemon/${name} · no connection`;
@@ -398,7 +395,6 @@ DEMOS.toolsOfTrade = function (el) {
     const on = stage.classList.toggle("formatted");
     fmt.textContent = on ? "↺ Show raw" : "✨ Auto-format";
     if (on) {
-      if (typeof labChime === "function") labChime([880, 1175]);
       if (typeof labSparkle === "function") labSparkle(el, el.querySelector(".tj-card"), 12);
     }
   });
@@ -547,7 +543,6 @@ DEMOS.vaultFind = function (el) {
     draw(list, Object.keys(q).length > 0 && list.length > 0);
     if (!list.length && docs.some(d => match(d, true))) msg.innerHTML += ` · <b class="bad">MongoDB is case-sensitive — check capital letters!</b>`;
     if (Object.keys(q).length && list.length) {
-      if (typeof labChime === "function") labChime([880, 1175, 1568]);
       if (typeof labSparkle === "function") labSparkle(el, docsEl, 12);
     }
   }
