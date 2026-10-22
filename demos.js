@@ -542,9 +542,9 @@ DEMOS.vaultFind = function (el) {
   el.innerHTML = `
     <div class="vf">
       <ol class="vf-steps">
-        <li>Open <b>MongoDB Compass</b> → your class connection</li>
-        <li>Open <b>alicecode › ideas</b> → refresh ↻</li>
-        <li>Filter: <code>{ "name": "YourName" }</code> → <b>Find</b></li>
+        <li>The vault on the right is <b>alicecode › ideas</b> — everyone's ideas, live</li>
+        <li>On your laptop: same slide, or 🧪 <b>Labs</b> under the slides</li>
+        <li>Filter: <code>{ "name": "YourName" }</code> → <b>Apply</b></li>
         <li>📸 Screenshot <b>your</b> document — proof it's in the vault!</li>
       </ol>
       <div class="vf-atlas">
@@ -587,16 +587,21 @@ DEMOS.vaultFind = function (el) {
   input.addEventListener("keydown", e => { if (e.key === "Enter") apply(); });
   el.querySelector(".vf-reset").addEventListener("click", () => { input.value = ""; draw(docs); });
 
-  /* the real class collection when the hub has MONGODB_URI, otherwise sample documents */
-  fetch("api/ideas", { cache: "no-store" })
-    .then(r => r.ok && (r.headers.get("content-type") || "").includes("json") ? r.json() : null)
-    .catch(() => null)
-    .then(j => {
-      const live = !!(j && j.ok);
-      if (live) docs = j.docs;
-      el.querySelector(".vf-mode").textContent = live ? "🟢 live" : "🟡 sample data";
-      draw(docs);
-    });
+  /* the real class collection when the hub has MONGODB_URI, otherwise sample documents.
+     Reloads each time the slide is shown, so new ideas from Part 2 appear. */
+  function load() {
+    fetch("api/ideas", { cache: "no-store" })
+      .then(r => r.ok && (r.headers.get("content-type") || "").includes("json") ? r.json() : null)
+      .catch(() => null)
+      .then(j => {
+        const live = !!(j && j.ok);
+        if (live) docs = j.docs;
+        el.querySelector(".vf-mode").textContent = live ? "🟢 live" : "🟡 sample data";
+        if (input.value.trim()) apply(); else draw(docs);
+      });
+  }
+  demoOnShow(el, load);
+  load();
 };
 
 /* ============================================================
@@ -606,10 +611,10 @@ DEMOS.classDbConnect = function (el) {
   el.innerHTML = `
     <div class="cc">
       <ol class="cc-steps">
-        <li>📥 Download <b>MongoDB Compass</b> (free):<br><a href="https://www.mongodb.com/try/download/compass" target="_blank" rel="noopener">mongodb.com/try/download/compass ↗</a></li>
-        <li>➕ <b>Add new connection</b> → paste the class string → <b>Connect</b></li>
-        <li>🗂️ Open <b>alicecode › videos</b></li>
-        <li>🔧 Part 2: the <b>same</b> string goes in your <code>.env</code> as <code>MONGODB_URI=</code></li>
+        <li>🌐 On your laptop — nothing to install:<br><a href="https://alicecode-level4-hub.vercel.app/slides.html?n=1" target="_blank" rel="noopener">alicecode-level4-hub.vercel.app → Lesson 1 ↗</a></li>
+        <li>🔍 Part 1 slide (or 🧪 Labs under the slides): type a filter → <b>Apply</b> → the <b>real</b> database answers</li>
+        <li>🗂️ Database <b>alicecode</b> › collection <b>videos</b>: 30 TikTok videos</li>
+        <li>🔧 Part 2: your own app connects with this string — in <code>.env</code> as <code>MONGODB_URI=</code></li>
       </ol>
       <div class="cdb">
         <div class="cdb-head">🔑 Class database <span>database <b>alicecode</b></span></div>
@@ -620,7 +625,7 @@ DEMOS.classDbConnect = function (el) {
 };
 
 /* ============================================================
-   Part 1 · the ready-made database — class login + 4 exercises + a practice copy
+   Part 1 · the ready-made database — 4 exercises on the real class database (a practice copy offline)
    ============================================================ */
 DEMOS.readyDb = function (el) {
   const EX = [
@@ -632,11 +637,7 @@ DEMOS.readyDb = function (el) {
   el.innerHTML = `
     <div class="rd">
       <div class="rd-left">
-        <div class="cdb">
-          <div class="cdb-head">🔑 Class database <span>alicecode › <b>videos</b></span></div>
-          <div class="cdb-row">Open in <b>MongoDB Compass</b> → paste → Connect <small>(next to this: the practice copy)</small></div>
-          <div class="cdb-uri"></div>
-        </div>
+        <div class="rd-how">🍃 Type a filter on the right → <b>Apply</b>. The class database answers.</div>
         <ol class="rd-ex">${EX.map((x, i) => `
           <li><b>${x.ic} ${x.h}</b> ${x.q}
             ${x.f || x.s ? `<button class="rd-try" data-i="${i}">${x.f ? `Filter <code>${demoEsc(x.f)}</code>` : `Sort <code>${demoEsc(x.s)}</code>`}</button>` : ""}
@@ -645,7 +646,7 @@ DEMOS.readyDb = function (el) {
         <div class="rd-ans"></div>
       </div>
       <div class="vf-atlas rd-atlas">
-        <div class="vf-top">🍃 <b>MongoDB Atlas</b> <span>alicecode › <b>videos</b></span> <i class="vf-mode">practice copy</i></div>
+        <div class="vf-top">🍃 <b>MongoDB Atlas</b> <span>alicecode › <b>videos</b></span> <i class="vf-mode">…</i></div>
         <div class="vf-bar"><span class="vf-label">Filter</span><input class="vf-input rd-f" placeholder="{ field: 'value' }" spellcheck="false" aria-label="Filter"></div>
         <div class="vf-bar"><span class="vf-label">Sort</span><input class="vf-input rd-s" placeholder="{ field: -1 }" spellcheck="false" aria-label="Sort">
           <button class="vf-apply">Apply</button><button class="vf-reset">Reset</button></div>
@@ -655,38 +656,51 @@ DEMOS.readyDb = function (el) {
     </div>`;
 
   const f = el.querySelector(".rd-f"), s = el.querySelector(".rd-s");
-  const msg = el.querySelector(".vf-msg"), docsEl = el.querySelector(".vf-docs"), uriEl = el.querySelector(".cdb-uri");
-  let videos = [];
+  const msg = el.querySelector(".vf-msg"), docsEl = el.querySelector(".vf-docs"), mode = el.querySelector(".vf-mode");
+  let videos = [], live = false;
 
-  /* the practice copy: same 30 videos as the real class database */
-  function draw(list, hit) {
-    msg.innerHTML = `QUERY RESULTS: <b>${list.length ? `1-${list.length} OF ${list.length}` : "0"}</b>`;
+  /* live = the real class database through api/videos; otherwise the practice copy (same 30 videos) */
+  function draw(list, hit, total = list.length) {
+    msg.innerHTML = `QUERY RESULTS: <b>${list.length ? `1-${list.length} OF ${total}` : "0"}</b>`;
     docsEl.innerHTML = list.map((d, i) => `
       <div class="vf-doc${hit && i === 0 ? " hit" : ""}">
         <div><span class="at-k">_id</span>: <span class="at-d">${d._id}</span> · <span class="at-k">title</span>: <span class="at-s">"${demoEsc(d.title)}"</span></div>
         <div><span class="at-k">category</span>: <span class="at-s">"${demoEsc(d.category)}"</span> · <span class="at-k">likes</span>: <span class="at-d">${d.likes}</span> · <span class="at-k">views</span>: <span class="at-d">${d.views}</span></div>
       </div>`).join("") || `<div class="vf-none">No documents match this filter.</div>`;
   }
-  function apply() {
+  const ask = (q, so) => fetch(`api/videos?filter=${encodeURIComponent(JSON.stringify(q))}&sort=${encodeURIComponent(JSON.stringify(so))}`, { cache: "no-store" })
+    .then(r => (r.headers.get("content-type") || "").includes("json") ? r.json() : null);
+  const caseHint = q => { try { if (videos.some(d => demoMatch(d, q, true))) msg.innerHTML += ` · <b class="bad">MongoDB is case-sensitive — check capital letters!</b>`; } catch (e) {} };
+  async function apply() {
     let q, so;
     try { q = demoParseQuery(f.value); so = demoParseQuery(s.value); }
     catch (e) { msg.innerHTML = `<b class="bad">🤔 That isn't valid — check the { } and the quotes.</b>`; docsEl.innerHTML = ""; return; }
+    const hit = Object.keys(q).length || Object.keys(so).length;
+    if (live) {
+      msg.textContent = "⏳ Asking the database…";
+      const j = await ask(q, so).catch(() => null);
+      if (j && j.ok) { draw(j.docs, hit, j.count); if (!j.count) caseHint(q); return; }
+      if (j && j.error) { msg.innerHTML = `<b class="bad">🤔 ${demoEsc(j.error)}</b>`; docsEl.innerHTML = ""; return; }
+    }
     try {
       const list = demoSort(videos.filter(d => demoMatch(d, q)), so);
-      draw(list, Object.keys(q).length || Object.keys(so).length);
-      if (!list.length && videos.some(d => demoMatch(d, q, true))) msg.innerHTML += ` · <b class="bad">MongoDB is case-sensitive — check capital letters!</b>`;
+      draw(list, hit);
+      if (!list.length) caseHint(q);
     } catch (e) { msg.innerHTML = `<b class="bad">🤔 ${demoEsc(e.message)}</b>`; docsEl.innerHTML = ""; }
   }
   el.querySelector(".vf-apply").addEventListener("click", apply);
   [f, s].forEach(i => i.addEventListener("keydown", e => { if (e.key === "Enter") apply(); }));
-  el.querySelector(".vf-reset").addEventListener("click", () => { f.value = ""; s.value = ""; draw(videos); });
+  el.querySelector(".vf-reset").addEventListener("click", () => { f.value = ""; s.value = ""; apply(); });
   el.querySelectorAll(".rd-try").forEach(b => b.addEventListener("click", () => {
     const x = EX[+b.dataset.i]; f.value = x.f; s.value = x.s; apply();
   }));
 
-  fetch("starter/class-db/videos.json").then(r => r.json()).then(list => {
+  fetch("starter/class-db/videos.json").then(r => r.json()).then(async list => {
     videos = list.map(d => ({ ...d, postedAt: d.postedAt && d.postedAt.$date }));
-    draw(videos);
+    const j = await ask({}, {}).catch(() => null);
+    live = !!(j && j.ok);
+    mode.textContent = live ? "🟢 live · class database" : "🟡 practice copy";
+    if (live) draw(j.docs, false, j.count); else draw(videos);
     /* answers: only for the instructor (admin or unlocked) */
     if (typeof canView === "function" && canView()) {
       const top = demoSort(videos, { likes: -1 })[0];
@@ -694,7 +708,5 @@ DEMOS.readyDb = function (el) {
         1 · ${videos.length} videos · 2 · ${videos.filter(d => d.category === "dance").length} dance ·
         3 · ${videos.filter(d => d.likes > 10000).length} over 10,000 · 4 · "${demoEsc(top.title)}" (${top.likes} ❤️)</details>`;
     }
-  }).catch(() => { msg.textContent = "Couldn't load the practice copy — use the real one in Compass."; });
-
-  classDbBox(uriEl);
+  }).catch(() => { msg.textContent = "Couldn't load the videos — check the internet connection."; });
 };
