@@ -10,3 +10,7 @@
 .cc-steps a { color: var(--pink); font-weight: 800; }
 .cc-steps code { font-family: var(--font-code); background: #fff; border-radius: 6px; padding: 1px 6px; }
 .cc .cdb { font-size: clamp(.9rem, 1.7vw, 1.1rem); padding: 10px 14px; }
+
+/* Part 1 task: one line on how to ask the class database */
+.rd-how { background: #001E2B; color: #E8EDEB; border-radius: 12px; padding: 8px 12px; font-size: .9em; }
+.rd-how b { color: #00ED64; }
