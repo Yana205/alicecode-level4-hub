@@ -88,20 +88,27 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 
 ---
 
-## Lesson 1 · final order (48 slides) — slide numbers above are from earlier versions
+## Lesson 1 · final order (34 slides) — slide numbers above are from earlier versions
 
-💬 = a "Let's talk" discussion slide. **Every new topic opens with one**: the students say what they think and why, then the next slide reveals it.
+💬 = a "Let's talk" slide: the students answer first, the next slide reveals it. One per topic, no more.
 
 | Part | Slides |
 |---|---|
-| **Opening** | 1 Title · 2 Steps today (the schedule) · 3 Game 🎮 |
-| **This year** | 4 💬 How did you use AI this summer? · 5 Users → builders · 6 💬 Chatting vs. an AI that works while you sleep? · 7 Chatting vs. building · 8 💬 Robots that make TikToks: what jobs? · 9 TikTok Studio loop · 10 💬 What happens at a hackathon? · 11 Road to the hackathon |
-| **Your superpower** | 12 💬 Same AI, amazing code vs. junk: why? · 13 Secret superpower · 14 Same wish, two prompts (**vote A or B**) · 15 Button Lab (test it live) |
-| **Part 1 · APIs** | 16 💬 Do you remember what an API is? · 17 API waiter (the answer) · 18 💬 Your app is empty: how does it get real data? · 19 Locked door vs. master key · 20 💬 "pikachu" + a button: what's sent, what comes back? · 21 Live fetch · 22 💬 How do you test an API before coding? · 23 Postman + JSON |
-| **Part 1 · Databases** | 24 💬 How does Instagram remember you? (+ predict a refresh) · 25 Before: variables forget · 26 💬 Where CAN an app keep data? · 27 NEW WORD MongoDB · 28 💬 Predict: same app + database, refresh · 29 After: MongoDB remembers · 30 💬 Variables, file or database: which and why? · 31 Why a database? · 32 💬 What do you save about each video? · 33 A good table · 34 💬 Most likes, without scrolling? · 35 Part 1 task · 36 Proof |
-| **Break** | 37 ☕ |
-| **Part 2 · Build** | 38 💬 What does the forgetting app need? · 39 Connect the wires (exercise) · 40 💬 How do you find YOUR document? · 41 Find it in the vault · 42 Proof · 43 Bonus: your own collection |
-| **Wrap-up** | 44 Explain to me · 45 What we learned · 46 Glossary · 47 Builder's Toolkit (W3Schools · freeCodeCamp · Frontend Masters) · 48 Next time |
+| **Opening** | 1 Title · 2 Steps today · 3 Game 🎮 |
+| **This year** | 4 💬 How did you use AI? · 5 Chatting vs. building · 6 💬 Robots that make TikToks? · 7 TikTok Studio · 8 Road to the hackathon |
+| **Superpower** | 9 💬 Same AI, junk vs. amazing — why? · 10 Secret superpower (the words) · 11 Button Lab (live) |
+| **APIs** | 12 💬 Remember what an API is? · 13 API waiter · 14 💬 "pikachu" → what comes back? · 15 Live fetch · 16 Postman + JSON |
+| **Databases** | 17 💬 How does Instagram remember you? · 18 Variables forget · 19 NEW WORD MongoDB · 20 MongoDB remembers · 21 💬 What do you save about each video? · 22 A good table |
+| **Part 1** | 23 💬 Most likes, without scrolling? · 24 Part 1 task (on the website, live database) |
+| **Break** | 25 ☕ |
+| **Part 2** | 26 💬 What does the app need? · 27 🔑 The class key · 28 Connect the wires · 29 Find it in the vault · 30 Bonus |
+| **Wrap-up** | 31 Explain to me · 32 Glossary · 33 Toolkit · 34 Next time |
+
+What the final review removed (49 → 34): "This year" (same message as the race demo), "Same wish, two prompts" (the Lab shows it live), "Locked door" (the refresh + live fetch already say it), "Why a database?" (a recap of the two demos), "What we learned" (the glossary says it), both "Proof time" slides (📸 is now on the task slides), and 7 extra 💬 slides — one talk per topic.
+
+20. **Less is more.** One idea per slide, one talk per topic, no recap slide that repeats the slide before it. If a slide's words fit in the instructor's mouth, cut them from the slide.
+
+### Earlier: the second reorder (48 slides)
 
 What changed in the second reorder:
 - **The schedule comes first.** "Steps today" is slide 2, right after the title, with the spoiler of the day and every part of the lesson (also the year intro and the superpower, which the old list skipped).

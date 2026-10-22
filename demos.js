@@ -42,7 +42,7 @@ function demoSort(list, s) {
   return k ? list.slice().sort((a, b) => (a[k] > b[k] ? 1 : a[k] < b[k] ? -1 : 0) * (dir < 0 ? -1 : 1)) : list;
 }
 
-/* the class database: the student connection string the teacher pastes on the Connect slide.
+/* the class database: the student connection string the teacher pastes on the class key slide.
    Kept in this browser only (or CLASS_DB.studentUri in lessons-data.js, if you choose to publish it). */
 const CLASS_DB_KEY = "ac4-class-db";
 function classDbUri() {
@@ -455,7 +455,7 @@ npm install`)}
         <p class="ex-small">No Node.js? <a href="https://codespaces.new/${REPO}" target="_blank" rel="noopener">Open in GitHub Codespaces ↗</a> → <code>cd starter/idea-tracker</code></p>` },
     { h: "🔌 2 · Add code", body: `
         <p>Make a <code>.env</code> file with the class string (your teacher has it):</p>
-        ${code(`MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher pastes it on the Connect slide)"}`, ".env")}
+        ${code(`MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher shows it on the class key slide)"}`, ".env")}
         <p>In <code>server.js</code>, swap the 🎯 lines for:</p>
         ${code(`await db.collection("ideas").insertOne(idea);`, "STEP 2a")}
         ${code(`const all = await db.collection("ideas")
@@ -524,9 +524,9 @@ npm install`)}
   }
   el.querySelector(".ex-replay").addEventListener("click", play);
   demoOnShow(el, play);
-  /* the .env line picks up the class string the teacher pasted on the Connect slide */
+  /* the .env line picks up the class string the teacher pasted on the class key slide */
   const envPre = [...el.querySelectorAll(".ex-file")].find(x => x.textContent === ".env").nextElementSibling;
-  demoOnShow(el, () => { envPre.textContent = `MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher pastes it on the Connect slide)"}`; });
+  demoOnShow(el, () => { envPre.textContent = `MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher shows it on the class key slide)"}`; });
 };
 
 /* ============================================================
@@ -605,16 +605,15 @@ DEMOS.vaultFind = function (el) {
 };
 
 /* ============================================================
-   Connect to the class database — lean steps + the 🔑 box
+   The class key — 3 steps + the 🔑 box (Part 2)
    ============================================================ */
 DEMOS.classDbConnect = function (el) {
   el.innerHTML = `
     <div class="cc">
       <ol class="cc-steps">
-        <li>🌐 On your laptop — nothing to install:<br><a href="https://alicecode-level4-hub.vercel.app/slides.html?n=1" target="_blank" rel="noopener">alicecode-level4-hub.vercel.app → Lesson 1 ↗</a></li>
-        <li>🔍 Part 1 slide (or 🧪 Labs under the slides): type a filter → <b>Apply</b> → the <b>real</b> database answers</li>
-        <li>🗂️ Database <b>alicecode</b> › collection <b>videos</b>: 30 TikTok videos</li>
-        <li>🔧 Part 2: your own app connects with this string — in <code>.env</code> as <code>MONGODB_URI=</code></li>
+        <li>📋 Copy the key below</li>
+        <li>🔧 Paste it in your <code>.env</code>: <code>MONGODB_URI=…</code></li>
+        <li>🔒 Never put it on GitHub</li>
       </ol>
       <div class="cdb">
         <div class="cdb-head">🔑 Class database <span>database <b>alicecode</b></span></div>
