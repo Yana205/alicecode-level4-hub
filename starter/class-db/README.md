@@ -36,7 +36,7 @@ It logs you in, creates the project + free cluster, opens network access, makes 
 ## Then connect everything
 - **The hub (live slides):** Vercel → *Settings → Environment Variables* → `MONGODB_URI` = the **student** string (it only needs `alicecode`) → *Redeploy*. The "MongoDB remembers" and "Find it in the vault" slides switch to 🟢 live.
 - **No terminal? Let the hub do setup + check:** open `https://alicecode-level4-hub.vercel.app/api/class-db` — it loads the 30 videos if they're missing and runs the same checks as `npm run check` (all `"ok": true` = ready). `?reset=1` reloads the videos.
-- **The girls:** in class, paste the **student** string into the **🔑 box** on the *Connect to the class database* slide (it stays in your browser only; every slide that needs it shows it). They open it in **MongoDB Compass** (no Atlas account needed) and use the same string in their Idea Tracker `.env`.
+- **The girls:** in class, paste the **student** string into the **🔑 box** on the *Connect to the class database* slide (it stays in your browser only; every slide that needs it shows it). Part 1 happens on the website (no install, no Atlas account): the Part 1 slide asks the real database through `/api/videos`. They use the same string in their Idea Tracker `.env` for Part 2.
 
 ## Part 1 answers (teacher only)
 1. Total videos: **30**
