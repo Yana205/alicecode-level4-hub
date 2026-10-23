@@ -9,23 +9,8 @@
 <link rel="preload" href="assets/fonts/baloo2-latin-4a324d.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
-<script>
-  /* The dates rarely change. Saved from a visit < 10 min ago → no request at all.
-     Older → ask "changed?" with their fingerprint (ETag): unchanged = "304", no data sent.
-     Starts here in <head>, in parallel with the rest of the page. */
-  window.CAL = (function () {
-    let saved = null;
-    try { saved = JSON.parse(localStorage.getItem("ac4-calendar")); } catch (e) {}
-    if (!saved || !saved.events) saved = null;
-    const fresh = saved && Date.now() - saved.at < 10 * 60 * 1000;
-    const ask = fresh ? Promise.resolve({ same: true, skipped: true }) :
-      fetch("api/calendar", { cache: "no-store", headers: saved && saved.etag ? { "If-None-Match": saved.etag } : {} })
-        .then(async r => r.status === 304 ? { same: true }
-          : r.ok ? { events: (await r.json()).events, etag: r.headers.get("ETag") } : null)
-        .catch(() => null);
-    return { saved, ask };
-  })();
-</script>
+<!-- Template: api/calendar-page.js puts the class dates here (window.CAL_DATA) and serves it as /calendar.html -->
+<!--CAL_DATA-->
 </head>
 <body>
 
@@ -62,7 +47,7 @@
   </section>
 
   <h2 class="white" style="margin:30px 0 12px">📌 Coming up</h2>
-  <div id="cal"><p class="white">Loading…</p></div>
+  <div id="cal"></div>
 
 </div>
 
@@ -180,18 +165,14 @@
       </section>`).join("") : `<p class="white">No dates yet. 😉</p>`;
   }
 
-  /* 1) draw at once: the grid, plus the events saved from the last visit
-     2) redraw only if Google Calendar changed (api/calendar.js) — edit dates there, not here */
-  const { saved } = window.CAL;
-  if (saved) render(saved.events); else draw();
-
-  const got = await window.CAL.ask;
-  const keep = x => { try { localStorage.setItem("ac4-calendar", JSON.stringify(x)); } catch (e) {} };
-  if (got && got.same) { if (saved && !got.skipped) keep({ ...saved, at: Date.now() }); }
-  else if (got && got.events) { keep({ events: got.events, etag: got.etag, at: Date.now() }); render(got.events); }
-  else if (!saved) {
-    document.getElementById("cal").innerHTML = `<p class="white">Couldn't load the dates — try again in a minute, or use “Add to Google Calendar” above.</p>`;
+  /* the dates come built into the page (api/calendar-page.js) — edit them in Google Calendar, not here */
+  let events = window.CAL_DATA;
+  if (!events) {
+    draw();
+    try { const j = await (await fetch("api/calendar")).json(); if (j.ok) events = j.events; } catch (e) {}
   }
+  if (events) render(events);
+  else document.getElementById("cal").innerHTML = `<p class="white">Couldn't load the dates — try again in a minute, or use “Add to Google Calendar” above.</p>`;
 })();
 </script>
 </body>

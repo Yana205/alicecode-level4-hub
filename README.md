@@ -15,8 +15,8 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `tasks.html` | Mission board with progress bar (saved in the browser) + link to the class Trello |
 | `setup.html` | opencode install guide + animated terminal demo |
 | `learn-more.html` | Curated free resources: W3Schools, freeCodeCamp, Frontend Masters, MongoDB U, YouTube |
-| `calendar.html` | The class calendar in AliceCode style: month grid + coming up, read live from the class Google Calendar. **Edit dates in Google Calendar**, not in the code |
-| `api/calendar.js` | Reads the public Google Calendar feed and returns the events as JSON for `calendar.html` |
+| `calendar.html` | The class calendar in AliceCode style: month grid + coming up. Served by `api/calendar-page.js` from the template `pages/calendar.html`, with the dates from the class Google Calendar already inside (rewrite in `vercel.json`). **Edit dates in Google Calendar**, not in the code |
+| `api/_calendar.js`, `api/calendar.js` | Reads the public Google Calendar feed (shared code) · the same dates as JSON |
 | `demos.js` | Live slide demos for Lesson 1: chat vs. agent race, TikTok Studio loop, live PokeAPI fetch |
 | `db-demo.html` + `db-demo.jsx` | "Variables vs. Database" slides as **React + Tailwind** components (`VariablesForget`, `MongoRemembers`). Shown in the deck in a frame; open `db-demo.html` alone to see both. `db-demo.js` + `db-demo.css` are pre-built from it: after editing `db-demo.jsx`, run `sh scripts/build-db-demo.sh` |
 | `assets/fonts`, `assets/brand`, `assets/vendor` | Fonts, logos and React served from this site (no outside servers = faster first load) |

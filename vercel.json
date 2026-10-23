@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/calendar.html", "destination": "/api/calendar-page" },
+    { "source": "/calendar", "destination": "/api/calendar-page" }
+  ]
+}
