@@ -16,20 +16,20 @@
   <header class="hero" style="padding-bottom:20px">
     <div class="badge">Semester 1 · before the hackathon</div>
     <h1>📚 The Lessons</h1>
-    <p class="sub">Seven lessons from zero to a full AI studio. Click one to open its presentation, missions and links.</p>
+    <p class="sub">Seven lessons, one a week. Tap one to open its slides.</p>
   </header>
 
   <div class="grid" id="lesson-grid"></div>
 
   <section class="card reveal" id="hackathon" style="margin-top:26px; border: 3px solid var(--pink)">
     <h2>🔥 7–9 December · The Hackathon</h2>
-    <p>Three days at Hanukkah. Day 1 together in class, days 2–3 on Zoom. You build something with the Studio's scope — your idea, your agents, your demo in front of everyone. A celebration, not a test. 🎉</p>
+    <p>Three days at Hanukkah: day 1 in class, days 2–3 on Zoom. Your idea, your agents, your demo. A celebration, not a test. 🎉</p>
     <p style="margin-top:10px"><strong class="pink">Get ready:</strong> lesson 7 ends with your team's plan — idea, MVP, who builds what.</p>
   </section>
 
   <section class="card reveal">
     <h2>🧭 After the hackathon</h2>
-    <p class="muted">Week 9: reflection + your first agent evals. Then P5 (smart search with embeddings) and P6 (RAG — agents that answer with sources). And from week 9, <strong>you</strong> start teaching too: every pair gives one short lesson. More on all of this after December. 😉</p>
+    <p class="muted">Smart search, agents that answer with sources — and <strong>you</strong> start teaching too. More after December. 😉</p>
   </section>
 
 </div>
@@ -42,7 +42,8 @@
   (async function () {
     const locks = await loadLocks();
     document.getElementById("lesson-grid").innerHTML = LESSONS.map(l => {
-      const lk = lessonLocked(locks, l.n);
+      const lk = lessonLocked(locks, l.n), st = lessonStatus(l);
+      const pill = { today: '<span class="status-pill">📍 Today</span>', next: '<span class="status-pill">⏭️ Next</span>', done: '<span class="status-pill done">✓ Done</span>' }[st] || "";
       if (lk && !canView()) return `
         <a class="lesson-card locked reveal" href="slides.html?n=${l.n}">
           <span class="num">Lesson ${l.n} · Thu ${l.date}</span>
@@ -52,12 +53,12 @@
           <span class="locked-pill">COMING SOON</span>
         </a>`;
       return `
-      <a class="lesson-card reveal" href="slides.html?n=${l.n}">
-        <span class="num">Lesson ${l.n} · Thu ${l.date}</span>
+      <a class="lesson-card reveal${st === "today" || st === "next" ? " is-next" : ""}" href="slides.html?n=${l.n}">
+        <span class="num">Lesson ${l.n} · Thu ${l.date} ${pill}</span>
         <span class="emoji">${l.emoji}</span>
         <h3>${l.title}${lk ? ' <span class="locked-pill admin-locked-pill">🔒 students</span>' : ""}</h3>
         <p class="muted">${l.goal}</p>
-        <span class="cta">Open the presentation →</span>
+        <span class="cta">Open the slides →</span>
       </a>`;
     }).join("");
     armReveal();

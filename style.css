@@ -214,6 +214,19 @@ p  { line-height: 1.65; }
   color: rgba(216,52,116,.08);
 }
 .lesson-card .cta { margin-top: auto; color: var(--pink); font-weight: 800; }
+.lesson-card.is-next { outline: 3px solid var(--pink); outline-offset: -3px; }
+.status-pill {
+  display: inline-block; margin-left: 4px; vertical-align: 1px;
+  background: var(--pink); color: #fff; border-radius: 999px;
+  padding: 2px 9px; font-size: .7rem; letter-spacing: .5px;
+}
+.status-pill.done { background: #EFE6F5; color: var(--ink-soft); }
+.next-card { border: 3px solid var(--pink); }
+.next-card .nc-when {
+  font-family: var(--font-head); font-weight: 800; font-size: .85rem;
+  color: var(--pink); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px;
+}
+.next-card .btn { margin-top: 14px; }
 
 /* ---------- meme cards ---------- */
 .meme-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }

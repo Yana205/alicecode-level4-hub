@@ -29,17 +29,44 @@
     <h1><span class="braces">{</span> From Users<br>to Builders <span class="braces">}</span></h1>
     <p class="sub">This year you don't just use AI — you <strong>build</strong> it. 💜</p>
     <div style="margin-top:26px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
-      <a class="btn" href="lessons.html">Start with the lessons</a>
+      <a class="btn" href="lessons.html">All lessons</a>
       <a class="btn ghost" href="setup.html">Set up opencode</a>
     </div>
   </header>
 
+  <section class="card reveal next-card" id="next"></section>
+
   <section class="card reveal">
-    <h2>🗓️ The road to the hackathon</h2>
-    <div class="timeline" id="roadmap"></div>
+    <h2>🚀 Quick doors</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
+      <a class="lesson-card" href="calendar.html">
+        <span class="emoji">🗓️</span>
+        <h3>Calendar</h3>
+        <p class="muted">Every lesson and event.</p>
+        <span class="cta">Open →</span>
+      </a>
+      <a class="lesson-card" href="tasks.html">
+        <span class="emoji">✅</span>
+        <h3>Tasks</h3>
+        <p class="muted">Your missions, with checkboxes.</p>
+        <span class="cta">Open →</span>
+      </a>
+      <a class="lesson-card" href="setup.html">
+        <span class="emoji">🔧</span>
+        <h3>Setup guide</h3>
+        <p class="muted">Install opencode, step by step.</p>
+        <span class="cta">Open →</span>
+      </a>
+      <a class="lesson-card" href="learn-more.html">
+        <span class="emoji">🌟</span>
+        <h3>Learn more</h3>
+        <p class="muted">Free courses and videos.</p>
+        <span class="cta">Open →</span>
+      </a>
+    </div>
   </section>
 
-  <section class="reveal">
+  <section class="reveal" style="margin-top:26px">
     <h2 class="white center" style="margin-bottom:16px">⚡ Wall of energy</h2>
     <div class="meme-strip" id="memes"></div>
   </section>
@@ -65,36 +92,6 @@
     </div>
   </section>
 
-  <section class="card reveal">
-    <h2>🚀 Quick doors</h2>
-    <div class="grid">
-      <a class="lesson-card" href="calendar.html">
-        <span class="emoji">🗓️</span>
-        <h3>Calendar</h3>
-        <p class="muted">Every lesson and event.</p>
-        <span class="cta">Open →</span>
-      </a>
-      <a class="lesson-card" href="tasks.html">
-        <span class="emoji">✅</span>
-        <h3>Task board</h3>
-        <p class="muted">Your missions, with checkboxes.</p>
-        <span class="cta">Open →</span>
-      </a>
-      <a class="lesson-card" href="setup.html">
-        <span class="emoji">🔧</span>
-        <h3>Setup guide</h3>
-        <p class="muted">Install opencode, step by step.</p>
-        <span class="cta">Open →</span>
-      </a>
-      <a class="lesson-card" href="learn-more.html">
-        <span class="emoji">🌟</span>
-        <h3>Learn more</h3>
-        <p class="muted">Free courses and videos.</p>
-        <span class="cta">Open →</span>
-      </a>
-    </div>
-  </section>
-
 </div>
 
 <footer class="footer">
@@ -106,33 +103,20 @@
 <script src="lessons-data.js"></script>
 <script src="main.js"></script>
 <script>
-  // roadmap (lock-aware)
+  // the next lesson, so nobody has to hunt for it
   (async function () {
-    const locks = await loadLocks();
-    document.getElementById("roadmap").innerHTML =
-      LESSONS.map(l => {
-        const lk = lessonLocked(locks, l.n);
-        if (lk && !canView()) return `
-          <div class="tl-item">
-            <div class="dot">🔒</div>
-            <div class="when">Thursday ${l.date}</div>
-            <h3>Lesson ${l.n} — locked</h3>
-          </div>`;
-        return `
-        <div class="tl-item">
-          <div class="dot">${l.n}</div>
-          <div class="when">Thursday ${l.date}</div>
-          <h3><a href="slides.html?n=${l.n}">${l.emoji} ${l.title}</a>${lk ? ' <span class="locked-pill admin-locked-pill">🔒 students</span>' : ""}</h3>
-        </div>`;
-      }).join("") + `
-      <div class="tl-item special">
-        <div class="dot">🔥</div>
-        <div class="when">${HACKATHON.date}</div>
-        <h3>${HACKATHON.emoji} ${HACKATHON.title}</h3>
-      </div>`;
-    armReveal();
+    const nx = nextLesson(), box = document.getElementById("next");
+    if (!nx) {
+      box.innerHTML = `<div class="nc-when">🔥 ${HACKATHON.date}</div><h2>${HACKATHON.emoji} ${HACKATHON.title}</h2>`;
+      return;
+    }
+    const hidden = !lessonVisible(await loadLocks(), nx.n);
+    box.innerHTML = `
+      <div class="nc-when">${lessonStatus(nx) === "today" ? "📍 Today" : "⏭️ Next lesson"} · Thursday ${nx.date}</div>
+      <h2>${hidden ? "🔒" : nx.emoji} Lesson ${nx.n} · ${hidden ? "unlocks in class" : nx.title}</h2>
+      ${hidden ? "" : `<p class="muted">${nx.goal}</p><a class="btn small" href="slides.html?n=${nx.n}">Open the slides →</a>`}`;
   })();
-  renderMemes(document.getElementById("memes"), MEMES.slice(0, 6));
+  renderMemes(document.getElementById("memes"), MEMES.slice(0, 3));
   armReveal();
 </script>
 </body>

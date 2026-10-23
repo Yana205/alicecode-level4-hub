@@ -271,7 +271,6 @@
       <h2>🎯 Today's goal</h2>
       <p>${esc(lesson.goal)}</p>
       <p style="margin-top:8px"><strong class="pink">You leave with:</strong> ${esc(lesson.leaves)}</p>
-      ${flow ? `<button class="btn small" style="margin-top:14px" onclick="openFlowModal(${n})">📋 See today's full flow${lesson.missionsInFlow ? " + tasks" : ""}</button>` : ""}
     </div>
 
     ${lesson.missionsInFlow && flow ? "" : `
@@ -299,7 +298,7 @@
 
     <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:8px">
       ${lesson.n > 1 ? `<a class="btn ghost" href="slides.html?n=${lesson.n - 1}">← Lesson ${lesson.n - 1}</a>` : ""}
-      <a class="btn" href="tasks.html">All tasks board</a>
+      <a class="btn" href="tasks.html">✅ All tasks</a>
       ${lesson.n < 7 ? `<a class="btn ghost" href="slides.html?n=${lesson.n + 1}">Lesson ${lesson.n + 1} →</a>`
                      : `<a class="btn dark" href="lessons.html#hackathon">🔥 The Hackathon</a>`}
     </div>`;
