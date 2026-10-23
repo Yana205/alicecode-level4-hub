@@ -502,7 +502,6 @@ p  { line-height: 1.65; }
 .burger.open span:nth-child(2) { opacity: 0; }
 .burger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 .mobile-menu { display: none; }
-.admin-link { font-size: 1.05rem; }
 
 .admin-banner {
   position: relative; z-index: 40;
@@ -638,37 +637,7 @@ a.cal-ev:hover { transform: translateX(4px); }
 .cal-legend .l-block::before { color: var(--mint); }
 .cal-legend .l-off::before { color: #B9A8CF; }
 
-/* ---------- admin ---------- */
-.admin-card input[type=password], .admin-card input[type=text] {
-  width: 100%; padding: 13px 16px;
-  border: 2px solid #E8DCF0; border-radius: 14px;
-  font-family: var(--font-code); font-size: .95rem;
-  outline: none;
-}
-.admin-card input:focus { border-color: var(--pink); }
-.admin-user { display: flex; align-items: center; gap: 14px; }
-.admin-user img { width: 52px; height: 52px; border-radius: 50%; border: 3px solid var(--pink); }
-.lock-row {
-  display: flex; align-items: center; gap: 14px;
-  padding: 13px 0; border-bottom: 1.5px solid #F2E8F5;
-}
-.lock-row:last-child { border-bottom: none; }
-.lock-row .lr-name { font-weight: 700; flex: 1; }
-.lock-row .lr-date { color: var(--ink-soft); font-size: .85rem; }
-.switch { position: relative; width: 56px; height: 30px; flex-shrink: 0; cursor: pointer; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.switch .sl {
-  position: absolute; inset: 0; border-radius: 999px;
-  background: #CBB8DD; transition: .25s;
-}
-.switch .sl::before {
-  content: "🔒"; font-size: .75rem; line-height: 24px; text-align: center;
-  position: absolute; width: 24px; height: 24px; left: 3px; top: 3px;
-  border-radius: 50%; background: #fff; transition: .25s;
-}
-.switch input:checked + .sl { background: var(--mint); }
-.switch input:checked + .sl::before { transform: translateX(26px); content: "🔓"; }
-.switch input:disabled + .sl { opacity: .5; cursor: wait; }
+/* ---------- status line (magic password) ---------- */
 .admin-status { font-weight: 700; font-size: .88rem; margin-top: 10px; min-height: 22px; }
 .admin-status.ok { color: var(--mint); }
 .admin-status.err { color: var(--red); }

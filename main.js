@@ -1,15 +1,6 @@
 /* AliceCode Level 4 Hub — shared behavior */
 
-/* ============ admin + locks ============ */
-const AC4_TOKEN_KEY = "ac4-admin-token";
-const AC4_REPO = "Yana205/alicecode-level4-hub";
-
-function adminToken() {
-  try { return sessionStorage.getItem(AC4_TOKEN_KEY) || localStorage.getItem(AC4_TOKEN_KEY); }
-  catch (e) { return null; }
-}
-function isAdmin() { return !!adminToken(); }
-
+/* ============ locks ============ */
 /* magic view-password: opens locked lessons on this device (spoiler-level, not security) */
 const AC4_UNLOCK_KEY = "ac4-magic-unlock";
 function isUnlocked() {
@@ -25,19 +16,6 @@ function tryPassword(p) {
 function relock() { try { localStorage.removeItem(AC4_UNLOCK_KEY); } catch (e) {} }
 
 async function loadLocks() {
-  // Admin reads straight from the GitHub API (instant); students read the deployed file.
-  if (isAdmin()) {
-    try {
-      const r = await fetch(`https://api.github.com/repos/${AC4_REPO}/contents/locks.json`, {
-        headers: { Authorization: "Bearer " + adminToken(), Accept: "application/vnd.github+json" },
-        cache: "no-store"
-      });
-      if (r.ok) {
-        const j = await r.json();
-        return JSON.parse(decodeURIComponent(escape(atob(j.content))));
-      }
-    } catch (e) {}
-  }
   try {
     const r = await fetch("locks.json?v=" + Date.now(), { cache: "no-store" });
     if (r.ok) return await r.json();
@@ -45,7 +23,7 @@ async function loadLocks() {
   return {};
 }
 function lessonLocked(locks, n) { return !!locks[String(n)]; }
-function canView() { return isAdmin() || isUnlocked(); }
+function canView() { return isUnlocked(); }
 function lessonVisible(locks, n) { return canView() || !lessonLocked(locks, n); }
 
 /* ============ floating doodles ============ */
@@ -113,7 +91,6 @@ function lessonVisible(locks, n) { return canView() || !lessonLocked(locks, n); 
     <div class="links desktop-links">
       ${linkHTML(["index", "🏠", "Home"])}
       ${groups.map(g => g.links.map(linkHTML).join("")).join("")}
-      <a class="nl admin-link ${here === "admin" ? "active" : ""}" href="admin.html" title="Instructor sign-in">👩‍🏫</a>
     </div>
     <button class="burger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -123,8 +100,6 @@ function lessonVisible(locks, n) { return canView() || !lessonLocked(locks, n); 
       ${groups.map(g => `
         <div class="mm-group">${g.name}</div>
         ${g.links.map(linkHTML).join("")}`).join("")}
-      <div class="mm-group">Instructor</div>
-      <a class="nl ${here === "admin" ? "active" : ""}" href="admin.html"><span class="nl-ic">👩‍🏫</span>Instructor area</a>
     </div>`;
   document.body.insertBefore(nav, document.body.children[1]);
 
@@ -137,12 +112,7 @@ function lessonVisible(locks, n) { return canView() || !lessonLocked(locks, n); 
   });
   menu.addEventListener("click", e => { if (e.target.closest("a")) menu.classList.remove("open"); });
 
-  if (isAdmin()) {
-    const b = document.createElement("div");
-    b.className = "admin-banner";
-    b.innerHTML = `👩‍🏫 Instructor mode — you can see locked lessons. <a href="admin.html">Manage locks</a>`;
-    document.body.insertBefore(b, nav.nextSibling);
-  } else if (isUnlocked()) {
+  if (isUnlocked()) {
     const b = document.createElement("div");
     b.className = "admin-banner";
     b.innerHTML = `🔓 Magic password active — locked lessons are visible on this device. <a href="#" id="relock-link">Lock again</a>`;

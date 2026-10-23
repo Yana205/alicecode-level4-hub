@@ -16,7 +16,6 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `setup.html` | opencode install guide + animated terminal demo |
 | `learn-more.html` | Curated free resources: W3Schools, freeCodeCamp, Frontend Masters, MongoDB U, YouTube |
 | `calendar.html` | The whole year — Thursday lessons + fixed events, with an .ics download |
-| `admin.html` | Instructor sign-in (fine-grained GitHub PAT, stored only in the browser) to lock/unlock lessons |
 | `demos.js` | Live slide demos for Lesson 1: chat vs. agent race, TikTok Studio loop, live PokeAPI fetch |
 | `db-demo.html` + `db-demo.jsx` | "Variables vs. Database" slides as **React + Tailwind** components (`VariablesForget`, `MongoRemembers`). Shown in the deck in a frame; open `db-demo.html` alone to see both |
 | `starter/class-db/` | **The class database, ready for Lesson 1:** 30 ready-made TikTok videos (`videos.json`), `npm run setup` (load data + print Part 1 answers), `npm run check` (test the student login), optional `atlas-setup.sh` (whole cluster via Atlas CLI). Start with its README |
@@ -26,7 +25,7 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `api/videos.js` | Read-only query on the class `videos` collection (`?filter=…&sort=…`) for the Part 1 task slide — the girls query the real database from the website |
 | `api/class-db.js` | Open `/api/class-db` to set up + check the class database from the browser (loads the 30 videos if missing, tests insert/find/delete) |
 | `SLIDE-UPGRADE-RULES.md` | Before/after of the Lesson 1 Button Lab upgrade + the global "juice" rules for all decks |
-| `locks.json` | Which lessons are hidden from students (`true` = locked). Edited by the admin page |
+| `locks.json` | Which lessons are hidden from students (`true` = locked). Edit it on GitHub; the magic password opens locked lessons on one device |
 
 ## Class Trello
 

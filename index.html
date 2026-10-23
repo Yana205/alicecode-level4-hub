@@ -27,37 +27,12 @@
     </div>
     <div class="badge">הסמכה 4 · 2026–27</div>
     <h1><span class="braces">{</span> From Users<br>to Builders <span class="braces">}</span></h1>
-    <p class="sub">This year you don't just use AI. You <strong>build</strong> it — agents, tools and one amazing shared project. Welcome to Level 4. 💜</p>
+    <p class="sub">This year you don't just use AI — you <strong>build</strong> it. 💜</p>
     <div style="margin-top:26px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
       <a class="btn" href="lessons.html">Start with the lessons</a>
       <a class="btn ghost" href="setup.html">Set up opencode</a>
     </div>
   </header>
-
-  <section class="card reveal">
-    <h2>📱 The big build: TikTok Studio</h2>
-    <p>One shared project, all semester. Three AI agents working as a team — plus a database and a screen that shows it all.</p>
-    <div class="pipeline">
-      <div class="pipe-step">
-        <span class="big">🔎</span>
-        <h3>Agent 1 · Trend Finder</h3>
-        <p class="muted">Searches the real internet: what is hot on TikTok today?</p>
-      </div>
-      <div class="pipe-arrow">➜</div>
-      <div class="pipe-step">
-        <span class="big">💡</span>
-        <h3>Agent 2 · Idea Maker</h3>
-        <p class="muted">Turns a trend into one great video idea.</p>
-      </div>
-      <div class="pipe-arrow">➜</div>
-      <div class="pipe-step">
-        <span class="big">🎬</span>
-        <h3>Agent 3 · Video Maker</h3>
-        <p class="muted">Sends the idea to a video service — and gets a real video back.</p>
-      </div>
-    </div>
-    <p class="center muted" style="margin-top:10px">You build every one of these. Yes, really. 💅</p>
-  </section>
 
   <section class="card reveal">
     <h2>🗓️ The road to the hackathon</h2>
@@ -71,27 +46,20 @@
 
   <section class="card reveal" style="margin-top:26px">
     <h2>🐙 Our GitHub</h2>
-    <p style="margin-bottom:14px">Real builders share code in one place. This is ours:</p>
+    
     <div style="display:grid; gap:12px">
       <a class="gh-card" href="https://github.com/Yana205/alicecode-level4-hub" target="_blank" rel="noopener">
         <span class="gh-icon">🐙</span>
         <div>
           <h3>Yana205/alicecode-level4-hub</h3>
-          <p>This website! Lessons, tasks and guides. Found a typo? Open an issue 😉</p>
+          <p>This website: lessons, tasks, guides.</p>
         </div>
       </a>
       <a class="gh-card" href="https://github.com/nirkaufman/refernce-project-js/tree/main/tutorial" target="_blank" rel="noopener">
         <span class="gh-icon">📖</span>
         <div>
           <h3>nirkaufman/refernce-project-js</h3>
-          <p>Our reference project — the tutorial we follow for agents, tools and the supervisor.</p>
-        </div>
-      </a>
-      <a class="gh-card" href="https://github.com/Yana205" target="_blank" rel="noopener">
-        <span class="gh-icon">⭐</span>
-        <div>
-          <h3>The Studio repo</h3>
-          <p>Our shared TikTok Studio code lives under Yan's GitHub — link lands here when the repo opens in week 3.</p>
+          <p>The tutorial we follow for agents.</p>
         </div>
       </a>
     </div>
@@ -103,25 +71,25 @@
       <a class="lesson-card" href="calendar.html">
         <span class="emoji">🗓️</span>
         <h3>Calendar</h3>
-        <p class="muted">Every Thursday lesson + the whole year's events. Add it to your phone.</p>
+        <p class="muted">Every lesson and event.</p>
         <span class="cta">Open →</span>
       </a>
       <a class="lesson-card" href="tasks.html">
         <span class="emoji">✅</span>
         <h3>Task board</h3>
-        <p class="muted">Your missions for every lesson, with satisfying checkboxes.</p>
+        <p class="muted">Your missions, with checkboxes.</p>
         <span class="cta">Open →</span>
       </a>
       <a class="lesson-card" href="setup.html">
         <span class="emoji">🔧</span>
         <h3>Setup guide</h3>
-        <p class="muted">Install opencode and watch a real agent work, step by step.</p>
+        <p class="muted">Install opencode, step by step.</p>
         <span class="cta">Open →</span>
       </a>
       <a class="lesson-card" href="learn-more.html">
         <span class="emoji">🌟</span>
         <h3>Learn more</h3>
-        <p class="muted">Videos, free courses and the best pages for curious builders.</p>
+        <p class="muted">Free courses and videos.</p>
         <span class="cta">Open →</span>
       </a>
     </div>
@@ -149,21 +117,18 @@
             <div class="dot">🔒</div>
             <div class="when">Thursday ${l.date}</div>
             <h3>Lesson ${l.n} — locked</h3>
-            <p class="muted">Unlocks when we get there. No spoilers. 😉</p>
           </div>`;
         return `
         <div class="tl-item">
           <div class="dot">${l.n}</div>
           <div class="when">Thursday ${l.date}</div>
           <h3><a href="slides.html?n=${l.n}">${l.emoji} ${l.title}</a>${lk ? ' <span class="locked-pill admin-locked-pill">🔒 students</span>' : ""}</h3>
-          <p class="muted">${l.goal}</p>
         </div>`;
       }).join("") + `
       <div class="tl-item special">
         <div class="dot">🔥</div>
         <div class="when">${HACKATHON.date}</div>
         <h3>${HACKATHON.emoji} ${HACKATHON.title}</h3>
-        <p class="muted">${HACKATHON.desc}</p>
       </div>`;
     armReveal();
   })();
