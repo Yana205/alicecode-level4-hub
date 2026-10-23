@@ -14,119 +14,161 @@
 <div class="wrap">
 
   <header class="hero" style="padding-bottom:14px">
-    <div class="badge">Always up to date 💜</div>
-    <h1>🗓️ The AliceCode Calendar</h1>
-    <p class="sub">Our class calendar, live from Google Calendar.</p>
-    <div style="margin-top:18px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
+    <div class="badge">Live from Google Calendar 💜</div>
+    <h1>🗓️ Calendar</h1>
+    <p class="sub">Lessons and big days of the year.</p>
+    <div class="gc-next" id="gc-next" hidden></div>
+    <div class="gc-subscribe">
       <a class="btn" target="_blank" rel="noopener"
          href="https://calendar.google.com/calendar/r?cid=Y182ZDIyY2JkMmFlNmZkMjg0MTI2Y2MxOWJkN2MwOTkzMTRjODQ3Zjk1MmI2OTQxYmQ0NjQ2NmYzZTg3MGEyOGE2QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20">➕ Add to Google Calendar</a>
-      <a class="btn ghost"
-         href="webcal://calendar.google.com/calendar/ical/c_6d22cbd2ae6fd284126cc19bd7c099314c847f952b6941bd46466f3e870a28a6%40group.calendar.google.com/public/basic.ics">📲 iPhone / Outlook</a>
+      <a class="btn ghost" href="webcal://calendar.google.com/calendar/ical/c_6d22cbd2ae6fd284126cc19bd7c099314c847f952b6941bd46466f3e870a28a6%40group.calendar.google.com/public/basic.ics">📲 iPhone / Outlook</a>
       <button class="btn ghost" id="copy-cal">🔗 Copy link</button>
     </div>
-    <p style="margin-top:10px; font-size:.85rem; opacity:.85">Subscribe once — new events show up on your phone by themselves.</p>
+    <p class="gc-hint">Subscribe once — new dates show up on your phone by themselves.</p>
   </header>
 
-  <section class="card gcal-card">
-    <iframe id="gcal" title="AliceCode Level 4 calendar" loading="lazy"></iframe>
+  <section class="card gc-card">
+    <div class="gc-head">
+      <button class="gc-arrow" id="gc-prev" aria-label="Previous month">‹</button>
+      <h2 id="gc-title">Loading…</h2>
+      <button class="gc-arrow" id="gc-next-m" aria-label="Next month">›</button>
+      <button class="gc-today" id="gc-today">Today</button>
+    </div>
+    <div class="gc-grid" id="gc-grid"></div>
+    <div class="gc-legend">
+      <span class="k-lesson">Lesson</span>
+      <span class="k-event">Big day</span>
+      <span class="k-off">No lesson</span>
+    </div>
+    <div class="gc-day" id="gc-day" hidden></div>
   </section>
 
-  <h2 class="white" style="margin:30px 0 12px">📌 Big dates</h2>
-  <div class="cal-legend">
-    <span class="l-event">Special event</span>
-    <span class="l-off">Holiday — no lesson</span>
-  </div>
-
-  <div id="cal"></div>
+  <h2 class="white" style="margin:30px 0 12px">📌 Coming up</h2>
+  <div id="cal"><p class="white">Loading…</p></div>
 
 </div>
 
 <footer class="footer">Made with 💜 for the Level 4 builders · {Alice code} 2026–27<br>by <strong>Yana Ifraimov</strong></footer>
 
 <script src="lessons-data.js"></script>
-<script>
-  /* Google Calendar embed: month view on wide screens, agenda (a list) on phones */
-  (function () {
-    const id = "c_6d22cbd2ae6fd284126cc19bd7c099314c847f952b6941bd46466f3e870a28a6%40group.calendar.google.com";
-    const mode = innerWidth < 640 ? "AGENDA" : "MONTH";
-    document.getElementById("gcal").src = `https://calendar.google.com/calendar/embed?src=${id}&ctz=Asia%2FJerusalem` +
-      `&mode=${mode}&showTitle=0&showPrint=0&showCalendars=0&showTz=0&wkst=1&color=%23D83474`;
-
-    /* Android, Outlook web etc.: paste this link in "add calendar from URL" */
-    const btn = document.getElementById("copy-cal");
-    btn.addEventListener("click", async () => {
-      const url = `https://calendar.google.com/calendar/ical/${id}/public/basic.ics`;
-      try { await navigator.clipboard.writeText(url); btn.textContent = "✅ Copied!"; }
-      catch (e) { prompt("Copy this link:", url); }
-      setTimeout(() => (btn.textContent = "🔗 Copy link"), 2000);
-    });
-  })();
-</script>
 <script src="main.js"></script>
 <script>
 (async function () {
-  const locks = await loadLocks();
   const esc = s => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
-
-  /* fixed events only: lessons have no dates */
-  const items = [];
-  CALENDAR.forEach(ev => {
-    items.push({
-      dt: new Date(ev.date + "T12:00:00"), end: ev.end ? new Date(ev.end + "T12:00:00") : null,
-      kind: ev.kind, title: ev.title, emoji: ev.emoji, desc: ev.desc || "", approx: ev.approx
-    });
-  });
-  items.sort((a, b) => a.dt - b.dt);
-
   const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-  const DOW = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-  const today = new Date(); today.setHours(0,0,0,0);
-  const fmtRange = it => it.end ? `${it.dt.getDate()}–${it.end.getDate()}` : it.dt.getDate();
+  const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const pad = n => String(n).padStart(2, "0");
+  const key = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const day = s => { const [y, m, d] = s.slice(0, 10).split("-").map(Number); return new Date(y, m - 1, d); };
+  const todayKey = key(new Date());
 
-  const byMonth = {};
-  items.forEach(it => {
-    const k = it.dt.getFullYear() + "-" + it.dt.getMonth();
-    (byMonth[k] = byMonth[k] || []).push(it);
+  /* copy the public calendar link (Android, Outlook web: "add calendar from URL") */
+  const copyBtn = document.getElementById("copy-cal");
+  copyBtn.addEventListener("click", async () => {
+    const url = "https://calendar.google.com/calendar/ical/c_6d22cbd2ae6fd284126cc19bd7c099314c847f952b6941bd46466f3e870a28a6%40group.calendar.google.com/public/basic.ics";
+    try { await navigator.clipboard.writeText(url); copyBtn.textContent = "✅ Copied!"; }
+    catch (e) { prompt("Copy this link:", url); }
+    setTimeout(() => (copyBtn.textContent = "🔗 Copy link"), 2000);
   });
 
-  document.getElementById("cal").innerHTML = Object.entries(byMonth).map(([k, evs]) => {
-    const [y, m] = k.split("-").map(Number);
-    const lessonsCount = evs.filter(e => e.kind === "lesson" || e.kind === "lesson-extra").length;
-    return `
-    <section class="cal-month reveal">
-      <h2>${MONTHS[m]} ${y} ${lessonsCount ? `<span class="mcount">${lessonsCount} lesson${lessonsCount > 1 ? "s" : ""}</span>` : ""}</h2>
-      ${evs.map(it => {
-        const isToday = !it.end
-          ? it.dt.toDateString() === new Date().toDateString()
-          : (today >= new Date(it.dt).setHours(0,0,0,0) && today <= it.end);
-        const kindClass = it.kind === "lesson" || it.kind === "lesson-extra" ? "" :
-                          it.kind === "off" ? "k-off" : it.kind === "block" ? "k-block" : "k-event";
-        const dateBox = `
-          <div class="d">
-            <div class="dd">${fmtRange(it)}</div>
-            <div class="dw">${it.approx ? "TBA" : (it.end ? MONTHS[it.dt.getMonth()].slice(0,3) : DOW[it.dt.getDay()])}</div>
-          </div>`;
-        if (it.kind === "lesson") {
-          const lk = lessonLocked(locks, it.n);
-          if (lk && !canView()) {
-            return `<div class="cal-ev ${isToday ? "today" : ""}">
-              ${dateBox}
-              <div><h3>🔒 Lesson ${it.n} <span class="locked-pill">LOCKED</span></h3>
-              <p>Unlocks when we get there. No spoilers. 😉</p></div></div>`;
-          }
-          return `<a class="cal-ev ${isToday ? "today" : ""}" href="slides.html?n=${it.n}">
-            ${dateBox}
-            <div><h3>${it.emoji} ${esc(it.title)}${lk ? ' <span class="locked-pill admin-locked-pill">🔒 students</span>' : ""}</h3>
-            <p>${esc(it.desc)}</p></div></a>`;
-        }
-        return `<div class="cal-ev ${kindClass} ${isToday ? "today" : ""}">
-          ${dateBox}
-          <div><h3>${it.emoji} ${esc(it.title)}</h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ""}</div></div>`;
-      }).join("")}
-    </section>`;
-  }).join("");
-  armReveal();
+  /* events come from Google Calendar (api/calendar.js) — edit them there, not here */
+  let events;
+  try {
+    const j = await (await fetch("api/calendar")).json();
+    if (!j.ok) throw new Error(j.error);
+    events = j.events;
+  } catch (e) {
+    document.getElementById("gc-title").textContent = "Couldn't load the calendar";
+    document.getElementById("cal").innerHTML = `<p class="white">Try again in a minute, or use “Add to Google Calendar” above.</p>`;
+    return;
+  }
+  const kind = e => /no lesson/i.test(e.title) ? "k-off" : /lesson|class|שיעור/i.test(e.title) ? "k-lesson" : "k-event";
+  const time = e => e.allDay ? "" : e.start.slice(11, 16) + "–" + e.end.slice(11, 16);
+  const slides = e => (e.desc.match(/https?:\/\/\S*slides\.html\?n=\d/) || [])[0];
+  const info = e => esc(e.desc.replace(/\n?Slides: \S+/, ""));
 
+  /* which events fall on each day (multi-day events on every day) */
+  const byDay = {};
+  events.forEach(e => {
+    for (let d = day(e.start); key(d) <= e.end.slice(0, 10); d.setDate(d.getDate() + 1))
+      (byDay[key(d)] = byDay[key(d)] || []).push(e);
+  });
+
+  /* "next up" pill in the hero */
+  const upcoming = events.filter(e => e.end.slice(0, 10) >= todayKey);
+  if (upcoming.length) {
+    const nx = upcoming[0], days = Math.round((day(nx.start) - day(todayKey)) / 86400000);
+    const el = document.getElementById("gc-next");
+    el.innerHTML = `⏭️ Next: <b>${esc(nx.title)}</b> · ${days <= 0 ? "today!" : days === 1 ? "tomorrow" : `in ${days} days`}`;
+    el.hidden = false;
+  }
+
+  /* ---------- month grid ---------- */
+  let view = new Date(); view.setDate(1);
+  const grid = document.getElementById("gc-grid"), dayBox = document.getElementById("gc-day");
+
+  function showDay(k) {
+    const list = byDay[k] || [];
+    grid.querySelectorAll(".gc-cell").forEach(c => c.classList.toggle("sel", c.dataset.k === k));
+    const d = day(k);
+    dayBox.hidden = false;
+    dayBox.innerHTML = `<h3>${DOW[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]}</h3>` + (list.length
+      ? list.map(e => `<div class="gc-item ${kind(e)}"><b>${esc(e.title)}</b>
+          ${time(e) ? `<span class="gc-meta">🕔 ${time(e)}</span>` : ""}
+          ${e.location ? `<span class="gc-meta">📍 ${esc(e.location)}</span>` : ""}
+          ${info(e) ? `<p>${info(e)}</p>` : ""}
+          ${slides(e) ? `<a class="gc-link" href="${slides(e)}">Open the slides →</a>` : ""}</div>`).join("")
+      : `<p class="muted">Nothing on this day.</p>`);
+  }
+
+  function draw() {
+    const y = view.getFullYear(), m = view.getMonth();
+    document.getElementById("gc-title").textContent = `${MONTHS[m]} ${y}`;
+    const first = new Date(y, m, 1), start = new Date(y, m, 1 - first.getDay());
+    const weeks = Math.ceil((first.getDay() + new Date(y, m + 1, 0).getDate()) / 7);
+    let html = DOW.map(d => `<div class="gc-dow">${d}</div>`).join("");
+    for (let i = 0; i < weeks * 7; i++) {
+      const d = new Date(start); d.setDate(start.getDate() + i);
+      const k = key(d), list = byDay[k] || [];
+      html += `<button class="gc-cell${d.getMonth() !== m ? " out" : ""}${k === todayKey ? " today" : ""}" data-k="${k}">
+        <span class="gc-num">${d.getDate()}</span>
+        ${list.slice(0, 2).map(e => `<span class="gc-chip ${kind(e)}">${esc(e.title)}</span>`).join("")}
+        ${list.length > 2 ? `<span class="gc-more">+${list.length - 2}</span>` : ""}
+      </button>`;
+    }
+    grid.innerHTML = html;
+    dayBox.hidden = true;
+  }
+  grid.addEventListener("click", e => { const c = e.target.closest(".gc-cell"); if (c) showDay(c.dataset.k); });
+  document.getElementById("gc-prev").onclick = () => { view.setMonth(view.getMonth() - 1); draw(); };
+  document.getElementById("gc-next-m").onclick = () => { view.setMonth(view.getMonth() + 1); draw(); };
+  document.getElementById("gc-today").onclick = () => { view = new Date(); view.setDate(1); draw(); showDay(todayKey); };
+  draw();
+
+  /* ---------- coming up, by month (past dates hidden) ---------- */
+  const groups = {};
+  upcoming.forEach(e => { const d = day(e.start), k = `${MONTHS[d.getMonth()]} ${d.getFullYear()}`; (groups[k] = groups[k] || []).push(e); });
+  document.getElementById("cal").innerHTML = Object.keys(groups).length ? Object.entries(groups).map(([mo, list]) => `
+    <section class="cal-month reveal">
+      <h2>${mo}</h2>
+      ${list.map(e => {
+        const a = day(e.start), b = day(e.end), multi = key(a) !== key(b);
+        const live = e.start.slice(0, 10) <= todayKey && todayKey <= e.end.slice(0, 10);
+        return `<button class="cal-ev ${kind(e)}${live ? " today" : ""}" data-k="${e.start.slice(0, 10)}">
+          <div class="d"><div class="dd">${multi ? `${a.getDate()}–${b.getDate()}` : a.getDate()}</div>
+            <div class="dw">${multi ? MONTHS[a.getMonth()].slice(0, 3) : DOW[a.getDay()]}</div></div>
+          <div><h3>${esc(e.title)}</h3>
+            <p>${[time(e) && "🕔 " + time(e), e.location && "📍 " + esc(e.location), info(e)].filter(Boolean).join(" · ")}</p></div>
+        </button>`;
+      }).join("")}
+    </section>`).join("") : `<p class="white">No dates yet. 😉</p>`;
+  /* tap a date in the list → open that day in the month grid */
+  document.getElementById("cal").addEventListener("click", e => {
+    const b = e.target.closest(".cal-ev"); if (!b) return;
+    const d = day(b.dataset.k); view = new Date(d.getFullYear(), d.getMonth(), 1); draw(); showDay(b.dataset.k);
+    document.querySelector(".gc-card").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  armReveal();
 })();
 </script>
 </body>

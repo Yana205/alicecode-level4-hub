@@ -1393,28 +1393,6 @@ const FLOWS = {
 };
 
 /* ============================================================
-   CALENDAR — fixed dates only (hackathon, holidays, judging).
-   Lessons have no dates: the instructor sets the pace in class.
-   ============================================================ */
-
-const CALENDAR = [
-  { date: "2026-12-07", end: "2026-12-09", title: "The Hackathon", emoji: "🔥", kind: "event",
-    desc: "3 days at Hanukkah — day 1 together, days 2–3 on Zoom. You build something with the Studio's scope." },
-  { date: "2027-01-28", title: "Semester 1 ends", emoji: "🏁", kind: "event",
-    desc: "Wrap-up with an evidence exhibition — all your before/afters on one wall." },
-  { date: "2027-02-04", end: "2027-02-11", title: "Guest parent + tech tour", emoji: "🚌", kind: "event",
-    desc: "Two special weeks — no new content, lots of inspiration." },
-  { date: "2027-03-18", title: "Parents' open lesson", emoji: "👨‍👩‍👧", kind: "event",
-    desc: "Parents come to class — you show them one live before/after moment." },
-  { date: "2027-03-25", title: "Purim — no lesson", emoji: "🎭", kind: "off" },
-  { date: "2027-04-22", end: "2027-04-29", title: "Pesach — no lessons", emoji: "🫓", kind: "off" },
-  { date: "2027-06-04", title: "JUDGING DAY", emoji: "🏆", kind: "event",
-    desc: "The big one. Your project, your pitch, your year on stage." },
-  { date: "2027-06-24", title: "Farewell", emoji: "🎉", kind: "event", desc: "Last meeting of the year. 🥹" },
-  { date: "2027-07-01", title: "Ceremony (July — date TBA)", emoji: "🎓", kind: "event", approx: true }
-];
-
-/* ============================================================
    VISUALS — illustration slots per slide (Upgrade B).
    Keyed by lesson number → exact slide title.
    Image file convention: assets/lesson-N/<id>.png
