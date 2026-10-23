@@ -16,7 +16,7 @@
   <header class="hero" style="padding-bottom:20px">
     <div class="badge">Semester 1 · before the hackathon</div>
     <h1>📚 The Lessons</h1>
-    <p class="sub">Seven lessons, one a week. Tap one to open its slides.</p>
+    <p class="sub">Seven lessons. Tap one to open its slides.</p>
   </header>
 
   <div class="grid" id="lesson-grid"></div>
@@ -42,19 +42,18 @@
   (async function () {
     const locks = await loadLocks();
     document.getElementById("lesson-grid").innerHTML = LESSONS.map(l => {
-      const lk = lessonLocked(locks, l.n), st = lessonStatus(l);
-      const pill = { today: '<span class="status-pill">📍 Today</span>', next: '<span class="status-pill">⏭️ Next</span>', done: '<span class="status-pill done">✓ Done</span>' }[st] || "";
+      const lk = lessonLocked(locks, l.n);
       if (lk && !canView()) return `
         <a class="lesson-card locked reveal" href="slides.html?n=${l.n}">
-          <span class="num">Lesson ${l.n} · Thu ${l.date}</span>
+          <span class="num">Lesson ${l.n}</span>
           <span class="emoji">🔒</span>
           <h3>Top secret (for now)</h3>
           <p class="muted">Unlocks when we get there in class. Have the magic password? Tap to enter it. 🪄</p>
           <span class="locked-pill">COMING SOON</span>
         </a>`;
       return `
-      <a class="lesson-card reveal${st === "today" || st === "next" ? " is-next" : ""}" href="slides.html?n=${l.n}">
-        <span class="num">Lesson ${l.n} · Thu ${l.date} ${pill}</span>
+      <a class="lesson-card reveal" href="slides.html?n=${l.n}">
+        <span class="num">Lesson ${l.n}</span>
         <span class="emoji">${l.emoji}</span>
         <h3>${l.title}${lk ? ' <span class="locked-pill admin-locked-pill">🔒 students</span>' : ""}</h3>
         <p class="muted">${l.goal}</p>

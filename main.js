@@ -26,18 +26,6 @@ function lessonLocked(locks, n) { return !!locks[String(n)]; }
 function canView() { return isUnlocked(); }
 function lessonVisible(locks, n) { return canView() || !lessonLocked(locks, n); }
 
-/* today / next lesson, from the dates in lessons-data.js ("22 Oct 2026") */
-const AC4_MONTHS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
-function lessonDay(l) { const [d, m, y] = l.date.split(" "); return new Date(+y, AC4_MONTHS[m], +d).getTime(); }
-function todayStart() { return new Date().setHours(0, 0, 0, 0); }
-function nextLesson() { return LESSONS.find(l => lessonDay(l) >= todayStart()) || null; }
-function lessonStatus(l) {
-  const d = lessonDay(l), t = todayStart();
-  if (d === t) return "today";
-  if (d < t) return "done";
-  return l === nextLesson() ? "next" : "";
-}
-
 /* ============ floating doodles ============ */
 (function doodles() {
   const layer = document.createElement("div");
@@ -217,7 +205,7 @@ function openFlowModal(n) {
     <div class="modal" role="dialog" aria-label="Lesson flow">
       <button class="modal-x" aria-label="Close">✕</button>
       <div class="modal-head">
-        <div class="badge" style="background:rgba(216,52,116,.1); border-color:var(--pink); color:var(--pink)">${esc(lesson.date)} · Thursday</div>
+        <div class="badge" style="background:rgba(216,52,116,.1); border-color:var(--pink); color:var(--pink)">Lesson ${lesson.n} of 7</div>
         <h2>${lesson.emoji} Lesson ${lesson.n} — today's flow</h2>
       </div>
       <div class="flow-list">

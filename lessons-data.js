@@ -17,7 +17,7 @@ const LESSONS = [
 {
   n: 1, emoji: "🚀", title: "Back to Building",
   missionsInFlow: true, // the task checklist lives inside "Today's flow", not on the page
-  date: "22 Oct 2026", project: "P1 · Refresh: APIs + Databases",
+  project: "P1 · Refresh: APIs + Databases",
   goal: "Warm up APIs, understand why apps need databases, and connect a real app to MongoDB.",
   leaves: "Mongo exercises done + an app that remembers, with YOUR document in the database.",
   tutorial: [
@@ -36,7 +36,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 1 · Back to Building 🚀",
-      sub: "22 October 2026 · Project P1 · Refresh: APIs + Databases" },
+      sub: "Project P1 · Refresh: APIs + Databases" },
     { kind: "content", title: "Steps today",
       lead: "Spoiler: by the end, YOUR app remembers — like Instagram does. 👀", items: [
       { lines: [
@@ -247,7 +247,7 @@ const LESSONS = [
 /* ================= LESSON 2 ================= */
 {
   n: 2, emoji: "😎", title: "Vibe Coding",
-  date: "29 Oct 2026", project: "P1 · From LLMs to coding agents",
+  project: "P1 · From LLMs to coding agents",
   goal: "See what an LLM can (and can't) do, then install opencode and let it work inside a real project.",
   leaves: "opencode installed and answering + a bug found and fixed in a big project.",
   tutorial: [
@@ -266,7 +266,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 2 · Vibe Coding 😎",
-      sub: "29 October 2026 · Project P1 · From LLMs to coding agents" },
+      sub: "Project P1 · From LLMs to coding agents" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "We warmed up APIs: GET, JSON.",
@@ -448,7 +448,7 @@ const LESSONS = [
 /* ================= LESSON 3 ================= */
 {
   n: 3, emoji: "🛠️", title: "We Build an Agent",
-  date: "5 Nov 2026", project: "P2 · LangChain + the Studio begins",
+  project: "P2 · LangChain + the Studio begins",
   goal: "Understand what an agent is made of, build your first one, and start the Studio: Agent 1, the trend finder.",
   leaves: "Agent 1 of the Studio works — it finds real trends from today.",
   tutorial: [
@@ -466,7 +466,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 3 · We Build an Agent 🛠️",
-      sub: "5 November 2026 · Project P2 · LangChain + the Studio begins" },
+      sub: "Project P2 · LangChain + the Studio begins" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "An LLM solved your old exercise in seconds.",
@@ -631,7 +631,7 @@ const LESSONS = [
 /* ================= LESSON 4 ================= */
 {
   n: 4, emoji: "🧰", title: "Tool Time",
-  date: "12 Nov 2026", project: "P2 · Tools, Zod + Agent 2",
+  project: "P2 · Tools, Zod + Agent 2",
   goal: "Give agents great tools (and great descriptions), fix an agent that behaves badly, and build Agent 2.",
   leaves: "Agent 2 works + a confused agent fixed, with before/after proof.",
   tutorial: [
@@ -649,7 +649,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 4 · Tool Time 🧰",
-      sub: "12 November 2026 · Project P2 · Tools, Zod + Agent 2" },
+      sub: "Project P2 · Tools, Zod + Agent 2" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "You built your first agent with createAgent.",
@@ -799,7 +799,7 @@ const LESSONS = [
 /* ================= LESSON 5 ================= */
 {
   n: 5, emoji: "⛓️", title: "Agents in a Chain",
-  date: "19 Nov 2026", project: "P3 · The loop, the supervisor + shared memory",
+  project: "P3 · The loop, the supervisor + shared memory",
   goal: "Build a tiny agent loop by hand, then connect Agents 1 + 2 with a supervisor and a shared database.",
   leaves: "The 1→2 pipeline runs through a supervisor + writes to Mongo.",
   tutorial: [
@@ -817,7 +817,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 5 · Agents in a Chain ⛓️",
-      sub: "19 November 2026 · Project P3 · The loop, the supervisor + shared memory" },
+      sub: "Project P3 · The loop, the supervisor + shared memory" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "Tools = function + schema + description.",
@@ -950,7 +950,7 @@ const LESSONS = [
 /* ================= LESSON 6 ================= */
 {
   n: 6, emoji: "🎬", title: "Lights, Camera, Agent 3",
-  date: "26 Nov 2026", project: "P3 · The video maker + the Studio UI",
+  project: "P3 · The video maker + the Studio UI",
   goal: "Build Agent 3 — idea in, real video out — and give the Studio a screen that shows every step.",
   leaves: "The first video made by your pipeline + a UI that shows the steps.",
   tutorial: [
@@ -968,7 +968,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 6 · Lights, Camera, Agent 3 🎬",
-      sub: "26 November 2026 · Project P3 · The video maker + the Studio UI" },
+      sub: "Project P3 · The video maker + the Studio UI" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "You built the agent loop by hand. No more magic.",
@@ -1098,7 +1098,7 @@ const LESSONS = [
 /* ================= LESSON 7 ================= */
 {
   n: 7, emoji: "🏁", title: "Studio Grand Opening",
-  date: "3 Dec 2026", project: "P4 · Finish the Studio + hackathon prep",
+  project: "P4 · Finish the Studio + hackathon prep",
   goal: "Run the whole Studio end to end, add your own touch, and get your team ready for the hackathon.",
   leaves: "A complete Studio running + your team's hackathon plan.",
   tutorial: [
@@ -1116,7 +1116,7 @@ const LESSONS = [
   ],
   slides: [
     { kind: "title", title: "Lesson 7 · Studio Grand Opening 🏁",
-      sub: "3 December 2026 · Project P4 · Finish the Studio + hackathon prep" },
+      sub: "Project P4 · Finish the Studio + hackathon prep" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "Agent 3 made your first AI video. 🎬",
@@ -1393,19 +1393,13 @@ const FLOWS = {
 };
 
 /* ============================================================
-   CALENDAR — the whole year. Lessons are Thursdays.
-   Fixed events (hackathon, judging) keep their official dates.
+   CALENDAR — fixed dates only (hackathon, holidays, judging).
+   Lessons have no dates: the instructor sets the pace in class.
    ============================================================ */
 
 const CALENDAR = [
   { date: "2026-12-07", end: "2026-12-09", title: "The Hackathon", emoji: "🔥", kind: "event",
     desc: "3 days at Hanukkah — day 1 together, days 2–3 on Zoom. You build something with the Studio's scope." },
-  { date: "2026-12-17", title: "Reflection + first evals", emoji: "🪞", kind: "lesson-extra",
-    desc: "Error analysis on the hackathon, 10 golden questions per agent. Student-led lessons begin!" },
-  { date: "2026-12-24", end: "2027-01-07", title: "P5 · The Smart Search", emoji: "🔍", kind: "block",
-    desc: "3 lessons: embeddings + semantic search over the Studio's archive." },
-  { date: "2027-01-14", end: "2027-01-28", title: "P6 · RAG", emoji: "📖", kind: "block",
-    desc: "3 lessons: retrieval, answers with sources, a taste of MCP." },
   { date: "2027-01-28", title: "Semester 1 ends", emoji: "🏁", kind: "event",
     desc: "Wrap-up with an evidence exhibition — all your before/afters on one wall." },
   { date: "2027-02-04", end: "2027-02-11", title: "Guest parent + tech tour", emoji: "🚌", kind: "event",
@@ -1414,11 +1408,6 @@ const CALENDAR = [
     desc: "Parents come to class — you show them one live before/after moment." },
   { date: "2027-03-25", title: "Purim — no lesson", emoji: "🎭", kind: "off" },
   { date: "2027-04-22", end: "2027-04-29", title: "Pesach — no lessons", emoji: "🫓", kind: "off" },
-  { date: "2027-05-06", title: "Final project — working session 1", emoji: "🛠️", kind: "lesson-extra",
-    desc: "Your team's fork of the Studio. Build, build, build." },
-  { date: "2027-05-20", title: "Final project — working session 2", emoji: "🛠️", kind: "lesson-extra" },
-  { date: "2027-06-03", title: "Final project — rehearsal", emoji: "🎤", kind: "lesson-extra",
-    desc: "5-minute pitch, full dry run." },
   { date: "2027-06-04", title: "JUDGING DAY", emoji: "🏆", kind: "event",
     desc: "The big one. Your project, your pitch, your year on stage." },
   { date: "2027-06-24", title: "Farewell", emoji: "🎉", kind: "event", desc: "Last meeting of the year. 🥹" },

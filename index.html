@@ -34,15 +34,13 @@
     </div>
   </header>
 
-  <section class="card reveal next-card" id="next"></section>
-
   <section class="card reveal">
     <h2>🚀 Quick doors</h2>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
       <a class="lesson-card" href="calendar.html">
         <span class="emoji">🗓️</span>
         <h3>Calendar</h3>
-        <p class="muted">Every lesson and event.</p>
+        <p class="muted">Hackathon, holidays, big days.</p>
         <span class="cta">Open →</span>
       </a>
       <a class="lesson-card" href="tasks.html">
@@ -104,19 +102,6 @@
 <script src="lessons-data.js"></script>
 <script src="main.js"></script>
 <script>
-  // the next lesson, so nobody has to hunt for it
-  (async function () {
-    const nx = nextLesson(), box = document.getElementById("next");
-    if (!nx) {
-      box.innerHTML = `<div class="nc-when">🔥 ${HACKATHON.date}</div><h2>${HACKATHON.emoji} ${HACKATHON.title}</h2>`;
-      return;
-    }
-    const hidden = !lessonVisible(await loadLocks(), nx.n);
-    box.innerHTML = `
-      <div class="nc-when">${lessonStatus(nx) === "today" ? "📍 Today" : "⏭️ Next lesson"} · Thursday ${nx.date}</div>
-      <h2>${hidden ? "🔒" : nx.emoji} Lesson ${nx.n} · ${hidden ? "unlocks in class" : nx.title}</h2>
-      ${hidden ? "" : `<p class="muted">${nx.goal}</p><a class="btn small" href="slides.html?n=${nx.n}">Open the slides →</a>`}`;
-  })();
   renderMemes(document.getElementById("memes"), MEMES.slice(0, 3));
   armReveal();
 </script>

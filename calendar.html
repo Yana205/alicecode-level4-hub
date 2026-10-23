@@ -14,18 +14,16 @@
 <div class="wrap">
 
   <header class="hero" style="padding-bottom:14px">
-    <div class="badge">Lessons every Thursday 💜</div>
+    <div class="badge">Fixed dates only 💜</div>
     <h1>🗓️ The AliceCode Calendar</h1>
-    <p class="sub">The whole year at a glance — lessons, the hackathon, special days and the road to judging day.</p>
+    <p class="sub">The hackathon, holidays and big days. Lessons follow the class pace.</p>
     <div style="margin-top:18px">
       <button class="btn" id="ics-btn">📲 Add to my calendar (.ics)</button>
     </div>
   </header>
 
   <div class="cal-legend">
-    <span class="l-lesson">Lesson (Thursday)</span>
     <span class="l-event">Special event</span>
-    <span class="l-block">Lesson block</span>
     <span class="l-off">Holiday — no lesson</span>
   </div>
 
@@ -42,16 +40,8 @@
   const locks = await loadLocks();
   const esc = s => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
-  /* merge lessons + fixed events into one dated list */
+  /* fixed events only: lessons have no dates */
   const items = [];
-  LESSONS.forEach(l => {
-    const d = new Date(l.date + " 17:00");
-    items.push({
-      dt: d, kind: "lesson", n: l.n,
-      title: `Lesson ${l.n} · ${l.title}`, emoji: l.emoji,
-      desc: l.goal
-    });
-  });
   CALENDAR.forEach(ev => {
     items.push({
       dt: new Date(ev.date + "T12:00:00"), end: ev.end ? new Date(ev.end + "T12:00:00") : null,

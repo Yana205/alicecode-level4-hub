@@ -43,7 +43,7 @@
 
   /* ---------- header ---------- */
   head.innerHTML = `
-    <div class="badge">Lesson ${lesson.n} of 7 · Thursday ${lesson.date}${locked ? ' · <b>🔒 locked for students</b>' : ""}</div>
+    <div class="badge">Lesson ${lesson.n} of 7${locked ? ' · <b>🔒 locked for students</b>' : ""}</div>
     <h1>${lesson.emoji} ${lesson.title}</h1>
     <p class="sub">${lesson.project}</p>
     <div style="margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap">

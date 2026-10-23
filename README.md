@@ -15,7 +15,7 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `tasks.html` | Mission board with progress bar (saved in the browser) + link to the class Trello |
 | `setup.html` | opencode install guide + animated terminal demo |
 | `learn-more.html` | Curated free resources: W3Schools, freeCodeCamp, Frontend Masters, MongoDB U, YouTube |
-| `calendar.html` | The whole year — Thursday lessons + fixed events, with an .ics download |
+| `calendar.html` | Fixed dates only (hackathon, holidays, judging) with an .ics download — lessons have no dates, the instructor sets the pace |
 | `demos.js` | Live slide demos for Lesson 1: chat vs. agent race, TikTok Studio loop, live PokeAPI fetch |
 | `db-demo.html` + `db-demo.jsx` | "Variables vs. Database" slides as **React + Tailwind** components (`VariablesForget`, `MongoRemembers`). Shown in the deck in a frame; open `db-demo.html` alone to see both |
 | `starter/class-db/` | **The class database, ready for Lesson 1:** 30 ready-made TikTok videos (`videos.json`), `npm run setup` (load data + print Part 1 answers), `npm run check` (test the student login), optional `atlas-setup.sh` (whole cluster via Atlas CLI). Start with its README |
