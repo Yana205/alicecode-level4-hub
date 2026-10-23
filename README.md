@@ -10,8 +10,8 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | Page | What it does |
 |---|---|
 | `index.html` | Year intro, TikTok Studio pipeline, roadmap to the hackathon |
-| `lessons.html` | All 7 pre-hackathon lessons |
-| `slides.html?n=1…7` | Web presentations for lessons 1–7 (simple English, click/arrow navigation) |
+| `lessons.html` | All 6 pre-hackathon lessons |
+| `slides.html?n=1…6` | Web presentations for lessons 1–6 (simple English, click/arrow navigation) |
 | `tasks.html` | Mission board with progress bar (saved in the browser) + link to the class Trello |
 | `setup.html` | opencode install guide + animated terminal demo |
 | `learn-more.html` | Curated free resources: W3Schools, freeCodeCamp, Frontend Masters, MongoDB U, YouTube |

@@ -205,7 +205,7 @@ function openFlowModal(n) {
     <div class="modal" role="dialog" aria-label="Lesson flow">
       <button class="modal-x" aria-label="Close">✕</button>
       <div class="modal-head">
-        <div class="badge" style="background:rgba(216,52,116,.1); border-color:var(--pink); color:var(--pink)">Lesson ${lesson.n} of 7</div>
+        <div class="badge" style="background:rgba(216,52,116,.1); border-color:var(--pink); color:var(--pink)">Lesson ${lesson.n} of ${LESSONS.length}</div>
         <h2>${lesson.emoji} Lesson ${lesson.n} — today's flow</h2>
       </div>
       <div class="flow-list">

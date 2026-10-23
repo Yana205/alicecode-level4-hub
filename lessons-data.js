@@ -73,8 +73,8 @@ const LESSONS = [
       { lines: [
         "Weeks 1–2 · P1: refresh APIs and databases",
         "Weeks 3–4 · P2: build agents 1 and 2",
-        "Weeks 5–6 · P3: connect them in a chain",
-        "Week 7 · P4: finish the full Studio"
+        "Week 5 · P3: connect them in a chain",
+        "Week 6 · P4: Agent 3 + the full Studio"
       ]},
       { note: "7–9 December: HACKATHON! You build something like this. 🔥" }
     ]},
@@ -909,10 +909,10 @@ const LESSONS = [
     { kind: "content", title: "Next time 👀", items: [
       { lines: [
         "The missing piece: Agent 3, the video maker.",
-        "Plus: a real screen for the Studio — the UI.",
-        "You'll SEE your pipeline as a graph."
+        "The whole Studio on a real screen — the UI.",
+        "And your team's hackathon plan. 🔥"
       ]},
-      { note: "Next week: lights, camera, Agent 3. 🎬" }
+      { note: "Next week: lights, camera, Agent 3 — and grand opening. 🎬" }
     ]},
     { kind: "content", title: "Prompts to try at home 💬",
       lead: "Open opencode on the Studio repo and try:", items: [
@@ -947,28 +947,28 @@ const LESSONS = [
   ]
 },
 
-/* ================= LESSON 6 ================= */
+/* ================= LESSON 6 (was 6 + 7) ================= */
 {
-  n: 6, emoji: "🎬", title: "Lights, Camera, Agent 3",
-  project: "P3 · The video maker + the Studio UI",
-  goal: "Build Agent 3 — idea in, real video out — and give the Studio a screen that shows every step.",
-  leaves: "The first video made by your pipeline + a UI that shows the steps.",
+  n: 6, emoji: "🎬", title: "Agent 3 + Grand Opening",
+  project: "P3–P4 · The video maker, the full Studio + hackathon prep",
+  goal: "Build Agent 3 — idea in, real video out — run the whole Studio on screen, and get your team ready for the hackathon.",
+  leaves: "Your first AI video, the full Studio running, and your team's hackathon plan.",
   tutorial: [
-    { label: "Nir's tutorial — the bonus UI chapter", url: NIR_TUTORIAL },
-    { label: "LangChain JS — streaming guide", url: "https://js.langchain.com" },
-    { label: "LangGraph — see your agents as a graph", url: "https://langchain-ai.github.io/langgraphjs/" }
+    { label: "Nir's tutorial — full reference (incl. the bonus UI)", url: NIR_TUTORIAL },
+    { label: "Our Studio repo — the finished pipeline", url: "https://github.com/Yana205" },
+    { label: "LangChain JS — docs for your extra feature", url: "https://js.langchain.com" }
   ],
   missions: [
-    "Build Agent 3: it turns a video idea into a prompt for the video service.",
-    "Wire the call: send the prompt, wait, get the video back.",
-    "Run the FULL chain: trend → idea → video. 🎬",
-    "Start the Studio UI and watch your pipeline live.",
-    "Open the graph view: find your three agents in the picture.",
-    "📸 Screenshot the first video + the pipeline screen."
+    "Build Agent 3: it turns a video idea into a prompt for the video service — and gets a real video back.",
+    "Run the FULL Studio on the UI: trend → idea → video. 🎬",
+    "Edit one idea in the UI before it becomes a video.",
+    "⭐ Bonus: add ONE feature (genre filter / Israel trends / your idea).",
+    "Form your hackathon team. Write the one-pager: idea, MVP, who does what.",
+    "📸 Screenshot your first video + the full pipeline run."
   ],
   slides: [
-    { kind: "title", title: "Lesson 6 · Lights, Camera, Agent 3 🎬",
-      sub: "Project P3 · The video maker + the Studio UI" },
+    { kind: "title", title: "Lesson 6 · Agent 3 + Grand Opening 🎬",
+      sub: "Project P3–P4 · The video maker, the full Studio + hackathon prep" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "You built the agent loop by hand. No more magic.",
@@ -976,13 +976,13 @@ const LESSONS = [
         "Mongo is the team's shared memory."
       ]}
     ]},
-    { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then we go to the movies" },
+    { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then: opening night 🎬" },
     { kind: "content", title: "Steps today", items: [
       { lines: [
         "20 min · game",
-        "Part 1 · Agent 3: idea → video prompt → video",
+        "Part 1 · Agent 3: idea → video",
         "Break ☕",
-        "Part 2 · the Studio UI + the graph view",
+        "Part 2 · the full Studio + your hackathon plan",
         "Last 15 min · \"Explain to me\" 🗣️"
       ]}
     ]},
@@ -1018,120 +1018,14 @@ const LESSONS = [
       before: ["An idea in the database.", "Just text.", "No pictures, no sound."],
       after: ["A real video,", "made from YOUR idea,", "by YOUR pipeline. 🎬"],
       note: "📸 Save that video. It's going in the showcase." },
-    { kind: "section", title: "Break ☕", sub: "30 minutes" },
-    { kind: "content", title: "Part 2 · The Studio gets a face 🖥️",
-      lead: "Until now: terminal. Today: a real screen.", items: [
+    { kind: "section", title: "Break ☕", sub: "30 minutes — last one before the hackathon 😱" },
+    { kind: "content", title: "Part 2 · Grand opening 🖥️",
+      lead: "Until now: terminal. Now: a real screen.", items: [
       { lines: [
-        "Start the Studio UI from the repo.",
-        "It shows each step while the pipeline runs.",
-        "Found trend → idea → video — live on screen.",
-        "This is what customers would actually see."
-      ]}
-    ]},
-    { kind: "newword", term: "LangGraph",
-      meaning: "A way to see (and run) your agent team as a graph: boxes and arrows.",
-      extra: "We use it as a MAP today — the Studio draws your pipeline." },
-    { kind: "content", title: "Find yourself on the map 🗺️", items: [
-      { lines: [
-        "Open the graph view.",
-        "Find Agent 1, Agent 2, Agent 3, the supervisor.",
-        "Trace one run: where does the data flow?",
-        "Point at the box YOU built. Own it. 💅"
-      ]}
-    ]},
-    { kind: "content", title: "Explain to me 🗣️", items: [
-      { lines: [
-        "Pick: Agent 3 · video prompt · the graph.",
-        "Explain it in 2 sentences.",
-        "Show your first AI video. 🎬"
-      ]}
-    ]},
-    { kind: "content", title: "What we learned today", items: [
-      { lines: [
-        "Agent 3 turns ideas into video prompts + real videos.",
-        "Detailed prompts beat vibes. Every time.",
-        "The UI shows the pipeline live.",
-        "Your team of agents is now a real product. 💼"
-      ]}
-    ]},
-    { kind: "content", title: "Next time 👀", items: [
-      { lines: [
-        "We finish the WHOLE Studio, end to end.",
-        "Extra features: genres, regions, your ideas.",
-        "And… we start planning the hackathon. 🔥"
-      ]},
-      { note: "One more week to the full Studio. You're almost there!" }
-    ]},
-    { kind: "content", title: "Prompts to try at home 💬",
-      lead: "Open opencode on the Studio repo and try:", items: [
-      { rows: [
-        ["Understand", "\"Explain how the UI knows what step we're on.\""],
-        ["Experiment", "\"Make Agent 3's prompts shorter. Do videos get worse?\""],
-        ["Trace", "\"Follow one idea from Mongo to the video call.\""],
-        ["Spec first", "\"Spec a 'funny mode' for Agent 3 before building.\""],
-        ["Bug", "\"What happens if the video service is down? Find out.\""]
-      ]}
-    ]},
-    { kind: "content", title: "Want more? 📚",
-      lead: "Not homework. Only if you're curious.", items: [
-      { rows: [
-        ["LangGraph", "langchain-ai.github.io/langgraphjs — graphs for agents"],
-        ["Streaming UIs", "js.langchain.com — the streaming guide"],
-        ["Nir's bonus UI", "the UI chapter in our reference repo"],
-        ["AI video", "try describing one scene in 3 different ways"]
-      ]}
-    ]},
-    { kind: "content", title: "Glossary 📖", items: [
-      { rows: [
-        ["Agent 3", "our video maker: idea → prompt → real video"],
-        ["video prompt", "a very detailed description a video AI understands"],
-        ["UI", "user interface — the screen people see and click"],
-        ["frontend", "the part of an app that runs in the browser"],
-        ["streaming", "showing results live, piece by piece"],
-        ["LangGraph", "boxes-and-arrows view of an agent team"],
-        ["node", "one box in the graph (an agent or a step)"]
-      ]}
-    ]}
-  ]
-},
-
-/* ================= LESSON 7 ================= */
-{
-  n: 7, emoji: "🏁", title: "Studio Grand Opening",
-  project: "P4 · Finish the Studio + hackathon prep",
-  goal: "Run the whole Studio end to end, add your own touch, and get your team ready for the hackathon.",
-  leaves: "A complete Studio running + your team's hackathon plan.",
-  tutorial: [
-    { label: "Nir's tutorial — full reference", url: NIR_TUTORIAL },
-    { label: "Our Studio repo — the finished pipeline", url: "https://github.com/Yana205" },
-    { label: "LangChain JS — docs for your extra feature", url: "https://js.langchain.com" }
-  ],
-  missions: [
-    "Run the FULL Studio: trend → idea → video, on the UI, no help.",
-    "Edit one idea in the UI before it becomes a video.",
-    "Pick one optional feature (genre filter / regional trends / your idea) and build it.",
-    "Form your hackathon team.",
-    "Write your team's one-page plan: idea, MVP, who does what.",
-    "📸 Screenshot the full pipeline run — this is your biggest proof yet."
-  ],
-  slides: [
-    { kind: "title", title: "Lesson 7 · Studio Grand Opening 🏁",
-      sub: "Project P4 · Finish the Studio + hackathon prep" },
-    { kind: "content", title: "Last time", items: [
-      { lines: [
-        "Agent 3 made your first AI video. 🎬",
-        "The UI shows the pipeline live.",
-        "You found your agents on the graph map."
-      ]}
-    ]},
-    { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then: opening night" },
-    { kind: "content", title: "Steps today", items: [
-      { lines: [
-        "20 min · game",
-        "Part 1 · finish the Studio, end to end",
-        "Break ☕",
-        "Part 2 · hackathon prep: team + plan",
-        "Last 15 min · \"Explain to me\" 🗣️"
+        "Pull the latest repo. Start the Studio UI.",
+        "Run it: trend → idea → video, live on screen.",
+        "Edit one idea in the UI before it renders.",
+        "⭐ Bonus: add ONE feature. Genre filter? Israel trends? 💜"
       ]}
     ]},
     { kind: "content", title: "Look how far you've come 🥹", items: [
@@ -1140,23 +1034,9 @@ const LESSONS = [
         { h: "Week 4", lines: ["Fixing confused agents", "like a pro."], color: "orange" },
         { h: "Today", lines: ["Running a full", "AI video studio. 💅"], color: "green" }
       ]},
-      { note: "Seven weeks. From zero agents to a full pipeline. That's YOU." }
+      { note: "Six weeks. From zero agents to a full pipeline. That's YOU." }
     ]},
-    { kind: "content", title: "Part 1 · Task ✅ Grand opening", items: [
-      { lines: [
-        "Pull the latest repo. Run the full Studio.",
-        "Trend → idea → video, all on the UI.",
-        "Edit one idea in the UI before it renders.",
-        "Then: add ONE optional feature.",
-        "Genre filter? Israel trends? Your call. 💜"
-      ]}
-    ]},
-    { kind: "beforeafter", title: "Proof time 📸",
-      before: ["Week 1: an empty", "Mongo collection", "and a dream."],
-      after: ["Week 7: a full AI studio.", "Three agents. One team.", "Real videos. 🎬"],
-      note: "📸 The full-pipeline screenshot is your biggest proof yet." },
-    { kind: "section", title: "Break ☕", sub: "30 minutes — last one before the hackathon 😱" },
-    { kind: "content", title: "Part 2 · HACKATHON 🔥",
+    { kind: "content", title: "The HACKATHON 🔥",
       lead: "7–9 December · Hanukkah · 3 days · your build", items: [
       { lines: [
         "Day 1 · together in class: idea + start building",
@@ -1186,17 +1066,9 @@ const LESSONS = [
     ]},
     { kind: "content", title: "Explain to me 🗣️", items: [
       { lines: [
-        "Tell us your team's idea in one sentence.",
-        "What's the ONE thing your demo must show?",
-        "What are you most excited to build?"
-      ]}
-    ]},
-    { kind: "content", title: "What we learned today", items: [
-      { lines: [
-        "The Studio runs end to end. You built it.",
-        "You added a feature nobody asked you to. 💅",
-        "Your hackathon team has a plan.",
-        "Next stop: 7–9 December. 🔥"
+        "Pick: Agent 3 · video prompt · MVP. Explain it in 2 sentences.",
+        "Show your first AI video. 🎬",
+        "Tell us your team's idea in one sentence."
       ]}
     ]},
     { kind: "content", title: "Hackathon checklist ✅", items: [
@@ -1214,7 +1086,7 @@ const LESSONS = [
       { rows: [
         ["Spec first", "\"Here's our hackathon idea. Help me write the MVP spec.\""],
         ["Plan", "\"Split this spec into 3 days of work for 3 people.\""],
-        ["Scaffold", "\"Set up an empty agent project like our Studio.\""],
+        ["Trace", "\"Follow one idea from Mongo to the video call.\""],
         ["Practice", "\"Quiz me: agents, tools, supervisor. Simple English.\""]
       ]}
     ]},
@@ -1222,18 +1094,20 @@ const LESSONS = [
       lead: "Before the hackathon, if you're curious.", items: [
       { rows: [
         ["Our Studio repo", "read the code you'll build from"],
-        ["Nir's tutorial", "the full reference, lessons 1–4"],
+        ["Nir's tutorial", "the full reference + the bonus UI chapter"],
         ["LangChain JS", "js.langchain.com — docs for your feature"],
         ["Rest!", "seriously — sleep before the hackathon 😴"]
       ]}
     ]},
     { kind: "content", title: "Glossary 📖", items: [
       { rows: [
+        ["Agent 3", "our video maker: idea → prompt → real video"],
+        ["video prompt", "a very detailed description a video AI understands"],
+        ["UI", "user interface — the screen people see and click"],
+        ["end to end", "the whole pipeline, start to finish"],
         ["MVP", "the smallest version that really works"],
         ["spec", "a short plan written BEFORE the code"],
         ["demo", "showing your working build to everyone"],
-        ["end to end", "the whole pipeline, start to finish"],
-        ["feature", "one ability of a product"],
         ["hackathon", "3 days, one team, one build, zero judging"]
       ]}
     ]}
@@ -1359,36 +1233,20 @@ const FLOWS = {
     start: "Draw the pipeline on paper first: who calls whom, and what gets saved where?"
   },
   6: {
-    tease: "Tonight your pipeline makes its first REAL video. Lights, camera, Agent 3. 🎬",
+    tease: "Lights, camera, Agent 3 — your pipeline makes its first REAL video. Then the whole Studio opens… and hackathon mode. 🔥",
     game: { name: "TikTok Charades", url: "https://garticphone.com",
       note: "Act a TikTok trend with no words — a bad prompt is charades; a good prompt says everything. (Or Gartic animation mode.)" },
-    material: "Slides: Agent 3 · writing video prompts (details beat vibes) · the Studio UI · LangGraph as a map.",
+    material: "Slides: Agent 3 · video prompts (details beat vibes) · the Studio UI · what makes a great hackathon idea · the team one-pager.",
     discussion: "What makes a video idea feel 'doable' for an AI? What's missing when we only give vibes?",
-    demo: "One idea → video prompt → a real AI video, live on screen. 🍿",
+    demo: "One idea → video prompt → a real AI video, live on screen. Then the full run on the UI. 🍿",
     exercises: "Write the SAME video prompt two ways — vibes vs details. Compare what comes back.",
-    building: "Build Agent 3, wire the video-service call, run the full chain, open the UI and find yourself on the graph.",
-    sources: [
-      { label: "Nir's tutorial — bonus UI", url: NIR_TUTORIAL },
-      { label: "LangGraph JS", url: "https://langchain-ai.github.io/langgraphjs/" },
-      { label: "LangChain streaming", url: "https://js.langchain.com" }
-    ],
-    start: "Take YOUR video idea from last week — that's the one Agent 3 turns into a film tonight."
-  },
-  7: {
-    tease: "Grand opening: the full Studio runs end to end. And then… hackathon mode. 🔥",
-    game: { name: "Kahoot — semester recap quiz", url: "https://kahoot.it",
-      note: "Everything from week 1 to now. Winner picks the break playlist. 👑" },
-    material: "Slides: finishing touches · what makes a great hackathon idea · the team one-pager.",
-    discussion: "What was the hardest moment this semester — and what got you past it?",
-    demo: "The full run: trend → idea → video, all on the UI, no terminal.",
-    exercises: "Run the Studio yourself with no help. Edit one idea in the UI before it renders.",
-    building: "Pick ONE optional feature and build it. Then: team + idea + MVP one-pager for the hackathon.",
+    building: "Build Agent 3, run the full Studio on the UI, edit one idea. Then: team + idea + MVP one-pager for the hackathon.",
     sources: [
       { label: "Nir's tutorial — full reference", url: NIR_TUTORIAL },
       { label: "LangChain JS", url: "https://js.langchain.com" },
       { label: "Our class Trello", url: "https://trello.com/b/wPXqrlUT" }
     ],
-    start: "Teams of 2–3. One sentence for the idea. The smallest demo that works. Write it down before you leave."
+    start: "Take YOUR video idea from last week — that's the one Agent 3 turns into a film today."
   }
 };
 
@@ -1434,11 +1292,8 @@ const VISUALS = {
   6: {
     "The missing piece 🧩": { id: "v6-1", prompt: "A director robot with a clapperboard and beret, a film reel turning into a phone video." },
     "A prompt for video 🎥": { id: "v6-2", prompt: "Split: a blurry dream cloud vs a sharp detailed storyboard of a fluffy orange cat dancing in a pink kitchen." },
-    "Find yourself on the map 🗺️": { id: "v6-3", prompt: "A subway-style map of glowing nodes connected by pink lines, girls pointing at stations." }
-  },
-  7: {
+    "Part 2 · Grand opening 🖥️": { id: "v7-2", prompt: "Ribbon-cutting in front of a neon studio sign, confetti, a team of girls with their three robots." },
     "Look how far you've come 🥹": { id: "v7-1", prompt: "A mountain path from a tiny seedling at the bottom to a shining studio building on the peak, little flags along the way." },
-    "Part 1 · Task ✅ Grand opening": { id: "v7-2", prompt: "Ribbon-cutting in front of a neon studio sign, confetti, a team of girls with their three robots." },
-    "Part 2 · HACKATHON 🔥": { id: "v7-3", prompt: "A planning war-room table: map, sticky notes, three girls planning, a rocket model in the middle." }
+    "The HACKATHON 🔥": { id: "v7-3", prompt: "A planning war-room table: map, sticky notes, three girls planning, a rocket model in the middle." }
   }
 };

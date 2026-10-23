@@ -74,7 +74,7 @@ async function downloadPPTX(n) {
     /* left meta column (template style) */
     const m = (sl.sub || "").split("·").map(t => t.trim());
     s.addText(`${lesson.project}`, { x: 0.45, y: 2.32, w: 3.1, h: 0.6, align: "center", fontFace: BODY, fontSize: 11.5, color: "FFFFFF" });
-    s.addText(`Lesson ${lesson.n} of 7`, { x: 0.45, y: 2.9, w: 3.1, h: 0.35, align: "center", fontFace: BODY, fontSize: 11, color: "FFFFFF" });
+    s.addText(`Lesson ${lesson.n} of ${LESSONS.length}`, { x: 0.45, y: 2.9, w: 3.1, h: 0.35, align: "center", fontFace: BODY, fontSize: 11, color: "FFFFFF" });
     /* big title right */
     s.addText(sl.title.replace(/^Lesson \d+ · /, `Lesson ${lesson.n} ·\n`), {
       x: 3.8, y: 1.2, w: 5.9, h: 3.2, align: "center", valign: "middle",

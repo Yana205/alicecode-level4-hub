@@ -2,7 +2,7 @@
 
 (async function () {
   const params = new URLSearchParams(location.search);
-  const n = Math.min(7, Math.max(1, parseInt(params.get("n") || "1", 10)));
+  const n = Math.min(LESSONS.length, Math.max(1, parseInt(params.get("n") || "1", 10)));
   const lesson = LESSONS.find(l => l.n === n);
   if (!lesson) return;
 
@@ -16,7 +16,7 @@
   const locks = await loadLocks();
   const locked = lessonLocked(locks, n);
   if (locked && !canView()) {
-    head.innerHTML = `<div class="badge">Lesson ${lesson.n} of 7</div><h1>🔒 Not yet!</h1>`;
+    head.innerHTML = `<div class="badge">Lesson ${lesson.n} of ${LESSONS.length}</div><h1>🔒 Not yet!</h1>`;
     stageWrap.style.display = "none";
     below.innerHTML = `
       <div class="card lock-screen">
@@ -43,7 +43,7 @@
 
   /* ---------- header ---------- */
   head.innerHTML = `
-    <div class="badge">Lesson ${lesson.n} of 7${locked ? ' · <b>🔒 locked for students</b>' : ""}</div>
+    <div class="badge">Lesson ${lesson.n} of ${LESSONS.length}${locked ? ' · <b>🔒 locked for students</b>' : ""}</div>
     <h1>${lesson.emoji} ${lesson.title}</h1>
     <p class="sub">${lesson.project}</p>
     <div style="margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap">
@@ -299,7 +299,7 @@
     <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:8px">
       ${lesson.n > 1 ? `<a class="btn ghost" href="slides.html?n=${lesson.n - 1}">← Lesson ${lesson.n - 1}</a>` : ""}
       <a class="btn" href="tasks.html">✅ All tasks</a>
-      ${lesson.n < 7 ? `<a class="btn ghost" href="slides.html?n=${lesson.n + 1}">Lesson ${lesson.n + 1} →</a>`
+      ${lesson.n < LESSONS.length ? `<a class="btn ghost" href="slides.html?n=${lesson.n + 1}">Lesson ${lesson.n + 1} →</a>`
                      : `<a class="btn dark" href="lessons.html#hackathon">🔥 The Hackathon</a>`}
     </div>`;
 
