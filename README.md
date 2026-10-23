@@ -18,7 +18,8 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `calendar.html` | The class calendar in AliceCode style: month grid + coming up, read live from the class Google Calendar. **Edit dates in Google Calendar**, not in the code |
 | `api/calendar.js` | Reads the public Google Calendar feed and returns the events as JSON for `calendar.html` |
 | `demos.js` | Live slide demos for Lesson 1: chat vs. agent race, TikTok Studio loop, live PokeAPI fetch |
-| `db-demo.html` + `db-demo.jsx` | "Variables vs. Database" slides as **React + Tailwind** components (`VariablesForget`, `MongoRemembers`). Shown in the deck in a frame; open `db-demo.html` alone to see both |
+| `db-demo.html` + `db-demo.jsx` | "Variables vs. Database" slides as **React + Tailwind** components (`VariablesForget`, `MongoRemembers`). Shown in the deck in a frame; open `db-demo.html` alone to see both. `db-demo.js` + `db-demo.css` are pre-built from it: after editing `db-demo.jsx`, run `sh scripts/build-db-demo.sh` |
+| `assets/fonts`, `assets/brand`, `assets/vendor` | Fonts, logos and React served from this site (no outside servers = faster first load) |
 | `starter/class-db/` | **The class database, ready for Lesson 1:** 30 ready-made TikTok videos (`videos.json`), `npm run setup` (load data + print Part 1 answers), `npm run check` (test the student login), optional `atlas-setup.sh` (whole cluster via Atlas CLI). Start with its README |
 | `starter/idea-tracker/` | Lesson 1 exercise: a TikTok Idea Tracker (Express + MongoDB) students clone with `npx degit Yana205/alicecode-level4-hub/starter/idea-tracker` and connect to the class database. Its README has the teacher setup |
 | `api/ideas.js` | Read-only view of the class `ideas` collection for the "Find it in the vault" slide |

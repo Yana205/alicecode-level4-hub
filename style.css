@@ -951,7 +951,7 @@ a.cal-ev:hover, button.cal-ev:hover { transform: translateX(4px); }
 
 /* content slides: the template frame + white card IS the background */
 .stage {
-  background: #fff url("tpl-content.png") center / 100% 100% no-repeat;
+  background: #fff url("tpl-content.webp") center / 100% 100% no-repeat;
 }
 .slide {
   /* keep text inside the white card of the background image */
@@ -991,7 +991,7 @@ a.cal-ev:hover, button.cal-ev:hover { transform: translateX(4px); }
   content: "";
   position: absolute; top: 4.5%; right: 3%;
   width: clamp(96px, 13%, 150px); height: clamp(30px, 8%, 46px);
-  background: #fff url("https://alicecode.org/__l5e/assets-v1/91e0a7b0-8b4c-4879-817f-ca5d41c350df/alicecode-logo.png") center / 78% auto no-repeat;
+  background: #fff url("assets/brand/alicecode-logo.webp") center / 78% auto no-repeat;
   border-radius: 999px;
   box-shadow: 0 4px 12px rgba(0,0,0,.15);
 }
@@ -1010,7 +1010,7 @@ a.cal-ev:hover, button.cal-ev:hover { transform: translateX(4px); }
 }
 /* fullscreen keeps the frame (stage is ~16:9 there) */
 .stage-wrap:fullscreen .stage {
-  background: #fff url("tpl-content.png") center / 100% 100% no-repeat;
+  background: #fff url("tpl-content.webp") center / 100% 100% no-repeat;
 }
 
 /* ============================================================

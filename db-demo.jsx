@@ -10,7 +10,8 @@
    (MONGODB_URI on Vercel) the After slide uses it and says "live";
    otherwise it simulates the database in this browser and says "demo".
 
-   Runs in-browser via db-demo.html (React UMD + Babel standalone).
+   Shown by db-demo.html (React UMD). After editing, rebuild db-demo.js + db-demo.css:
+   sh scripts/build-db-demo.sh
    In a bundled React app: `import { useState, useEffect, useRef } from "react"`
    instead of the line below, and export the two components. */
 

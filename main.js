@@ -80,7 +80,7 @@ function lessonVisible(locks, n) { return canView() || !lessonLocked(locks, n); 
   nav.className = "nav";
   nav.innerHTML = `
     <a class="logo" href="index.html">
-      <img class="logo-img" src="https://alicecode.org/__l5e/assets-v1/91e0a7b0-8b4c-4879-817f-ca5d41c350df/alicecode-logo.png"
+      <img class="logo-img" src="assets/brand/alicecode-logo.webp" width="300" height="123"
            alt="AliceCode" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
       <span class="logo-text" style="display:none">
         <span class="logo-stars">★</span>
