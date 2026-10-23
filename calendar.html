@@ -14,14 +14,22 @@
 <div class="wrap">
 
   <header class="hero" style="padding-bottom:14px">
-    <div class="badge">Fixed dates only 💜</div>
+    <div class="badge">Always up to date 💜</div>
     <h1>🗓️ The AliceCode Calendar</h1>
-    <p class="sub">The hackathon, holidays and big days. Lessons follow the class pace.</p>
-    <div style="margin-top:18px">
-      <button class="btn" id="ics-btn">📲 Add to my calendar (.ics)</button>
+    <p class="sub">Our class calendar, live from Google Calendar.</p>
+    <div style="margin-top:18px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
+      <a class="btn" target="_blank" rel="noopener"
+         href="https://calendar.google.com/calendar/r?cid=Y182ZDIyY2JkMmFlNmZkMjg0MTI2Y2MxOWJkN2MwOTkzMTRjODQ3Zjk1MmI2OTQxYmQ0NjQ2NmYzZTg3MGEyOGE2QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20">➕ Add to Google Calendar</a>
+      <a class="btn ghost"
+         href="webcal://calendar.google.com/calendar/ical/c_6d22cbd2ae6fd284126cc19bd7c099314c847f952b6941bd46466f3e870a28a6%40group.calendar.google.com/public/basic.ics">📲 iPhone / Outlook</a>
     </div>
   </header>
 
+  <section class="card gcal-card">
+    <iframe id="gcal" title="AliceCode Level 4 calendar" loading="lazy"></iframe>
+  </section>
+
+  <h2 class="white" style="margin:30px 0 12px">📌 Big dates</h2>
   <div class="cal-legend">
     <span class="l-event">Special event</span>
     <span class="l-off">Holiday — no lesson</span>
@@ -34,6 +42,15 @@
 <footer class="footer">Made with 💜 for the Level 4 builders · {Alice code} 2026–27<br>by <strong>Yana Ifraimov</strong></footer>
 
 <script src="lessons-data.js"></script>
+<script>
+  /* Google Calendar embed: month view on wide screens, agenda (a list) on phones */
+  (function () {
+    const id = "c_6d22cbd2ae6fd284126cc19bd7c099314c847f952b6941bd46466f3e870a28a6%40group.calendar.google.com";
+    const mode = innerWidth < 640 ? "AGENDA" : "MONTH";
+    document.getElementById("gcal").src = `https://calendar.google.com/calendar/embed?src=${id}&ctz=Asia%2FJerusalem` +
+      `&mode=${mode}&showTitle=0&showPrint=0&showCalendars=0&showTz=0&wkst=1&color=%23D83474`;
+  })();
+</script>
 <script src="main.js"></script>
 <script>
 (async function () {
@@ -99,30 +116,6 @@
   }).join("");
   armReveal();
 
-  /* .ics download — all-day events, so no wrong hours */
-  document.getElementById("ics-btn").addEventListener("click", () => {
-    const pad = x => String(x).padStart(2, "0");
-    const dstr = d => d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate());
-    const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//AliceCode Level 4//EN", "CALSCALE:GREGORIAN"];
-    items.forEach((it, i) => {
-      if (it.approx) return;
-      const end = new Date((it.end || it.dt).getTime() + 86400000); // DTEND is exclusive
-      lines.push("BEGIN:VEVENT",
-        `UID:ac4-${i}@alicecode-level4-hub`,
-        `DTSTAMP:${dstr(new Date())}T000000Z`,
-        `DTSTART;VALUE=DATE:${dstr(it.dt)}`,
-        `DTEND;VALUE=DATE:${dstr(end)}`,
-        `SUMMARY:${(it.emoji + " AliceCode: " + it.title).replace(/,/g, "\\,")}`,
-        "END:VEVENT");
-    });
-    lines.push("END:VCALENDAR");
-    const blob = new Blob([lines.join("\r\n")], { type: "text/calendar" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "alicecode-level4.ics";
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
 })();
 </script>
 </body>
