@@ -67,7 +67,8 @@ function expand(ev, until) {
 }
 
 module.exports = async (req, res) => {
-  res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=3600");
+  /* the CDN answers at once from its copy, and refreshes it from Google in the background */
+  res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=604800");
   if (req.method !== "GET") { res.setHeader("Allow", "GET"); return res.status(405).json({ ok: false, error: "GET only" }); }
   try {
     const r = await fetch(FEED);

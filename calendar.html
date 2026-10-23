@@ -9,6 +9,10 @@
 <link rel="preload" href="assets/fonts/baloo2-latin-4a324d.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
+<script>
+  /* start loading the events right away, in parallel with the rest of the page */
+  window.CAL = fetch("api/calendar").then(r => r.json()).catch(() => null);
+</script>
 </head>
 <body>
 
@@ -72,40 +76,12 @@
     setTimeout(() => (copyBtn.textContent = "🔗 Copy link"), 2000);
   });
 
-  /* events come from Google Calendar (api/calendar.js) — edit them there, not here */
-  let events;
-  try {
-    const j = await (await fetch("api/calendar")).json();
-    if (!j.ok) throw new Error(j.error);
-    events = j.events;
-  } catch (e) {
-    document.getElementById("gc-title").textContent = "Couldn't load the calendar";
-    document.getElementById("cal").innerHTML = `<p class="white">Try again in a minute, or use “Add to Google Calendar” above.</p>`;
-    return;
-  }
   const kind = e => /no lesson/i.test(e.title) ? "k-off" : /lesson|class|שיעור/i.test(e.title) ? "k-lesson" : "k-event";
   const time = e => e.allDay ? "" : e.start.slice(11, 16) + "–" + e.end.slice(11, 16);
   const slides = e => (e.desc.match(/https?:\/\/\S*slides\.html\?n=\d/) || [])[0];
   const info = e => esc(e.desc.replace(/\n?Slides: \S+/, ""));
 
-  /* which events fall on each day (multi-day events on every day) */
-  const byDay = {};
-  events.forEach(e => {
-    for (let d = day(e.start); key(d) <= e.end.slice(0, 10); d.setDate(d.getDate() + 1))
-      (byDay[key(d)] = byDay[key(d)] || []).push(e);
-  });
-
-  /* "next up" pill in the hero */
-  const upcoming = events.filter(e => e.end.slice(0, 10) >= todayKey);
-  if (upcoming.length) {
-    const nx = upcoming[0], days = Math.round((day(nx.start) - day(todayKey)) / 86400000);
-    const el = document.getElementById("gc-next");
-    el.innerHTML = `⏭️ Next: <b>${esc(nx.title)}</b> · ${days <= 0 ? "today!" : days === 1 ? "tomorrow" : `in ${days} days`}`;
-    el.hidden = false;
-  }
-
-  /* ---------- month grid ---------- */
-  let view = new Date(); view.setDate(1);
+  let byDay = {}, view = new Date(); view.setDate(1);
   const grid = document.getElementById("gc-grid"), dayBox = document.getElementById("gc-day");
 
   function showDay(k) {
@@ -122,6 +98,7 @@
       : `<p class="muted">Nothing on this day.</p>`);
   }
 
+  /* ---------- month grid ---------- */
   function draw() {
     const y = view.getFullYear(), m = view.getMonth();
     document.getElementById("gc-title").textContent = `${MONTHS[m]} ${y}`;
@@ -144,32 +121,66 @@
   document.getElementById("gc-prev").onclick = () => { view.setMonth(view.getMonth() - 1); draw(); };
   document.getElementById("gc-next-m").onclick = () => { view.setMonth(view.getMonth() + 1); draw(); };
   document.getElementById("gc-today").onclick = () => { view = new Date(); view.setDate(1); draw(); showDay(todayKey); };
-  draw();
-
-  /* ---------- coming up, by month (past dates hidden) ---------- */
-  const groups = {};
-  upcoming.forEach(e => { const d = day(e.start), k = `${MONTHS[d.getMonth()]} ${d.getFullYear()}`; (groups[k] = groups[k] || []).push(e); });
-  document.getElementById("cal").innerHTML = Object.keys(groups).length ? Object.entries(groups).map(([mo, list]) => `
-    <section class="cal-month reveal">
-      <h2>${mo}</h2>
-      ${list.map(e => {
-        const a = day(e.start), b = day(e.end), multi = key(a) !== key(b);
-        const live = e.start.slice(0, 10) <= todayKey && todayKey <= e.end.slice(0, 10);
-        return `<button class="cal-ev ${kind(e)}${live ? " today" : ""}" data-k="${e.start.slice(0, 10)}">
-          <div class="d"><div class="dd">${multi ? `${a.getDate()}–${b.getDate()}` : a.getDate()}</div>
-            <div class="dw">${multi ? MONTHS[a.getMonth()].slice(0, 3) : DOW[a.getDay()]}</div></div>
-          <div><h3>${esc(e.title)}</h3>
-            <p>${[time(e) && "🕔 " + time(e), e.location && "📍 " + esc(e.location), info(e)].filter(Boolean).join(" · ")}</p></div>
-        </button>`;
-      }).join("")}
-    </section>`).join("") : `<p class="white">No dates yet. 😉</p>`;
   /* tap a date in the list → open that day in the month grid */
   document.getElementById("cal").addEventListener("click", e => {
     const b = e.target.closest(".cal-ev"); if (!b) return;
     const d = day(b.dataset.k); view = new Date(d.getFullYear(), d.getMonth(), 1); draw(); showDay(b.dataset.k);
     document.querySelector(".gc-card").scrollIntoView({ behavior: "smooth", block: "start" });
   });
-  armReveal();
+
+  /* draw everything for a list of events (runs again when fresh data arrives) */
+  function render(events) {
+    byDay = {};
+    events.forEach(e => {
+      for (let d = day(e.start); key(d) <= e.end.slice(0, 10); d.setDate(d.getDate() + 1))
+        (byDay[key(d)] = byDay[key(d)] || []).push(e);
+    });
+    const open = dayBox.hidden ? null : grid.querySelector(".gc-cell.sel");
+    draw();
+    if (open) showDay(open.dataset.k);
+
+    /* "next up" pill in the hero */
+    const upcoming = events.filter(e => e.end.slice(0, 10) >= todayKey);
+    const el = document.getElementById("gc-next");
+    if (upcoming.length) {
+      const nx = upcoming[0], days = Math.round((day(nx.start) - day(todayKey)) / 86400000);
+      el.innerHTML = `⏭️ Next: <b>${esc(nx.title)}</b> · ${days <= 0 ? "today!" : days === 1 ? "tomorrow" : `in ${days} days`}`;
+    }
+    el.hidden = !upcoming.length;
+
+    /* coming up, by month (past dates hidden) */
+    const groups = {};
+    upcoming.forEach(e => { const d = day(e.start), k = `${MONTHS[d.getMonth()]} ${d.getFullYear()}`; (groups[k] = groups[k] || []).push(e); });
+    document.getElementById("cal").innerHTML = Object.keys(groups).length ? Object.entries(groups).map(([mo, list]) => `
+      <section class="cal-month">
+        <h2>${mo}</h2>
+        ${list.map(e => {
+          const a = day(e.start), b = day(e.end), multi = key(a) !== key(b);
+          const live = e.start.slice(0, 10) <= todayKey && todayKey <= e.end.slice(0, 10);
+          return `<button class="cal-ev ${kind(e)}${live ? " today" : ""}" data-k="${e.start.slice(0, 10)}">
+            <div class="d"><div class="dd">${multi ? `${a.getDate()}–${b.getDate()}` : a.getDate()}</div>
+              <div class="dw">${multi ? MONTHS[a.getMonth()].slice(0, 3) : DOW[a.getDay()]}</div></div>
+            <div><h3>${esc(e.title)}</h3>
+              <p>${[time(e) && "🕔 " + time(e), e.location && "📍 " + esc(e.location), info(e)].filter(Boolean).join(" · ")}</p></div>
+          </button>`;
+        }).join("")}
+      </section>`).join("") : `<p class="white">No dates yet. 😉</p>`;
+  }
+
+  /* 1) draw at once: the grid, plus the events saved from the last visit
+     2) then the fresh events from Google Calendar (api/calendar.js) — edit dates there, not here */
+  const SAVE = "ac4-calendar";
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(SAVE)); } catch (e) {}
+  if (saved) render(saved); else draw();
+
+  const j = await window.CAL;
+  if (j && j.ok) {
+    try { localStorage.setItem(SAVE, JSON.stringify(j.events)); } catch (e) {}
+    if (JSON.stringify(j.events) !== JSON.stringify(saved)) render(j.events);
+  } else if (!saved) {
+    document.getElementById("cal").innerHTML = `<p class="white">Couldn't load the dates — try again in a minute, or use “Add to Google Calendar” above.</p>`;
+  }
 })();
 </script>
 </body>
