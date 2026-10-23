@@ -1,7 +1,10 @@
 /* AliceCode Level 4 — the class Google Calendar as JSON for calendar.html.
    GET /api/calendar → { ok, events: [{ title, desc, location, allDay, start, end }] }
    Reads the PUBLIC iCal feed (the calendar is public), so no login or secret is needed.
-   All-day: start/end are "YYYY-MM-DD" (end inclusive). Timed: Israel local time "YYYY-MM-DDTHH:MM". */
+   All-day: start/end are "YYYY-MM-DD" (end inclusive). Timed: Israel local time "YYYY-MM-DDTHH:MM".
+   ETag = fingerprint of the events: a browser that already has them gets "304 Not Modified" (no body). */
+
+const crypto = require("crypto");
 
 const FEED = "https://calendar.google.com/calendar/ical/" +
   "c_6d22cbd2ae6fd284126cc19bd7c099314c847f952b6941bd46466f3e870a28a6%40group.calendar.google.com/public/basic.ics";
@@ -68,7 +71,7 @@ function expand(ev, until) {
 
 module.exports = async (req, res) => {
   /* the CDN answers at once from its copy, and refreshes it from Google in the background */
-  res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=604800");
+  res.setHeader("Cache-Control", "s-maxage=600, stale-while-revalidate=604800");
   if (req.method !== "GET") { res.setHeader("Allow", "GET"); return res.status(405).json({ ok: false, error: "GET only" }); }
   try {
     const r = await fetch(FEED);
@@ -87,6 +90,9 @@ module.exports = async (req, res) => {
       }
     }
     events.sort((a, b) => a.start.localeCompare(b.start));
+    const etag = '"' + crypto.createHash("sha1").update(JSON.stringify(events)).digest("hex").slice(0, 16) + '"';
+    res.setHeader("ETag", etag);
+    if (req.headers && req.headers["if-none-match"] === etag) return res.status(304).end();
     return res.status(200).json({ ok: true, events });
   } catch (e) {
     return res.status(502).json({ ok: false, error: e.message });
