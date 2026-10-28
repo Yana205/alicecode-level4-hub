@@ -115,8 +115,14 @@ body {
 .card.slim p { font-size: .95rem; }
 .card.slim .btn.small { box-shadow: none; }
 .link-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+.kit-links { margin-top: 14px; padding-top: 12px; border-top: 1.5px dashed #EADCF2; }
+.kit-links h3 { margin: 0 0 8px; font-size: 1rem; }
+.card.slim > .kit-links:only-of-type, .card.slim h2 + .kit-links { margin-top: 0; padding-top: 0; border-top: 0; }
+.lr-ic { font-size: 1.25rem; line-height: 1; flex: 0 0 auto; }
+.link-row > span:last-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.lc-ic { margin-right: 6px; }
 .link-row {
-  display: flex; flex-direction: column; gap: 2px; padding: 9px 13px; border-radius: 12px;
+  display: flex; align-items: center; gap: 10px; padding: 9px 13px; border-radius: 12px;
   background: #FBF7FD; border: 1.5px solid transparent; text-decoration: none; transition: border-color .15s;
 }
 .link-row:hover { border-color: var(--pink-soft); }

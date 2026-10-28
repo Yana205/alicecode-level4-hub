@@ -241,7 +241,35 @@
   const labs = lesson.slides.map((s, i) => ({ s, i })).filter(({ s }) =>
     (s.kind === "lab" && typeof LAB_PRESETS !== "undefined" && LAB_PRESETS[n]) ||
     (s.kind === "demo" && typeof DEMOS !== "undefined" && DEMOS[s.demo]));
-  below.innerHTML = labs.length ? `
+  /* an emoji in front of each item, so it's easy to spot: the slide's own emoji, or one per website */
+  const EMOJI = /\p{Extended_Pictographic}(?:️|‍\p{Extended_Pictographic})*/u;
+  const labIcon = s => { const m = s.title.match(EMOJI); return {
+    icon: m ? m[0] : s.kind === "lab" ? "🧪" : "🎩", text: s.title.replace(EMOJI, "").replace(/\s{2,}/g, " ").trim() }; };
+  const SITE_ICON = [[/mongodb/, "🍃"], [/w3schools/, "📘"], [/pokeapi/, "⚡"], [/opencode/, "💻"], [/openai|tokenizer/, "🔢"],
+    [/promptingguide/, "💬"], [/github/, "🐙"], [/langchain/, "🦜"], [/tavily/, "🔎"], [/zod/, "💎"], [/youtube/, "▶️"]];
+  const linkIcon = url => (SITE_ICON.find(([re]) => re.test(url)) || [0, "🔗"])[1];
+  const links = `
+      <div class="kit-links">
+        ${labs.length ? `<h3>🔗 Links</h3>` : ""}
+        <div class="link-list">
+          ${lesson.tutorial.map(t => `
+            <a class="link-row" href="${t.url}" target="_blank" rel="noopener">
+              <span class="lr-ic">${linkIcon(t.url)}</span>
+              <span><span class="lr-t">${esc(t.label)}</span>
+              <span class="lr-u">${esc(t.url.replace(/^https?:\/\/(www\.)?/, "").split("/")[0])} ↗</span></span>
+            </a>`).join("")}
+        </div>
+      </div>`;
+
+  below.innerHTML = `
+    <div class="card slim reveal">
+      <h2>🎯 Today's goal</h2>
+      <p>${esc(lesson.goal)}</p>
+      <p style="margin-top:8px"><strong class="pink">You leave with:</strong> ${esc(lesson.leaves)}</p>
+      <button class="btn small" style="margin-top:14px" onclick="openFlowModal(${n})">📋 See today's flow</button>
+    </div>
+
+    ${labs.length ? `
     <div class="card slim reveal labs-card closed" id="labs">
       <div class="labs-top">
         <h2>🧪 Labs &amp; live demos <span class="labs-count">${labs.length}</span></h2>
@@ -260,30 +288,17 @@
         </div>
         <button class="labs-arrow" data-dir="1" aria-label="Next lab">›</button>
       </div>
-      <div class="labs-chips">${labs.map(({ s }, k) => `<button class="labs-chip" data-k="${k}">${k + 1} · ${esc(s.title)}</button>`).join("")}</div>
+      <div class="labs-chips">${labs.map(({ s }, k) => { const { icon, text } = labIcon(s);
+        return `<button class="labs-chip" data-k="${k}"><span class="lc-ic">${icon}</span>${esc(text)}</button>`; }).join("")}</div>
       <div class="labs-panels">${labs.map(({ s }, k) => `
         <div class="lab-panel k-${s.kind}" data-k="${k}">${s.kind === "lab" ? `<div class="lab-embed"></div>` : `<div class="demo-embed" data-demo="${esc(s.demo)}"></div>`}</div>`).join("")}
       </div>
-    </div>` : "";
-  below.innerHTML += `
-    <div class="card slim reveal">
-      <h2>🎯 Today's goal</h2>
-      <p>${esc(lesson.goal)}</p>
-      <p style="margin-top:8px"><strong class="pink">You leave with:</strong> ${esc(lesson.leaves)}</p>
-      <button class="btn small" style="margin-top:14px" onclick="openFlowModal(${n})">📋 See today's flow</button>
-    </div>
-
-
+      ${links}
+    </div>` : `
     <div class="card slim reveal">
       <h2>🔗 Links for today</h2>
-      <div class="link-list">
-        ${lesson.tutorial.map(t => `
-          <a class="link-row" href="${t.url}" target="_blank" rel="noopener">
-            <span class="lr-t">${esc(t.label)}</span>
-            <span class="lr-u">${esc(t.url.replace(/^https?:\/\/(www\.)?/, "").split("/")[0])} ↗</span>
-          </a>`).join("")}
-      </div>
-    </div>
+      ${links}
+    </div>`}
 
     <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:8px">
       ${lesson.n > 1 ? `<a class="btn ghost" href="slides.html?n=${lesson.n - 1}">← Lesson ${lesson.n - 1}</a>` : ""}
