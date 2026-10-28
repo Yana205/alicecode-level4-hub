@@ -273,7 +273,7 @@
       <p style="margin-top:8px"><strong class="pink">You leave with:</strong> ${esc(lesson.leaves)}</p>
     </div>
 
-    ${lesson.hideMissions ? "" : `
+    ${`
     <div class="card reveal">
       <h2>✅ Your missions</h2>
       <p class="muted" style="margin-bottom:10px">Tick them off as you go — the page remembers you. ✨</p>

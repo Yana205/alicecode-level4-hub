@@ -16,7 +16,6 @@ const LESSONS = [
 /* ================= LESSON 1 ================= */
 {
   n: 1, emoji: "🚀", title: "Back to Building",
-  hideMissions: true, // tasks are on the task slides + the Tasks page, not under the deck
   project: "P1 · Refresh: APIs + Databases",
   goal: "Warm up APIs, understand why apps need databases, and connect a real app to MongoDB.",
   leaves: "Mongo exercises done + an app that remembers, with YOUR document in the database.",
