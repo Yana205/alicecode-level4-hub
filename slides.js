@@ -48,6 +48,7 @@
     <p class="sub">${lesson.project}</p>
     <div style="margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap">
       <button class="btn small" id="flow-btn">📋 Today's flow</button>
+      <button class="btn small ghost" style="box-shadow:none" id="gal-btn">🔲 All slides</button>
       <button class="btn small dark" id="fs-btn">⛶ Fullscreen</button>
       <button class="btn small ghost" style="box-shadow:none" id="pptx-btn">⬇️ PowerPoint</button>
     </div>`;
@@ -179,11 +180,52 @@
     if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); go(cur + 1); }
     if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(cur - 1); }
     if (e.key === "f" || e.key === "F") toggleFS();
+    if ((e.key === "g" || e.key === "G") && !document.getElementById("gal-modal")) openGallery();
   });
   stage.addEventListener("click", e => {
     if (e.target.closest("a, .lab-embed, .demo-embed, button, textarea, input")) return;
     go(cur + 1);
   });
+
+  /* ---------- gallery: every slide as a small picture; tap one to jump there ---------- */
+  const label = s => s.title || (s.kind === "discuss" ? "💬 " + s.q : s.kind === "newword" ? "✨ " + s.term : "");
+  const thumbHTML = s => (s.kind === "demo" || s.kind === "lab") ? `
+      <h2 class="s-title">${esc(s.title)}</h2>
+      ${s.sub ? `<div class="s-lead">${esc(s.sub)}</div>` : ""}
+      <div class="gal-live">${s.kind === "lab" ? "🧪 Lab" : "🎩 Live demo"}</div>` : slideHTML(s);
+  function openGallery() {
+    const wrap = document.createElement("div");
+    wrap.id = "gal-modal";
+    wrap.className = "modal-backdrop";
+    wrap.innerHTML = `
+      <div class="modal gal-modal" role="dialog" aria-label="All slides">
+        <button class="modal-x" aria-label="Close">✕</button>
+        <h2>${lesson.emoji} Lesson ${lesson.n} — all ${lesson.slides.length} slides</h2>
+        <div class="gal-grid">${lesson.slides.map((s, i) => `
+          <div class="gal-item${i === cur ? " on" : ""}" data-i="${i}" role="button" tabindex="0" aria-label="Slide ${i + 1}">
+            <span class="gal-thumb"><span class="stage gal-stage"><span class="slide k-${s.kind} on">${thumbHTML(s)}</span></span></span>
+            <span class="gal-cap"><b>${i + 1}</b>${esc(label(s))}</span>
+          </div>`).join("")}
+        </div>
+      </div>`;
+    document.body.appendChild(wrap);
+    const fit = () => wrap.querySelectorAll(".gal-thumb").forEach(t => t.style.setProperty("--k", t.clientWidth / 1000));
+    fit(); addEventListener("resize", fit);
+    const close = () => { removeEventListener("resize", fit); document.removeEventListener("keydown", esck); wrap.remove(); };
+    function esck(e) {
+      if (e.key === "Escape") close();
+      const item = e.target.closest && e.target.closest(".gal-item");
+      if (item && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); item.click(); }
+    }
+    document.addEventListener("keydown", esck);
+    wrap.addEventListener("click", e => {
+      const item = e.target.closest(".gal-item");
+      if (item) { go(+item.dataset.i); close(); stageWrap.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
+      if (e.target === wrap || e.target.closest(".modal-x")) close();
+    });
+    const on = wrap.querySelector(".gal-item.on"); if (on) on.scrollIntoView({ block: "center" });
+  }
+  document.getElementById("gal-btn").addEventListener("click", openGallery);
 
   /* lab slides: init the playground inside the deck */
   stage.querySelectorAll(".slide.k-lab .lab-embed").forEach(el => {
