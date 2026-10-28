@@ -242,7 +242,7 @@
     (s.kind === "lab" && typeof LAB_PRESETS !== "undefined" && LAB_PRESETS[n]) ||
     (s.kind === "demo" && typeof DEMOS !== "undefined" && DEMOS[s.demo]));
   below.innerHTML = labs.length ? `
-    <div class="card reveal labs-card closed" id="labs">
+    <div class="card slim reveal labs-card closed" id="labs">
       <div class="labs-top">
         <h2>🧪 Labs &amp; live demos <span class="labs-count">${labs.length}</span></h2>
         <div class="labs-tools">
@@ -250,7 +250,7 @@
           <button class="btn small dark labs-close">✕ Close</button>
         </div>
       </div>
-      <p class="muted labs-hint">Click a lab to open it here — no need to find it in the slides.</p>
+      <p class="muted labs-hint">Tap one to open it here.</p>
       <div class="labs-nav">
         <button class="labs-arrow" data-dir="-1" aria-label="Previous lab">‹</button>
         <div class="labs-now">
@@ -266,7 +266,7 @@
       </div>
     </div>` : "";
   below.innerHTML += `
-    <div class="card reveal">
+    <div class="card slim reveal">
       <h2>🎯 Today's goal</h2>
       <p>${esc(lesson.goal)}</p>
       <p style="margin-top:8px"><strong class="pink">You leave with:</strong> ${esc(lesson.leaves)}</p>
@@ -274,15 +274,13 @@
     </div>
 
 
-    <div class="card reveal">
-      <h2>🔗 Tutorial links for today's steps</h2>
-      <p class="muted" style="margin-bottom:10px">Everything we touch today, one click away.</p>
-      <div class="res-grid">
+    <div class="card slim reveal">
+      <h2>🔗 Links for today</h2>
+      <div class="link-list">
         ${lesson.tutorial.map(t => `
-          <a class="res" href="${t.url}" target="_blank" rel="noopener">
-            <span class="r-kind">tutorial</span>
-            <h3>${esc(t.label)}</h3>
-            <span class="r-url">${esc(t.url.replace("https://", ""))} ↗</span>
+          <a class="link-row" href="${t.url}" target="_blank" rel="noopener">
+            <span class="lr-t">${esc(t.label)}</span>
+            <span class="lr-u">${esc(t.url.replace(/^https?:\/\/(www\.)?/, "").split("/")[0])} ↗</span>
           </a>`).join("")}
       </div>
     </div>
