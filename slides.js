@@ -237,7 +237,6 @@
   go(0);
 
   /* ---------- below the deck ---------- */
-  const flow = FLOWS[n];
   /* every lab + live demo in this deck, in slide order */
   const labs = lesson.slides.map((s, i) => ({ s, i })).filter(({ s }) =>
     (s.kind === "lab" && typeof LAB_PRESETS !== "undefined" && LAB_PRESETS[n]) ||
@@ -271,17 +270,9 @@
       <h2>🎯 Today's goal</h2>
       <p>${esc(lesson.goal)}</p>
       <p style="margin-top:8px"><strong class="pink">You leave with:</strong> ${esc(lesson.leaves)}</p>
+      <button class="btn small" style="margin-top:14px" onclick="openFlowModal(${n})">📋 See today's flow</button>
     </div>
 
-    ${`
-    <div class="card reveal">
-      <h2>✅ Your missions</h2>
-      <p class="muted" style="margin-bottom:10px">Tick them off as you go — the page remembers you. ✨</p>
-      <ul class="check-list" id="mission-list">
-        ${lesson.missions.map((m, i) => `
-          <li><input type="checkbox" id="l${lesson.n}-m${i}"><label for="l${lesson.n}-m${i}">${esc(m)}</label></li>`).join("")}
-      </ul>
-    </div>`}
 
     <div class="card reveal">
       <h2>🔗 Tutorial links for today's steps</h2>
@@ -303,8 +294,6 @@
                      : `<a class="btn dark" href="lessons.html#hackathon">🔥 The Hackathon</a>`}
     </div>`;
 
-  const missionList = document.getElementById("mission-list");
-  if (missionList) bindChecklist(missionList, `ac4-missions-l${lesson.n}`);
   if (labs.length) initLabs();
 
   /* ---------- labs carousel: ‹ › through every lab, built on first view ---------- */
