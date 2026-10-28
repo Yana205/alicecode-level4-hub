@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static("public"));
 
-let db = null;      // the class database (connects below if .env has MONGODB_URI)
+let db = null;      // your MongoDB database (connects below if .env has MONGODB_URI)
 let ideas = [];     // ❌ a plain variable — it forgets everything when the server stops
 
 /* ---------- save one idea ---------- */

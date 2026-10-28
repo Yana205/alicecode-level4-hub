@@ -5,7 +5,7 @@ Everything the lesson needs in one MongoDB Atlas cluster (free M0):
 | Collection | Used by | What's in it |
 |---|---|---|
 | `videos` | **Part 1 · Task** (read, filter, count, sort) | 30 ready-made TikTok videos — this folder's `videos.json` |
-| `ideas` | **Part 2 · Connect the wires** + "Find it in the vault" slide | what the girls save from the Idea Tracker |
+| `ideas` | **Part 2 · Watch: connect the wires** (teacher demo, optional) | what the Idea Tracker saves if you demo it on the class database |
 | `tasks` | "After: MongoDB remembers" slide | the live to-do demo |
 
 All in the database **`alicecode`**.
@@ -23,7 +23,7 @@ It logs you in, creates the project + free cluster, opens network access, makes 
 1. [cloud.mongodb.com](https://cloud.mongodb.com) → new project **AliceCode Level 4** → **Create cluster → M0 (free)**.
 2. **Database Access → Add user**:
    - `teacher` · role **Atlas admin** (for you and the hub).
-   - `student` · **Specific privileges → readWrite @ alicecode** (the one you share in class).
+   - `student` · **Specific privileges → readWrite @ alicecode** (the one the hub uses — only this database).
 3. **Network Access → Add IP → Allow access from anywhere** (`0.0.0.0/0`).
 4. **Connect → Drivers** → copy the `mongodb+srv://…` string. Make two copies: one with `teacher:PASSWORD`, one with `student:PASSWORD`.
 5. Here: `cp .env.example .env`, paste both strings, then:
@@ -34,9 +34,9 @@ It logs you in, creates the project + free cluster, opens network access, makes 
    ```
 
 ## Then connect everything
-- **The hub (live slides):** Vercel → *Settings → Environment Variables* → `MONGODB_URI` = the **student** string (it only needs `alicecode`) → *Redeploy*. The "MongoDB remembers" and "Find it in the vault" slides switch to 🟢 live.
+- **The hub (live slides):** Vercel → *Settings → Environment Variables* → `MONGODB_URI` = the **student** string (it only needs `alicecode`) → *Redeploy*. The "MongoDB remembers" and "Part 1 · Task" slides switch to 🟢 live.
 - **No terminal? Let the hub do setup + check:** open `https://alicecode-level4-hub.vercel.app/api/class-db` — it loads the 30 videos if they're missing and runs the same checks as `npm run check` (all `"ok": true` = ready). `?reset=1` reloads the videos.
-- **The girls:** in class, paste the **student** string into the **🔑 box** on the *Connect to the class database* slide (it stays in your browser only; every slide that needs it shows it). Part 1 happens on the website (no install, no Atlas account): the Part 1 slide asks the real database through `/api/videos`. They use the same string in their Idea Tracker `.env` for Part 2.
+- **The girls:** nothing to paste. Part 1 happens on the website (no install, no Atlas account): the Part 1 slide asks the real database through `/api/videos`. Part 2 is a teacher demo; at home they make their **own** free database (Idea Tracker README).
 
 ## Part 1 answers (teacher only)
 1. Total videos: **30**
@@ -44,6 +44,6 @@ It logs you in, creates the project + free cluster, opens network access, makes 
 3. More than 10,000 likes `{ "likes": { "$gt": 10000 } }`: **13**
 4. Most likes (sort `{ "likes": -1 }`): **"y2k outfit check"** by @tamar.style — 48,200 ❤️
 
-Someone deleted the videos? Run `npm run setup` again — it reloads them and keeps the girls' ideas.
+Someone deleted the videos? Run `npm run setup` again — it reloads them and keeps the ideas.
 
-> 🔒 The student password is safe to share in class, but don't put it in this repo or on the public site — anyone could write to the database.
+> 🔒 Keep both connection strings out of this repo and off the public site — anyone who has one can write to the database.

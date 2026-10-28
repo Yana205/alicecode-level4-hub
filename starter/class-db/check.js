@@ -24,7 +24,7 @@ async function main() {
   ok &= await step("read it back with find", async () => { if (!(await db.collection("ideas").findOne({ _id: id }))) throw new Error("not found"); });
   ok &= await step("clean up the test idea", async () => { await db.collection("ideas").deleteOne({ _id: id }); });
   await client.close();
-  console.log(ok ? "\n🎉 Ready for class — share STUDENT_URI with the girls." : "\n⚠️ Fix the ❌ lines above (user roles? Network Access 0.0.0.0/0?).");
+  console.log(ok ? "\n🎉 Ready for class — the student login works." : "\n⚠️ Fix the ❌ lines above (user roles? Network Access 0.0.0.0/0?).");
   process.exit(ok ? 0 : 1);
 }
 

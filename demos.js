@@ -42,54 +42,7 @@ function demoSort(list, s) {
   return k ? list.slice().sort((a, b) => (a[k] > b[k] ? 1 : a[k] < b[k] ? -1 : 0) * (dir < 0 ? -1 : 1)) : list;
 }
 
-/* the class database: the student connection string the teacher pastes on the class key slide.
-   Kept in this browser only (or CLASS_DB.studentUri in lessons-data.js, if you choose to publish it). */
-const CLASS_DB_KEY = "ac4-class-db";
-function classDbUri() {
-  if (typeof CLASS_DB !== "undefined" && CLASS_DB.studentUri) return CLASS_DB.studentUri;
-  try { return localStorage.getItem(CLASS_DB_KEY) || ""; } catch (e) { return ""; }
-}
-const classDbMasked = u => u.replace(/(\/\/[^:\/]+:)[^@]+@/, "$1••••••@");
-
 function demoOnShow(el, fn) { const s = el.closest(".slide, .lab-panel"); if (s) s.addEventListener("slide-on", fn); }
-
-/* 🔑 the student connection string box: the teacher pastes it once, the girls copy it.
-   Shows the user + password under it; every box redraws when its slide is shown. */
-function classDbBox(uriEl) {
-  const credOf = u => { const m = u.match(/\/\/([^:\/]+):([^@]+)@/); return m ? { user: decodeURIComponent(m[1]), pw: decodeURIComponent(m[2]) } : null; };
-  let shown = false;
-  function draw(editing) {
-    const uri = classDbUri(), fixed = typeof CLASS_DB !== "undefined" && CLASS_DB.studentUri, cred = uri && credOf(uri);
-    if (uri && !editing) {
-      uriEl.innerHTML = `<code class="cdb-val">${demoEsc(shown ? uri : classDbMasked(uri))}</code>
-        <button class="cdb-btn" data-a="show" title="Show / hide the password">👁</button>
-        <button class="cdb-btn" data-a="copy">📋 copy</button>
-        ${fixed ? "" : `<button class="cdb-btn" data-a="edit" title="Change">✎</button>`}
-        ${cred ? `<span class="cdb-cred">👤 <b>${demoEsc(cred.user)}</b> · 🔒 <code>${demoEsc(shown ? cred.pw : "••••••")}</code></span>` : ""}`;
-    } else {
-      uriEl.innerHTML = `<input class="cdb-in" placeholder="Teacher: paste the student connection string" spellcheck="false" value="${demoEsc(uri)}">
-        <button class="cdb-btn" data-a="save">Save</button>`;
-    }
-    uriEl.insertAdjacentHTML("beforeend", `<small class="cdb-note">${fixed ? "Set in lessons-data.js" : "Saved in this browser only — never on the website."}</small>`);
-  }
-  uriEl.addEventListener("click", async e => {
-    const a = e.target.dataset && e.target.dataset.a; if (!a) return;
-    if (a === "save") {
-      const v = uriEl.querySelector(".cdb-in").value.trim();
-      try { v ? localStorage.setItem(CLASS_DB_KEY, v) : localStorage.removeItem(CLASS_DB_KEY); } catch (err) {}
-      draw();
-    }
-    if (a === "edit") draw(true);
-    if (a === "show") { shown = !shown; draw(); }
-    if (a === "copy") {
-      try { await navigator.clipboard.writeText(classDbUri()); e.target.textContent = "✅ copied"; } catch (err) { e.target.textContent = "select + copy"; }
-      setTimeout(() => { e.target.textContent = "📋 copy"; }, 1500);
-    }
-  });
-  uriEl.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.classList.contains("cdb-in")) uriEl.querySelector('[data-a="save"]').click(); });
-  demoOnShow(uriEl, () => { shown = false; draw(); });
-  draw();
-}
 
 const DEMOS = {};
 
@@ -441,7 +394,7 @@ DEMOS.toolsOfTrade = function (el) {
 };
 
 /* ============================================================
-   D+ · The live database exercise — 3 steps + an animated "expected result"
+   D+ · Watch: connect the wires — teacher demo, 3 steps + an animated "expected result"
    ============================================================ */
 DEMOS.dbExercise = function (el) {
   const REPO = "Yana205/alicecode-level4-hub";
@@ -454,8 +407,8 @@ cd idea-tracker
 npm install`)}
         <p class="ex-small">No Node.js? <a href="https://codespaces.new/${REPO}" target="_blank" rel="noopener">Open in GitHub Codespaces ↗</a> → <code>cd starter/idea-tracker</code></p>` },
     { h: "🔌 2 · Add code", body: `
-        <p>Make a <code>.env</code> file with the class string (your teacher has it):</p>
-        ${code(`MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher shows it on the class key slide)"}`, ".env")}
+        <p>Make a <code>.env</code> file with the <b>secret key</b> (never on GitHub 🔒):</p>
+        ${code(`MONGODB_URI=mongodb+srv://maya:••••••@cluster0…/alicecode`, ".env")}
         <p>In <code>server.js</code>, swap the 🎯 lines for:</p>
         ${code(`await db.collection("ideas").insertOne(idea);`, "STEP 2a")}
         ${code(`const all = await db.collection("ideas")
@@ -524,103 +477,85 @@ npm install`)}
   }
   el.querySelector(".ex-replay").addEventListener("click", play);
   demoOnShow(el, play);
-  /* the .env line picks up the class string the teacher pasted on the class key slide */
-  const envPre = [...el.querySelectorAll(".ex-file")].find(x => x.textContent === ".env").nextElementSibling;
-  demoOnShow(el, () => { envPre.textContent = `MONGODB_URI=${classDbUri() || "mongodb+srv://… (your teacher shows it on the class key slide)"}`; });
 };
 
 /* ============================================================
-   D++ · Verifying in the vault — find YOUR document with a filter
+   🔒 Your key is a secret — the parts of a connection string + key in code vs. key in .env
    ============================================================ */
-DEMOS.vaultFind = function (el) {
-  const now = Date.now();
-  const SAMPLE = [
-    ["Noa", "Day in my life as a coder 💻"], ["Lia", "3 study tips that actually work"], ["Maya", "POV: your mom's 2003 closet is back"],
-    ["Tamar", "Cat reacts to my dance 🐱"], ["Shira", "Pasta hack in 30 seconds"], ["Yael", "Rating every y2k trend"]
-  ].map(([name, idea], i) => ({ _id: (Math.floor(now / 1000) - i * 97).toString(16) + "a1c0de" + String(i).padStart(10, "0"), name, idea, createdAt: new Date(now - i * 97000).toISOString() }));
-
-  el.innerHTML = `
-    <div class="vf">
-      <ol class="vf-steps">
-        <li>The vault on the right is <b>alicecode › ideas</b> — everyone's ideas, live</li>
-        <li>On your laptop: same slide, or 🧪 <b>Labs</b> under the slides</li>
-        <li>Filter: <code>{ "name": "YourName" }</code> → <b>Apply</b></li>
-        <li>📸 Screenshot <b>your</b> document — proof it's in the vault!</li>
-      </ol>
-      <div class="vf-atlas">
-        <div class="vf-top">🍃 <b>MongoDB Atlas</b> <span>alicecode › <b>ideas</b></span> <i class="vf-mode"></i></div>
-        <div class="vf-bar">
-          <span class="vf-label">Filter</span>
-          <input class="vf-input" placeholder="{ field: 'value' }" spellcheck="false" aria-label="Filter">
-          <button class="vf-apply">Apply</button><button class="vf-reset">Reset</button>
-        </div>
-        <div class="vf-msg"></div>
-        <div class="vf-docs"></div>
-      </div>
-    </div>`;
-
-  const input = el.querySelector(".vf-input"), docsEl = el.querySelector(".vf-docs"), msg = el.querySelector(".vf-msg");
-  let docs = SAMPLE;
-
-  function draw(list, hit) {
-    msg.innerHTML = `QUERY RESULTS: <b>${list.length ? `1-${list.length} OF ${list.length}` : "0"}</b>`;
-    docsEl.innerHTML = list.map(d => `
-      <div class="vf-doc${hit ? " hit" : ""}">
-        <div><span class="at-k">_id</span>: <span class="at-oid">ObjectId('${demoEsc(String(d._id))}')</span></div>
-        <div><span class="at-k">name</span>: <span class="at-s">"${demoEsc(d.name)}"</span></div>
-        <div><span class="at-k">idea</span>: <span class="at-s">"${demoEsc(d.idea)}"</span></div>
-        <div><span class="at-k">createdAt</span>: <span class="at-d">${demoEsc(String(d.createdAt).replace(/\.\d+Z$/, "Z"))}</span></div>
-      </div>`).join("") || `<div class="vf-none">No documents match this filter.</div>`;
-  }
-  function apply() {
-    let q;
-    try { q = demoParseQuery(input.value); } catch (e) { msg.innerHTML = `<b class="bad">🤔 That filter isn't valid — check the { } and the quotes.</b>`; docsEl.innerHTML = ""; return; }
-    const match = (d, ci) => demoMatch(d, q, ci);
-    const list = docs.filter(d => match(d, false));
-    draw(list, Object.keys(q).length > 0 && list.length > 0);
-    if (!list.length && docs.some(d => match(d, true))) msg.innerHTML += ` · <b class="bad">MongoDB is case-sensitive — check capital letters!</b>`;
-    if (Object.keys(q).length && list.length) {
-      if (typeof labSparkle === "function") labSparkle(el, docsEl, 12);
+DEMOS.secretKey = function (el) {
+  const PARTS = [
+    { t: "mongodb+srv://", c: "proto", h: "🔌 How to talk", d: "Says: “this is a MongoDB address”." },
+    { t: "maya", c: "user", h: "👤 Who", d: "The database user that logs in." },
+    { t: ":" },
+    { t: "S3cr3t-Pa55", c: "pw", h: "🔑 The secret", d: "The password. Whoever has it gets in — like your Instagram password." },
+    { t: "@" },
+    { t: "cluster0.ab12c.mongodb.net", c: "host", h: "📍 Where", d: "The address of your database in the cloud." },
+    { t: "/alicecode", c: "db", h: "📁 Which", d: "The database inside it." }
+  ];
+  const MODES = {
+    bad: {
+      btn: "❌ Key in server.js",
+      code: `<span class="c-kw">const</span> uri = <span class="c-str">"mongodb+srv://maya:<b class="sk-leak">S3cr3t-Pa55</b>@cluster0…"</span>;`,
+      gh: `<div class="sk-ghf">📄 server.js</div><code>const uri = "mongodb+srv://maya:<b class="sk-leak">S3cr3t-Pa55</b>@…"</code>`,
+      verdict: "🚨 Public! Bots search GitHub for keys all day. They can read, change or DELETE all your data."
+    },
+    good: {
+      btn: "✅ Key in .env",
+      code: `<span class="sk-file">.env</span>MONGODB_URI=mongodb+srv://maya:<b class="sk-safe">S3cr3t-Pa55</b>@…
+<span class="sk-file">.gitignore</span><b class="sk-safe">.env</b>
+<span class="sk-file">server.js</span><span class="c-kw">const</span> uri = process.env.<b class="sk-safe">MONGODB_URI</b>;`,
+      gh: `<div class="sk-ghf">📄 server.js</div><code>const uri = process.env.MONGODB_URI;</code><div class="sk-ghf sk-skip">🚫 .env — not uploaded (it's in .gitignore)</div>`,
+      verdict: "✅ Safe! The password never leaves your laptop."
     }
-  }
-  el.querySelector(".vf-apply").addEventListener("click", apply);
-  input.addEventListener("keydown", e => { if (e.key === "Enter") apply(); });
-  el.querySelector(".vf-reset").addEventListener("click", () => { input.value = ""; draw(docs); });
-
-  /* the real class collection when the hub has MONGODB_URI, otherwise sample documents.
-     Reloads each time the slide is shown, so new ideas from Part 2 appear. */
-  function load() {
-    fetch("api/ideas", { cache: "no-store" })
-      .then(r => r.ok && (r.headers.get("content-type") || "").includes("json") ? r.json() : null)
-      .catch(() => null)
-      .then(j => {
-        const live = !!(j && j.ok);
-        if (live) docs = j.docs;
-        el.querySelector(".vf-mode").textContent = live ? "🟢 live" : "🟡 sample data";
-        if (input.value.trim()) apply(); else draw(docs);
-      });
-  }
-  demoOnShow(el, load);
-  load();
-};
-
-/* ============================================================
-   The class key — 3 steps + the 🔑 box (Part 2)
-   ============================================================ */
-DEMOS.classDbConnect = function (el) {
+  };
   el.innerHTML = `
-    <div class="cc">
-      <ol class="cc-steps">
-        <li>📋 Copy the key below</li>
-        <li>🔧 Paste it in your <code>.env</code>: <code>MONGODB_URI=…</code></li>
-        <li>🔒 Never put it on GitHub</li>
-      </ol>
-      <div class="cdb">
-        <div class="cdb-head">🔑 Class database <span>database <b>alicecode</b></span></div>
-        <div class="cdb-uri"></div>
+    <div class="sk">
+      <div class="sk-key">
+        <div class="sk-uri">${PARTS.map((p, i) => p.c ? `<button class="sk-part sk-${p.c}" data-i="${i}">${demoEsc(p.t)}</button>` : `<span>${p.t}</span>`).join("")}</div>
+        <div class="sk-what"><b>👆 Click a part of the key</b> — it's called a <b>connection string</b>.</div>
+      </div>
+      <div class="sk-row">
+        <div class="sk-laptop">
+          <div class="sk-modes">${Object.entries(MODES).map(([k, m]) => `<button class="sk-mode" data-m="${k}">${m.btn}</button>`).join("")}</div>
+          <div class="sk-head">💻 Your laptop</div>
+          <pre class="sk-code"></pre>
+          <div class="sk-push">⬆️ git push</div>
+        </div>
+        <div class="sk-gh">
+          <div class="sk-head">🌍 GitHub · public · everyone can see</div>
+          <div class="sk-ghbody"></div>
+          <div class="sk-verdict"></div>
+        </div>
+      </div>
+      <div class="sk-locks">
+        <span>👤 A user that can only touch <b>ONE</b> database</span>
+        <span>🌐 <b>Network Access</b> = who may knock</span>
+        <span>🔁 Leaked? <b>Change the password</b> right away</span>
       </div>
     </div>`;
-  classDbBox(el.querySelector(".cdb-uri"));
+
+  const what = el.querySelector(".sk-what"), sk = el.querySelector(".sk");
+  el.querySelectorAll(".sk-part").forEach(b => b.addEventListener("click", () => {
+    const p = PARTS[+b.dataset.i];
+    el.querySelectorAll(".sk-part").forEach(x => x.classList.toggle("on", x === b));
+    what.innerHTML = `<b>${p.h}</b> ${p.d}`;
+  }));
+  function mode(k) {
+    const m = MODES[k];
+    sk.dataset.mode = k;
+    el.querySelectorAll(".sk-mode").forEach(b => b.classList.toggle("on", b.dataset.m === k));
+    el.querySelector(".sk-code").innerHTML = m.code;
+    el.querySelector(".sk-ghbody").innerHTML = m.gh;
+    el.querySelector(".sk-verdict").textContent = m.verdict;
+    if (k === "good" && typeof labSparkle === "function") labSparkle(el, el.querySelector(".sk-verdict"), 12);
+  }
+  el.querySelectorAll(".sk-mode").forEach(b => b.addEventListener("click", () => mode(b.dataset.m)));
+  demoOnShow(el, () => {
+    mode("bad");
+    el.querySelectorAll(".sk-part").forEach(x => x.classList.remove("on"));
+    what.innerHTML = `<b>👆 Click a part of the key</b> — it's called a <b>connection string</b>.`;
+  });
+  mode("bad");
 };
 
 /* ============================================================

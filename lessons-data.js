@@ -7,10 +7,6 @@
 
 const NIR_TUTORIAL = "https://github.com/nirkaufman/refernce-project-js/tree/main/tutorial";
 
-/* The class database login shown on the "class key" slide. Leave empty and the teacher pastes it in class
-   (saved only in that browser). Anything written here is PUBLIC on the website and on GitHub. */
-const CLASS_DB = { studentUri: "" };
-
 const LESSONS = [
 
 /* ================= LESSON 1 ================= */
@@ -18,9 +14,11 @@ const LESSONS = [
   n: 1, emoji: "🚀", title: "Back to Building",
   project: "P1 · Refresh: APIs + Databases",
   goal: "Warm up APIs, understand why apps need databases, and connect a real app to MongoDB.",
-  leaves: "Mongo exercises done + an app that remembers, with YOUR document in the database.",
+  leaves: "Mongo exercises done + you know how an app connects to MongoDB, and why its key stays secret.",
   tutorial: [
     { label: "MongoDB basics — short and friendly", url: "https://www.mongodb.com/basics" },
+    { label: "Try it yourself: the Idea Tracker guide", url: "https://github.com/Yana205/alicecode-level4-hub/tree/main/starter/idea-tracker" },
+    { label: "Video: MongoDB & Node.js — connecting (MongoDB on YouTube)", url: "https://www.youtube.com/watch?v=fbYExfeFsI0" },
     { label: "JSON intro on W3Schools", url: "https://www.w3schools.com/js/js_json_intro.asp" },
     { label: "Play with a real API: PokeAPI", url: "https://pokeapi.co" }
   ],
@@ -28,9 +26,9 @@ const LESSONS = [
     "Prompt practice: ask an AI for one small change using at least 3 words from the keyword bank (flexbox, hover, id…).",
     "Open the ready-made Mongo database (alicecode › videos) and finish the 4 small exercises: read, filter, count, sort.",
     "Find: which video has the most likes?",
-    "Connect the Idea Tracker to MongoDB: add an idea, restart the server — it's still there.",
-    "Find YOUR document in the vault with a filter. 🔍",
-    "⭐ Bonus: create your own collection, insert 3 documents with unique ids, find them with a query.",
+    "Watch the teacher connect the Idea Tracker to MongoDB: add an idea, restart the server — it's still there.",
+    "Explain in one sentence: why does the MongoDB key live in .env and never on GitHub? 🔒",
+    "🏠 Try it yourself (optional): follow the Idea Tracker guide with your own free MongoDB database.",
     "📸 Screenshot your before + after for the portfolio."
   ],
   slides: [
@@ -43,7 +41,7 @@ const LESSONS = [
         "🚀 This year + your superpower",
         "🌐 Part 1 · APIs + databases",
         "☕ Break · 30 min",
-        "🔌 Part 2 · your app + MongoDB",
+        "🔌 Part 2 · how apps connect to MongoDB",
         "🗣️ Explain to me · last 15 min"
       ]},
       { note: "💬 A \"Let's talk\" slide? You answer FIRST!" }
@@ -167,42 +165,42 @@ const LESSONS = [
     { kind: "section", title: "Break ☕", sub: "30 minutes — you earned it" },
     { kind: "discuss", q: "The app that forgot everything: what does it need?",
       hints: ["Save it where?", "Read it back how?"] },
-    { kind: "demo", demo: "classDbConnect", title: "🔑 The class key",
-      sub: "Your app needs it to open the class database.",
-      offline: [
-        "1 · Copy the class key (the teacher shows it on the live slide)",
-        "2 · Paste it in your .env: MONGODB_URI=…",
-        "3 · Never put it on GitHub 🔒"
-      ] },
-    { kind: "demo", demo: "dbExercise", title: "Part 2 · Connect the wires 🔌",
-      sub: "Your app forgets on restart. 3 steps → it remembers.",
+    { kind: "demo", demo: "dbExercise", title: "Watch: connect the wires 🔌",
+      sub: "Teacher demo. An app that forgets → 3 steps → it remembers.",
       offline: [
         "1 · Clone: npx degit Yana205/alicecode-level4-hub/starter/idea-tracker idea-tracker → cd idea-tracker → npm install",
-        "2 · Add code: .env → MONGODB_URI=… (from your teacher)",
+        "2 · Add code: .env → MONGODB_URI=… (the secret key)",
         "   server.js → await db.collection(\"ideas\").insertOne(idea);",
         "   server.js → const all = await db.collection(\"ideas\").find().sort({ createdAt: -1 }).toArray();",
         "3 · Test: npm start → add an idea → Ctrl+C → npm start → refresh. Still there? 🎉"
       ] },
-    { kind: "demo", demo: "vaultFind", title: "Find it in the vault 🔍",
-      sub: "Find YOUR idea. 📸 Screenshot = proof!",
+    { kind: "discuss", q: "Your app has a key to the database. What if a stranger finds it? 😬",
+      hints: ["Can they read your data?", "Can they DELETE it?"] },
+    { kind: "demo", demo: "secretKey", title: "Your key is a secret 🔒",
+      sub: "Click the parts of the key. Then: key in the code vs. key in .env.",
       offline: [
-        "1 · The vault on this slide = alicecode › ideas, live",
-        "2 · On your laptop: same slide, or 🧪 Labs under the slides",
-        "3 · Filter: { \"name\": \"YourName\" } → Apply",
-        "4 · 📸 Screenshot your document — proof it's in the vault!"
+        "The key (connection string): mongodb+srv://maya:S3cr3t-Pa55@cluster0.ab12c.mongodb.net/alicecode",
+        "user = WHO logs in · password = the secret · cluster = WHERE the database lives · /alicecode = WHICH database",
+        "❌ Key inside server.js → pushed to GitHub → anyone can read, change or DELETE your data.",
+        "✅ Key in .env + .env in .gitignore → server.js only says process.env.MONGODB_URI → GitHub never sees the password.",
+        "Atlas locks: a user that can only touch ONE database · Network Access · leaked? change the password right away."
       ] },
-    { kind: "content", title: "Bonus ⭐ Your own collection 🔧",
-      lead: "Finished early?", items: [
-      { lines: [
-        "A NEW collection — any topic you love.",
-        "Plan the fields. Give each one a unique id.",
-        "Insert 3 documents. Find them with a query."
-      ]}
+    { kind: "content", title: "Try it yourself 🏠",
+      lead: "Want YOUR app to remember? Make your own free database. Not homework!", items: [
+      { links: [
+        { h: "1 · 🎬 Watch", url: "https://www.youtube.com/watch?v=fbYExfeFsI0", color: "orange",
+          text: "MongoDB on YouTube: connect a Node.js app to Atlas, step by step." },
+        { h: "2 · 📖 Read", url: "https://www.mongodb.com/docs/get-started/", color: "green",
+          text: "Make your free Atlas database: account, cluster, user, connection string." },
+        { h: "3 · 🛠️ Build", url: "https://github.com/Yana205/alicecode-level4-hub/tree/main/starter/idea-tracker",
+          text: "Our Idea Tracker guide: clone, paste YOUR key in .env, add 2 lines. Done." }
+      ]},
+      { note: "Stuck? Bring a screenshot next lesson. We fix it together. 💜" }
     ]},
     { kind: "content", title: "Explain to me 🗣️",
       lead: "Last 15 minutes.", items: [
       { lines: [
-        "Pick a word: API · JSON · collection · unique id.",
+        "Pick a word: API · JSON · collection · .env",
         "Explain it in 2 sentences.",
         "Show your screenshots."
       ]}
@@ -218,7 +216,9 @@ const LESSONS = [
         ["MongoDB", "the database we use this year"],
         ["collection", "a folder of documents in MongoDB"],
         ["document", "one row of data — looks like JSON"],
-        ["unique id", "a number/name no other row has"]
+        ["unique id", "a number/name no other row has"],
+        ["connection string", "the key + address an app uses to open a database"],
+        [".env", "a secret file for keys — never on GitHub"]
       ]}
     ]},
     { kind: "content", title: "The Builder's Toolkit (Resources) 🚀",
@@ -282,7 +282,7 @@ const LESSONS = [
       { lines: [
         "We warmed up APIs: GET, JSON.",
         "We saw why apps need databases.",
-        "You built your own Mongo collection. 💪"
+        "You saw an app connect to MongoDB — and kept its key secret. 🔒"
       ]}
     ]},
     { kind: "discuss", q: "Can an AI write code for you? Then who is the boss?",
@@ -1175,16 +1175,19 @@ const FLOWS = {
         { k: "talk", text: "30 videos. Which has the most likes — without scrolling?" },
         { k: "do", text: "On their laptops: this site → Lesson 1 → 🧪 Labs → Part 1. 4 exercises + 📸 screenshot." } ] },
       { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "25", steps: [] },
-      { t: "2:00", icon: "🔑", name: "The class key", min: 5, slides: "26–27", steps: [
+      { t: "2:00", icon: "🔌", name: "Watch: connect", min: 15, slides: "26–27", steps: [
         { k: "talk", text: "The app that forgot everything — what does it need?" },
-        { k: "show", text: "The key slide: copy it into .env. Never on GitHub. 🔒" } ] },
-      { t: "2:05", icon: "🔌", name: "Part 2 · build", min: 30, slides: "28, 30", steps: [
-        { k: "do", text: "Clone → add code → test: add an idea, restart — still there? 🎉" },
-        { k: "do", text: "Done early → Bonus: their own collection (slide 30)." } ] },
-      { t: "2:35", icon: "🔍", name: "Find it in the vault", min: 10, slides: "29", steps: [
-        { k: "do", text: "Each student finds HER idea with a filter + 📸 screenshot." } ] },
+        { k: "demo", concept: "Connecting", before: "Idea Tracker: restart → ideas gone", after: "3 steps → restart → still there" },
+        { k: "show", text: "You do it live on your laptop (your own key in .env). They watch — no install today." } ] },
+      { t: "2:15", icon: "🔒", name: "Your key is a secret", min: 15, slides: "28–29", steps: [
+        { k: "talk", text: "Your app has a key to the database. What if a stranger finds it?" },
+        { k: "demo", concept: "Secrets", before: "Key in server.js → on GitHub for everyone", after: "Key in .env + .gitignore → GitHub never sees it" },
+        { k: "talk", text: "Click each part of the key: who · password · where · which database." } ] },
+      { t: "2:30", icon: "🏠", name: "Try it yourself", min: 15, slides: "30", steps: [
+        { k: "show", text: "Video + article + our Idea Tracker guide. Optional, at home. Stuck → bring a screenshot." },
+        { k: "do", text: "Time left? Fast ones start the guide now: Atlas account + free cluster." } ] },
       { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "31–34", steps: [
-        { k: "do", text: "Pick a word (API · JSON · collection · unique id), explain it in 2 sentences, show screenshots." },
+        { k: "do", text: "Pick a word (API · JSON · collection · .env), explain it in 2 sentences, show screenshots." },
         { k: "show", text: "Glossary, toolkit, next time." } ] }
     ]
   },

@@ -101,12 +101,21 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 | **Databases** | 17 💬 How does Instagram remember you? · 18 Variables forget · 19 NEW WORD MongoDB · 20 MongoDB remembers · 21 💬 What do you save about each video? · 22 A good table |
 | **Part 1** | 23 💬 Most likes, without scrolling? · 24 Part 1 task (on the website, live database) |
 | **Break** | 25 ☕ |
-| **Part 2** | 26 💬 What does the app need? · 27 🔑 The class key · 28 Connect the wires · 29 Find it in the vault · 30 Bonus |
+| **Part 2** | 26 💬 What does the app need? · 27 Watch: connect the wires (teacher demo) · 28 💬 What if a stranger finds the key? · 29 Your key is a secret 🔒 · 30 Try it yourself 🏠 |
 | **Wrap-up** | 31 Explain to me · 32 Glossary · 33 Toolkit · 34 Next time |
 
 What the final review removed (49 → 34): "This year" (same message as the race demo), "Same wish, two prompts" (the Lab shows it live), "Locked door" (the refresh + live fetch already say it), "Why a database?" (a recap of the two demos), "What we learned" (the glossary says it), both "Proof time" slides (📸 is now on the task slides), and 7 extra 💬 slides — one talk per topic.
 
 20. **Less is more.** One idea per slide, one talk per topic, no recap slide that repeats the slide before it. If a slide's words fit in the instructor's mouth, cut them from the slide.
+
+**Part 2 went from practice to demo.** The hands-on part (class key → clone → connect → find it in the vault → bonus) was too heavy for the end of a 3-hour lesson. Now the teacher connects the Idea Tracker live, one slide explains why the key is a secret, and the last Part 2 slide is a "Try it yourself" page: a video, an article and the Idea Tracker README, where each girl makes her **own** free Atlas database. The class connection string is no longer shown on a slide.
+
+| Slide | What it adds |
+|---|---|
+| **29 · Your key is a secret 🔒** (new) | The connection string split into colored parts: click one to see what it is (who · the password · where · which database). Below: **❌ Key in server.js** → GitHub shows the password in red + "anyone can read, change or DELETE your data", vs. **✅ Key in .env** → `.gitignore` keeps `.env` off GitHub, `server.js` only says `process.env.MONGODB_URI` (sparkle). Three Atlas locks underneath. |
+| **30 · Try it yourself 🏠** (new) | 🎬 Watch (MongoDB's own YouTube video) · 📖 Read (Atlas get started) · 🛠️ Build (the Idea Tracker README, now written for your own free database + a "keep your key secret" section). |
+
+21. **Heavy setup = demo + take-home.** When a hands-on step needs accounts, installs or secrets, show it live and give a "Try it yourself" slide with a video, an article and the starter README.
 
 ### Earlier: the second reorder (48 slides)
 
