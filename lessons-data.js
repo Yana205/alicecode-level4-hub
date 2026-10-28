@@ -1136,25 +1136,13 @@ const MEMES = [
 ];
 
 /* ============================================================
-   FLOW — the AliceCode lesson structure, per lesson.
-   Same 7 beats every week: tease → game → material → discussion
-   → demo → easy exercises → project building blocks.
+   FLOWS — "Today's flow" for the instructor: a 3-hour timeline per lesson.
+   Each block: start time · name · minutes · slides · steps. Break at 1:30.
+   Step kinds: talk = 💬 they answer first · demo = 🎩 live demo (concept + before → after)
+               do = ✋ students work · show = 📽️ you show / explain · glimpse = 👀 a peek ahead
    ============================================================ */
 
-const FLOW_STAGES = [
-  { key: "tease",      icon: "👀", name: "Spoiler of today",  min: 5  },
-  { key: "game",       icon: "🎮", name: "Social game",       min: 15 },
-  { key: "material",   icon: "📚", name: "Material",          min: 15 },
-  { key: "discussion", icon: "💬", name: "Discussion",        min: 5  },
-  { key: "demo",       icon: "🎩", name: "Demo",              min: 10 },
-  { key: "exercises",  icon: "✏️", name: "Prove it (easy!)",  min: 15 },
-  { key: "building",   icon: "🧱", name: "Build the project", min: 25 }
-];
-
 const FLOWS = {
-  /* Lesson 1: a minute-by-minute timeline for the instructor (instead of the 7 stages).
-     Step kinds: talk = 💬 they answer first · demo = 🎩 live demo (concept + before → after)
-                 do = ✋ students work · show = 📽️ you show / explain · glimpse = 👀 a peek ahead */
   1: {
     timeline: [
       { t: "0:00", icon: "👋", name: "Welcome", min: 5, slides: "1–2", steps: [
@@ -1200,84 +1188,149 @@ const FLOWS = {
     ]
   },
   2: {
-    tease: "An AI solves YOUR exercise from last year — in seconds. Then you stop copy-pasting and become its boss.",
-    game: { name: "Gartic Phone", url: "https://garticphone.com",
-      note: "Broken telephone with drawings — exactly what happens when an AI loses context. 😉" },
-    material: "Slides: what LLMs can and can't do · tokens · context window · system prompt.",
-    discussion: "In the game — what got lost along the chain? The same thing happens in a long AI chat. Why?",
-    demo: "Fix a planted bug live, just by chatting with Gemini. No typing code.",
-    exercises: "Paste one old exercise into the LLM. Check its answer. Catch one thing it got wrong or didn't test.",
-    building: "Install opencode, open last year's big project, ask it \"What does this project do?\" — then hunt the hidden bug.",
-    sources: [
-      { label: "opencode docs", url: "https://opencode.ai/docs" },
-      { label: "See tokens live (tokenizer)", url: "https://platform.openai.com/tokenizer" },
-      { label: "Prompting guide", url: "https://www.promptingguide.ai" }
-    ],
-    start: "Start with the Setup page of this site — install takes ~10 minutes."
+    timeline: [
+      { t: "0:00", icon: "👋", name: "Welcome", min: 5, slides: "1–2", steps: [
+        { k: "show", text: "Last time: APIs, JSON, MongoDB." } ] },
+      { t: "0:05", icon: "🎮", name: "Game", min: 15, slides: "3",
+        game: { name: "Gartic Phone", url: "https://garticphone.com" }, steps: [
+        { k: "do", text: "Broken telephone with drawings." },
+        { k: "talk", text: "What got lost along the chain? A long AI chat does the same. Why?" } ] },
+      { t: "0:20", icon: "💡", name: "Vibe coding", min: 20, slides: "4–8", steps: [
+        { k: "show", text: "Today's steps + the big idea: you describe → AI codes → YOU check." },
+        { k: "demo", concept: "Explicit prompts", before: "\"Build me a flower shop site\" → the AI guesses everything", after: "Navbar, 6 cards, pink #D83474… → her exact vision" },
+        { k: "do", text: "Flower Shop Lab: one vague vs. one explicit prompt — live." } ] },
+      { t: "0:40", icon: "✅", name: "Part 1 · LLM challenge", min: 30, slides: "9–10", steps: [
+        { k: "do", text: "Paste a real exercise from last year into Gemini / Claude. Read the answer. Test it." },
+        { k: "demo", concept: "Fix by chatting", before: "The code crashes on an empty list", after: "The AI spots it, we test the fix → green" } ] },
+      { t: "1:10", icon: "🙈", name: "What the AI misses", min: 20, slides: "11–13", steps: [
+        { k: "talk", text: "Why did the AI miss that?" },
+        { k: "show", text: "It can't see · it forgets · it sounds sure. 3 words: token · context window · system prompt." },
+        { k: "do", text: "📸 Proof: the error + the fix." } ] },
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "14", steps: [] },
+      { t: "2:00", icon: "🤝", name: "Meet the coding agent", min: 10, slides: "15–16", steps: [
+        { k: "talk", text: "Copy-paste is getting old. What if the AI could open the whole project?" },
+        { k: "show", text: "Chat LLM = advice. Coding agent = hands on your project. Ours: opencode." } ] },
+      { t: "2:10", icon: "🔧", name: "Part 2 · install", min: 20, slides: "17", steps: [
+        { k: "do", text: "Install opencode (Setup page). Open last year's project. Ask: \"What does this project do?\"" } ] },
+      { t: "2:30", icon: "🕵️‍♀️", name: "Bug hunt", min: 15, slides: "18–20", steps: [
+        { k: "demo", concept: "Coding agent", before: "The page loads… and shows nothing", after: "The agent finds the bad file → one fix, it works" },
+        { k: "do", text: "They let the agent find the hidden bug. Fix, run, test, 📸." },
+        { k: "show", text: "New word: skill." } ] },
+      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "21–26", steps: [
+        { k: "do", text: "Pick token · context window · coding agent → 2 sentences + their before/after." },
+        { k: "show", text: "What we learned, next time, prompts to try, glossary." } ] }
+    ]
   },
   3: {
-    tease: "Today you switch sides: from USING agents to BUILDING one. The TikTok Studio officially begins.",
-    game: { name: "Robot & Operator (in pairs)", url: "https://skribbl.io",
-      note: "One girl is the robot, one gives exact commands — bad instructions = funny robot. (Or Skribbl with agent words.)" },
-    material: "Slides: what an agent is made of — model + prompt + tools + access.",
-    discussion: "Which agents did you meet in real life this week (support bots, recommendations…)? Who built them, and why?",
-    demo: "createAgent live: 7 lines of code → a talking agent.",
-    exercises: "Complete the half-built agent: give it a system prompt and one tool. Run it. Try to break it.",
-    building: "Agent 1 of the Studio: wire the Tavily search tool, make it find 3 REAL TikTok trends from today.",
-    sources: [
-      { label: "Nir's tutorial (our reference)", url: NIR_TUTORIAL },
-      { label: "LangChain JS", url: "https://js.langchain.com" },
-      { label: "Tavily", url: "https://www.tavily.com" }
-    ],
-    start: "Pull the Studio repo, open src/agents/, read Agent 1's file before you type anything."
+    timeline: [
+      { t: "0:00", icon: "👋", name: "Welcome", min: 5, slides: "1–2", steps: [
+        { k: "show", text: "Last time: LLMs, tokens, opencode." } ] },
+      { t: "0:05", icon: "🎮", name: "Game", min: 15, slides: "3",
+        game: { name: "Robot & Operator (or Skribbl)", url: "https://skribbl.io" }, steps: [
+        { k: "do", text: "In pairs: one is the robot, one gives exact commands. Bad instructions = funny robot." } ] },
+      { t: "0:20", icon: "🌍", name: "Agents everywhere", min: 15, slides: "4–6", steps: [
+        { k: "show", text: "Today's steps." },
+        { k: "talk", text: "Which agents did you meet this week? Who built them — and why?" },
+        { k: "show", text: "Today we switch sides: from USING agents to BUILDING one." } ] },
+      { t: "0:35", icon: "🧩", name: "What's an agent made of", min: 20, slides: "7–9", steps: [
+        { k: "show", text: "Model + system prompt + tools + access = an agent." },
+        { k: "demo", concept: "createAgent", before: "3 parts on the table: model, prompt, tool", after: "7 lines of code → an agent that talks" } ] },
+      { t: "0:55", icon: "✅", name: "Part 1 · wake it up", min: 35, slides: "10–11", steps: [
+        { k: "do", text: "Complete the half-built agent: add a system prompt + one tool. Run it. Try to break it." },
+        { k: "do", text: "📸 Proof: the answer before vs. after." } ] },
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "12", steps: [] },
+      { t: "2:00", icon: "🔎", name: "Agent 1 · trend finder", min: 10, slides: "13–14", steps: [
+        { k: "show", text: "Our first real agent: it searches the internet for today's trends." },
+        { k: "show", text: "New word: Tavily — search made for agents." } ] },
+      { t: "2:10", icon: "🔧", name: "Part 2 · finish Agent 1", min: 30, slides: "15–17", steps: [
+        { k: "do", text: "In pairs (driver + navigator, switch every 20 min): pull the repo, add the Tavily tool, prompt: \"find 3 trends from today\"." },
+        { k: "demo", concept: "Tools", before: "\"I cannot browse the internet.\"", after: "3 real trends from today, found by YOUR agent" } ] },
+      { t: "2:40", icon: "🗣️", name: "Explain to me", min: 20, slides: "18–23", steps: [
+        { k: "do", text: "Pick agent · tool · system prompt · Tavily → 2 sentences + their before/after." },
+        { k: "do", text: "💾 Save the trends — Agent 2 needs them next week." },
+        { k: "show", text: "What we learned, next time, prompts to try, glossary." } ] }
+    ]
   },
   4: {
-    tease: "Meet an agent that behaves SO badly… and fix it with nothing but better words. Then build Agent 2.",
-    game: { name: "Describe the Tool (Taboo style)", url: "https://codenames.game",
-      note: "Describe an everyday tool without saying its name — literally what .describe() does. (Or a quick Codenames round.)" },
-    material: "Slides: tool() + Zod + .describe() · the RTOC prompt recipe.",
-    discussion: "Think of a time bad instructions ruined a task for you. What would have fixed it — more effort, or clearer words?",
-    demo: "One empty .describe() → the agent picks the wrong tool. Fix the words → fixed agent. Before/after on screen.",
-    exercises: "Write ONE tool with Zod and clear describes. Make the agent use it correctly once.",
-    building: "Agent 2: takes a trend, writes one video idea. RTOC prompt + a save tool. Test with last week's real trends.",
-    sources: [
-      { label: "Zod", url: "https://zod.dev" },
-      { label: "LangChain tools guide", url: "https://js.langchain.com" },
-      { label: "Nir's tutorial — tools", url: NIR_TUTORIAL }
-    ],
-    start: "Before coding: write Agent 2's prompt in RTOC form on paper — Role, Task, Output, Constraints."
+    timeline: [
+      { t: "0:00", icon: "👋", name: "Welcome", min: 5, slides: "1–2", steps: [
+        { k: "show", text: "Last time: createAgent + Agent 1 finds real trends." } ] },
+      { t: "0:05", icon: "🎮", name: "Game", min: 15, slides: "3",
+        game: { name: "Describe the Tool (Taboo style)", url: "https://codenames.game" }, steps: [
+        { k: "do", text: "Describe an everyday tool without saying its name — exactly what .describe() does." } ] },
+      { t: "0:20", icon: "🤝", name: "A tool is a promise", min: 20, slides: "4–7", steps: [
+        { k: "talk", text: "When did bad instructions ruin a task for you? More effort — or clearer words?" },
+        { k: "show", text: "A tool = function + schema + description. The agent only reads the description." },
+        { k: "show", text: "Your first tool: tool() + Zod + .describe()." } ] },
+      { t: "0:40", icon: "😵‍💫", name: "The confused agent", min: 10, slides: "8", steps: [
+        { k: "demo", concept: ".describe()", before: "Empty descriptions → wrong tool, saves nothing", after: "Clear words → the right tool, every time" } ] },
+      { t: "0:50", icon: "✅", name: "Part 1 · fix it", min: 40, slides: "9–11", steps: [
+        { k: "do", text: "Run it, watch it fail 📸. Rewrite the bad descriptions + fix the contradiction in the prompt. Run again 📸." },
+        { k: "show", text: "RTOC: Role · Task · Output · Constraints." } ] },
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "12", steps: [] },
+      { t: "2:00", icon: "💡", name: "Part 2 · Agent 2", min: 45, slides: "13–14", steps: [
+        { k: "show", text: "Agent 2: one trend in → one video idea out." },
+        { k: "do", text: "Build it: model + RTOC prompt + a save tool. Test with last week's trends." },
+        { k: "demo", concept: "Agent 2", before: "A trend name. Just text.", after: "A full video idea, written by YOUR agent" } ] },
+      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "15–20", steps: [
+        { k: "do", text: "Pick tool · schema · .describe() · RTOC → 2 sentences + the confused-agent before/after." },
+        { k: "show", text: "What we learned, next time, prompts to try, glossary." } ] }
+    ]
   },
   5: {
-    tease: "We open the magic box: every agent is… a loop. Then your agents start talking to each other.",
-    game: { name: "Gartic Phone — chain mode", url: "https://garticphone.com",
-      note: "A pipeline of players, each passing work to the next. Sound familiar? ⛓️" },
-    material: "Slides: the agent loop · the supervisor pattern · shared memory in Mongo.",
-    discussion: "What does a good team leader actually do? Now swap the people for agents — what changes?",
-    demo: "The loop built by hand in ~10 lines, then: \"createAgent is exactly this.\" 🤯",
-    exercises: "Build the mini loop in pairs (~30 min). Say the magic sentence out loud when it runs.",
-    building: "Wire the supervisor with Agents 1+2 as its tools, connect Mongo, run the full 1→2 chain with one command.",
-    sources: [
-      { label: "Nir's tutorial — supervisor", url: NIR_TUTORIAL },
-      { label: "MongoDB basics", url: "https://www.mongodb.com/basics" },
-      { label: "LangChain multi-agent", url: "https://js.langchain.com" }
-    ],
-    start: "Draw the pipeline on paper first: who calls whom, and what gets saved where?"
+    timeline: [
+      { t: "0:00", icon: "👋", name: "Welcome", min: 5, slides: "1–2", steps: [
+        { k: "show", text: "Last time: tools, Zod, Agent 2 makes video ideas." } ] },
+      { t: "0:05", icon: "🎮", name: "Game", min: 15, slides: "3",
+        game: { name: "Gartic Phone — chain mode", url: "https://garticphone.com" }, steps: [
+        { k: "do", text: "A chain of players, each passing work to the next. ⛓️" } ] },
+      { t: "0:20", icon: "🔍", name: "Inside createAgent", min: 10, slides: "4–5", steps: [
+        { k: "show", text: "Today's steps. The secret: it's a loop — ask → act → check → again." } ] },
+      { t: "0:30", icon: "🖐️", name: "Build the loop by hand", min: 30, slides: "6", steps: [
+        { k: "do", text: "In pairs: ~10 lines of plain JS. When it runs, say it: \"createAgent is exactly this.\"" },
+        { k: "demo", concept: "The agent loop", before: "createAgent = a magic box", after: "createAgent = a 10-line loop" } ] },
+      { t: "1:00", icon: "👩‍💼", name: "The supervisor", min: 30, slides: "7–8", steps: [
+        { k: "talk", text: "What does a good team leader do? Swap the people for agents — what changes?" },
+        { k: "show", text: "Supervisor = an agent whose tools are other agents." },
+        { k: "do", text: "Draw the pipeline on paper: who calls whom, what is saved where." } ] },
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "9", steps: [] },
+      { t: "2:00", icon: "🧠", name: "Shared memory", min: 10, slides: "10", steps: [
+        { k: "show", text: "Agent 1 saves trends to Mongo. Agent 2 reads them and writes ideas back." } ] },
+      { t: "2:10", icon: "⛓️", name: "Part 2 · chain it", min: 35, slides: "11–12", steps: [
+        { k: "do", text: "Wire the supervisor (Agents 1 + 2 as its tools) + Mongo. One command: \"make me a video idea from today's trends\"." },
+        { k: "demo", concept: "Supervisor", before: "Two lonely agents — you copy data by hand", after: "One command — the idea lands in the database" },
+        { k: "do", text: "📸 the Mongo document their chain wrote." } ] },
+      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "13–18", steps: [
+        { k: "do", text: "Pick the loop · supervisor · shared memory → 2 sentences + their document." },
+        { k: "show", text: "What we learned, next time, prompts to try, glossary." } ] }
+    ]
   },
   6: {
-    tease: "Lights, camera, Agent 3 — your pipeline makes its first REAL video. Then the whole Studio opens… and hackathon mode. 🔥",
-    game: { name: "TikTok Charades", url: "https://garticphone.com",
-      note: "Act a TikTok trend with no words — a bad prompt is charades; a good prompt says everything. (Or Gartic animation mode.)" },
-    material: "Slides: Agent 3 · video prompts (details beat vibes) · the Studio UI · what makes a great hackathon idea · the team one-pager.",
-    discussion: "What makes a video idea feel 'doable' for an AI? What's missing when we only give vibes?",
-    demo: "One idea → video prompt → a real AI video, live on screen. Then the full run on the UI. 🍿",
-    exercises: "Write the SAME video prompt two ways — vibes vs details. Compare what comes back.",
-    building: "Build Agent 3, run the full Studio on the UI, edit one idea. Then: team + idea + MVP one-pager for the hackathon.",
-    sources: [
-      { label: "Nir's tutorial — full reference", url: NIR_TUTORIAL },
-      { label: "LangChain JS", url: "https://js.langchain.com" },
-      { label: "Our class Trello", url: "https://trello.com/b/wPXqrlUT" }
-    ],
-    start: "Take YOUR video idea from last week — that's the one Agent 3 turns into a film today."
+    timeline: [
+      { t: "0:00", icon: "👋", name: "Welcome", min: 5, slides: "1–2", steps: [
+        { k: "show", text: "Last time: the loop, the supervisor, shared memory." } ] },
+      { t: "0:05", icon: "🎮", name: "Game", min: 15, slides: "3",
+        game: { name: "TikTok Charades", url: "https://garticphone.com" }, steps: [
+        { k: "do", text: "Act a TikTok trend with no words — a bad prompt is charades." } ] },
+      { t: "0:20", icon: "🧩", name: "Agent 3", min: 15, slides: "4–6", steps: [
+        { k: "show", text: "Today's steps. The missing piece: idea → video prompt → a real video (through an API — week 1!)." },
+        { k: "talk", text: "What makes a video idea \"doable\" for an AI?" },
+        { k: "demo", concept: "Video prompts", before: "\"a cool cat video\" 😿", after: "\"fluffy orange cat dancing in a pink kitchen, camera zooms in\"" } ] },
+      { t: "0:35", icon: "✅", name: "Part 1 · build Agent 3", min: 55, slides: "7–8", steps: [
+        { k: "do", text: "Open the Agent 3 file: RTOC prompt + the video tool. Test with THEIR idea from last week." },
+        { k: "do", text: "📸 Save the first AI video." } ] },
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "9", steps: [] },
+      { t: "2:00", icon: "🖥️", name: "Grand opening", min: 25, slides: "10–11", steps: [
+        { k: "demo", concept: "The full Studio", before: "The terminal, one agent at a time", after: "Trend → idea → video, live on screen" },
+        { k: "do", text: "They run it, edit one idea before it renders. Done early → one bonus feature." },
+        { k: "show", text: "Look how far you've come. 🥹" } ] },
+      { t: "2:25", icon: "🔥", name: "Hackathon plan", min: 25, slides: "12–14", steps: [
+        { k: "show", text: "7–9 Dec: day 1 in class, days 2–3 on Zoom. A celebration, not a test." },
+        { k: "do", text: "Teams of 2–3. Great idea = small, agent-powered, theirs. Write the one-pager: idea, MVP, agents, who builds what." } ] },
+      { t: "2:50", icon: "🗣️", name: "Explain to me", min: 10, slides: "15–19", steps: [
+        { k: "do", text: "Each team: the idea in one sentence + their first AI video." },
+        { k: "show", text: "Hackathon checklist, prompts to try, glossary." } ] }
+    ]
   }
 };
 

@@ -559,7 +559,6 @@ p  { line-height: 1.65; }
 }
 .modal-head h2 { margin: 8px 0 4px; }
 
-.flow-list { margin-top: 14px; }
 /* instructor timeline: 💬 ask · 📽️ show · ✋ they do · 👀 glimpse · 🎩 demo (before → after) */
 .tl-legend { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 6px; }
 .tl-legend span { font-size: .75rem; font-weight: 800; color: var(--ink-soft); background: #F6EDF9; border-radius: 999px; padding: 4px 10px; }
@@ -593,35 +592,8 @@ p  { line-height: 1.65; }
   .tl-ba { flex-direction: column; }
   .tl-arrow { transform: rotate(90deg); align-self: center; }
 }
-.flow-stage { border-left: 4px solid var(--pink-soft); padding: 0 0 16px 16px; position: relative; }
-.flow-stage:last-child { padding-bottom: 0; }
-.flow-tasks { border-left-color: var(--mint); }
-.flow-tasks .fs-body { background: #F3FBF7; border-radius: 14px; padding: 10px 12px; }
-.flow-tasks .check-list { margin-top: 6px; }
-.flow-stage::before {
-  content: ""; position: absolute; left: -9px; top: 4px;
-  width: 14px; height: 14px; border-radius: 50%;
-  background: var(--pink); box-shadow: 0 0 0 4px rgba(216,52,116,.18);
-}
-.fs-head { display: flex; align-items: center; gap: 9px; }
-.fs-head h3 { margin: 0; font-size: 1.02rem; }
-.fs-ic { font-size: 1.2rem; }
-.fs-min { margin-left: auto; font-weight: 800; color: var(--pink); font-size: .85rem; white-space: nowrap; }
-.fs-body { padding: 4px 0 0 30px; font-size: .93rem; line-height: 1.55; }
-.fs-body .muted { font-size: .85rem; margin-top: 4px; }
-.flow-sources { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-.flow-sources a {
-  background: #F3EAF7; color: var(--ink); text-decoration: none;
-  font-weight: 700; font-size: .8rem; padding: 6px 12px; border-radius: 999px;
-}
-.flow-sources a:hover { background: var(--pink); color: #fff; }
-.flow-start {
-  margin-top: 10px; background: rgba(47,179,128,.1);
-  border-left: 4px solid var(--mint); border-radius: 10px;
-  padding: 10px 14px; font-size: .9rem;
-}
 
-/* ---------- Google Calendar embed ---------- */
+/* ---------- calendar page ---------- */
 /* lesson = pink · big day = orange · no lesson = lavender */
 .gc-next {
   display: inline-block; margin-top: 16px; padding: 8px 18px; border-radius: 999px;

@@ -182,21 +182,7 @@ function openFlowModal(n) {
   if (!lesson || !flow) return;
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
-  const stageBody = flow.timeline ? {} : {
-    tease: `<p>${esc(flow.tease)}</p>`,
-    game: `<p><a class="btn small" href="${flow.game.url}" target="_blank" rel="noopener">🎮 ${esc(flow.game.name)} ↗</a></p>
-           <p class="muted">${esc(flow.game.note)}</p>`,
-    material: `<p>${esc(flow.material)}</p>`,
-    discussion: `<p>${esc(flow.discussion)}</p>`,
-    demo: `<p>${esc(flow.demo)}</p>`,
-    exercises: `<p>${esc(flow.exercises)}</p>`,
-    building: `<p>${esc(flow.building)}</p>
-      <div class="flow-sources">${flow.sources.map(s =>
-        `<a href="${s.url}" target="_blank" rel="noopener">🔗 ${esc(s.label)}</a>`).join("")}</div>
-      <div class="flow-start">🚦 <strong>How to start:</strong> ${esc(flow.start)}</div>`
-  };
-
-  /* instructor timeline (FLOWS[n].timeline): time · block · slides, and each step coded by kind */
+  /* the instructor timeline (FLOWS[n].timeline): time · block · slides, each step coded by kind */
   const KIND = { talk: ["💬", "Ask"], show: ["📽️", "Show"], do: ["✋", "They do"], glimpse: ["👀", "Glimpse"] };
   const step = s => s.k === "demo"
     ? `<div class="tl-demo">
@@ -204,7 +190,7 @@ function openFlowModal(n) {
          <div class="tl-ba"><span class="tl-b"><i>Before</i>${esc(s.before)}</span><span class="tl-arrow">➜</span><span class="tl-a"><i>After</i>${esc(s.after)}</span></div>
        </div>`
     : `<div class="tl-step k-${s.k}"><span class="tl-k">${KIND[s.k][0]} ${KIND[s.k][1]}</span><span>${esc(s.text)}</span></div>`;
-  const timeline = flow.timeline && `
+  const timeline = `
     <div class="tl-legend">${Object.values(KIND).map(([i, l]) => `<span>${i} ${l}</span>`).join("")}<span>🎩 Demo: before → after</span></div>
     <div class="tl-list">${flow.timeline.map(b => `
       <div class="tl-block${b.steps.length ? "" : " tl-break"}">
@@ -230,17 +216,7 @@ function openFlowModal(n) {
         <div class="badge" style="background:rgba(216,52,116,.1); border-color:var(--pink); color:var(--pink)">Lesson ${lesson.n} of ${LESSONS.length}</div>
         <h2>${lesson.emoji} Lesson ${lesson.n} — today's flow</h2>
       </div>
-      ${timeline || `<div class="flow-list">
-        ${FLOW_STAGES.map((st, i) => `
-          <div class="flow-stage">
-            <div class="fs-head">
-              <span class="fs-ic">${st.icon}</span>
-              <h3>${st.name}</h3>
-              <span class="fs-min">~${st.min}′</span>
-            </div>
-            <div class="fs-body">${stageBody[st.key] || ""}</div>
-          </div>`).join("")}
-      </div>`}
+      ${timeline}
     </div>`;
   document.body.appendChild(wrap);
   const close = () => wrap.remove();
