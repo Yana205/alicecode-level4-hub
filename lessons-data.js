@@ -16,7 +16,7 @@ const LESSONS = [
 /* ================= LESSON 1 ================= */
 {
   n: 1, emoji: "🚀", title: "Back to Building",
-  missionsInFlow: true, // the task checklist lives inside "Today's flow", not on the page
+  hideMissions: true, // tasks are on the task slides + the Tasks page, not under the deck
   project: "P1 · Refresh: APIs + Databases",
   goal: "Warm up APIs, understand why apps need databases, and connect a real app to MongoDB.",
   leaves: "Mongo exercises done + an app that remembers, with YOUR document in the database.",
@@ -1152,21 +1152,52 @@ const FLOW_STAGES = [
 ];
 
 const FLOWS = {
+  /* Lesson 1: a minute-by-minute timeline for the instructor (instead of the 7 stages).
+     Step kinds: talk = 💬 they answer first · demo = 🎩 live demo (concept + before → after)
+                 do = ✋ students work · show = 📽️ you show / explain · glimpse = 👀 a peek ahead */
   1: {
-    tease: "How does Instagram remember your likes after you close it? Today you find out — and build an app-memory of your own.",
-    game: { name: "Skribbl.io — custom words", url: "https://skribbl.io",
-      note: "Draw & guess with OUR words: API, server, database, JSON, cloud, waiter, pizza…" },
-    material: "Slides: API refresh (live fetch, Postman, JSON) + why apps need databases (live demos).",
-    discussion: "A 💬 Let's talk slide before every big idea — they answer first, then the slide reveals it. The big one: where does your favorite app keep its stuff? What would happen if it forgot everything every night?",
-    demo: "Yan opens a real Mongo database live and finds the most-liked video with ONE query.",
-    exercises: "4 tiny exercises on the ready-made videos collection — read, filter, count, sort. Everyone finishes. 📸 screenshot your answer.",
-    building: "Connect the TikTok Idea Tracker to MongoDB (Clone → Add code → Test), then find YOUR document in the vault. Bonus: your own collection.",
-    sources: [
-      { label: "MongoDB basics", url: "https://www.mongodb.com/basics" },
-      { label: "JSON intro (W3Schools)", url: "https://www.w3schools.com/js/js_json_intro.asp" },
-      { label: "PokeAPI — a real API in your browser", url: "https://pokeapi.co" }
-    ],
-    start: "Start with step 1 on the \"Connect the wires\" slide — clone the starter and run npm install."
+    timeline: [
+      { t: "0:00", icon: "👋", name: "Welcome", min: 5, slides: "1–2", steps: [
+        { k: "show", text: "Today's steps. Tell them: on a 💬 slide, YOU answer first." } ] },
+      { t: "0:05", icon: "🎮", name: "Game", min: 15, slides: "3",
+        game: { name: "Skribbl.io — custom words", url: "https://skribbl.io" }, steps: [
+        { k: "do", text: "Draw & guess with our words: API, server, database, JSON, cloud, waiter, pizza…" } ] },
+      { t: "0:20", icon: "🤖", name: "Chat vs. build", min: 8, slides: "4–5", steps: [
+        { k: "talk", text: "This summer — how did YOU use AI?" },
+        { k: "demo", concept: "AI agents", before: "AI chat: 20 min of clicking", after: "An agent does the whole job at 8 AM" } ] },
+      { t: "0:28", icon: "👀", name: "Glimpse ahead", min: 5, slides: "6–8", steps: [
+        { k: "glimpse", text: "Where we're going until the hackathon: a team of agents that makes TikToks. High level only — each lesson builds one piece." } ] },
+      { t: "0:33", icon: "🦸‍♀️", name: "Prompt power", min: 12, slides: "9–11", steps: [
+        { k: "talk", text: "Same AI, same button. One gets great code, one gets junk. Why?" },
+        { k: "show", text: "Your superpower: the code words you already know (flexbox, hover, id…)." },
+        { k: "demo", concept: "Prompt words", before: "Vague prompt → a plain button", after: "Pro prompt → the exact design" },
+        { k: "do", text: "\"Your turn\": they write a prompt with the 3 new words." } ] },
+      { t: "0:45", icon: "🌐", name: "APIs", min: 15, slides: "12–16", steps: [
+        { k: "talk", text: "Do you remember what an API is?  → then reveal the waiter." },
+        { k: "talk", text: "You type \"pikachu\" and press a button. What comes back?" },
+        { k: "demo", concept: "API", before: "You type a Pokémon name", after: "The internet answers with live JSON" },
+        { k: "show", text: "Postman + JSON: test the API first, then the same request in code." } ] },
+      { t: "1:00", icon: "💾", name: "Databases", min: 15, slides: "17–22", steps: [
+        { k: "talk", text: "Close Instagram, open it again — your likes are still there. How?" },
+        { k: "demo", concept: "Memory", before: "Variables: refresh → everything is gone", after: "MongoDB: refresh → it's all still there" },
+        { k: "talk", text: "1,000 TikTok videos. What do you save about EACH one?" },
+        { k: "show", text: "A good table: one row = one thing, a unique id, the same fields." } ] },
+      { t: "1:15", icon: "✅", name: "Part 1 · task", min: 15, slides: "23–24", steps: [
+        { k: "talk", text: "30 videos. Which has the most likes — without scrolling?" },
+        { k: "do", text: "On their laptops: this site → Lesson 1 → 🧪 Labs → Part 1. 4 exercises + 📸 screenshot." } ] },
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "25", steps: [] },
+      { t: "2:00", icon: "🔑", name: "The class key", min: 5, slides: "26–27", steps: [
+        { k: "talk", text: "The app that forgot everything — what does it need?" },
+        { k: "show", text: "The key slide: copy it into .env. Never on GitHub. 🔒" } ] },
+      { t: "2:05", icon: "🔌", name: "Part 2 · build", min: 30, slides: "28, 30", steps: [
+        { k: "do", text: "Clone → add code → test: add an idea, restart — still there? 🎉" },
+        { k: "do", text: "Done early → Bonus: their own collection (slide 30)." } ] },
+      { t: "2:35", icon: "🔍", name: "Find it in the vault", min: 10, slides: "29", steps: [
+        { k: "do", text: "Each student finds HER idea with a filter + 📸 screenshot." } ] },
+      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "31–34", steps: [
+        { k: "do", text: "Pick a word (API · JSON · collection · unique id), explain it in 2 sentences, show screenshots." },
+        { k: "show", text: "Glossary, toolkit, next time." } ] }
+    ]
   },
   2: {
     tease: "An AI solves YOUR exercise from last year — in seconds. Then you stop copy-pasting and become its boss.",

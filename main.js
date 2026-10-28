@@ -182,7 +182,7 @@ function openFlowModal(n) {
   if (!lesson || !flow) return;
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
-  const stageBody = {
+  const stageBody = flow.timeline ? {} : {
     tease: `<p>${esc(flow.tease)}</p>`,
     game: `<p><a class="btn small" href="${flow.game.url}" target="_blank" rel="noopener">🎮 ${esc(flow.game.name)} ↗</a></p>
            <p class="muted">${esc(flow.game.note)}</p>`,
@@ -196,6 +196,28 @@ function openFlowModal(n) {
       <div class="flow-start">🚦 <strong>How to start:</strong> ${esc(flow.start)}</div>`
   };
 
+  /* instructor timeline (FLOWS[n].timeline): time · block · slides, and each step coded by kind */
+  const KIND = { talk: ["💬", "Ask"], show: ["📽️", "Show"], do: ["✋", "They do"], glimpse: ["👀", "Glimpse"] };
+  const step = s => s.k === "demo"
+    ? `<div class="tl-demo">
+         <div class="tl-demo-h">🎩 Demo · <b>${esc(s.concept)}</b></div>
+         <div class="tl-ba"><span class="tl-b"><i>Before</i>${esc(s.before)}</span><span class="tl-arrow">➜</span><span class="tl-a"><i>After</i>${esc(s.after)}</span></div>
+       </div>`
+    : `<div class="tl-step k-${s.k}"><span class="tl-k">${KIND[s.k][0]} ${KIND[s.k][1]}</span><span>${esc(s.text)}</span></div>`;
+  const timeline = flow.timeline && `
+    <div class="tl-legend">${Object.values(KIND).map(([i, l]) => `<span>${i} ${l}</span>`).join("")}<span>🎩 Demo: before → after</span></div>
+    <div class="tl-list">${flow.timeline.map(b => `
+      <div class="tl-block${b.steps.length ? "" : " tl-break"}">
+        <div class="tl-time">${b.t}</div>
+        <div class="tl-main">
+          <div class="tl-head"><span class="tl-ic">${b.icon}</span><h3>${esc(b.name)}</h3>
+            <span class="tl-meta">${b.min}′ · slide${/[–,]/.test(b.slides) ? "s" : ""} ${b.slides}</span></div>
+          ${b.game ? `<a class="btn small tl-game" href="${b.game.url}" target="_blank" rel="noopener">🎮 ${esc(b.game.name)} ↗</a>` : ""}
+          ${b.steps.map(step).join("")}
+        </div>
+      </div>`).join("")}
+    </div>`;
+
   const old = document.getElementById("flow-modal");
   if (old) old.remove();
   const wrap = document.createElement("div");
@@ -208,7 +230,7 @@ function openFlowModal(n) {
         <div class="badge" style="background:rgba(216,52,116,.1); border-color:var(--pink); color:var(--pink)">Lesson ${lesson.n} of ${LESSONS.length}</div>
         <h2>${lesson.emoji} Lesson ${lesson.n} — today's flow</h2>
       </div>
-      <div class="flow-list">
+      ${timeline || `<div class="flow-list">
         ${FLOW_STAGES.map((st, i) => `
           <div class="flow-stage">
             <div class="fs-head">
@@ -218,24 +240,9 @@ function openFlowModal(n) {
             </div>
             <div class="fs-body">${stageBody[st.key] || ""}</div>
           </div>`).join("")}
-        ${lesson.missionsInFlow ? `
-          <div class="flow-stage flow-tasks">
-            <div class="fs-head">
-              <span class="fs-ic">✅</span>
-              <h3>Today's tasks</h3>
-            </div>
-            <div class="fs-body">
-              <p class="muted">Tick them off as you go — the page remembers you. ✨</p>
-              <ul class="check-list" id="flow-mission-list">
-                ${lesson.missions.map((m, i) => `
-                  <li><input type="checkbox" id="l${lesson.n}-m${i}"><label for="l${lesson.n}-m${i}">${esc(m)}</label></li>`).join("")}
-              </ul>
-            </div>
-          </div>` : ""}
-      </div>
+      </div>`}
     </div>`;
   document.body.appendChild(wrap);
-  if (lesson.missionsInFlow) bindChecklist(wrap.querySelector("#flow-mission-list"), `ac4-missions-l${lesson.n}`);
   const close = () => wrap.remove();
   wrap.addEventListener("click", e => { if (e.target === wrap) close(); });
   wrap.querySelector(".modal-x").addEventListener("click", close);

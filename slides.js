@@ -47,7 +47,7 @@
     <h1>${lesson.emoji} ${lesson.title}</h1>
     <p class="sub">${lesson.project}</p>
     <div style="margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap">
-      <button class="btn small" id="flow-btn">📋 Today's flow${lesson.missionsInFlow ? " + tasks" : ""}</button>
+      <button class="btn small" id="flow-btn">📋 Today's flow</button>
       <button class="btn small dark" id="fs-btn">⛶ Fullscreen</button>
       <button class="btn small ghost" style="box-shadow:none" id="pptx-btn">⬇️ PowerPoint</button>
     </div>`;
@@ -273,7 +273,7 @@
       <p style="margin-top:8px"><strong class="pink">You leave with:</strong> ${esc(lesson.leaves)}</p>
     </div>
 
-    ${lesson.missionsInFlow && flow ? "" : `
+    ${lesson.hideMissions ? "" : `
     <div class="card reveal">
       <h2>✅ Your missions</h2>
       <p class="muted" style="margin-bottom:10px">Tick them off as you go — the page remembers you. ✨</p>
