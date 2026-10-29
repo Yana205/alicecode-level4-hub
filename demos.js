@@ -368,49 +368,48 @@ DEMOS.toolsOfTrade = function (el) {
 };
 
 /* ============================================================
-   🗄️ What is a database? — app → server → database, zoom into MongoDB, + 4 database shapes
+   🗄️ Databases, one idea per slide: dbArch (app → server → database) · dbInside (inside MongoDB) · dbShapes (4 types)
    ============================================================ */
-DEMOS.dbMap = function (el) {
+/* click a [data-k] box → it lights up and the info line explains it */
+function dbPicker(el, INFO, first) {
+  const info = el.querySelector(".dm-info");
+  const pick = k => { el.querySelectorAll("[data-k]").forEach(x => x.classList.toggle("on", x.dataset.k === k)); info.innerHTML = INFO[k]; };
+  el.querySelectorAll("[data-k]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); pick(b.dataset.k); }));
+  pick(first);
+  return pick;
+}
+
+DEMOS.dbArch = function (el) {
   const INFO = {
     app: "📱 <b>The app</b> = what you see. It never opens the database itself. It asks the server.",
-    server: "⚙️ <b>The server</b> (backend) = the middle. It keeps the secret key and talks to the database: <code>insertOne</code>, <code>find</code>.",
-    db: "🗄️ <b>The database</b> = the app's long-term memory, in the cloud. Restart everything — the data is still there.",
-    cluster: "☁️ <b>Cluster</b> = the computers in the cloud that run MongoDB (we use MongoDB Atlas).",
-    database: "🗂️ <b>Database</b> = one drawer for one project. Ours is <code>alicecode</code>.",
-    collection: "📁 <b>Collection</b> = a folder of documents of one kind. Here: <code>videos</code>.",
-    document: "📄 <b>Document</b> = ONE thing (one video). It looks like JSON."
+    server: "⚙️ <b>The server</b> = the middle. It keeps the secret key and talks to the database.",
+    db: "🗄️ <b>The database</b> = long-term memory in the cloud. Restart everything — the data is still there."
   };
-  const TYPES = [
-    { k: "sql", ic: "📊", h: "Relational", tag: "SQL", ex: "MySQL · PostgreSQL · SQLite", good: "data with a strict shape: banks, school grades, shops",
-      show: `<table class="dm-table"><tr><th>id</th><th>title</th><th>likes</th></tr><tr><td>1</td><td>cat dance</td><td>5021</td></tr><tr><td>2</td><td>pasta hack</td><td>812</td></tr></table>
-        <p class="dm-say">Tables with rows + columns, like Excel. Every row has the SAME columns.</p>` },
-    { k: "doc", ic: "📄", h: "Document", tag: "NoSQL", ex: "MongoDB · Firestore", good: "apps that change fast — like our TikTok Studio", ours: true,
-      show: `<pre class="dm-json">{ <span class="j-key">"_id"</span>: <span class="j-num">1</span>, <span class="j-key">"title"</span>: <span class="j-str">"cat dance"</span>, <span class="j-key">"likes"</span>: <span class="j-num">5021</span>,
-  <span class="j-key j-hot">"tags"</span>: [<span class="j-str">"cat"</span>, <span class="j-str">"dance"</span>] }</pre>
-        <p class="dm-say">JSON-like documents. One can have a list (<code>tags</code>) — no table needed.</p>` },
-    { k: "kv", ic: "🔑", h: "Key-value", tag: "NoSQL", ex: "Redis", good: "super-fast lookups: likes counters, logins, caches",
-      show: `<div class="dm-kv"><span>"video:1:title"</span><i>→</i><b>"cat dance"</b><span>"video:1:likes"</span><i>→</i><b>5021</b></div>
-        <p class="dm-say">A name → a value. Like a locker: you know the number, you get what's inside. Fast!</p>` },
-    { k: "graph", ic: "🕸️", h: "Graph", tag: "NoSQL", ex: "Neo4j", good: "relationships: who follows who, “friends you may know”",
-      show: `<svg class="dm-graph" viewBox="0 0 300 92" role="img" aria-label="Maya follows Noa, both liked cat dance">
-          <line x1="48" y1="24" x2="150" y2="24"/><line x1="48" y1="24" x2="252" y2="70"/><line x1="150" y1="24" x2="252" y2="70"/>
-          <text x="99" y="16">follows</text><text x="128" y="62">liked</text><text x="214" y="38">liked</text>
-          <circle cx="48" cy="24" r="17"/><text class="n" x="48" y="28">Maya</text>
-          <circle cx="150" cy="24" r="17"/><text class="n" x="150" y="28">Noa</text>
-          <circle class="v" cx="252" cy="70" r="19"/><text class="n" x="252" y="74">🐱 video</text>
-        </svg>
-        <p class="dm-say">Dots (people, videos) + lines (follows, liked). The lines ARE the data.</p>` }
-  ];
   const node = (k, ic, h, sub) => `<button class="dm-node" data-k="${k}"><span class="dm-ic">${ic}</span><b>${h}</b><small>${sub}</small></button>`;
   el.innerHTML = `
-    <div class="dm">
+    <div class="dm dm-one">
       <div class="dm-arch">
         ${node("app", "📱", "App", "phone · website")}
         <div class="dm-wire"><span>asks</span><i></i></div>
-        ${node("server", "⚙️", "Server", "backend · server.js")}
+        ${node("server", "⚙️", "Server", "backend")}
         <div class="dm-wire"><span>asks</span><i></i></div>
         ${node("db", "🗄️", "Database", "MongoDB · cloud")}
       </div>
+      <div class="dm-info"></div>
+    </div>`;
+  const arch = el.querySelector(".dm-arch"), pick = dbPicker(el, INFO, "app");
+  demoOnShow(el, () => { pick("app"); arch.classList.remove("go"); void arch.offsetWidth; arch.classList.add("go"); }); // one trip of the request dot
+};
+
+DEMOS.dbInside = function (el) {
+  const INFO = {
+    cluster: "☁️ <b>Cluster</b> = the computers in the cloud that run MongoDB.",
+    database: "🗂️ <b>Database</b> = one drawer for one project. Ours is <code>alicecode</code>.",
+    collection: "📁 <b>Collection</b> = a folder of documents of one kind. Here: <code>videos</code>.",
+    document: "📄 <b>Document</b> = ONE thing — one video. It looks like JSON."
+  };
+  el.innerHTML = `
+    <div class="dm dm-one">
       <div class="dm-zoom">
         <button class="dm-box" data-k="cluster">☁️ cluster0
           <span class="dm-box" data-k="database">🗂️ alicecode
@@ -421,34 +420,49 @@ DEMOS.dbMap = function (el) {
         </button>
       </div>
       <div class="dm-info"></div>
-      <div class="dm-types">
-        <div class="dm-tabs">${TYPES.map(t => `<button class="dm-tab" data-t="${t.k}"><span>${t.ic} ${t.h}</span><i>${t.tag}</i></button>`).join("")}</div>
-        <div class="dm-show"></div>
-      </div>
-      <a class="dm-bonus" href="https://www.freecodecamp.org/news/sql-vs-nosql-tutorial/" target="_blank" rel="noopener">⭐ Bonus · <b>freeCodeCamp</b>: SQL vs NoSQL — when to use which (article + video) ↗</a>
     </div>`;
+  const pick = dbPicker(el, INFO, "cluster");
+  demoOnShow(el, () => pick("cluster"));
+};
 
-  const info = el.querySelector(".dm-info"), show = el.querySelector(".dm-show"), arch = el.querySelector(".dm-arch");
-  function pick(k) {
-    el.querySelectorAll("[data-k]").forEach(x => x.classList.toggle("on", x.dataset.k === k));
-    if (["cluster", "database", "collection", "document"].includes(k)) el.querySelector('.dm-node[data-k="db"]').classList.add("on");
-    info.innerHTML = INFO[k];
-  }
-  el.querySelectorAll("[data-k]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); pick(b.dataset.k); }));
+DEMOS.dbShapes = function (el) {
+  const TYPES = [
+    { k: "sql", ic: "📊", h: "Relational", tag: "SQL", good: "data with a strict shape — e.g. MySQL",
+      show: `<table class="dm-table"><tr><th>id</th><th>title</th><th>likes</th></tr><tr><td>1</td><td>cat dance</td><td>5021</td></tr><tr><td>2</td><td>pasta hack</td><td>812</td></tr></table>`,
+      say: "Tables with rows + columns, like Excel." },
+    { k: "doc", ic: "📄", h: "Document", tag: "NoSQL", good: "apps that change fast — e.g. MongoDB", ours: true,
+      show: `<pre class="dm-json">{ <span class="j-key">"title"</span>: <span class="j-str">"cat dance"</span>, <span class="j-key">"likes"</span>: <span class="j-num">5021</span> }</pre>`,
+      say: "JSON-like documents." },
+    { k: "kv", ic: "🔑", h: "Key-value", tag: "NoSQL", good: "super-fast lookups — e.g. Redis",
+      show: `<div class="dm-kv"><span>"video:1:likes"</span><i>→</i><b>5021</b></div>`,
+      say: "A name → a value. Like a locker number." },
+    { k: "graph", ic: "🕸️", h: "Graph", tag: "NoSQL", good: "who follows who — e.g. Neo4j",
+      show: `<svg class="dm-graph" viewBox="0 0 300 92" role="img" aria-label="Maya follows Noa, both liked cat dance">
+          <line x1="48" y1="24" x2="150" y2="24"/><line x1="48" y1="24" x2="252" y2="70"/><line x1="150" y1="24" x2="252" y2="70"/>
+          <text x="99" y="16">follows</text><text x="128" y="62">liked</text><text x="214" y="38">liked</text>
+          <circle cx="48" cy="24" r="17"/><text class="n" x="48" y="28">Maya</text>
+          <circle cx="150" cy="24" r="17"/><text class="n" x="150" y="28">Noa</text>
+          <circle class="v" cx="252" cy="70" r="19"/><text class="n" x="252" y="74">🐱 video</text>
+        </svg>`,
+      say: "Dots + lines. The lines ARE the data." }
+  ];
+  el.innerHTML = `
+    <div class="dm dm-one">
+      <div class="dm-tabs">${TYPES.map(t => `<button class="dm-tab" data-t="${t.k}"><span>${t.ic} ${t.h}</span><i>${t.tag}</i></button>`).join("")}</div>
+      <div class="dm-show"></div>
+      <a class="dm-bonus" href="https://www.freecodecamp.org/news/sql-vs-nosql-tutorial/" target="_blank" rel="noopener">⭐ Bonus · <b>freeCodeCamp</b>: SQL vs NoSQL ↗</a>
+    </div>`;
+  const show = el.querySelector(".dm-show");
   function type(k) {
     const t = TYPES.find(x => x.k === k);
     el.querySelectorAll(".dm-tab").forEach(b => b.classList.toggle("on", b.dataset.t === k));
-    show.innerHTML = `<div class="dm-show-h"><b>${t.ic} ${t.h}</b> <i>${t.tag}</i>${t.ours ? `<span class="dm-ours">⭐ we use this one</span>` : ""}</div>
-      ${t.show}
-      <div class="dm-meta"><span>✅ Good for: <b>${t.good}</b></span><span>🏷️ ${t.ex}</span></div>`;
+    show.innerHTML = `${t.ours ? `<span class="dm-ours">⭐ we use this one</span>` : ""}${t.show}
+      <p class="dm-say">${t.say}</p><p class="dm-good">✅ Good for: <b>${t.good}</b></p>`;
     if (t.ours && typeof labSparkle === "function") labSparkle(el, show.querySelector(".dm-ours"), 10);
   }
   el.querySelectorAll(".dm-tab").forEach(b => b.addEventListener("click", () => type(b.dataset.t)));
-  demoOnShow(el, () => {
-    pick("db"); type("doc");
-    arch.classList.remove("go"); void arch.offsetWidth; arch.classList.add("go"); // one trip of the request dot
-  });
-  pick("db"); type("doc");
+  demoOnShow(el, () => type("doc"));
+  type("doc");
 };
 
 /* ============================================================
@@ -617,16 +631,16 @@ DEMOS.secretKey = function (el) {
 };
 
 /* ============================================================
-   Part 1 · ask the data — 4 questions, each one a simple SQL query. Guess first, then ▶ Run.
+   Part 1 · ask the data — 4 questions, each one a simple SQL query (+ the same in MongoDB). Guess first, then ▶ Run.
    ============================================================ */
 DEMOS.sqlAsk = function (el) {
   const kw = t => t.replace(/\b(SELECT|COUNT|FROM|WHERE|ORDER BY|DESC|LIMIT)\b/g, '<span class="c-kw">$1</span>')
     .replace(/('[^']*')/g, '<span class="c-str">$1</span>').replace(/\b(\d+)\b/g, '<span class="c-fn">$1</span>');
   const Q = [
-    { ic: "👀", h: "Read", q: "How many videos are there?", sql: "SELECT COUNT(*) FROM videos;", run: v => ({ n: v.length }) },
-    { ic: "🔍", h: "Filter", q: "Show only the dance videos.", sql: "SELECT title, likes FROM videos\nWHERE category = 'dance';", run: v => ({ rows: v.filter(d => d.category === "dance") }) },
-    { ic: "🔢", h: "Count", q: "How many have more than 10,000 likes?", sql: "SELECT COUNT(*) FROM videos\nWHERE likes > 10000;", run: v => ({ n: v.filter(d => d.likes > 10000).length }) },
-    { ic: "🏆", h: "Sort", q: "Which video has the MOST likes?", sql: "SELECT title, likes FROM videos\nORDER BY likes DESC\nLIMIT 1;", run: v => ({ rows: v.slice().sort((a, b) => b.likes - a.likes).slice(0, 1), win: true }) }
+    { ic: "👀", h: "Read", q: "How many videos are there?", sql: "SELECT COUNT(*) FROM videos;", mongo: "db.videos.countDocuments()", run: v => ({ n: v.length }) },
+    { ic: "🔍", h: "Filter", q: "Show only the dance videos.", sql: "SELECT title, likes FROM videos\nWHERE category = 'dance';", mongo: 'db.videos.find({ category: "dance" })', run: v => ({ rows: v.filter(d => d.category === "dance") }) },
+    { ic: "🔢", h: "Count", q: "How many have more than 10,000 likes?", sql: "SELECT COUNT(*) FROM videos\nWHERE likes > 10000;", mongo: "db.videos.countDocuments({ likes: { $gt: 10000 } })", run: v => ({ n: v.filter(d => d.likes > 10000).length }) },
+    { ic: "🏆", h: "Sort", q: "Which video has the MOST likes?", sql: "SELECT title, likes FROM videos\nORDER BY likes DESC\nLIMIT 1;", mongo: "db.videos.find().sort({ likes: -1 }).limit(1)", run: v => ({ rows: v.slice().sort((a, b) => b.likes - a.likes).slice(0, 1), win: true }) }
   ];
   el.innerHTML = `
     <div class="sq">
@@ -637,6 +651,7 @@ DEMOS.sqlAsk = function (el) {
           <pre class="sq-code"></pre>
           <button class="btn small sq-run">▶ Run</button>
         </div>
+        <div class="sq-mongo">🍃 Same question in MongoDB: <code></code></div>
         <div class="sq-out"></div>
       </div>
     </div>`;
@@ -648,6 +663,7 @@ DEMOS.sqlAsk = function (el) {
     const me = ++run; cur = i;
     el.querySelectorAll(".sq-q").forEach(b => b.classList.toggle("on", +b.dataset.i === i));
     guess();
+    el.querySelector(".sq-mongo code").textContent = Q[i].mongo;
     const sql = Q[i].sql;
     if (demoReduced()) { code.innerHTML = kw(demoEsc(sql)); return; }
     for (let k = 1; k <= sql.length; k += 2) {

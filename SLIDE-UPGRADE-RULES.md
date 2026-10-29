@@ -88,7 +88,7 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 
 ---
 
-## Lesson 1 · final order (35 slides) — slide numbers above are from earlier versions
+## Lesson 1 · final order (37 slides) — slide numbers above are from earlier versions
 
 💬 = a "Let's talk" slide: the students answer first, the next slide reveals it. One per topic, no more.
 
@@ -98,28 +98,28 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 | **This year** | 4 💬 How did you use AI? · 5 Chatting vs. building · 6 💬 Robots that make TikToks? · 7 TikTok Studio · 8 Road to the hackathon |
 | **Superpower** | 9 💬 Same AI, junk vs. amazing — why? · 10 Secret superpower (the words) · 11 Button Lab (live) |
 | **APIs** | 12 💬 Remember what an API is? · 13 API waiter · 14 💬 "pikachu" → what comes back? · 15 Live fetch · 16 Postman + JSON |
-| **Databases** | 17 💬 How does Instagram remember you? · 18 Variables forget · 19 NEW WORD MongoDB · 20 MongoDB remembers · 21 What is a database? 🗄️ · 22 💬 What do you save about each video? · 23 A good table |
-| **Part 1** | 24 💬 Most likes, without scrolling? · 25 Part 1 · Ask the data (4 questions → a simple SQL query → guess → ▶ Run) |
-| **Break** | 26 ☕ |
-| **Part 2** | 27 💬 What does the app need? · 28 Watch: connect the wires (teacher demo) · 29 💬 What if a stranger finds the key? · 30 Your key is a secret 🔒 · 31 Try it yourself 🏠 |
-| **Wrap-up** | 32 Explain to me · 33 Glossary · 34 Toolkit · 35 Next time |
+| **Databases** | 17 💬 How does Instagram remember you? · 18 Variables forget · 19 NEW WORD MongoDB · 20 MongoDB remembers · 21 Where does the data live? · 22 Inside MongoDB · 23 Databases come in shapes · 24 💬 What do you save about each video? · 25 A good table |
+| **Part 1** | 26 💬 Most likes, without scrolling? · 27 Part 1 · Ask the data (4 questions → a simple SQL query → guess → ▶ Run) |
+| **Break** | 28 ☕ |
+| **Part 2** | 29 💬 What does the app need? · 30 Watch: connect the wires (teacher demo) · 31 💬 What if a stranger finds the key? · 32 Your key is a secret 🔒 · 33 Try it yourself 🏠 |
+| **Wrap-up** | 34 Explain to me · 35 Glossary · 36 Toolkit · 37 Next time |
 
 What the final review removed (49 → 34): "This year" (same message as the race demo), "Same wish, two prompts" (the Lab shows it live), "Locked door" (the refresh + live fetch already say it), "Why a database?" (a recap of the two demos), "What we learned" (the glossary says it), both "Proof time" slides (📸 is now on the task slides), and 7 extra 💬 slides — one talk per topic.
 
-20. **Less is more.** One idea per slide, one talk per topic, no recap slide that repeats the slide before it. If a slide's words fit in the instructor's mouth, cut them from the slide.
+20. **Less is more.** One idea per slide (if a slide needs tabs AND a diagram AND a zoom, it is 3 slides), one talk per topic, no recap slide that repeats the slide before it. If a slide's words fit in the instructor's mouth, cut them from the slide.
 
 **Part 2 went from practice to demo.** The hands-on part (class key → clone → connect → find it in the vault → bonus) was too heavy for the end of a 3-hour lesson. Now the teacher connects the Idea Tracker live, one slide explains why the key is a secret, and the last Part 2 slide is a "Try it yourself" page: a video, an article and the Idea Tracker README, where each girl makes her **own** free Atlas database. The class connection string is no longer shown on a slide.
 
 | Slide | What it adds |
 |---|---|
-| **30 · Your key is a secret 🔒** (new) | The connection string split into colored parts: click one to see what it is (who · the password · where · which database). Below: **❌ Key in server.js** → GitHub shows the password in red + "anyone can read, change or DELETE your data", vs. **✅ Key in .env** → `.gitignore` keeps `.env` off GitHub, `server.js` only says `process.env.MONGODB_URI` (sparkle). Three Atlas locks underneath. |
-| **31 · Try it yourself 🏠** (new) | 🎬 Watch (MongoDB's own YouTube video) · 📖 Read (Atlas get started) · 🛠️ Build (the Idea Tracker README, now written for your own free database + a "keep your key secret" section). |
+| **32 · Your key is a secret 🔒** (new) | The connection string split into colored parts: click one to see what it is (who · the password · where · which database). Below: **❌ Key in server.js** → GitHub shows the password in red + "anyone can read, change or DELETE your data", vs. **✅ Key in .env** → `.gitignore` keeps `.env` off GitHub, `server.js` only says `process.env.MONGODB_URI` (sparkle). Three Atlas locks underneath. |
+| **33 · Try it yourself 🏠** (new) | 🎬 Watch (MongoDB's own YouTube video) · 📖 Read (Atlas get started) · 🛠️ Build (the Idea Tracker README, now written for your own free database + a "keep your key secret" section). |
 
 21. **Heavy setup = demo + take-home.** When a hands-on step needs accounts, installs or secrets, show it live and give a "Try it yourself" slide with a video, an article and the starter README.
 
 | Slide | What it adds |
 |---|---|
-| **21 · What is a database? 🗄️** (new) | Left: **📱 App → ⚙️ Server → 🗄️ Database** (a pink dot runs the request once when the slide opens), then MongoDB zoomed in as nested boxes **cluster0 › alicecode › videos › { document }**: click any box for a one-line meaning. Right: 4 tabs, the same video in 4 shapes: **📊 Relational** (a SQL table) · **📄 Document** (JSON, "⭐ we use this one") · **🔑 Key-value** · **🕸️ Graph** (dots + lines), each with "good for" + examples. Bottom: ⭐ Bonus link to freeCodeCamp's "SQL vs NoSQL: when to use which". |
+| **21–23 · Databases, one idea per slide** (new) | **Where does the data live?** 📱 App → ⚙️ Server → 🗄️ Database, a pink dot runs the request once, click a box for its meaning. **Inside MongoDB:** nested boxes cluster0 › alicecode › videos › { document }, click each. **Databases come in shapes:** 4 tabs, the same video as a SQL table · a document (⭐ we use this one) · key-value · graph, one line each + ⭐ freeCodeCamp bonus. (First built as one slide: too noisy, so split.) |
 
 ### Earlier: the second reorder (48 slides)
 
