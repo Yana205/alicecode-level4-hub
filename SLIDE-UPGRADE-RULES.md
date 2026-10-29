@@ -151,3 +151,16 @@ Every lesson page lists **all** its labs and live demos (any `kind: "lab"` or `k
 
 ## Discussion slides
 19. **Talk first, reveal second.** Before every new topic (not just the big ones), put a `kind: "discuss"` slide with an open question. The students answer (think → partner → share), then the next slide shows the answer. Fields: `q` (the question), `hints` (2–3 small nudges, optional), `sec` (talk timer, default 60), `how` (optional, replaces "Think · Tell your partner · Share"). On the web the ⏱ button starts the timer and resets each time the slide opens; in PowerPoint it's the question, the hints and the note.
+
+---
+
+## Lesson 2 · one-idea-per-slide review (29 → 30 slides)
+
+| Before | After |
+|---|---|
+| **"3 new words 🧠"**: token, context window, system prompt as 3 cards on one slide | 3 ✨ NEW WORD slides, one each, with one example line (16 token · 17 context window · 18 system prompt) |
+| **"Part 2 · Install + first mission 🔧"**: two jobs on one slide | 22 **Install opencode** (Setup page → it says hi) · 23 **First mission: meet your project** |
+| **2 × "Proof time 📸"** before/after slides that repeated the task slide | Removed. The 📸 line moved onto the task slides (13 fix a bug · 24 bug hunt), like Lesson 1 |
+| **"Why could she ask like that?"**: 4 lines + a note repeating Lesson 1's superpower | 2 lines (the words) + "No words → the AI guesses. Your words → YOUR design." |
+| **"Want more?"**: 5 text rows | 4 clickable link cards: opencode docs · tokenizer · Karpathy's LLM intro · our Setup page |
+| Wrap-up order: Explain · Next time · Prompts · Want more · Glossary | Explain · Glossary · Prompts · Want more · **Next time last** (same as Lesson 1) |
