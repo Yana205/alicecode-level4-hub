@@ -394,6 +394,90 @@ DEMOS.toolsOfTrade = function (el) {
 };
 
 /* ============================================================
+   🗄️ What is a database? — app → server → database, zoom into MongoDB, + 4 database shapes
+   ============================================================ */
+DEMOS.dbMap = function (el) {
+  const INFO = {
+    app: "📱 <b>The app</b> = what you see. It never opens the database itself. It asks the server.",
+    server: "⚙️ <b>The server</b> (backend) = the middle. It keeps the secret key and talks to the database: <code>insertOne</code>, <code>find</code>.",
+    db: "🗄️ <b>The database</b> = the app's long-term memory, in the cloud. Restart everything — the data is still there.",
+    cluster: "☁️ <b>Cluster</b> = the computers in the cloud that run MongoDB (we use MongoDB Atlas).",
+    database: "🗂️ <b>Database</b> = one drawer for one project. Ours is <code>alicecode</code>.",
+    collection: "📁 <b>Collection</b> = a folder of documents of one kind. Here: <code>videos</code>.",
+    document: "📄 <b>Document</b> = ONE thing (one video). It looks like JSON."
+  };
+  const TYPES = [
+    { k: "sql", ic: "📊", h: "Relational", tag: "SQL", ex: "MySQL · PostgreSQL · SQLite", good: "data with a strict shape: banks, school grades, shops",
+      show: `<table class="dm-table"><tr><th>id</th><th>title</th><th>likes</th></tr><tr><td>1</td><td>cat dance</td><td>5021</td></tr><tr><td>2</td><td>pasta hack</td><td>812</td></tr></table>
+        <p class="dm-say">Tables with rows + columns, like Excel. Every row has the SAME columns.</p>` },
+    { k: "doc", ic: "📄", h: "Document", tag: "NoSQL", ex: "MongoDB · Firestore", good: "apps that change fast — like our TikTok Studio", ours: true,
+      show: `<pre class="dm-json">{ <span class="j-key">"_id"</span>: <span class="j-num">1</span>, <span class="j-key">"title"</span>: <span class="j-str">"cat dance"</span>, <span class="j-key">"likes"</span>: <span class="j-num">5021</span>,
+  <span class="j-key j-hot">"tags"</span>: [<span class="j-str">"cat"</span>, <span class="j-str">"dance"</span>] }</pre>
+        <p class="dm-say">JSON-like documents. One can have a list (<code>tags</code>) — no table needed.</p>` },
+    { k: "kv", ic: "🔑", h: "Key-value", tag: "NoSQL", ex: "Redis", good: "super-fast lookups: likes counters, logins, caches",
+      show: `<div class="dm-kv"><span>"video:1:title"</span><i>→</i><b>"cat dance"</b><span>"video:1:likes"</span><i>→</i><b>5021</b></div>
+        <p class="dm-say">A name → a value. Like a locker: you know the number, you get what's inside. Fast!</p>` },
+    { k: "graph", ic: "🕸️", h: "Graph", tag: "NoSQL", ex: "Neo4j", good: "relationships: who follows who, “friends you may know”",
+      show: `<svg class="dm-graph" viewBox="0 0 300 92" role="img" aria-label="Maya follows Noa, both liked cat dance">
+          <line x1="48" y1="24" x2="150" y2="24"/><line x1="48" y1="24" x2="252" y2="70"/><line x1="150" y1="24" x2="252" y2="70"/>
+          <text x="99" y="16">follows</text><text x="128" y="62">liked</text><text x="214" y="38">liked</text>
+          <circle cx="48" cy="24" r="17"/><text class="n" x="48" y="28">Maya</text>
+          <circle cx="150" cy="24" r="17"/><text class="n" x="150" y="28">Noa</text>
+          <circle class="v" cx="252" cy="70" r="19"/><text class="n" x="252" y="74">🐱 video</text>
+        </svg>
+        <p class="dm-say">Dots (people, videos) + lines (follows, liked). The lines ARE the data.</p>` }
+  ];
+  const node = (k, ic, h, sub) => `<button class="dm-node" data-k="${k}"><span class="dm-ic">${ic}</span><b>${h}</b><small>${sub}</small></button>`;
+  el.innerHTML = `
+    <div class="dm">
+      <div class="dm-arch">
+        ${node("app", "📱", "App", "phone · website")}
+        <div class="dm-wire"><span>asks</span><i></i></div>
+        ${node("server", "⚙️", "Server", "backend · server.js")}
+        <div class="dm-wire"><span>asks</span><i></i></div>
+        ${node("db", "🗄️", "Database", "MongoDB · cloud")}
+      </div>
+      <div class="dm-zoom">
+        <button class="dm-box" data-k="cluster">☁️ cluster0
+          <span class="dm-box" data-k="database">🗂️ alicecode
+            <span class="dm-box" data-k="collection">📁 videos
+              <span class="dm-box dm-doc" data-k="document">{ "title": "cat dance", "likes": 5021 }</span>
+            </span>
+          </span>
+        </button>
+      </div>
+      <div class="dm-info"></div>
+      <div class="dm-types">
+        <div class="dm-tabs">${TYPES.map(t => `<button class="dm-tab" data-t="${t.k}"><span>${t.ic} ${t.h}</span><i>${t.tag}</i></button>`).join("")}</div>
+        <div class="dm-show"></div>
+      </div>
+      <a class="dm-bonus" href="https://www.freecodecamp.org/news/sql-vs-nosql-tutorial/" target="_blank" rel="noopener">⭐ Bonus · <b>freeCodeCamp</b>: SQL vs NoSQL — when to use which (article + video) ↗</a>
+    </div>`;
+
+  const info = el.querySelector(".dm-info"), show = el.querySelector(".dm-show"), arch = el.querySelector(".dm-arch");
+  function pick(k) {
+    el.querySelectorAll("[data-k]").forEach(x => x.classList.toggle("on", x.dataset.k === k));
+    if (["cluster", "database", "collection", "document"].includes(k)) el.querySelector('.dm-node[data-k="db"]').classList.add("on");
+    info.innerHTML = INFO[k];
+  }
+  el.querySelectorAll("[data-k]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); pick(b.dataset.k); }));
+  function type(k) {
+    const t = TYPES.find(x => x.k === k);
+    el.querySelectorAll(".dm-tab").forEach(b => b.classList.toggle("on", b.dataset.t === k));
+    show.innerHTML = `<div class="dm-show-h"><b>${t.ic} ${t.h}</b> <i>${t.tag}</i>${t.ours ? `<span class="dm-ours">⭐ we use this one</span>` : ""}</div>
+      ${t.show}
+      <div class="dm-meta"><span>✅ Good for: <b>${t.good}</b></span><span>🏷️ ${t.ex}</span></div>`;
+    if (t.ours && typeof labSparkle === "function") labSparkle(el, show.querySelector(".dm-ours"), 10);
+  }
+  el.querySelectorAll(".dm-tab").forEach(b => b.addEventListener("click", () => type(b.dataset.t)));
+  demoOnShow(el, () => {
+    pick("db"); type("doc");
+    arch.classList.remove("go"); void arch.offsetWidth; arch.classList.add("go"); // one trip of the request dot
+  });
+  pick("db"); type("doc");
+};
+
+/* ============================================================
    D+ · Watch: connect the wires — teacher demo, 3 steps + an animated "expected result"
    ============================================================ */
 DEMOS.dbExercise = function (el) {

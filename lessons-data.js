@@ -17,6 +17,7 @@ const LESSONS = [
   leaves: "Mongo exercises done + you know how an app connects to MongoDB, and why its key stays secret.",
   tutorial: [
     { label: "MongoDB basics — short and friendly", url: "https://www.mongodb.com/basics" },
+    { label: "⭐ Bonus: SQL vs NoSQL — when to use which (freeCodeCamp)", url: "https://www.freecodecamp.org/news/sql-vs-nosql-tutorial/" },
     { label: "Try it yourself: the Idea Tracker guide", url: "https://github.com/Yana205/alicecode-level4-hub/tree/main/starter/idea-tracker" },
     { label: "Video: MongoDB & Node.js — connecting (MongoDB on YouTube)", url: "https://www.youtube.com/watch?v=fbYExfeFsI0" },
     { label: "JSON intro on W3Schools", url: "https://www.w3schools.com/js/js_json_intro.asp" },
@@ -130,6 +131,17 @@ const LESSONS = [
     { kind: "newword", term: "MongoDB",
       meaning: "A database that stores documents — they look just like JSON.",
       extra: "collection = a folder of documents · document = one row" },
+    { kind: "demo", demo: "dbMap", title: "What is a database? 🗄️",
+      sub: "Click a box to zoom in. Then: databases come in different shapes.",
+      offline: [
+        "📱 App → asks → ⚙️ Server → asks → 🗄️ Database. The app never talks to the database directly.",
+        "Inside MongoDB: cluster (the computer in the cloud) › database (alicecode) › collection (videos) › document { … }",
+        "📊 Relational (SQL): tables with rows + columns, like Excel — MySQL, PostgreSQL",
+        "📄 Document (NoSQL): JSON-like documents — MongoDB ← we use this one",
+        "🔑 Key-value: a name → a value, super fast — Redis",
+        "🕸️ Graph: dots + lines, for who-follows-who — Neo4j",
+        "⭐ Bonus: freeCodeCamp · SQL vs NoSQL: when to use which → freecodecamp.org/news/sql-vs-nosql-tutorial"
+      ] },
     { kind: "demo", demo: "dbAfter", title: "After: MongoDB remembers 🧠",
       sub: "Same app, now with a database. Add a task — watch the document appear.",
       offline: [
@@ -214,6 +226,7 @@ const LESSONS = [
         ["JSON", "the format the internet uses to send data"],
         ["database", "where an app keeps data long-term"],
         ["MongoDB", "the database we use this year"],
+        ["SQL vs NoSQL", "tables (rows + columns) vs. other shapes, like documents"],
         ["collection", "a folder of documents in MongoDB"],
         ["document", "one row of data — looks like JSON"],
         ["unique id", "a number/name no other row has"],
@@ -1156,37 +1169,39 @@ const FLOWS = {
         { k: "demo", concept: "AI agents", before: "AI chat: 20 min of clicking", after: "An agent does the whole job at 8 AM" } ] },
       { t: "0:28", icon: "👀", name: "Glimpse ahead", min: 5, slides: "6–8", steps: [
         { k: "glimpse", text: "Where we're going until the hackathon: a team of agents that makes TikToks. High level only — each lesson builds one piece." } ] },
-      { t: "0:33", icon: "🦸‍♀️", name: "Prompt power", min: 12, slides: "9–11", steps: [
+      { t: "0:33", icon: "🦸‍♀️", name: "Prompt power", min: 10, slides: "9–11", steps: [
         { k: "talk", text: "Same AI, same button. One gets great code, one gets junk. Why?" },
         { k: "show", text: "Your superpower: the code words you already know (flexbox, hover, id…)." },
         { k: "demo", concept: "Prompt words", before: "Vague prompt → a plain button", after: "Pro prompt → the exact design" },
         { k: "do", text: "\"Your turn\": they write a prompt with the 3 new words." } ] },
-      { t: "0:45", icon: "🌐", name: "APIs", min: 15, slides: "12–16", steps: [
+      { t: "0:43", icon: "🌐", name: "APIs", min: 12, slides: "12–16", steps: [
         { k: "talk", text: "Do you remember what an API is?  → then reveal the waiter." },
         { k: "talk", text: "You type \"pikachu\" and press a button. What comes back?" },
         { k: "demo", concept: "API", before: "You type a Pokémon name", after: "The internet answers with live JSON" },
         { k: "show", text: "Postman + JSON: test the API first, then the same request in code." } ] },
-      { t: "1:00", icon: "💾", name: "Databases", min: 15, slides: "17–22", steps: [
+      { t: "0:55", icon: "💾", name: "Databases", min: 20, slides: "17–23", steps: [
         { k: "talk", text: "Close Instagram, open it again — your likes are still there. How?" },
+        { k: "show", text: "What is a database? App → server → database. Click into MongoDB: cluster › database › collection › document." },
+        { k: "show", text: "Databases come in shapes: relational (SQL tables), document (MongoDB ⭐), key-value, graph. Bonus: the freeCodeCamp link." },
         { k: "demo", concept: "Memory", before: "Variables: refresh → everything is gone", after: "MongoDB: refresh → it's all still there" },
         { k: "talk", text: "1,000 TikTok videos. What do you save about EACH one?" },
         { k: "show", text: "A good table: one row = one thing, a unique id, the same fields." } ] },
-      { t: "1:15", icon: "✅", name: "Part 1 · task", min: 15, slides: "23–24", steps: [
+      { t: "1:15", icon: "✅", name: "Part 1 · task", min: 15, slides: "24–25", steps: [
         { k: "talk", text: "30 videos. Which has the most likes — without scrolling?" },
         { k: "do", text: "On their laptops: this site → Lesson 1 → 🧪 Labs → Part 1. 4 exercises + 📸 screenshot." } ] },
-      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "25", steps: [] },
-      { t: "2:00", icon: "🔌", name: "Watch: connect", min: 15, slides: "26–27", steps: [
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "26", steps: [] },
+      { t: "2:00", icon: "🔌", name: "Watch: connect", min: 15, slides: "27–28", steps: [
         { k: "talk", text: "The app that forgot everything — what does it need?" },
         { k: "demo", concept: "Connecting", before: "Idea Tracker: restart → ideas gone", after: "3 steps → restart → still there" },
         { k: "show", text: "You do it live on your laptop (your own key in .env). They watch — no install today." } ] },
-      { t: "2:15", icon: "🔒", name: "Your key is a secret", min: 15, slides: "28–29", steps: [
+      { t: "2:15", icon: "🔒", name: "Your key is a secret", min: 15, slides: "29–30", steps: [
         { k: "talk", text: "Your app has a key to the database. What if a stranger finds it?" },
         { k: "demo", concept: "Secrets", before: "Key in server.js → on GitHub for everyone", after: "Key in .env + .gitignore → GitHub never sees it" },
         { k: "talk", text: "Click each part of the key: who · password · where · which database." } ] },
-      { t: "2:30", icon: "🏠", name: "Try it yourself", min: 15, slides: "30", steps: [
+      { t: "2:30", icon: "🏠", name: "Try it yourself", min: 15, slides: "31", steps: [
         { k: "show", text: "Video + article + our Idea Tracker guide. Optional, at home. Stuck → bring a screenshot." },
         { k: "do", text: "Time left? Fast ones start the guide now: Atlas account + free cluster." } ] },
-      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "31–34", steps: [
+      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "32–35", steps: [
         { k: "do", text: "Pick a word (API · JSON · collection · .env), explain it in 2 sentences, show screenshots." },
         { k: "show", text: "Glossary, toolkit, next time." } ] }
     ]
