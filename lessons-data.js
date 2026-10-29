@@ -131,6 +131,13 @@ const LESSONS = [
     { kind: "newword", term: "MongoDB",
       meaning: "A database that stores documents — they look just like JSON.",
       extra: "collection = a folder of documents · document = one row" },
+    { kind: "demo", demo: "dbAfter", title: "After: MongoDB remembers 🧠",
+      sub: "Same app, now with a database. Add a task — watch the document appear.",
+      offline: [
+        "The same to-do list, plus the backend: db.collection('tasks').insertOne(...)",
+        "Add a task → it shoots to MongoDB and a JSON document appears.",
+        "Refresh the page → the tasks come back. The database remembered. 🎉"
+      ] },
     { kind: "demo", demo: "dbMap", title: "What is a database? 🗄️",
       sub: "Click a box to zoom in. Then: databases come in different shapes.",
       offline: [
@@ -141,13 +148,6 @@ const LESSONS = [
         "🔑 Key-value: a name → a value, super fast — Redis",
         "🕸️ Graph: dots + lines, for who-follows-who — Neo4j",
         "⭐ Bonus: freeCodeCamp · SQL vs NoSQL: when to use which → freecodecamp.org/news/sql-vs-nosql-tutorial"
-      ] },
-    { kind: "demo", demo: "dbAfter", title: "After: MongoDB remembers 🧠",
-      sub: "Same app, now with a database. Add a task — watch the document appear.",
-      offline: [
-        "The same to-do list, plus the backend: db.collection('tasks').insertOne(...)",
-        "Add a task → it shoots to MongoDB and a JSON document appears.",
-        "Refresh the page → the tasks come back. The database remembered. 🎉"
       ] },
     { kind: "discuss", q: "1,000 TikTok videos. What do you save about EACH one?",
       hints: ["title? likes? …", "Same title twice — how do you tell them apart?"], sec: 90 },
@@ -1181,9 +1181,9 @@ const FLOWS = {
         { k: "show", text: "Postman + JSON: test the API first, then the same request in code." } ] },
       { t: "0:55", icon: "💾", name: "Databases", min: 20, slides: "17–23", steps: [
         { k: "talk", text: "Close Instagram, open it again — your likes are still there. How?" },
+        { k: "demo", concept: "Memory", before: "Variables: refresh → everything is gone", after: "MongoDB: refresh → it's all still there" },
         { k: "show", text: "What is a database? App → server → database. Click into MongoDB: cluster › database › collection › document." },
         { k: "show", text: "Databases come in shapes: relational (SQL tables), document (MongoDB ⭐), key-value, graph. Bonus: the freeCodeCamp link." },
-        { k: "demo", concept: "Memory", before: "Variables: refresh → everything is gone", after: "MongoDB: refresh → it's all still there" },
         { k: "talk", text: "1,000 TikTok videos. What do you save about EACH one?" },
         { k: "show", text: "A good table: one row = one thing, a unique id, the same fields." } ] },
       { t: "1:15", icon: "✅", name: "Part 1 · ask the data", min: 15, slides: "24–25", steps: [

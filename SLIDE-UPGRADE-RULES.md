@@ -98,7 +98,7 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 | **This year** | 4 💬 How did you use AI? · 5 Chatting vs. building · 6 💬 Robots that make TikToks? · 7 TikTok Studio · 8 Road to the hackathon |
 | **Superpower** | 9 💬 Same AI, junk vs. amazing — why? · 10 Secret superpower (the words) · 11 Button Lab (live) |
 | **APIs** | 12 💬 Remember what an API is? · 13 API waiter · 14 💬 "pikachu" → what comes back? · 15 Live fetch · 16 Postman + JSON |
-| **Databases** | 17 💬 How does Instagram remember you? · 18 Variables forget · 19 NEW WORD MongoDB · 20 What is a database? 🗄️ · 21 MongoDB remembers · 22 💬 What do you save about each video? · 23 A good table |
+| **Databases** | 17 💬 How does Instagram remember you? · 18 Variables forget · 19 NEW WORD MongoDB · 20 MongoDB remembers · 21 What is a database? 🗄️ · 22 💬 What do you save about each video? · 23 A good table |
 | **Part 1** | 24 💬 Most likes, without scrolling? · 25 Part 1 · Ask the data (4 questions → a simple SQL query → guess → ▶ Run) |
 | **Break** | 26 ☕ |
 | **Part 2** | 27 💬 What does the app need? · 28 Watch: connect the wires (teacher demo) · 29 💬 What if a stranger finds the key? · 30 Your key is a secret 🔒 · 31 Try it yourself 🏠 |
@@ -119,7 +119,7 @@ What the final review removed (49 → 34): "This year" (same message as the race
 
 | Slide | What it adds |
 |---|---|
-| **20 · What is a database? 🗄️** (new) | Left: **📱 App → ⚙️ Server → 🗄️ Database** (a pink dot runs the request once when the slide opens), then MongoDB zoomed in as nested boxes **cluster0 › alicecode › videos › { document }**: click any box for a one-line meaning. Right: 4 tabs, the same video in 4 shapes: **📊 Relational** (a SQL table) · **📄 Document** (JSON, "⭐ we use this one") · **🔑 Key-value** · **🕸️ Graph** (dots + lines), each with "good for" + examples. Bottom: ⭐ Bonus link to freeCodeCamp's "SQL vs NoSQL: when to use which". |
+| **21 · What is a database? 🗄️** (new) | Left: **📱 App → ⚙️ Server → 🗄️ Database** (a pink dot runs the request once when the slide opens), then MongoDB zoomed in as nested boxes **cluster0 › alicecode › videos › { document }**: click any box for a one-line meaning. Right: 4 tabs, the same video in 4 shapes: **📊 Relational** (a SQL table) · **📄 Document** (JSON, "⭐ we use this one") · **🔑 Key-value** · **🕸️ Graph** (dots + lines), each with "good for" + examples. Bottom: ⭐ Bonus link to freeCodeCamp's "SQL vs NoSQL: when to use which". |
 
 ### Earlier: the second reorder (48 slides)
 
