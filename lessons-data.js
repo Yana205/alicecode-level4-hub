@@ -826,7 +826,8 @@ const LESSONS = [
   tutorial: [
     { label: "Nir's tutorial — supervisor chapter", url: NIR_TUTORIAL },
     { label: "MongoDB basics — insert + find", url: "https://www.mongodb.com/basics" },
-    { label: "LangChain JS — multi-agent guide", url: "https://js.langchain.com" }
+    { label: "LangChain JS — multi-agent guide", url: "https://js.langchain.com" },
+    { label: "Free course: Intro to Deep Agents (LangChain Academy)", url: "https://academy.langchain.com/courses/foundation-introduction-to-deepagents" }
   ],
   missions: [
     "Build the mini loop by hand: ask → act → check → again (~30 min, in pairs).",
@@ -951,7 +952,8 @@ const LESSONS = [
         ["Multi-agent systems", "js.langchain.com — multi-agent guide"],
         ["MongoDB", "mongodb.com/basics — insert + find"],
         ["Nir's tutorial", "the supervisor chapter in our reference repo"],
-        ["Agentic patterns", "deeplearning.ai — agentic design patterns"]
+        ["Agentic patterns", "deeplearning.ai — agentic design patterns"],
+        ["Deep Agents (free course)", "academy.langchain.com — agents that plan + use helpers on big jobs"]
       ]}
     ]},
     { kind: "content", title: "Glossary 📖", items: [
