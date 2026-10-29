@@ -14,7 +14,7 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `slides.html?n=1…6` | Web presentations for lessons 1–6 (simple English, click/arrow navigation) |
 | `tasks.html` | Mission board with progress bar (saved in the browser) + link to the class Trello |
 | `setup.html` | opencode install guide + animated terminal demo |
-| `learn-more.html` | Curated free resources: W3Schools, freeCodeCamp, Frontend Masters, MongoDB U, YouTube |
+| `learn-more.html` | Just 3 places to go deeper: freeCodeCamp, W3Schools, LangChain Academy |
 | `calendar.html` | The class calendar in AliceCode style: month grid + coming up. Served by `api/calendar-page.js` from the template `pages/calendar.html`, with the dates from the class Google Calendar already inside (rewrite in `vercel.json`). **Edit dates in Google Calendar**, not in the code |
 | `api/_calendar.js`, `api/calendar.js` | Reads the public Google Calendar feed (shared code) · the same dates as JSON |
 | `demos.js` | Live slide demos for Lesson 1: chat vs. agent race, TikTok Studio loop, live PokeAPI fetch |
