@@ -23,7 +23,6 @@ The home base for **AliceCode הסמכה 4 (2026–27)** — the final-year prog
 | `starter/class-db/` | **The class database, ready for Lesson 1:** 30 ready-made TikTok videos (`videos.json`), `npm run setup` (load data + print Part 1 answers), `npm run check` (test the student login), optional `atlas-setup.sh` (whole cluster via Atlas CLI). Start with its README |
 | `starter/idea-tracker/` | Lesson 1 Part 2: a TikTok Idea Tracker (Express + MongoDB). The teacher connects it live on the "Watch: connect the wires" slide; students do it at home with their **own** free Atlas database (the "Try it yourself" slide links its README) |
 | `api/tasks.js` | Tiny Vercel function behind the "MongoDB remembers" slide (needs `MONGODB_URI`, see below) |
-| `api/videos.js` | Read-only query on the class `videos` collection (`?filter=…&sort=…`) for the Part 1 task slide — the girls query the real database from the website |
 | `api/class-db.js` | Open `/api/class-db` to set up + check the class database from the browser (loads the 30 videos if missing, tests insert/find/delete) |
 | `SLIDE-UPGRADE-RULES.md` | Before/after of the Lesson 1 Button Lab upgrade + the global "juice" rules for all decks |
 | `locks.json` | Which lessons are hidden from students (`true` = locked). Edit it on GitHub; the magic password opens locked lessons on one device |

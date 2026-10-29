@@ -4,7 +4,7 @@ Everything the lesson needs in one MongoDB Atlas cluster (free M0):
 
 | Collection | Used by | What's in it |
 |---|---|---|
-| `videos` | **Part 1 · Task** (read, filter, count, sort) | 30 ready-made TikTok videos — this folder's `videos.json` |
+| `videos` | `/api/class-db` checks (the "Part 1 · Ask the data" slide reads the same 30 videos from `videos.json`, as SQL) | 30 ready-made TikTok videos — this folder's `videos.json` |
 | `ideas` | **Part 2 · Watch: connect the wires** (teacher demo, optional) | what the Idea Tracker saves if you demo it on the class database |
 | `tasks` | "After: MongoDB remembers" slide | the live to-do demo |
 
@@ -34,9 +34,9 @@ It logs you in, creates the project + free cluster, opens network access, makes 
    ```
 
 ## Then connect everything
-- **The hub (live slides):** Vercel → *Settings → Environment Variables* → `MONGODB_URI` = the **student** string (it only needs `alicecode`) → *Redeploy*. The "MongoDB remembers" and "Part 1 · Task" slides switch to 🟢 live.
+- **The hub (live slides):** Vercel → *Settings → Environment Variables* → `MONGODB_URI` = the **student** string (it only needs `alicecode`) → *Redeploy*. The "MongoDB remembers" slide switches to 🟢 live.
 - **No terminal? Let the hub do setup + check:** open `https://alicecode-level4-hub.vercel.app/api/class-db` — it loads the 30 videos if they're missing and runs the same checks as `npm run check` (all `"ok": true` = ready). `?reset=1` reloads the videos.
-- **The girls:** nothing to paste. Part 1 happens on the website (no install, no Atlas account): the Part 1 slide asks the real database through `/api/videos`. Part 2 is a teacher demo; at home they make their **own** free database (Idea Tracker README).
+- **The girls:** nothing to paste. Part 1 happens on the slide: 4 simple SQL queries on the 30 videos, guess first, then ▶ Run. Part 2 is a teacher demo; at home they make their **own** free database (Idea Tracker README).
 
 ## Part 1 answers (teacher only)
 1. Total videos: **30**

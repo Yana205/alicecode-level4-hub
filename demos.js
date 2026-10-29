@@ -16,32 +16,6 @@ function demoJSON(v, hotKey, ind = "") {
   return `<span class="j-num">${v}</span>`;
 }
 /* a demo lives on a slide or in a lab panel below the deck; both fire "slide-on" when shown */
-/* Atlas accepts relaxed JSON like { name: 'Noa' } — so do we */
-function demoParseQuery(text) {
-  const t = String(text || "").trim(); if (!t) return {};
-  try { return JSON.parse(t); } catch (e) {}
-  return JSON.parse(t.replace(/'/g, '"').replace(/([{,]\s*)(\$?[A-Za-z_][\w$]*)\s*:/g, '$1"$2":'));
-}
-/* equality plus $gt $gte $lt $lte $ne $in — enough for class; ci = ignore capital letters */
-function demoMatch(doc, q, ci) {
-  const norm = v => ci && typeof v === "string" ? v.toLowerCase() : v;
-  return Object.entries(q).every(([k, cond]) => {
-    const v = norm(doc[k]);
-    if (cond && typeof cond === "object" && !Array.isArray(cond)) return Object.entries(cond).every(([op, x]) => {
-      x = norm(x);
-      if (op === "$gt") return v > x; if (op === "$gte") return v >= x;
-      if (op === "$lt") return v < x; if (op === "$lte") return v <= x;
-      if (op === "$ne") return v !== x; if (op === "$in") return Array.isArray(x) && x.map(norm).includes(v);
-      throw new Error("unknown operator " + op);
-    });
-    return v === norm(cond);
-  });
-}
-function demoSort(list, s) {
-  const [[k, dir] = []] = Object.entries(s || {});
-  return k ? list.slice().sort((a, b) => (a[k] > b[k] ? 1 : a[k] < b[k] ? -1 : 0) * (dir < 0 ? -1 : 1)) : list;
-}
-
 function demoOnShow(el, fn) { const s = el.closest(".slide, .lab-panel"); if (s) s.addEventListener("slide-on", fn); }
 
 const DEMOS = {};
@@ -643,88 +617,58 @@ DEMOS.secretKey = function (el) {
 };
 
 /* ============================================================
-   Part 1 · the ready-made database — 4 exercises on the real class database (a practice copy offline)
+   Part 1 · ask the data — 4 questions, each one a simple SQL query. Guess first, then ▶ Run.
    ============================================================ */
-DEMOS.readyDb = function (el) {
-  const EX = [
-    { ic: "👀", h: "Read", q: "How many videos are there?", f: "", s: "" },
-    { ic: "🔍", h: "Filter", q: "Show only the dance videos.", f: '{ "category": "dance" }', s: "" },
-    { ic: "🔢", h: "Count", q: "How many have more than 10,000 likes?", f: '{ "likes": { "$gt": 10000 } }', s: "" },
-    { ic: "🏆", h: "Sort", q: "Which video has the MOST likes?", f: "", s: '{ "likes": -1 }' }
+DEMOS.sqlAsk = function (el) {
+  const kw = t => t.replace(/\b(SELECT|COUNT|FROM|WHERE|ORDER BY|DESC|LIMIT)\b/g, '<span class="c-kw">$1</span>')
+    .replace(/('[^']*')/g, '<span class="c-str">$1</span>').replace(/\b(\d+)\b/g, '<span class="c-fn">$1</span>');
+  const Q = [
+    { ic: "👀", h: "Read", q: "How many videos are there?", sql: "SELECT COUNT(*) FROM videos;", run: v => ({ n: v.length }) },
+    { ic: "🔍", h: "Filter", q: "Show only the dance videos.", sql: "SELECT title, likes FROM videos\nWHERE category = 'dance';", run: v => ({ rows: v.filter(d => d.category === "dance") }) },
+    { ic: "🔢", h: "Count", q: "How many have more than 10,000 likes?", sql: "SELECT COUNT(*) FROM videos\nWHERE likes > 10000;", run: v => ({ n: v.filter(d => d.likes > 10000).length }) },
+    { ic: "🏆", h: "Sort", q: "Which video has the MOST likes?", sql: "SELECT title, likes FROM videos\nORDER BY likes DESC\nLIMIT 1;", run: v => ({ rows: v.slice().sort((a, b) => b.likes - a.likes).slice(0, 1), win: true }) }
   ];
   el.innerHTML = `
-    <div class="rd">
-      <div class="rd-left">
-        <div class="rd-how">🍃 Type a filter on the right → <b>Apply</b>. The class database answers.</div>
-        <ol class="rd-ex">${EX.map((x, i) => `
-          <li><b>${x.ic} ${x.h}</b> ${x.q}
-            ${x.f || x.s ? `<button class="rd-try" data-i="${i}">${x.f ? `Filter <code>${demoEsc(x.f)}</code>` : `Sort <code>${demoEsc(x.s)}</code>`}</button>` : ""}
-          </li>`).join("")}
-        </ol>
-        <div class="rd-ans"></div>
-      </div>
-      <div class="vf-atlas rd-atlas">
-        <div class="vf-top">🍃 <b>MongoDB Atlas</b> <span>alicecode › <b>videos</b></span> <i class="vf-mode">…</i></div>
-        <div class="vf-bar"><span class="vf-label">Filter</span><input class="vf-input rd-f" placeholder="{ field: 'value' }" spellcheck="false" aria-label="Filter"></div>
-        <div class="vf-bar"><span class="vf-label">Sort</span><input class="vf-input rd-s" placeholder="{ field: -1 }" spellcheck="false" aria-label="Sort">
-          <button class="vf-apply">Apply</button><button class="vf-reset">Reset</button></div>
-        <div class="vf-msg"></div>
-        <div class="vf-docs"></div>
+    <div class="sq">
+      <ol class="sq-qs">${Q.map((x, i) => `<li><button class="sq-q" data-i="${i}"><b>${x.ic} ${x.h}</b><span>${x.q}</span></button></li>`).join("")}</ol>
+      <div class="sq-right">
+        <div class="sq-editor">
+          <div class="term-bar"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span><span class="title">query.sql · table videos (30 rows)</span></div>
+          <pre class="sq-code"></pre>
+          <button class="btn small sq-run">▶ Run</button>
+        </div>
+        <div class="sq-out"></div>
       </div>
     </div>`;
 
-  const f = el.querySelector(".rd-f"), s = el.querySelector(".rd-s");
-  const msg = el.querySelector(".vf-msg"), docsEl = el.querySelector(".vf-docs"), mode = el.querySelector(".vf-mode");
-  let videos = [], live = false;
-
-  /* live = the real class database through api/videos; otherwise the practice copy (same 30 videos) */
-  function draw(list, hit, total = list.length) {
-    msg.innerHTML = `QUERY RESULTS: <b>${list.length ? `1-${list.length} OF ${total}` : "0"}</b>`;
-    docsEl.innerHTML = list.map((d, i) => `
-      <div class="vf-doc${hit && i === 0 ? " hit" : ""}">
-        <div><span class="at-k">_id</span>: <span class="at-d">${d._id}</span> · <span class="at-k">title</span>: <span class="at-s">"${demoEsc(d.title)}"</span></div>
-        <div><span class="at-k">category</span>: <span class="at-s">"${demoEsc(d.category)}"</span> · <span class="at-k">likes</span>: <span class="at-d">${d.likes}</span> · <span class="at-k">views</span>: <span class="at-d">${d.views}</span></div>
-      </div>`).join("") || `<div class="vf-none">No documents match this filter.</div>`;
-  }
-  const ask = (q, so) => fetch(`api/videos?filter=${encodeURIComponent(JSON.stringify(q))}&sort=${encodeURIComponent(JSON.stringify(so))}`, { cache: "no-store" })
-    .then(r => (r.headers.get("content-type") || "").includes("json") ? r.json() : null);
-  const caseHint = q => { try { if (videos.some(d => demoMatch(d, q, true))) msg.innerHTML += ` · <b class="bad">MongoDB is case-sensitive — check capital letters!</b>`; } catch (e) {} };
-  async function apply() {
-    let q, so;
-    try { q = demoParseQuery(f.value); so = demoParseQuery(s.value); }
-    catch (e) { msg.innerHTML = `<b class="bad">🤔 That isn't valid — check the { } and the quotes.</b>`; docsEl.innerHTML = ""; return; }
-    const hit = Object.keys(q).length || Object.keys(so).length;
-    if (live) {
-      msg.textContent = "⏳ Asking the database…";
-      const j = await ask(q, so).catch(() => null);
-      if (j && j.ok) { draw(j.docs, hit, j.count); if (!j.count) caseHint(q); return; }
-      if (j && j.error) { msg.innerHTML = `<b class="bad">🤔 ${demoEsc(j.error)}</b>`; docsEl.innerHTML = ""; return; }
+  let videos = [], cur = 0, run = 0;
+  const code = el.querySelector(".sq-code"), out = el.querySelector(".sq-out"), slide = el.closest(".slide, .lab-panel");
+  const guess = () => { out.className = "sq-out"; out.innerHTML = `🤔 <b>Guess the answer first.</b> Then press ▶ Run.`; };
+  async function pick(i) {
+    const me = ++run; cur = i;
+    el.querySelectorAll(".sq-q").forEach(b => b.classList.toggle("on", +b.dataset.i === i));
+    guess();
+    const sql = Q[i].sql;
+    if (demoReduced()) { code.innerHTML = kw(demoEsc(sql)); return; }
+    for (let k = 1; k <= sql.length; k += 2) {
+      if (me !== run || (slide && !slide.classList.contains("on"))) { code.innerHTML = kw(demoEsc(sql)); return; }
+      code.innerHTML = kw(demoEsc(sql.slice(0, k))); await demoWait(18);
     }
-    try {
-      const list = demoSort(videos.filter(d => demoMatch(d, q)), so);
-      draw(list, hit);
-      if (!list.length) caseHint(q);
-    } catch (e) { msg.innerHTML = `<b class="bad">🤔 ${demoEsc(e.message)}</b>`; docsEl.innerHTML = ""; }
+    code.innerHTML = kw(demoEsc(sql));
   }
-  el.querySelector(".vf-apply").addEventListener("click", apply);
-  [f, s].forEach(i => i.addEventListener("keydown", e => { if (e.key === "Enter") apply(); }));
-  el.querySelector(".vf-reset").addEventListener("click", () => { f.value = ""; s.value = ""; apply(); });
-  el.querySelectorAll(".rd-try").forEach(b => b.addEventListener("click", () => {
-    const x = EX[+b.dataset.i]; f.value = x.f; s.value = x.s; apply();
-  }));
-
-  fetch("starter/class-db/videos.json").then(r => r.json()).then(async list => {
-    videos = list.map(d => ({ ...d, postedAt: d.postedAt && d.postedAt.$date }));
-    const j = await ask({}, {}).catch(() => null);
-    live = !!(j && j.ok);
-    mode.textContent = live ? "🟢 live · class database" : "🟡 practice copy";
-    if (live) draw(j.docs, false, j.count); else draw(videos);
-    /* answers: only for the instructor (admin or unlocked) */
-    if (typeof canView === "function" && canView()) {
-      const top = demoSort(videos, { likes: -1 })[0];
-      el.querySelector(".rd-ans").innerHTML = `<details><summary>👩‍🏫 Answers (only you see this)</summary>
-        1 · ${videos.length} videos · 2 · ${videos.filter(d => d.category === "dance").length} dance ·
-        3 · ${videos.filter(d => d.likes > 10000).length} over 10,000 · 4 · "${demoEsc(top.title)}" (${top.likes} ❤️)</details>`;
-    }
-  }).catch(() => { msg.textContent = "Couldn't load the videos — check the internet connection."; });
+  function exec() {
+    if (!videos.length) { out.textContent = "Couldn't load the videos — check the internet connection."; return; }
+    const r = Q[cur].run(videos);
+    out.className = "sq-out done";
+    out.innerHTML = r.rows
+      ? `<table class="sq-table"><tr><th>title</th><th>likes</th></tr>${r.rows.map(d => `<tr><td>${r.win ? "🏆 " : ""}${demoEsc(d.title)}</td><td>${d.likes.toLocaleString("en")}</td></tr>`).join("")}</table>
+         <small>${r.rows.length} row${r.rows.length === 1 ? "" : "s"}</small>`
+      : `<div class="sq-num">${r.n}</div><small>COUNT(*)</small>`;
+    if (typeof labSparkle === "function") labSparkle(el, out, 10);
+  }
+  el.querySelectorAll(".sq-q").forEach(b => b.addEventListener("click", () => pick(+b.dataset.i)));
+  el.querySelector(".sq-run").addEventListener("click", exec);
+  demoOnShow(el, () => pick(0));
+  fetch("starter/class-db/videos.json").then(r => r.json()).then(list => { videos = list; }).catch(() => {});
+  pick(0);
 };

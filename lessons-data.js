@@ -14,7 +14,7 @@ const LESSONS = [
   n: 1, emoji: "🚀", title: "Back to Building",
   project: "P1 · Refresh: APIs + Databases",
   goal: "Warm up APIs, understand why apps need databases, and connect a real app to MongoDB.",
-  leaves: "Mongo exercises done + you know how an app connects to MongoDB, and why its key stays secret.",
+  leaves: "4 data questions answered + you know how an app connects to MongoDB, and why its key stays secret.",
   tutorial: [
     { label: "MongoDB basics — short and friendly", url: "https://www.mongodb.com/basics" },
     { label: "⭐ Bonus: SQL vs NoSQL — when to use which (freeCodeCamp)", url: "https://www.freecodecamp.org/news/sql-vs-nosql-tutorial/" },
@@ -25,7 +25,7 @@ const LESSONS = [
   ],
   missions: [
     "Prompt practice: ask an AI for one small change using at least 3 words from the keyword bank (flexbox, hover, id…).",
-    "Open the ready-made Mongo database (alicecode › videos) and finish the 4 small exercises: read, filter, count, sort.",
+    "Part 1 · Ask the data: read 4 simple queries (read, filter, count, sort), guess each answer, then run it.",
     "Find: which video has the most likes?",
     "Watch the teacher connect the Idea Tracker to MongoDB: add an idea, restart the server — it's still there.",
     "Explain in one sentence: why does the MongoDB key live in .env and never on GitHub? 🔒",
@@ -165,14 +165,14 @@ const LESSONS = [
     ]},
     { kind: "discuss", q: "30 videos. Which has the most likes — without scrolling?",
       hints: ["Ask the data a question?", "Sort by…?"] },
-    { kind: "demo", demo: "readyDb", title: "Part 1 · Task ✅",
-      sub: "On your laptop: this site → Lesson 1 → 🧪 Labs → Part 1. 📸 Screenshot your answer.",
+    { kind: "demo", demo: "sqlAsk", title: "Part 1 · Ask the data 🔍",
+      sub: "Pick a question. Read the query. Guess the answer — then ▶ Run.",
       offline: [
-        "On your laptop: this site → Lesson 1 → 🧪 Labs → Part 1 · type a filter → Apply",
-        "1 · 👀 Read: how many videos are there?",
-        "2 · 🔍 Filter: only dance videos → { \"category\": \"dance\" }",
-        "3 · 🔢 Count: more than 10,000 likes → { \"likes\": { \"$gt\": 10000 } }",
-        "4 · 🏆 Sort: which video has the most likes? → sort { \"likes\": -1 }"
+        "30 videos in a table called videos. Ask it questions with SQL:",
+        "1 · 👀 Read: how many videos? → SELECT COUNT(*) FROM videos;",
+        "2 · 🔍 Filter: only dance videos → SELECT title, likes FROM videos WHERE category = 'dance';",
+        "3 · 🔢 Count: more than 10,000 likes → SELECT COUNT(*) FROM videos WHERE likes > 10000;",
+        "4 · 🏆 Sort: the most likes → SELECT title, likes FROM videos ORDER BY likes DESC LIMIT 1;"
       ] },
     { kind: "section", title: "Break ☕", sub: "30 minutes — you earned it" },
     { kind: "discuss", q: "The app that forgot everything: what does it need?",
@@ -1186,9 +1186,9 @@ const FLOWS = {
         { k: "demo", concept: "Memory", before: "Variables: refresh → everything is gone", after: "MongoDB: refresh → it's all still there" },
         { k: "talk", text: "1,000 TikTok videos. What do you save about EACH one?" },
         { k: "show", text: "A good table: one row = one thing, a unique id, the same fields." } ] },
-      { t: "1:15", icon: "✅", name: "Part 1 · task", min: 15, slides: "24–25", steps: [
+      { t: "1:15", icon: "✅", name: "Part 1 · ask the data", min: 15, slides: "24–25", steps: [
         { k: "talk", text: "30 videos. Which has the most likes — without scrolling?" },
-        { k: "do", text: "On their laptops: this site → Lesson 1 → 🧪 Labs → Part 1. 4 exercises + 📸 screenshot." } ] },
+        { k: "do", text: "Ask the data: pick a question, read the SQL query out loud, everyone guesses — then ▶ Run. 4 questions." } ] },
       { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "26", steps: [] },
       { t: "2:00", icon: "🔌", name: "Watch: connect", min: 15, slides: "27–28", steps: [
         { k: "talk", text: "The app that forgot everything — what does it need?" },

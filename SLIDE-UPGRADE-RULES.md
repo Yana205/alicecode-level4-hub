@@ -99,7 +99,7 @@ In `demos.js`: `DEMOS.<name> = function (el) { … }`. It's built once, and the 
 | **Superpower** | 9 💬 Same AI, junk vs. amazing — why? · 10 Secret superpower (the words) · 11 Button Lab (live) |
 | **APIs** | 12 💬 Remember what an API is? · 13 API waiter · 14 💬 "pikachu" → what comes back? · 15 Live fetch · 16 Postman + JSON |
 | **Databases** | 17 💬 How does Instagram remember you? · 18 Variables forget · 19 NEW WORD MongoDB · 20 What is a database? 🗄️ · 21 MongoDB remembers · 22 💬 What do you save about each video? · 23 A good table |
-| **Part 1** | 24 💬 Most likes, without scrolling? · 25 Part 1 task (on the website, live database) |
+| **Part 1** | 24 💬 Most likes, without scrolling? · 25 Part 1 · Ask the data (4 questions → a simple SQL query → guess → ▶ Run) |
 | **Break** | 26 ☕ |
 | **Part 2** | 27 💬 What does the app need? · 28 Watch: connect the wires (teacher demo) · 29 💬 What if a stranger finds the key? · 30 Your key is a secret 🔒 · 31 Try it yourself 🏠 |
 | **Wrap-up** | 32 Explain to me · 33 Glossary · 34 Toolkit · 35 Next time |

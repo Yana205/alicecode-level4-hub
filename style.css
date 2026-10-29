@@ -1166,7 +1166,7 @@ a.cal-ev:hover, button.cal-ev:hover { transform: translateX(4px); }
 .pm-send { border: none; background: #097BED; color: #fff; font-weight: 800; border-radius: 6px; padding: 6px 14px; cursor: pointer; }
 .pm-res { flex: 1; min-height: 0; display: flex; flex-direction: column; border-top: 1px solid #EEE; }
 .pm-status { padding: 5px 10px; font-size: .8em; color: #6B6B6B; }
-.pm-status .ok { color: #0CBB52; } .pm-status .bad, .vf-msg .bad { color: var(--red); }
+.pm-status .ok { color: #0CBB52; } .pm-status .bad { color: var(--red); }
 .pm-body { flex: 1; min-height: 0; margin: 0; overflow: auto; padding: 6px 10px; font: .76em/1.45 var(--font-code); color: #222; background: #FAFAFA; white-space: pre; }
 .pm-body .j-key, .tj-pretty .j-key { color: #A626A4; } .pm-body .j-str, .tj-pretty .j-str { color: #50A14F; } .pm-body .j-num, .tj-pretty .j-num { color: #986801; }
 .pm-same { text-align: center; font-weight: 800; color: var(--pink); font-size: .85em; padding: 3px 0; }
@@ -1229,24 +1229,26 @@ kbd { background: #fff; border: 1px solid #CFC9D6; border-bottom-width: 2px; bor
 .ex-badge { margin-top: auto; color: #fff; font-weight: 800; text-shadow: 0 0 10px rgba(47,179,128,.9); }
 .ex-badge:empty { display: none; }
 
-/* D++ · find it in the vault */
-.vf-atlas { display: flex; flex-direction: column; min-height: 0; background: #fff; border: 2px solid #C1E7D0; border-radius: 16px; overflow: hidden; }
-.vf-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: #001E2B; color: #fff; padding: 6px 12px; }
-.vf-top b { color: #00ED64; } .vf-top span { color: #C1C7C6; font-size: .85em; } .vf-top span b { color: #fff; }
-.vf-mode { margin-left: auto; font-style: normal; font-size: .75em; font-weight: 800; color: #C1C7C6; }
-.vf-bar { display: flex; gap: 6px; align-items: center; padding: 8px 10px; border-bottom: 1px solid #E8EDEB; }
-.vf-label { font-weight: 800; color: #5C6C75; font-size: .85em; }
-.vf-input { flex: 1; min-width: 0; padding: 6px 9px; border: 1.5px solid #C1C7C6; border-radius: 8px; font: .85em var(--font-code); outline: none; }
-.vf-input:focus { border-color: #00684A; box-shadow: 0 0 0 2px rgba(0,237,100,.3); }
-.vf-apply, .vf-reset { border: 1px solid #00684A; border-radius: 8px; padding: 5px 10px; font: 800 .82em var(--font-body); cursor: pointer; }
-.vf-apply { background: #00684A; color: #fff; } .vf-reset { background: #fff; color: #00684A; }
-.vf-msg { padding: 5px 12px; font-size: .75em; font-weight: 800; letter-spacing: .4px; color: #5C6C75; }
-.vf-docs { flex: 1; min-height: 0; overflow: auto; padding: 0 10px 10px; display: flex; flex-direction: column; gap: 6px; }
-.vf-doc { border: 1px solid #E8EDEB; border-radius: 10px; padding: 5px 10px; background: #F9FBFA; font: .76em/1.5 var(--font-code); color: #001E2B; }
-.vf-doc.hit { animation: vf-hit 1s ease; border-color: #00ED64; box-shadow: 0 0 0 2px rgba(0,237,100,.5); }
-@keyframes vf-hit { 0% { transform: scale(.9); opacity: 0; background: #C0FAE6; } 50% { transform: scale(1.03); opacity: 1; } }
-.at-k { color: #016BF8; } .at-oid { color: #00684A; } .at-s { color: #12924F; } .at-d { color: #B45AF2; }
-.vf-none { text-align: center; padding: 18px 0; color: #889397; font-weight: 700; }
+
+/* Part 1 · ask the data: 4 questions → a simple SQL query → ▶ Run */
+.sq { flex: 1; min-height: 0; display: grid; grid-template-columns: .9fr 1.1fr; gap: 14px; }
+.sq-qs { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
+.sq-q { width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 1px; text-align: left; border: 2px solid #E1D7EE; background: #fff; color: var(--ink); border-radius: 14px; padding: 8px 14px; font: inherit; cursor: pointer; transition: transform .2s, border-color .2s, box-shadow .2s; }
+.sq-q b { font: 800 1em var(--font-head); } .sq-q span { font-weight: 600; color: var(--ink-soft); font-size: .92em; }
+.sq-q:hover { transform: translateX(3px); }
+.sq-q.on { border-color: var(--pink); box-shadow: 0 4px 14px rgba(216,52,116,.3); } .sq-q.on b { color: var(--pink); }
+.sq-right { display: flex; flex-direction: column; gap: 10px; min-height: 0; justify-content: center; }
+.sq-editor { position: relative; background: #241436; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 18px rgba(36,20,54,.25); }
+.sq-code { margin: 0; min-height: 4.8em; padding: 12px 14px 14px; color: #EDE4FA; font: clamp(.85rem, 1.6vw, 1.1rem)/1.55 var(--font-code); white-space: pre-wrap; }
+.sq-run { position: absolute; right: 10px; bottom: 10px; }
+.sq-out { min-height: 7em; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: #F6F1FC; border: 2px dashed #D9CCEA; border-radius: 14px; padding: 10px 14px; text-align: center; font-weight: 600; color: var(--ink-soft); }
+.sq-out.done { background: #EEFBF4; border: 2px solid #2FB380; color: var(--ink); animation: pop-in .3s ease; }
+.sq-out small { color: var(--ink-soft); font: 700 .78em var(--font-code); }
+.sq-num { font: 800 clamp(2.2rem, 5vw, 3.4rem)/1 var(--font-head); color: #2FB380; }
+.sq-table { border-collapse: collapse; font: .85em var(--font-code); background: #fff; }
+.sq-table th, .sq-table td { border: 1.5px solid #C9E9D8; padding: 3px 12px; text-align: left; }
+.sq-table th { background: #D6F5E5; color: #1B6B4A; }
+@media (max-width: 640px) { .sq { grid-template-columns: 1fr; overflow: auto; } }
 
 /* 🗄️ What is a database? app → server → database, zoom, 4 shapes */
 .dm { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto 1fr auto; gap: clamp(6px, 1vw, 10px) 14px; }
@@ -1336,17 +1338,6 @@ kbd { background: #fff; border: 1px solid #CFC9D6; border-bottom-width: 2px; bor
 .sk-locks b { color: var(--ink); }
 @media (max-width: 640px) { .sk-row { grid-template-columns: 1fr; } }
 
-/* Part 1 · ready-made database: class login + exercises + practice copy */
-.rd { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1.15fr; gap: 12px; }
-.rd-left { display: flex; flex-direction: column; gap: 8px; min-height: 0; overflow: auto; }
-.rd-ex { margin: 0; padding: 8px 12px 8px 30px; background: #E5DBFD; border-radius: 14px; color: #43317E; display: flex; flex-direction: column; gap: 6px; font-weight: 600; line-height: 1.35; }
-.rd-ex b { color: var(--ink); }
-.rd-try { display: block; margin-top: 2px; border: 1.5px solid var(--pink-soft); background: #fff; color: var(--ink); border-radius: 8px; padding: 1px 8px; font: 700 .8em var(--font-body); cursor: pointer; text-align: left; }
-.rd-try:hover { border-color: var(--pink); }
-.rd-try code { font: .95em var(--font-code); color: var(--pink); }
-.rd-ans details { background: #FFF8E5; border-radius: 10px; padding: 5px 10px; font-size: .82em; font-weight: 700; color: var(--ink); }
-.rd-ans summary { cursor: pointer; color: #B7791F; }
-.rd-atlas .vf-bar + .vf-bar { border-top: none; padding-top: 0; }
 
 /* Part 3 · clickable resource cards */
 .s-links { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(8px, 1.4vw, 14px); }
