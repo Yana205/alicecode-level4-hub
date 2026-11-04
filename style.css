@@ -1075,6 +1075,30 @@ a.cal-ev:hover, button.cal-ev:hover { transform: translateX(4px); }
 .race-foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; font-weight: 700; }
 .race-score .bad { color: var(--red); } .race-score .good { color: var(--mint); }
 
+/* Lesson 2 · chat vs. coding agent: same bug, two ways */
+.cva { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto; gap: 10px 12px; position: relative; }
+.cva-side { border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+.cva-chat { background: #ECEBEF; border: 2px solid #D5D3DA; filter: saturate(.6); }
+.cva-head { display: flex; justify-content: space-between; gap: 8px; padding: 6px 12px; font-weight: 800; color: #5F5D66; background: #DEDCE3; }
+.cva-meter { font-family: var(--font-code); color: var(--red); }
+.cva-log { flex: 1; min-height: 0; overflow: auto; padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; }
+.cva-msg { max-width: 88%; padding: 5px 10px; border-radius: 12px; font-size: .82em; line-height: 1.4; font-weight: 600; animation: pop-in .25s ease; }
+.cva-msg.you { align-self: flex-end; background: #fff; color: #3B3A40; border-bottom-right-radius: 4px; }
+.cva-msg.ai { align-self: flex-start; background: #D5D3DA; color: #3B3A40; border-bottom-left-radius: 4px; }
+.cva-msg.bad { background: #FBE3E6; color: #A3243A; }
+.cva-msg i { font-style: normal; font-size: .9em; color: #6B6973; background: #F1F0F3; border-radius: 6px; padding: 0 5px; }
+.cva-msg code { font: .92em var(--font-code); }
+.cva-agent { box-shadow: 0 0 0 2px #2FB380, var(--shadow); transition: box-shadow .4s; }
+.cva-agent.won { box-shadow: 0 0 0 3px #2FB380, 0 0 28px rgba(47,179,128,.7); }
+.cva-term { flex: 1; min-height: 0; margin: 0; padding: 10px 12px; overflow: auto; color: #EDE4FA; font: .85em/1.6 var(--font-code); white-space: pre-wrap; }
+.t-you { color: #FF79A8; font-weight: 700; }
+.cva-diff { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; opacity: .25; filter: grayscale(1); transition: opacity .5s, filter .5s; }
+.cva.done .cva-diff { opacity: 1; filter: none; }
+.cva-d { display: flex; flex-direction: column; gap: 2px; background: #F6F1FC; border-radius: 12px; padding: 6px 10px; font-size: .82em; font-weight: 600; }
+.cva-d b { font-family: var(--font-head); color: var(--ink); }
+.cva-a { color: #6B6973; } .cva-b { color: #1B7A52; font-weight: 800; }
+.cva-replay { position: absolute; top: -40px; right: 0; }
+
 /* B · TikTok Studio loop */
 .sl-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); gap: 8px; align-items: stretch; cursor: pointer; }
 .sl-col { display: flex; flex-direction: column; min-height: 0; }
@@ -1332,7 +1356,8 @@ kbd { background: #fff; border: 1px solid #CFC9D6; border-bottom-width: 2px; bor
 
 @media (max-width: 700px) {
   .slide.k-demo { overflow-y: auto; }
-  .race, .lf, .td, .tt, .ex, .vf, .rd { grid-template-columns: 1fr; }
+  .race, .lf, .td, .tt, .ex, .vf, .rd, .cva { grid-template-columns: 1fr; }
+  .cva { grid-template-rows: 300px 260px auto; } .cva-diff { grid-template-columns: 1fr; } .cva-replay { position: static; justify-self: center; }
   .tj-stage.formatted { grid-template-columns: 1fr; }
   .ex-right { min-height: 340px; } .tt-pm { min-height: 360px; }
   .race { grid-template-rows: 260px 220px; }

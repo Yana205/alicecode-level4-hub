@@ -126,6 +126,88 @@ DEMOS.agentRace = function (el) {
 };
 
 /* ============================================================
+   Lesson 2 · the main show: the same bug, fixed in an AI chat vs. by a coding agent
+   ============================================================ */
+DEMOS.chatVsAgent = function (el) {
+  const CHAT = [
+    { who: "you", t: "📋 <i>pasted app.js</i> My flower shop page shows nothing. Fix it?", paste: 1, min: 1 },
+    { who: "ai", t: "I can't see your other files. Can you paste index.html and data.js?", min: 2 },
+    { who: "you", t: "📋 <i>pasted index.html</i> 📋 <i>pasted data.js</i>", paste: 2, min: 3 },
+    { who: "ai", t: "Try this on line 12: <code>showFlowers(list)</code>", min: 4 },
+    { who: "you", t: "📋 copied it into app.js… ❌ <code>showFlowers is not defined</code>", paste: 1, min: 5, bad: true },
+    { who: "ai", t: "Sorry! I guessed. Use <code>renderFlowers(list)</code>.", min: 6 },
+    { who: "you", t: "📋 copied again… ✅ works.", paste: 1, min: 7 }
+  ];
+  const TERM = [
+    ["dim", "$ opencode"],
+    ["you", "> my shop page shows nothing. find the bug + fix it"],
+    ["run", "📂 reading 14 files…"],
+    ["run", "🔍 app.js:12 calls loadFlower()"],
+    ["run", "   but data.js has loadFlowers()"],
+    ["ok", "✏️ fixed app.js (1 line)"],
+    ["run", "▶ npm test"],
+    ["ok", "✅ 3 passed"],
+    ["done", "[Done] The page works. ⏱ 40 sec"]
+  ];
+  const DIFF = [
+    ["👀 Sees", "only what you paste", "your whole project"],
+    ["✋ Does", "gives advice", "edits, runs + tests"],
+    ["🧠 Names", "guesses", "reads the real code"]
+  ];
+  el.innerHTML = `
+    <div class="cva">
+      <div class="cva-side cva-chat">
+        <div class="cva-head"><span>💬 AI chat</span><span class="cva-meter">📋 0 · ⏱ 0 min</span></div>
+        <div class="cva-log"></div>
+      </div>
+      <div class="cva-side cva-agent terminal">
+        <div class="term-bar"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+          <span class="title">🤖 coding agent · inside your project</span></div>
+        <pre class="cva-term"></pre>
+      </div>
+      <div class="cva-diff">${DIFF.map(([h, a, b]) => `<div class="cva-d"><b>${h}</b><span class="cva-a">💬 ${a}</span><span class="cva-b">🤖 ${b}</span></div>`).join("")}</div>
+      <button class="btn small cva-replay">↺ Replay</button>
+    </div>`;
+
+  const $ = q => el.querySelector(q);
+  const log = $(".cva-log"), term = $(".cva-term"), meter = $(".cva-meter"), box = $(".cva");
+  let run = 0;
+  async function playChat(me) {
+    let pastes = 0;
+    for (const m of CHAT) {
+      if (me !== run) return;
+      await demoWait(demoReduced() ? 150 : 1000);
+      if (me !== run) return;
+      pastes += m.paste || 0;
+      log.insertAdjacentHTML("beforeend", `<div class="cva-msg ${m.who}${m.bad ? " bad" : ""}">${m.t}</div>`);
+      log.scrollTop = log.scrollHeight;
+      meter.textContent = `📋 ${pastes} · ⏱ ${m.min} min`;
+    }
+  }
+  async function playAgent(me) {
+    for (const [cls, line] of TERM) {
+      if (me !== run) return;
+      await demoWait(demoReduced() ? 80 : cls === "run" ? 650 : 450);
+      if (me !== run) return;
+      term.innerHTML += `<span class="t-${cls}">${demoEsc(line)}</span>\n`;
+      term.scrollTop = term.scrollHeight;
+    }
+    $(".cva-agent").classList.add("won");
+  }
+  async function play() {
+    const me = ++run;
+    log.innerHTML = ""; term.innerHTML = ""; meter.textContent = "📋 0 · ⏱ 0 min";
+    box.classList.remove("done"); $(".cva-agent").classList.remove("won");
+    await Promise.all([playChat(me), playAgent(me)]);
+    if (me !== run) return;
+    box.classList.add("done");
+    if (typeof labSparkle === "function") labSparkle(el, $(".cva-agent"), 14);
+  }
+  $(".cva-replay").addEventListener("click", play);
+  demoOnShow(el, play);
+};
+
+/* ============================================================
    B · TikTok Studio teaser — 3 clicks: input → brain → output
    ============================================================ */
 DEMOS.studioLoop = function (el) {

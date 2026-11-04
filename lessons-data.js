@@ -276,7 +276,6 @@ const LESSONS = [
     "Install opencode (guide on the Setup page).",
     "Open last year's big project and ask: \"What does this project do?\"",
     "Bug hunt: let the agent find the hidden bug. Fix. Run. Test.",
-    "Rewrite \"build me a website for my flower shop\" as an explicit prompt — at least 5 keywords (layout, colors, features).",
     "📸 Screenshot the error + the fix — before and after."
   ],
   slides: [
@@ -300,7 +299,6 @@ const LESSONS = [
         "You saw an app connect to MongoDB — and kept its key secret. 🔒"
       ]}
     ]},
-    { kind: "discuss", q: "Can an AI write code for you? Then who is the boss?" },
     { kind: "content", title: "Today's big idea 💡", items: [
       { lines: [
         "AI can write code with you.",
@@ -310,20 +308,16 @@ const LESSONS = [
       ]},
       { note: "Vibe coding = leading the AI, not typing every line." }
     ]},
-    { kind: "discuss", q: "You tell an AI: \"build me a website\". What do you get?" },
-    { kind: "beforeafter", title: "The flower shop test 🌸",
-      before: ["\"Build me a website", "for my flower shop.\"", "The AI guesses EVERYTHING. 😬"],
-      after: ["\"Navbar + hero + a grid of 6", "flower cards with hover, pink", "#D83474, contact form, responsive.\"", "Her exact vision. 💅"],
-      note: "Same AI, same minute. Different words → a completely different website." },
-    { kind: "content", title: "Why could she ask like that? 🧠", items: [
-      { lines: [
-        "She knows the REAL words:",
-        "flexbox · grid · hover · form · id · responsive"
-      ]},
-      { note: "No words → the AI guesses. Your words → YOUR design." }
-    ]},
-    { kind: "lab", title: "🌸 The Flower Shop Lab",
-      sub: "One vague prompt vs one explicit prompt — a whole site, live." },
+    { kind: "discuss", q: "Coding with an AI in a chat vs. an AI agent inside your project. What's the difference?", sec: 90 },
+    { kind: "demo", demo: "chatVsAgent", title: "Same bug, two ways 🐞",
+      sub: "Left: you + an AI chat. Right: a coding agent. Watch both.",
+      offline: [
+        "💬 AI chat: paste app.js → \"I can't see your other files\" → paste 2 more → it guesses a name → ❌ error → paste again → ✅ after 7 min, 5 copy-pastes.",
+        "🤖 Coding agent: \"find the bug + fix it\" → reads 14 files → finds the real name → fixes 1 line → runs the tests → ✅ 40 seconds, 0 copy-pastes.",
+        "👀 Sees: only what you paste vs. your whole project",
+        "✋ Does: gives advice vs. edits, runs + tests",
+        "🧠 Names: guesses vs. reads the real code"
+      ] },
     { kind: "content", title: "Part 1 · The LLM challenge ✅",
       lead: "Remember sweating over this exercise? Watch.", items: [
       { lines: [
@@ -361,7 +355,6 @@ const LESSONS = [
       meaning: "The AI's job description, set before the chat starts.",
       extra: "Example: \"You are a patient coding teacher. Use simple English.\"" },
     { kind: "section", title: "Break ☕", sub: "30 minutes" },
-    { kind: "discuss", q: "Copy-paste is getting old 😩 What if the AI could open your WHOLE project?" },
     { kind: "content", title: "Meet the coding agent 🤝", items: [
       { lines: [
         "A coding agent reads your files.",
@@ -1205,32 +1198,30 @@ const FLOWS = {
       { t: "0:20", icon: "🔁", name: "Last time", min: 5, slides: "4–5", steps: [
         { k: "talk", text: "Last time we built with APIs + MongoDB. What do you remember?" },
         { k: "show", text: "Reveal: APIs, JSON, MongoDB." } ] },
-      { t: "0:25", icon: "💡", name: "Vibe coding", min: 20, slides: "6–11", steps: [
-        { k: "talk", text: "Can an AI write code for you? Then who is the boss?" },
+      { t: "0:25", icon: "🤖", name: "Chat vs. coding agent", min: 20, slides: "6–8", steps: [
         { k: "show", text: "The big idea: you describe → AI codes → YOU check." },
-        { k: "talk", text: "You tell an AI \"build me a website\". What do you get?" },
-        { k: "demo", concept: "Explicit prompts", before: "\"Build me a flower shop site\" → the AI guesses everything", after: "Navbar, 6 cards, pink #D83474… → her exact vision" },
-        { k: "do", text: "Flower Shop Lab: one vague vs. one explicit prompt — live." } ] },
-      { t: "0:45", icon: "✅", name: "Part 1 · LLM challenge", min: 25, slides: "12–13", steps: [
+        { k: "talk", text: "AI in a chat vs. an AI agent inside your project — what's the difference? Collect THEIR ideas on the board first." },
+        { k: "demo", concept: "Coding agent", before: "AI chat: 5 copy-pastes, a guessed name, an error, 7 min", after: "Agent: reads the project, fixes 1 line, tests pass, 40 sec" },
+        { k: "talk", text: "Compare with their board: sees · does · guesses. What did they find that the slide missed?" } ] },
+      { t: "0:45", icon: "✅", name: "Part 1 · LLM challenge", min: 25, slides: "9–10", steps: [
         { k: "do", text: "Paste a real exercise from last year into Gemini / Claude. Read the answer. Test it." },
         { k: "demo", concept: "Fix by chatting", before: "The code crashes on an empty list", after: "The AI spots it, we test the fix → green" },
         { k: "do", text: "📸 Proof: the error + the fix." } ] },
-      { t: "1:10", icon: "🙈", name: "What the AI misses", min: 20, slides: "14–18", steps: [
+      { t: "1:10", icon: "🙈", name: "What the AI misses", min: 20, slides: "11–15", steps: [
         { k: "talk", text: "The AI was fast. Was it always right? What did it miss?" },
         { k: "show", text: "It can't see · it forgets · it sounds sure." },
         { k: "show", text: "3 new words, one slide each: token · context window · system prompt." } ] },
-      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "19", steps: [] },
-      { t: "2:00", icon: "🤝", name: "Meet the coding agent", min: 10, slides: "20–21", steps: [
-        { k: "talk", text: "Copy-paste is getting old. What if the AI could open your WHOLE project?" },
-        { k: "show", text: "Chat LLM = advice. Coding agent = hands on your project. Ours: opencode." } ] },
-      { t: "2:10", icon: "🔧", name: "Part 2 · install", min: 20, slides: "22–23", steps: [
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "16", steps: [] },
+      { t: "2:00", icon: "🤝", name: "Meet the coding agent", min: 10, slides: "17", steps: [
+        { k: "show", text: "Back to the morning demo: chat = advice, agent = hands on your project. Ours: opencode." } ] },
+      { t: "2:10", icon: "🔧", name: "Part 2 · install", min: 20, slides: "18–19", steps: [
         { k: "do", text: "Install opencode (Setup page). It says hi? They're in." },
         { k: "do", text: "First mission: open last year's project. Ask: \"What does this project do?\"" } ] },
-      { t: "2:30", icon: "🕵️‍♀️", name: "Bug hunt", min: 15, slides: "24–25", steps: [
+      { t: "2:30", icon: "🕵️‍♀️", name: "Bug hunt", min: 15, slides: "20–21", steps: [
         { k: "demo", concept: "Coding agent", before: "The page loads… and shows nothing", after: "The agent finds the bad file → one fix, it works" },
         { k: "do", text: "They let the agent find the hidden bug. Fix, run, test, 📸." },
         { k: "show", text: "New word: skill." } ] },
-      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "26–30", steps: [
+      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "22–26", steps: [
         { k: "do", text: "Pick token · context window · coding agent → 2 sentences + their before/after." },
         { k: "show", text: "Glossary, prompts to try, want more, next time." } ] }
     ]
@@ -1385,7 +1376,7 @@ const VISUALS = {
   2: {
     "But the AI misses things 🙈": { id: "v2-1", prompt: "A blindfolded robot at a desk holding one paper, a whole messy project bookshelf behind it that it cannot see." },
     "Meet the coding agent 🤝": { id: "v2-3", prompt: "A robot with many arms working across multiple open files and screens at once." },
-    "Why could she ask like that? 🧠": { id: "v2-4", prompt: "Split image: sad generic gray website vs joyful pink flower-shop website, on the same laptop." }
+
   },
   3: {
     "Agents are everywhere 🌍": { id: "v3-1", prompt: "Three friendly robots: one with a headset (support), one with a magnifying glass and newspapers (research), one with a keyboard (coding)." },

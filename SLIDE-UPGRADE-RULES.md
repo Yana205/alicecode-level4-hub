@@ -172,3 +172,16 @@ Every lesson page lists **all** its labs and live demos (any `kind: "lab"` or `k
 The purple hint chips under a 💬 question pointed at the answer ("Or what it guessed?", "A loop?", "Model? Prompt?"), so the class repeated the hint instead of thinking. Removed from 28 of 31 💬 slides in all 6 lessons.
 
 22. **Their ideas first.** A 💬 slide is the question alone. A hint chip is only OK when it says *how* to answer, not *what* ("In your own words", "Predict: … = ?") or gives the rules of a brainstorm ("Small enough for 3 days?"). If students go quiet, the instructor asks a follow-up out loud. It is never printed on the slide.
+
+---
+
+## Lesson 2 · the main show: chat → coding agent (30 → 26 slides)
+
+The opening was 3 talks + a flower-shop thread that repeated Lesson 1's prompt superpower. Now it goes straight to the lesson's real idea.
+
+| Slide | What it does |
+|---|---|
+| **7 · 💬 Chat vs. agent: what's the difference?** (new, 90 s) | The question alone. The instructor writes THEIR answers on the board. |
+| **8 · Same bug, two ways 🐞** (new, replaces the Flower Shop Lab) | Twin panels, same bug ("the page shows nothing"). Left, gray AI chat: paste app.js → "I can't see your other files" → paste 2 more → a guessed function name → ❌ error → paste again → ✅. A meter counts 📋 5 copy-pastes · ⏱ 7 min. Right, glowing terminal: the agent reads 14 files, finds the real name, fixes 1 line, runs the tests → ✅ 40 sec (sparkle). Then 3 chips light up: 👀 sees · ✋ does · 🧠 names (chat vs. agent). ↺ Replay. |
+
+Removed: 💬 "Who is the boss?", 💬 "build me a website", "The flower shop test", "Why could she ask like that?", the Flower Shop Lab (and its preset in `lab.js`), and the after-break 💬 "Copy-paste is getting old" (same question as slide 7).

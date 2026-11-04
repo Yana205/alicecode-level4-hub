@@ -75,65 +75,6 @@ const LAB_PRESETS = {
         "animation": "@keyframes float {\n    0%, 100% { translate: 0 0; }\n    50% { translate: 0 -10px; }\n  }"
       }
     }
-  },
-  2: {
-    title: "🌸 The Flower Shop Lab — vague vs explicit, full page",
-    intro: "Lesson 1's trick, bigger: a whole site from one prompt. Watch both, then make it yours.",
-    start: `<h1>Flower Shop</h1>
-<p>Welcome to my shop.</p>`,
-    vague: {
-      label: "😐 \"Build me a website for my flower shop\"",
-      code: `<!-- The AI guessed everything. -->
-<h1>Flower Shop</h1>
-<p>Welcome to my flower shop.</p>
-<p>We sell flowers.</p>
-<ul>
-  <li>Roses</li>
-  <li>Tulips</li>
-</ul>`
-    },
-    explicit: {
-      label: "😎 \"navbar + hero + card grid with hover + #D83474 + responsive\"",
-      code: `<style>
-  body { margin: 0; font-family: sans-serif; color: #3B1F5C; }
-  nav {
-    display: flex; gap: 16px; align-items: center;
-    padding: 12px 20px; background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,.08);
-  }
-  nav b { color: #D83474; }
-  .hero {
-    background: linear-gradient(135deg,#674C9B,#D83474);
-    color: #fff; text-align: center; padding: 42px 16px;
-  }
-  .hero button {
-    background: #fff; color: #D83474; border: none;
-    border-radius: 999px; padding: 10px 26px;
-    font-weight: bold; cursor: pointer;
-  }
-  .grid {
-    display: flex; gap: 14px; flex-wrap: wrap;
-    justify-content: center; padding: 24px 14px;
-  }
-  .card {
-    background: #fff; border: 2px solid #EFA6C3;
-    border-radius: 16px; padding: 16px; width: 120px;
-    text-align: center; transition: transform .2s;
-  }
-  .card:hover { transform: translateY(-6px); }
-  .price { color: #D83474; font-weight: bold; }
-</style>
-<nav><b>🌸 Flora</b> Home · Shop · Contact</nav>
-<div class="hero">
-  <h1>Fresh flowers, every day</h1>
-  <button>Order now</button>
-</div>
-<div class="grid">
-  <div class="card">🌹<br>Rose<br><span class="price">₪12</span></div>
-  <div class="card">🌷<br>Tulip<br><span class="price">₪9</span></div>
-  <div class="card">🌻<br>Sunflower<br><span class="price">₪10</span></div>
-</div>`
-    }
   }
 };
 
