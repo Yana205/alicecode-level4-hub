@@ -1075,6 +1075,57 @@ a.cal-ev:hover, button.cal-ev:hover { transform: translateX(4px); }
 .race-foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; font-weight: 700; }
 .race-score .bad { color: var(--red); } .race-score .good { color: var(--mint); }
 
+/* optional chip above a slide title */
+.s-tag { align-self: center; margin: 0 auto 4px; background: #FFF4E8; color: #B5621A; border: 1.5px solid #FFB86C; border-radius: 999px; padding: 1px 12px; font-weight: 800; font-size: .78em; letter-spacing: .3px; width: fit-content; }
+
+/* Lesson 2 · opencode modes */
+.ocm { flex: 1; min-height: 0; display: grid; grid-template-columns: .8fr 1.2fr; grid-template-rows: 1fr auto; gap: 10px 14px; }
+.ocm-cards { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
+.ocm-card { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0 8px; background: #F3F1F6; border: 2px solid #E1DEE6; border-radius: 14px; padding: 8px 12px; color: #8A8794; transition: all .25s; }
+.ocm-card b { font: 800 1.05em var(--font-head); } .ocm-card span { grid-column: 1; font-weight: 600; font-size: .85em; } .ocm-card kbd { grid-row: 1 / 3; grid-column: 2; }
+.ocm-card.on { background: #fff; color: var(--ink); border-color: var(--pink); box-shadow: 0 4px 14px rgba(216,52,116,.25); }
+.ocm-card.on[data-c="build"] { border-color: #2FB380; box-shadow: 0 4px 14px rgba(47,179,128,.3); }
+.ocm-card.on[data-c="auto"] { border-color: #FFB86C; box-shadow: 0 4px 14px rgba(255,184,108,.35); }
+.ocm-tui { display: flex; flex-direction: column; min-height: 0; }
+.ocm-out { flex: 1; min-height: 0; margin: 0; padding: 10px 12px; overflow: auto; color: #EDE4FA; font: .85em/1.6 var(--font-code); white-space: pre-wrap; }
+.ocm-out i { color: #8E7BB0; font-style: normal; }
+.ocm-input { display: flex; justify-content: space-between; gap: 8px; border-top: 1px solid #3C2858; padding: 6px 12px; font: .85em var(--font-code); color: #EDE4FA; }
+.ocm-agent b { border-radius: 6px; padding: 0 8px; color: #fff; } .ocm-agent i { color: #8E7BB0; font-style: normal; }
+.m-plan { background: var(--pink); } .m-build { background: #2FB380; }
+.ocm-ask { display: inline-flex; gap: 6px; align-items: center; background: #3C2858; border-radius: 8px; padding: 3px 8px; color: #FFD166; font-weight: 700; }
+.ocm-ask button { border: none; border-radius: 6px; padding: 2px 8px; font: 700 .9em var(--font-body); cursor: pointer; }
+.ocm-yes { background: #2FB380; color: #fff; } .ocm-no { background: #fff; color: var(--ink); }
+.t-bad { color: #FF8A9B; }
+.ocm-keys { grid-column: 1 / -1; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.ocm-auto { background: #FFF4E8; color: #B5621A; border: 2px solid #FFB86C; box-shadow: none; }
+.ocm-auto.on { background: #FFB86C; color: #3B1F00; border-color: #FFB86C; box-shadow: 0 0 14px rgba(255,184,108,.6); }
+
+/* copy boxes (practice app + mission prompts) */
+.cp-box { display: flex; flex-direction: column; min-height: 0; background: #241436; border-radius: 12px; overflow: hidden; }
+.cp-head { display: flex; align-items: center; gap: 8px; padding: 5px 10px; background: #37204F; color: #C9B6E4; font: 700 .78em var(--font-code); }
+.cp-head span { flex: 1; } .cp-head a { color: #C9B6E4; }
+.cp-copy { border: none; background: var(--pink); color: #fff; border-radius: 6px; padding: 2px 10px; font: 800 .95em var(--font-body); cursor: pointer; }
+.cp-box pre { margin: 0; padding: 8px 12px; overflow: auto; color: #9FF0C8; font: .8em/1.5 var(--font-code); white-space: pre-wrap; }
+
+/* Lesson 2 · the practice app */
+.oca { flex: 1; min-height: 0; display: grid; grid-template-columns: .85fr 1.15fr; gap: 14px; }
+.oca-steps { margin: 0; padding: 10px 12px 10px 32px; background: #E5DBFD; border-radius: 16px; color: #43317E; font-weight: 600; line-height: 1.45; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+.oca-steps b { color: var(--ink); }
+.oca-steps code, .ocx-steps code { background: #fff; border-radius: 5px; padding: 0 5px; font: .9em var(--font-code); }
+.oca-code pre { flex: 1; }
+
+/* Lesson 2 · mission cards */
+.ocx { flex: 1; min-height: 0; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; max-width: 900px; width: 100%; margin: 0 auto; }
+.ocx-mode { display: flex; flex-direction: column; align-items: center; gap: 2px; color: #fff; border-radius: 20px; padding: 16px 22px; box-shadow: var(--shadow); }
+.ocx-mode span { font-size: 2.6em; line-height: 1; } .ocx-mode b { font: 800 1.2em var(--font-head); } .ocx-mode small { opacity: .9; font-weight: 700; }
+.ocx-mode kbd { color: var(--ink); }
+.ocx-main { display: flex; flex-direction: column; gap: 10px; }
+.ocx-steps { margin: 0; padding-left: 22px; font-weight: 600; line-height: 1.6; color: var(--ink); }
+.ocx .cp-box pre { font-size: .92em; color: #FFE3EE; }
+.ocx-check { background: #EEFBF4; border-left: 5px solid #2FB380; border-radius: 10px; padding: 6px 12px; font-weight: 700; color: var(--ink); }
+.ocx-check small { display: block; font-weight: 600; color: var(--ink-soft); }
+@media (max-width: 700px) { .ocm, .oca, .ocx { grid-template-columns: 1fr; } .ocm { grid-template-rows: auto 260px auto; } .oca-code { min-height: 300px; } }
+
 /* Lesson 2 · chat vs. coding agent: same bug, two ways */
 .cva { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto; gap: 10px 12px; position: relative; }
 .cva-side { border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }

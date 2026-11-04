@@ -74,6 +74,9 @@
       onerror="this.closest('.s-visual').classList.add('missing')"></div>`;
   }
 
+  /* a small chip above the title, e.g. tag: "⭐ Optional" */
+  const tagHTML = s => s.tag ? `<div class="s-tag">${esc(s.tag)}</div>` : "";
+
   function slideHTML(s) {
     if (s.kind === "title") return `
       <div class="brace-art">{ }</div>
@@ -87,7 +90,7 @@
       ${s.sub ? `<div class="s-lead">${esc(s.sub)}</div>` : ""}
       <div class="lab-embed"></div>`;
     if (s.kind === "demo") return `
-      <h2 class="s-title">${esc(s.title)}</h2>
+      ${tagHTML(s)}<h2 class="s-title">${esc(s.title)}</h2>
       ${s.sub ? `<div class="s-lead">${esc(s.sub)}</div>` : ""}
       <div class="demo-embed" data-demo="${esc(s.demo)}"></div>`;
     if (s.kind === "newword") return `
@@ -135,7 +138,7 @@
       return "";
     }).join("");
     return `
-      <h2 class="s-title">${esc(s.title)}</h2>
+      ${tagHTML(s)}<h2 class="s-title">${esc(s.title)}</h2>
       ${s.lead ? `<div class="s-lead">${esc(s.lead)}</div>` : ""}
       ${(() => {
         const vis = visualHTML(s.title);

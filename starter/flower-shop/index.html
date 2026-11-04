@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Flower Shop</title>
+  <style>
+    body { font-family: sans-serif; background: #fdf2f8; text-align: center; }
+    .flowers { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .card { background: white; border-radius: 16px; padding: 16px; width: 140px; }
+    .emoji { font-size: 40px; }
+    button { border: none; background: #d83474; color: white; border-radius: 99px; padding: 6px 14px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🌸 Flower Shop</h1>
+  <div class="flowers" id="flowers"></div>
+
+  <script>
+    const flowers = [
+      { name: "Rose", emoji: "🌹", likes: 0 },
+      { name: "Tulip", emoji: "🌷", likes: 0 },
+      { name: "Sunflower", emoji: "🌻", likes: 0 }
+    ];
+
+    function show() {
+      const box = document.getElementById("flowers");
+      box.innerHTML = "";
+      flowers.forEach((f, i) => {
+        box.innerHTML += `
+          <div class="card">
+            <div class="emoji">${f.emoji}</div>
+            <h3>${f.name}</h3>
+            <button onclick="like(${i})">❤️ ${f.likes}</button>
+          </div>`;
+      });
+    }
+
+    function like(i) {
+      flowers[i].like++;
+      show();
+    }
+
+    show();
+  </script>
+</body>
+</html>

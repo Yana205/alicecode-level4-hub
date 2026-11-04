@@ -185,3 +185,20 @@ The opening was 3 talks + a flower-shop thread that repeated Lesson 1's prompt s
 | **8 · Same bug, two ways 🐞** (new, replaces the Flower Shop Lab) | Twin panels, same bug ("the page shows nothing"). Left, gray AI chat: paste app.js → "I can't see your other files" → paste 2 more → a guessed function name → ❌ error → paste again → ✅. A meter counts 📋 5 copy-pastes · ⏱ 7 min. Right, glowing terminal: the agent reads 14 files, finds the real name, fixes 1 line, runs the tests → ✅ 40 sec (sparkle). Then 3 chips light up: 👀 sees · ✋ does · 🧠 names (chat vs. agent). ↺ Replay. |
 
 Removed: 💬 "Who is the boss?", 💬 "build me a website", "The flower shop test", "Why could she ask like that?", the Flower Shop Lab (and its preset in `lab.js`), and the after-break 💬 "Copy-paste is getting old" (same question as slide 7).
+
+---
+
+## Lesson 2 · rebuilt around opencode (26 slides · ~35 min talk, ~75 min hands-on)
+
+| Time | Slides | What |
+|---|---|---|
+| 0:25 · 15′ | 6–10 | Big idea → 💬 chat vs. agent → **Same bug, two ways** demo → **Chat vs. coding agent ⚖️** summary (1–3 words a line) → ⭐ *Optional* **Level 2 rematch**: the CodePen brief in ChatGPT vs. opencode (teacher demo) |
+| 0:40 · 15′ | 11–12 | **Meet opencode** (free, VS Code or terminal) → **Plan · Build · Auto** demo: Tab switches Plan (a plan, no edits) ⇄ Build (edits; asks "Allow?"), Ctrl+P = auto-approve |
+| 0:55 · 35′ | 13–14 | ✋ **Install** (npm + VS Code extension + Ctrl+Esc; links: install docs, 6-min video, terminal/TUI) → **First command** (/models → free → "hi!") |
+| 2:00 · 40′ | 16–19 | ✋ **The practice app** (`starter/flower-shop/index.html`, copy box + download) → **Mission 1 Plan** (search box) → **Mission 2 Build** → **Mission 3 Fix the bug** (❤️ never counts). Each mission: mode badge, steps, a prompt with 📋 copy, how you know it worked |
+| 2:40 · 5′ | 20 | **What the agent remembers**: token + context window, 1 line each. The deep dive moved to Lesson 3 (token · context window · system prompt NEW WORD slides) |
+| wrap-up | 21–26 | Explain · Glossary · Prompts · ⭐ **Context + workflow 🍿** (Nir Ayalon's talk from 40:15, opencode's workflow, Master.dev Claude Code basics, the commands) · ⭐ **Which model? 🤖** (Free / Flash / Pro, what they mean, our rule) · Next time |
+
+Removed: the chat LLM challenge, "fix a bug by chatting", "What did it miss?", "But the AI misses things", the 3 NEW WORD slides (→ Lesson 3), "skill", the old install / first-mission / bug-hunt slides.
+
+23. **Optional slides wear a tag.** `tag: "⭐ Optional"` (or "⭐ Bonus · after the lesson") on a content or demo slide puts a small orange chip above the title. Skip them when the class is behind.

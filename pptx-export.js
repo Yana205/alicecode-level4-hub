@@ -161,7 +161,7 @@ async function downloadPPTX(n) {
     if (sl.kind === "section") { sectionSlide(sl); return; }
 
     if (sl.kind === "lab") {
-      const s = contentBase(sl.title);
+      const s = contentBase((sl.tag ? sl.tag + " · " : "") + sl.title);
       s.addShape("roundRect", { x: MX, y: BODY_TOP + 0.5, w: CW, h: 1.5, rectRadius: 0.1, fill: { color: LAV } });
       s.addText([
         { text: (sl.sub || "Live playground.") + "\n", options: { bold: true } },
@@ -172,7 +172,7 @@ async function downloadPPTX(n) {
     }
     if (sl.kind === "demo") {
       /* live demos can't run inside PowerPoint: show what happens + where to open it */
-      const s = contentBase(sl.title);
+      const s = contentBase((sl.tag ? sl.tag + " · " : "") + sl.title);
       if (sl.sub) s.addText(sl.sub, { x: MX, y: BODY_TOP - 0.2, w: CW, h: 0.32, align: "center", fontFace: BODY, bold: true, fontSize: 12, color: PINK });
       addItems(s, [
         ...(sl.offline ? [{ lines: sl.offline }] : []),
@@ -203,7 +203,7 @@ async function downloadPPTX(n) {
     }
 
     if (sl.kind === "beforeafter") {
-      const s = contentBase(sl.title);
+      const s = contentBase((sl.tag ? sl.tag + " · " : "") + sl.title);
       /* template two-column: left white box w/ colored border, right lavender */
       const bw = (CW - 0.7) / 2, by = BODY_TOP + 0.05, bh = sl.note ? 2.5 : 3.1;
       s.addShape("roundRect", { x: MX, y: by, w: bw, h: bh, rectRadius: 0.1, fill: { color: "FFFFFF" }, line: { color: RED, width: 1.5 } });
@@ -223,7 +223,7 @@ async function downloadPPTX(n) {
     }
 
     /* content */
-    const s = contentBase(sl.title);
+    const s = contentBase((sl.tag ? sl.tag + " · " : "") + sl.title);
     let y = BODY_TOP;
     if (sl.lead) {
       s.addText(sl.lead, { x: MX, y: y - 0.2, w: CW, h: 0.32, align: "center", fontFace: BODY, bold: true, fontSize: 12, color: PINK });

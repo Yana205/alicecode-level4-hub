@@ -208,6 +208,128 @@ DEMOS.chatVsAgent = function (el) {
 };
 
 /* ============================================================
+   Lesson 2 · opencode: Plan / Build (Tab) + auto-approve (Ctrl+P)
+   ============================================================ */
+DEMOS.ocModes = function (el) {
+  const PROMPT = "add a 🌙 dark mode button";
+  el.innerHTML = `
+    <div class="ocm">
+      <div class="ocm-cards">
+        <div class="ocm-card" data-c="plan"><b>🧠 Plan</b><span>thinks · no edits</span><kbd>Tab</kbd></div>
+        <div class="ocm-card" data-c="build"><b>🔨 Build</b><span>edits · runs</span><kbd>Tab</kbd></div>
+        <div class="ocm-card" data-c="auto"><b>⚡ Auto</b><span>no "Allow?"</span><kbd>Ctrl+P</kbd></div>
+      </div>
+      <div class="ocm-tui terminal">
+        <div class="term-bar"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span><span class="title">opencode · flower-shop</span></div>
+        <pre class="ocm-out"></pre>
+        <div class="ocm-input"><span class="ocm-p">&gt; ${demoEsc(PROMPT)}</span><span class="ocm-agent"></span></div>
+      </div>
+      <div class="ocm-keys">
+        <button class="btn small ocm-tab">⇥ Tab · switch mode</button>
+        <button class="btn small ocm-auto">⚡ Ctrl+P · auto-approve</button>
+        <button class="btn small dark ocm-send">▶ Enter</button>
+      </div>
+    </div>`;
+  const $ = q => el.querySelector(q);
+  const out = $(".ocm-out"), agent = $(".ocm-agent");
+  let mode = "plan", auto = false, run = 0;
+  const line = (cls, t) => { out.innerHTML += `<span class="t-${cls}">${t}</span>\n`; out.scrollTop = out.scrollHeight; };
+  function draw() {
+    agent.innerHTML = `<b class="m-${mode}">${mode === "plan" ? "Plan" : "Build"}</b>${auto ? ` <i>auto</i>` : ""}`;
+    el.querySelectorAll(".ocm-card").forEach(c => c.classList.toggle("on", c.dataset.c === mode || (c.dataset.c === "auto" && auto)));
+    $(".ocm-auto").classList.toggle("on", auto);
+  }
+  async function send() {
+    const me = ++run, w = ms => demoWait(demoReduced() ? 60 : ms);
+    out.innerHTML = "";
+    line("you", `&gt; ${demoEsc(PROMPT)}`); await w(500); if (me !== run) return;
+    line("dim", "📂 reading index.html…"); await w(600); if (me !== run) return;
+    if (mode === "plan") {
+      line("run", "🧠 My plan:");
+      line("run", "  1. a 🌙 button in the header");
+      line("run", "  2. a .dark class in &lt;style&gt;");
+      line("run", "  3. click → toggle .dark");
+      await w(400); if (me !== run) return;
+      line("ok", "✋ No files changed. Tab → Build to do it.");
+      return;
+    }
+    if (!auto) {
+      line("run", "✏️ edit index.html (+12 lines)");
+      out.insertAdjacentHTML("beforeend", `<span class="ocm-ask">Allow? <button class="ocm-yes">Allow once</button> <button class="ocm-no">Reject</button></span>\n`);
+      const ok = await new Promise(r => { out.querySelector(".ocm-yes").onclick = () => r(true); out.querySelector(".ocm-no").onclick = () => r(false); });
+      if (me !== run) return;
+      out.querySelector(".ocm-ask").remove();
+      if (!ok) { line("bad", "❌ Rejected. Nothing changed."); return; }
+    } else line("run", "✏️ edit index.html (+12 lines) <i>auto-approved</i>");
+    await w(500); if (me !== run) return;
+    line("ok", "✅ Done. Refresh the page → 🌙 button!");
+    if (typeof labSparkle === "function") labSparkle(el, $(".ocm-tui"), 10);
+  }
+  $(".ocm-tab").addEventListener("click", () => { mode = mode === "plan" ? "build" : "plan"; draw(); send(); });
+  $(".ocm-auto").addEventListener("click", () => { auto = !auto; draw(); });
+  $(".ocm-send").addEventListener("click", send);
+  demoOnShow(el, () => { mode = "plan"; auto = false; draw(); send(); });
+  draw();
+};
+
+/* copy button for any <pre> inside a .cp-box */
+function demoCopyBox(el) {
+  el.querySelectorAll(".cp-copy").forEach(b => b.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(b.closest(".cp-box").querySelector("pre").textContent); b.textContent = "✅ copied"; }
+    catch (e) { b.textContent = "select + copy"; }
+    setTimeout(() => { b.textContent = "📋 copy"; }, 1500);
+  }));
+}
+
+/* Lesson 2 · the practice app: steps + the code to copy (starter/flower-shop/index.html) */
+DEMOS.ocApp = function (el) {
+  const SRC = "starter/flower-shop/index.html";
+  el.innerHTML = `
+    <div class="oca">
+      <ol class="oca-steps">
+        <li>VS Code → <b>File → Open Folder</b> → new folder <code>flower-shop</code></li>
+        <li><b>New File</b> → <code>index.html</code></li>
+        <li><b>📋 Copy</b> the code → paste → <kbd>Ctrl</kbd>+<kbd>S</kbd></li>
+        <li>Open <code>index.html</code> in the browser 🌸</li>
+        <li><kbd>Ctrl</kbd>+<kbd>Esc</kbd> → opencode opens</li>
+      </ol>
+      <div class="cp-box oca-code">
+        <div class="cp-head"><span>index.html</span><a href="${SRC}" download="index.html">⬇ download</a><button class="cp-copy">📋 copy</button></div>
+        <pre>Loading…</pre>
+      </div>
+    </div>`;
+  demoCopyBox(el);
+  fetch(SRC).then(r => r.text()).then(t => { el.querySelector(".oca-code pre").textContent = t; })
+    .catch(() => { el.querySelector(".oca-code pre").textContent = "Couldn't load it — use ⬇ download."; });
+};
+
+/* Lesson 2 · a mission card: mode badge + steps + a prompt to copy + how you know it worked */
+function ocMission(el, m) {
+  el.innerHTML = `
+    <div class="ocx">
+      <div class="ocx-mode m-${m.mode}"><span>${m.mode === "plan" ? "🧠" : "🔨"}</span><b>${m.mode === "plan" ? "Plan" : "Build"} mode</b><small><kbd>Tab</kbd> to switch</small></div>
+      <div class="ocx-main">
+        <ol class="ocx-steps">${m.steps.map(x => `<li>${x}</li>`).join("")}</ol>
+        <div class="cp-box"><div class="cp-head"><span>💬 the prompt</span><button class="cp-copy">📋 copy</button></div><pre>${demoEsc(m.prompt)}</pre></div>
+        <div class="ocx-check">${m.check}</div>
+      </div>
+    </div>`;
+  demoCopyBox(el);
+}
+DEMOS.ocPlan = el => ocMission(el, { mode: "plan",
+  steps: ["<kbd>Tab</kbd> until it says <b>Plan</b>", "📋 Copy → paste → <kbd>Enter</kbd>", "Read the plan. Ask it 1 question."],
+  prompt: "Add a search box above the flowers. When I type, show only the flowers whose name matches. Make a plan first: which parts of index.html will you change?",
+  check: "✋ Plan mode = no files changed yet." });
+DEMOS.ocBuild = el => ocMission(el, { mode: "build",
+  steps: ["<kbd>Tab</kbd> → <b>Build</b>", "📋 Copy → paste → <kbd>Enter</kbd>", "It asks <b>Allow?</b> → Allow", "Refresh the browser → type <code>ro</code>"],
+  prompt: "Looks good. Build it.",
+  check: "🌹 Only Rose shows? It works! 🎉 <small>Too many “Allow?” → <kbd>Ctrl</kbd>+<kbd>P</kbd> → auto-approve</small>" });
+DEMOS.ocBug = el => ocMission(el, { mode: "build",
+  steps: ["Click ❤️ — the number stays 0 😬", "📋 Copy → paste → <kbd>Enter</kbd>", "Refresh → click ❤️ → it counts?"],
+  prompt: "When I click ❤️ the number stays 0. Find the bug, fix it, and explain it to me in one sentence.",
+  check: "📸 Screenshot the fix + its explanation. Portfolio!" });
+
+/* ============================================================
    B · TikTok Studio teaser — 3 clicks: input → brain → output
    ============================================================ */
 DEMOS.studioLoop = function (el) {

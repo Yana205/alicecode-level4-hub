@@ -262,35 +262,41 @@ const LESSONS = [
 /* ================= LESSON 2 ================= */
 {
   n: 2, emoji: "😎", title: "Vibe Coding",
-  project: "P1 · From LLMs to coding agents",
-  goal: "See what an LLM can (and can't) do, then install opencode and let it work inside a real project.",
-  leaves: "opencode installed and answering + a bug found and fixed in a big project.",
+  project: "P1 · From AI chat to a coding agent",
+  goal: "See how a coding agent is different from an AI chat, install opencode, and use Plan + Build on a real app.",
+  leaves: "opencode installed in VS Code + a feature planned, built, and a bug fixed by the agent.",
   tutorial: [
-    { label: "opencode docs — install help + commands", url: "https://opencode.ai/docs" },
-    { label: "See tokens live — OpenAI tokenizer", url: "https://platform.openai.com/tokenizer" },
-    { label: "Prompt tricks — promptingguide.ai", url: "https://www.promptingguide.ai" }
+    { label: "opencode docs — install + first steps", url: "https://opencode.ai/docs/" },
+    { label: "Video: install + use opencode in VS Code (6 min)", url: "https://www.youtube.com/watch?v=hUjOPPby1OA" },
+    { label: "No VS Code? opencode in the terminal (TUI)", url: "https://opencode.ai/docs/tui/" },
+    { label: "⭐ Bonus video: The Dark Arts of AI Coding — Nir Ayalon (from 40:15)", url: "https://www.youtube.com/watch?v=6mfzPoBUmhc&t=2415s" },
+    { label: "⭐ Bonus: today's free models (opencode)", url: "https://opencode.ai/docs/zen/" },
+    { label: "⭐ Bonus course: Claude Code basics — Master.dev (free)", url: "https://master.dev/courses/claude-code/" }
   ],
   missions: [
-    "Paste a real exercise from last year into Gemini or Claude. Watch it solve. Then CHECK it.",
-    "Fix the planted bug just by chatting with the LLM.",
-    "Install opencode (guide on the Setup page).",
-    "Open last year's big project and ask: \"What does this project do?\"",
-    "Bug hunt: let the agent find the hidden bug. Fix. Run. Test.",
-    "📸 Screenshot the error + the fix — before and after."
+    "Name 3 differences between an AI chat and a coding agent.",
+    "Install opencode in VS Code (or the terminal).",
+    "First command: pick the free model and say hi.",
+    "Plan mode: get a plan for a search box — no files changed.",
+    "Build mode: build it. Does the search work?",
+    "Fix the ❤️ bug with the agent. Ask it to explain.",
+    "📸 Screenshot the plan + the fix."
   ],
   slides: [
     { kind: "title", title: "Lesson 2 · Vibe Coding 😎",
-      sub: "Project P1 · From LLMs to coding agents" },
+      sub: "Project P1 · From AI chat to a coding agent" },
     { kind: "content", title: "Steps today", items: [
       { lines: [
-        "20 min · game",
-        "Part 1 · an LLM solves YOUR old exercise",
-        "Break ☕",
-        "Part 2 · meet the coding agent: opencode",
-        "Last 15 min · \"Explain to me\" 🗣️"
-      ]}
+        "🎮 Game · 15 min",
+        "🤖 Chat vs. coding agent",
+        "🔧 Install opencode",
+        "☕ Break",
+        "✋ Plan → Build → fix a bug",
+        "🗣️ Explain to me · last 15 min"
+      ]},
+      { note: "Today: ~35 min talk · ~75 min hands-on 💪" }
     ]},
-    { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then the AI gets to work" },
+    { kind: "section", title: "First: a game! 🎮", sub: "15 minutes · then the AI gets to work" },
     { kind: "discuss", q: "Last time we built with APIs + MongoDB. What do you remember?" },
     { kind: "content", title: "Last time", items: [
       { lines: [
@@ -318,95 +324,122 @@ const LESSONS = [
         "✋ Does: gives advice vs. edits, runs + tests",
         "🧠 Names: guesses vs. reads the real code"
       ] },
-    { kind: "content", title: "Part 1 · The LLM challenge ✅",
-      lead: "Remember sweating over this exercise? Watch.", items: [
-      { lines: [
-        "Open Gemini (or Claude) in the browser.",
-        "Paste a real exercise from last year.",
-        "Watch it solve in seconds.",
-        "Now READ the answer. Is it right? Test it."
-      ]},
-      { note: "The AI is fast. YOU are the judge. ⚖️" }
-    ]},
-    { kind: "content", title: "Now: fix a bug by chatting 🐞", items: [
-      { lines: [
-        "Here is code with a bug (planted 😉).",
-        "Paste it. Describe what goes wrong.",
-        "Ask for a fix. Read it. Test it.",
-        "It works — and you never wrote the fix."
-      ]},
-      { note: "📸 Screenshot the error + the fix — proof #1 today." }
-    ]},
-    { kind: "discuss", q: "The AI was fast. Was it always right? What did it miss?" },
-    { kind: "content", title: "But the AI misses things 🙈", items: [
+    { kind: "content", title: "Chat vs. coding agent ⚖️", items: [
       { cards: [
-        { h: "It can't see", lines: ["Only what you paste.", "Your project? Invisible."], color: "red" },
-        { h: "It forgets", lines: ["Long chat →", "old parts fall out."], color: "orange" },
-        { h: "It sounds sure", lines: ["Even when it's wrong.", "Always test!"], color: "purple" }
+        { h: "💬 AI chat", lines: ["Copy-paste", "Guesses", "Gives advice"], color: "red" },
+        { h: "🤖 Coding agent", lines: ["Sees everything", "Edits + runs", "Tests itself"], color: "green" }
+      ]},
+      { note: "Both: YOU check. ✅" }
+    ]},
+    { kind: "content", tag: "⭐ Optional", title: "Level 2 rematch: chat vs. agent 🥊",
+      lead: "Your Level 2 project. Same brief, two AIs. Teacher demo.", items: [
+      { lines: [
+        "1 · Copy the project brief",
+        "2 · 💬 Paste it in ChatGPT → copy the code out",
+        "3 · 🤖 Paste it in opencode → it builds the files",
+        "4 · Which one runs first try?"
+      ]},
+      { links: [
+        { h: "📄 The project brief", url: "https://codepen.io/Yana-Ifraimov/pen/GggVzqZ",
+          text: "The Level 2 project on CodePen. Its description is the prompt." }
       ]}
     ]},
-    { kind: "newword", term: "token",
-      meaning: "A piece of a word. The AI reads tokens, not letters.",
-      extra: "See it live: the tokenizer on our Setup page." },
-    { kind: "newword", term: "context window",
-      meaning: "How much the AI can \"see\" at one time.",
-      extra: "Long chat → the oldest parts fall out. That's why it forgets." },
-    { kind: "newword", term: "system prompt",
-      meaning: "The AI's job description, set before the chat starts.",
-      extra: "Example: \"You are a patient coding teacher. Use simple English.\"" },
+    { kind: "content", title: "Meet opencode 🤝", items: [
+      { lines: [
+        "Our coding agent",
+        "Free + open source",
+        "Inside VS Code",
+        "Or in the terminal"
+      ]}
+    ]},
+    { kind: "demo", demo: "ocModes", title: "Plan · Build · Auto 🧠🔨⚡",
+      sub: "Press Tab to switch. Same prompt, different job.",
+      offline: [
+        "🧠 Plan = thinks + reads. Makes a plan. No edits.",
+        "🔨 Build = edits files + runs commands.",
+        "Tab switches Plan ⇄ Build (you see it in the corner).",
+        "⚡ Auto-approve = no \"Allow?\" questions: Ctrl+P → Enable auto-approve permissions."
+      ] },
+    { kind: "content", title: "Part 1 · Install opencode 🔧", items: [
+      { lines: [
+        "VS Code → Terminal → New Terminal",
+        "npm install -g opencode-ai",
+        "Extensions → \"opencode\" → Install",
+        "Ctrl+Esc (Mac: Cmd+Esc) → it opens"
+      ]},
+      { links: [
+        { h: "📖 Install docs", url: "https://opencode.ai/docs/#install", color: "green",
+          text: "Mac, Windows, Linux — every way to install." },
+        { h: "🎬 Video · 6 min", url: "https://www.youtube.com/watch?v=hUjOPPby1OA", color: "orange",
+          text: "Install + use opencode in VS Code, step by step." },
+        { h: "💻 No VS Code?", url: "https://opencode.ai/docs/tui/",
+          text: "Type opencode in any terminal. Same agent." }
+      ]}
+    ]},
+    { kind: "content", title: "First command 👋", items: [
+      { lines: [
+        "/models → the free one (ask your teacher)",
+        "Type: hi! What can you do?",
+        "It answers? You're in. 🎉"
+      ]},
+      { note: "Stuck? Tell your teacher now — we fix it in the break." }
+    ]},
     { kind: "section", title: "Break ☕", sub: "30 minutes" },
-    { kind: "content", title: "Meet the coding agent 🤝", items: [
-      { lines: [
-        "A coding agent reads your files.",
-        "It runs commands. It edits code. It tests.",
-        "Claude Code and tools like it do this.",
-        "Ours is free: opencode."
+    { kind: "demo", demo: "ocApp", title: "Part 2 · The practice app 🌸",
+      sub: "A tiny flower shop. Copy it into VS Code.",
+      offline: [
+        "1 · VS Code → File → Open Folder → new folder flower-shop",
+        "2 · New File → index.html",
+        "3 · Copy the code (this site → Lesson 2 → 🧪 Labs, or starter/flower-shop/index.html) → paste → Ctrl+S",
+        "4 · Open index.html in the browser",
+        "5 · Ctrl+Esc → opencode opens"
+      ] },
+    { kind: "demo", demo: "ocPlan", title: "Mission 1 · Plan it 🧠",
+      sub: "First think. No files change.",
+      offline: [
+        "Tab until it says Plan.",
+        "Prompt: \"Add a search box above the flowers. When I type, show only the flowers whose name matches. Make a plan first: which parts of index.html will you change?\"",
+        "Read the plan. Ask it 1 question."
+      ] },
+    { kind: "demo", demo: "ocBuild", title: "Mission 2 · Build it 🔨",
+      sub: "Now it may change files.",
+      offline: [
+        "Tab → Build. Prompt: \"Looks good. Build it.\"",
+        "It asks Allow? → Allow. Refresh the browser → type ro → only Rose shows? 🎉",
+        "Too many \"Allow?\" → Ctrl+P → auto-approve."
+      ] },
+    { kind: "demo", demo: "ocBug", title: "Mission 3 · Fix the bug 🐞",
+      sub: "The ❤️ button is broken. Let the agent find out why.",
+      offline: [
+        "Click ❤️ — the number stays 0.",
+        "Prompt: \"When I click ❤️ the number stays 0. Find the bug, fix it, and explain it to me in one sentence.\"",
+        "Refresh → click ❤️ → it counts? 📸 Screenshot the fix + its explanation."
+      ] },
+    { kind: "content", title: "What the agent remembers 🧠", items: [
+      { cards: [
+        { h: "🔤 token", lines: ["A word piece"] },
+        { h: "🪟 context window", lines: ["What it can see"], color: "orange" }
       ]},
-      { note: "Chat LLM = advice. Coding agent = hands on your project." }
+      { note: "Too long? It forgets. Next lesson we dig in. 👀" }
     ]},
-    { kind: "content", title: "Part 2 · Install opencode 🔧", items: [
-      { lines: [
-        "Open the Setup page on this site.",
-        "Follow the install steps.",
-        "Type opencode → it says hi? You're in. 🎉"
-      ]}
-    ]},
-    { kind: "content", title: "First mission: meet your project 🔎", items: [
-      { lines: [
-        "Open last year's big project in opencode.",
-        "Ask: \"What does this project do?\"",
-        "Read its answer. Did it get it right?"
-      ]}
-    ]},
-    { kind: "content", title: "The bug hunt 🕵️‍♀️",
-      lead: "Somewhere in this project, a bug is hiding.", items: [
-      { lines: [
-        "Ask the agent to find it.",
-        "Watch HOW it searches your files.",
-        "Let it explain the bug to you.",
-        "Fix together. Run. Test."
-      ]},
-      { note: "📸 Screenshot before + after. Portfolio!" }
-    ]},
-    { kind: "newword", term: "skill",
-      meaning: "A saved recipe of instructions your agent can use again and again.",
-      extra: "Example: a skill that teaches the agent YOUR project's style." },
     { kind: "content", title: "Explain to me 🗣️", items: [
       { lines: [
-        "Pick: token · context window · coding agent.",
+        "Pick: coding agent · Plan · Build.",
         "Explain it in 2 sentences.",
-        "Show your favorite before/after from today."
+        "Show your plan + your fix."
       ]}
     ]},
     { kind: "content", title: "Glossary 📖", items: [
       { rows: [
         ["LLM", "a large language model — the \"brain\" behind AI chat"],
         ["prompt", "what you write to the AI"],
-        ["system prompt", "the AI's job description, set before the chat"],
-        ["token", "a piece of a word; AI reads tokens, not letters"],
-        ["context window", "how much the AI can see at one time"],
         ["coding agent", "an AI that works inside your whole project"],
         ["opencode", "the free coding agent we use"],
+        ["Plan mode", "the agent thinks and plans — no edits"],
+        ["Build mode", "the agent edits files and runs commands"],
+        ["auto-approve", "the agent stops asking \"Allow?\""],
+        ["token", "a piece of a word; AI reads tokens, not letters"],
+        ["context window", "how much the AI can see at one time"],
         ["vibe coding", "you describe and check; the AI types"]
       ]}
     ]},
@@ -414,32 +447,43 @@ const LESSONS = [
       lead: "Open opencode on any project and try these:", items: [
       { rows: [
         ["Understand", "\"Explain this project to me like I'm new here.\""],
-        ["Feature", "\"Add one tiny feature. Show me your plan first.\""],
-        ["Bug", "\"Find a bug and prove it with a test.\""],
-        ["Project notes", "\"Write a CLAUDE.md with tips for working in my project.\""],
-        ["Spec first", "\"Write a short spec first. Then build exactly that.\""]
+        ["Plan first", "\"Plan one tiny feature. Don't change files yet.\""],
+        ["Bug", "\"Find a bug and explain it in one sentence.\""],
+        ["Project notes", "/init — it writes AGENTS.md about your project"]
       ]}
     ]},
-    { kind: "content", title: "Want more? 📚",
-      lead: "Not homework. Only if you're curious.", items: [
+    { kind: "content", tag: "⭐ Bonus · after the lesson", title: "Context + workflow 🍿",
+      lead: "Not homework. Watch or read one.", items: [
       { links: [
-        { h: "🛠️ opencode docs", url: "https://opencode.ai/docs", color: "green",
-          text: "Install help + all the commands." },
-        { h: "🔢 See tokens live", url: "https://platform.openai.com/tokenizer", color: "orange",
-          text: "Paste a sentence. Watch it break into tokens." },
-        { h: "🎬 How LLMs work", url: "https://www.youtube.com/watch?v=zjkBMFhNj_g",
-          text: "The famous 1-hour intro by Andrej Karpathy." },
-        { h: "🔧 Our Setup page", url: "setup.html", color: "green",
-          text: "Tokens, what AI really costs + put your site online for free." }
+        { h: "🎬 Watch · from 40:15", url: "https://www.youtube.com/watch?v=6mfzPoBUmhc&t=2415s", color: "orange",
+          text: "The Dark Arts of AI Coding — Nir Ayalon. Control the context before it controls you." },
+        { h: "📖 Read · the workflow", url: "https://opencode.ai/docs/#usage", color: "green",
+          text: "opencode's own steps: ask → plan → build → undo." },
+        { h: "🎓 Course · the basics", url: "https://master.dev/courses/claude-code/",
+          text: "Free, by Lydia Hallie (Anthropic). Model + harness, how it works. Claude Code, but the same ideas as opencode." },
+        { h: "💻 The commands", url: "https://opencode.ai/docs/tui/",
+          text: "/models · /new · /undo · /help" }
+      ]}
+    ]},
+    { kind: "content", tag: "⭐ Bonus · after the lesson", title: "Which model? 🤖", items: [
+      { rows: [
+        ["🆓 \"Free\" · Big Pickle", "$0 · only for a while · may learn from your chats"],
+        ["⚡ Flash · Mini · Lite", "fast + cheap"],
+        ["🧠 Pro · Opus", "smart + slow + $$$"]
+      ]},
+      { note: "Our rule: pick Free in /models. Never paste secrets or personal info. 🔒" },
+      { links: [
+        { h: "📋 Today's free list", url: "https://opencode.ai/docs/zen/", color: "green",
+          text: "Changes often. The Pricing table says which are free." }
       ]}
     ]},
     { kind: "content", title: "Next time 👀", items: [
       { lines: [
-        "We BUILD our own agent. From scratch.",
-        "LangChain: model + prompt + tools.",
-        "The Studio begins: Agent 1, the trend finder."
+        "Inside the agent's head: tokens + context.",
+        "We BUILD our own agent.",
+        "The Studio begins: Agent 1."
       ]},
-      { note: "You used an agent today. Next week you MAKE one. 🛠️" }
+      { note: "From now until the hackathon: opencode every lesson. 🛠️" }
     ]}
   ]
 },
@@ -476,14 +520,23 @@ const LESSONS = [
       ]}
     ]},
     { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then we switch sides" },
-    { kind: "discuss", q: "Last time an LLM solved your old exercise. What can't a chat AI do?" },
+    { kind: "discuss", q: "Last time you used opencode. What did it do that a chat AI can't?" },
     { kind: "content", title: "Last time", items: [
       { lines: [
-        "An LLM solved your old exercise in seconds.",
-        "You learned tokens + context window.",
-        "You installed opencode and fixed a real bug."
+        "Chat vs. coding agent",
+        "opencode installed",
+        "Plan → Build → bug fixed"
       ]}
     ]},
+    { kind: "newword", term: "token",
+      meaning: "A piece of a word. The AI reads tokens, not letters.",
+      extra: "Every message costs tokens. opencode counts them for you." },
+    { kind: "newword", term: "context window",
+      meaning: "How much the AI can \"see\" at one time.",
+      extra: "Long session → the start falls out. /new = a fresh start." },
+    { kind: "newword", term: "system prompt",
+      meaning: "The AI's job description, set before the chat starts.",
+      extra: "Today YOUR agent gets one." },
     { kind: "discuss", q: "Which AI agents did you meet this week? Who built them?" },
     { kind: "content", title: "Agents are everywhere 🌍", items: [
       { cards: [
@@ -1190,7 +1243,7 @@ const FLOWS = {
   2: {
     timeline: [
       { t: "0:00", icon: "👋", name: "Welcome", min: 5, slides: "1–2", steps: [
-        { k: "show", text: "Today's steps." } ] },
+        { k: "show", text: "Today's steps: ~35 min talk, ~75 min hands-on." } ] },
       { t: "0:05", icon: "🎮", name: "Game", min: 15, slides: "3",
         game: { name: "Gartic Phone", url: "https://garticphone.com" }, steps: [
         { k: "do", text: "Broken telephone with drawings." },
@@ -1198,32 +1251,32 @@ const FLOWS = {
       { t: "0:20", icon: "🔁", name: "Last time", min: 5, slides: "4–5", steps: [
         { k: "talk", text: "Last time we built with APIs + MongoDB. What do you remember?" },
         { k: "show", text: "Reveal: APIs, JSON, MongoDB." } ] },
-      { t: "0:25", icon: "🤖", name: "Chat vs. coding agent", min: 20, slides: "6–8", steps: [
+      { t: "0:25", icon: "🤖", name: "Chat vs. coding agent", min: 15, slides: "6–10", steps: [
         { k: "show", text: "The big idea: you describe → AI codes → YOU check." },
-        { k: "talk", text: "AI in a chat vs. an AI agent inside your project — what's the difference? Collect THEIR ideas on the board first." },
+        { k: "talk", text: "AI in a chat vs. an AI agent inside your project — what's the difference? Write THEIR answers on the board first." },
         { k: "demo", concept: "Coding agent", before: "AI chat: 5 copy-pastes, a guessed name, an error, 7 min", after: "Agent: reads the project, fixes 1 line, tests pass, 40 sec" },
-        { k: "talk", text: "Compare with their board: sees · does · guesses. What did they find that the slide missed?" } ] },
-      { t: "0:45", icon: "✅", name: "Part 1 · LLM challenge", min: 25, slides: "9–10", steps: [
-        { k: "do", text: "Paste a real exercise from last year into Gemini / Claude. Read the answer. Test it." },
-        { k: "demo", concept: "Fix by chatting", before: "The code crashes on an empty list", after: "The AI spots it, we test the fix → green" },
-        { k: "do", text: "📸 Proof: the error + the fix." } ] },
-      { t: "1:10", icon: "🙈", name: "What the AI misses", min: 20, slides: "11–15", steps: [
-        { k: "talk", text: "The AI was fast. Was it always right? What did it miss?" },
-        { k: "show", text: "It can't see · it forgets · it sounds sure." },
-        { k: "show", text: "3 new words, one slide each: token · context window · system prompt." } ] },
-      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "16", steps: [] },
-      { t: "2:00", icon: "🤝", name: "Meet the coding agent", min: 10, slides: "17", steps: [
-        { k: "show", text: "Back to the morning demo: chat = advice, agent = hands on your project. Ours: opencode." } ] },
-      { t: "2:10", icon: "🔧", name: "Part 2 · install", min: 20, slides: "18–19", steps: [
-        { k: "do", text: "Install opencode (Setup page). It says hi? They're in." },
-        { k: "do", text: "First mission: open last year's project. Ask: \"What does this project do?\"" } ] },
-      { t: "2:30", icon: "🕵️‍♀️", name: "Bug hunt", min: 15, slides: "20–21", steps: [
-        { k: "demo", concept: "Coding agent", before: "The page loads… and shows nothing", after: "The agent finds the bad file → one fix, it works" },
-        { k: "do", text: "They let the agent find the hidden bug. Fix, run, test, 📸." },
-        { k: "show", text: "New word: skill." } ] },
-      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "22–26", steps: [
-        { k: "do", text: "Pick token · context window · coding agent → 2 sentences + their before/after." },
-        { k: "show", text: "Glossary, prompts to try, want more, next time." } ] }
+        { k: "show", text: "Summary: chat = copy-paste, guesses, advice · agent = sees, edits, tests." },
+        { k: "glimpse", text: "⭐ Optional (+10 min): Level 2 rematch — paste the CodePen brief into ChatGPT and into your opencode. Which runs first try? Skip if behind." } ] },
+      { t: "0:40", icon: "🤝", name: "Meet opencode + modes", min: 15, slides: "11–12", steps: [
+        { k: "show", text: "opencode: free, open source, in VS Code or the terminal." },
+        { k: "demo", concept: "Plan · Build · Auto", before: "Plan: a 3-step plan, no files changed", after: "Build: edits index.html (asks \"Allow?\" unless auto-approve is on)" } ] },
+      { t: "0:55", icon: "🔧", name: "Part 1 · install", min: 35, slides: "13–14", steps: [
+        { k: "do", text: "Install: npm install -g opencode-ai → VS Code extension → Ctrl+Esc. No VS Code? opencode in the terminal." },
+        { k: "do", text: "First command: /models → the free model → \"hi! What can you do?\"" },
+        { k: "show", text: "Stuck ones: note who — fix it together in the break." } ] },
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "15", steps: [] },
+      { t: "2:00", icon: "🌸", name: "Part 2 · the practice app", min: 10, slides: "16", steps: [
+        { k: "do", text: "New folder → index.html → paste the code → open it in the browser → Ctrl+Esc." } ] },
+      { t: "2:10", icon: "🧠", name: "Plan → Build", min: 20, slides: "17–18", steps: [
+        { k: "do", text: "Mission 1 · Plan: the search box plan. No files change." },
+        { k: "do", text: "Mission 2 · Build: \"Looks good. Build it.\" → Allow → refresh → type ro." } ] },
+      { t: "2:30", icon: "🐞", name: "Fix the bug", min: 10, slides: "19", steps: [
+        { k: "do", text: "Mission 3 · the ❤️ never counts. The agent finds it (like vs. likes) + explains. 📸" } ] },
+      { t: "2:40", icon: "🧠", name: "What the agent remembers", min: 5, slides: "20", steps: [
+        { k: "show", text: "token = a word piece · context window = what it can see. 1 minute — the deep dive is lesson 3." } ] },
+      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "21–26", steps: [
+        { k: "do", text: "Pick coding agent · Plan · Build → 2 sentences + their plan and fix." },
+        { k: "show", text: "Glossary, prompts to try, ⭐ after-the-lesson bonus (Nir Ayalon's talk, the workflow, which model), next time." } ] }
     ]
   },
   3: {
@@ -1233,27 +1286,27 @@ const FLOWS = {
       { t: "0:05", icon: "🎮", name: "Game", min: 15, slides: "3",
         game: { name: "Robot & Operator (or Skribbl)", url: "https://skribbl.io" }, steps: [
         { k: "do", text: "In pairs: one is the robot, one gives exact commands. Bad instructions = funny robot." } ] },
-      { t: "0:20", icon: "🔁", name: "Last time", min: 5, slides: "4–5", steps: [
-        { k: "talk", text: "Last time an LLM solved your old exercise. What can't a chat AI do?" },
-        { k: "show", text: "Reveal: LLMs, tokens, opencode." } ] },
-      { t: "0:25", icon: "🌍", name: "Agents everywhere", min: 10, slides: "6–8", steps: [
+      { t: "0:20", icon: "🔁", name: "Last time + inside the agent's head", min: 15, slides: "4–8", steps: [
+        { k: "talk", text: "Last time you used opencode. What did it do that a chat AI can't?" },
+        { k: "show", text: "Recap, then 3 new words, one slide each: token · context window (/new = fresh start) · system prompt. The deep dive promised in lesson 2." } ] },
+      { t: "0:35", icon: "🌍", name: "Agents everywhere", min: 5, slides: "9–11", steps: [
         { k: "talk", text: "Which AI agents did you meet this week? Who built them?" },
         { k: "show", text: "Agents are everywhere — and today we switch sides: from USING to BUILDING." } ] },
-      { t: "0:35", icon: "🧩", name: "What's an agent made of", min: 20, slides: "9–12", steps: [
+      { t: "0:40", icon: "🧩", name: "What's an agent made of", min: 20, slides: "12–15", steps: [
         { k: "talk", text: "You build a robot helper. What parts does it need?" },
         { k: "show", text: "Model + system prompt + tools + access = an agent." },
         { k: "demo", concept: "createAgent", before: "3 parts on the table: model, prompt, tool", after: "7 lines of code → an agent that talks" } ] },
-      { t: "0:55", icon: "✅", name: "Part 1 · wake it up", min: 35, slides: "13–14", steps: [
+      { t: "1:00", icon: "✅", name: "Part 1 · wake it up", min: 30, slides: "16–17", steps: [
         { k: "do", text: "Complete the half-built agent: add a system prompt + one tool. Run it. Try to break it." },
         { k: "do", text: "📸 Proof: the answer before vs. after." } ] },
-      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "15", steps: [] },
-      { t: "2:00", icon: "🔎", name: "Agent 1 · trend finder", min: 10, slides: "16–18", steps: [
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "18", steps: [] },
+      { t: "2:00", icon: "🔎", name: "Agent 1 · trend finder", min: 10, slides: "19–21", steps: [
         { k: "talk", text: "How would an agent find TODAY's TikTok trends?" },
         { k: "show", text: "Our first real agent searches the internet. New word: Tavily — search made for agents." } ] },
-      { t: "2:10", icon: "🔧", name: "Part 2 · finish Agent 1", min: 30, slides: "19–21", steps: [
+      { t: "2:10", icon: "🔧", name: "Part 2 · finish Agent 1", min: 30, slides: "22–24", steps: [
         { k: "do", text: "In pairs (driver + navigator, switch every 20 min): pull the repo, add the Tavily tool, prompt: \"find 3 trends from today\"." },
         { k: "demo", concept: "Tools", before: "\"I cannot browse the internet.\"", after: "3 real trends from today, found by YOUR agent" } ] },
-      { t: "2:40", icon: "🗣️", name: "Explain to me", min: 20, slides: "22–26", steps: [
+      { t: "2:40", icon: "🗣️", name: "Explain to me", min: 20, slides: "25–29", steps: [
         { k: "do", text: "Pick agent · tool · system prompt · Tavily → 2 sentences + their before/after." },
         { k: "do", text: "💾 Save the trends — Agent 2 needs them next week." },
         { k: "show", text: "Next time, prompts to try, glossary." } ] }
@@ -1374,8 +1427,7 @@ const VISUALS = {
     "Steps today": { id: "v1-6", prompt: "Four icons on lavender: a pink game controller, a purple database stack, a coffee mug, a glowing lightbulb." }
   },
   2: {
-    "But the AI misses things 🙈": { id: "v2-1", prompt: "A blindfolded robot at a desk holding one paper, a whole messy project bookshelf behind it that it cannot see." },
-    "Meet the coding agent 🤝": { id: "v2-3", prompt: "A robot with many arms working across multiple open files and screens at once." },
+    "Meet opencode 🤝": { id: "v2-3", prompt: "A robot with many arms working across multiple open files and screens at once." },
 
   },
   3: {
