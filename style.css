@@ -1410,6 +1410,8 @@ kbd { background: #fff; border: 1px solid #CFC9D6; border-bottom-width: 2px; bor
 .s-link { text-decoration: none; display: flex; flex-direction: column; text-align: left; transition: transform .2s, box-shadow .2s; }
 .s-link:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(103,76,155,.25); }
 .s-link p { color: var(--ink); flex: 1; }
+.s-row-link { white-space: nowrap; font-size: .85em; font-weight: 800; color: var(--pink); text-decoration: none; }
+.s-row-link:hover { text-decoration: underline; }
 .s-link-url { margin-top: 6px; font-size: .78em; font-weight: 800; color: var(--pink); }
 
 @media (max-width: 700px) {

@@ -133,8 +133,11 @@
           <span class="s-link-url">${esc(c.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))} ↗</span></a>`).join("")}</div>`;
       if (it.note) return `<div class="s-note">${esc(it.note)}</div>`;
       if (it.code) return `<div class="s-code">${it.code.map(esc).join("\n")}</div>`;
+      /* a row may carry a 3rd item: a link to read more ("opencode docs ↗") */
+      const rowLink = u => `<a class="s-row-link" href="${u}" target="_blank" rel="noopener">${
+        /tokenizer/.test(u) ? "try it" : /opencode/.test(u) ? "opencode docs" : /claude/.test(u) ? "Claude Code docs" : "read more"} ↗</a>`;
       if (it.rows) return `<table class="s-rows">${it.rows.map(r => `
-        <tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table>`;
+        <tr><td>${esc(r[0])}</td><td>${esc(r[1])}${r[2] ? " " + rowLink(r[2]) : ""}</td></tr>`).join("")}</table>`;
       return "";
     }).join("");
     return `

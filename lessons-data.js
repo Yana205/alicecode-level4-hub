@@ -269,9 +269,9 @@ const LESSONS = [
     { label: "opencode docs — install + first steps", url: "https://opencode.ai/docs/" },
     { label: "Video: install + use opencode in VS Code (6 min)", url: "https://www.youtube.com/watch?v=hUjOPPby1OA" },
     { label: "No VS Code? opencode in the terminal (TUI)", url: "https://opencode.ai/docs/tui/" },
-    { label: "⭐ Bonus video: The Dark Arts of AI Coding — Nir Ayalon (from 40:15)", url: "https://www.youtube.com/watch?v=6mfzPoBUmhc&t=2415s" },
+    { label: "⭐ Bonus course: Claude Code basics — Master.dev (free)", url: "https://master.dev/courses/claude-code/" },
     { label: "⭐ Bonus: today's free models (opencode)", url: "https://opencode.ai/docs/zen/" },
-    { label: "⭐ Bonus course: Claude Code basics — Master.dev (free)", url: "https://master.dev/courses/claude-code/" }
+    { label: "⭐ Bonus lecture in Hebrew: The Dark Arts of AI Coding — Nir Ayalon (from 40:15)", url: "https://www.youtube.com/watch?v=6mfzPoBUmhc&t=2415s" }
   ],
   missions: [
     "Name 3 differences between an AI chat and a coding agent.",
@@ -431,16 +431,16 @@ const LESSONS = [
     ]},
     { kind: "content", title: "Glossary 📖", items: [
       { rows: [
-        ["LLM", "a large language model — the \"brain\" behind AI chat"],
-        ["prompt", "what you write to the AI"],
-        ["coding agent", "an AI that works inside your whole project"],
-        ["opencode", "the free coding agent we use"],
-        ["Plan mode", "the agent thinks and plans — no edits"],
-        ["Build mode", "the agent edits files and runs commands"],
-        ["auto-approve", "the agent stops asking \"Allow?\""],
-        ["token", "a piece of a word; AI reads tokens, not letters"],
-        ["context window", "how much the AI can see at one time"],
-        ["vibe coding", "you describe and check; the AI types"]
+        ["LLM", "a large language model — the \"brain\" behind AI chat", "https://opencode.ai/docs/models/"],
+        ["prompt", "what you write to the AI", "https://code.claude.com/docs/en/best-practices#write-a-specific-prompt"],
+        ["coding agent", "an AI that works inside your whole project", "https://code.claude.com/docs/en/how-claude-code-works"],
+        ["opencode", "the free coding agent we use", "https://opencode.ai/docs/"],
+        ["Plan mode", "the agent thinks and plans — no edits", "https://opencode.ai/docs/agents/#use-plan"],
+        ["Build mode", "the agent edits files and runs commands", "https://opencode.ai/docs/agents/#use-build"],
+        ["auto-approve", "the agent stops asking \"Allow?\"", "https://opencode.ai/docs/permissions/#auto-mode"],
+        ["token", "a piece of a word; AI reads tokens, not letters", "https://platform.openai.com/tokenizer"],
+        ["context window", "how much the AI can see at one time", "https://code.claude.com/docs/en/how-claude-code-works#the-context-window"],
+        ["vibe coding", "you describe and check; the AI types", "https://code.claude.com/docs/en/common-workflows"]
       ]}
     ]},
     { kind: "content", title: "Prompts to try at home 💬",
@@ -455,14 +455,14 @@ const LESSONS = [
     { kind: "content", tag: "⭐ Bonus · after the lesson", title: "Context + workflow 🍿",
       lead: "Not homework. Watch or read one.", items: [
       { links: [
-        { h: "🎬 Watch · from 40:15", url: "https://www.youtube.com/watch?v=6mfzPoBUmhc&t=2415s", color: "orange",
-          text: "The Dark Arts of AI Coding — Nir Ayalon. Control the context before it controls you." },
-        { h: "📖 Read · the workflow", url: "https://opencode.ai/docs/#usage", color: "green",
-          text: "opencode's own steps: ask → plan → build → undo." },
-        { h: "🎓 Course · the basics", url: "https://master.dev/courses/claude-code/",
+        { h: "1 · 🎓 Course · the basics", url: "https://master.dev/courses/claude-code/",
           text: "Free, by Lydia Hallie (Anthropic). Model + harness, how it works. Claude Code, but the same ideas as opencode." },
-        { h: "💻 The commands", url: "https://opencode.ai/docs/tui/",
-          text: "/models · /new · /undo · /help" }
+        { h: "2 · 📖 Docs · the workflow", url: "https://opencode.ai/docs/#usage", color: "green",
+          text: "opencode's own steps: ask → plan → build → undo." },
+        { h: "3 · 💻 Docs · the commands", url: "https://opencode.ai/docs/tui/", color: "green",
+          text: "/models · /new · /undo · /help" },
+        { h: "4 · 🎬 Lecture in Hebrew 🇮🇱 · from 40:15", url: "https://www.youtube.com/watch?v=6mfzPoBUmhc&t=2415s", color: "orange",
+          text: "The Dark Arts of AI Coding — Nir Ayalon. Control the context before it controls you." }
       ]}
     ]},
     { kind: "content", tag: "⭐ Bonus · after the lesson", title: "Which model? 🤖", items: [
@@ -1276,7 +1276,7 @@ const FLOWS = {
         { k: "show", text: "token = a word piece · context window = what it can see. 1 minute — the deep dive is lesson 3." } ] },
       { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "21–26", steps: [
         { k: "do", text: "Pick coding agent · Plan · Build → 2 sentences + their plan and fix." },
-        { k: "show", text: "Glossary, prompts to try, ⭐ after-the-lesson bonus (Nir Ayalon's talk, the workflow, which model), next time." } ] }
+        { k: "show", text: "Glossary (each word links to the docs), prompts to try, ⭐ after-the-lesson bonus (Lydia's course → the docs → Nir Ayalon's Hebrew lecture, which model), next time." } ] }
     ]
   },
   3: {
