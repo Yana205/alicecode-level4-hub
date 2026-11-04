@@ -202,3 +202,13 @@ Removed: 💬 "Who is the boss?", 💬 "build me a website", "The flower shop te
 Removed: the chat LLM challenge, "fix a bug by chatting", "What did it miss?", "But the AI misses things", the 3 NEW WORD slides (→ Lesson 3), "skill", the old install / first-mission / bug-hunt slides.
 
 23. **Optional slides wear a tag.** `tag: "⭐ Optional"` (or "⭐ Bonus · after the lesson") on a content or demo slide puts a small orange chip above the title. Skip them when the class is behind.
+
+---
+
+## 📱 Mobile + accessibility (all decks)
+
+Before: on phones every slide was a fixed 76% of the screen tall, with its own scroll box — short slides floated in a huge empty white card, long ones scrolled inside the page.
+
+24. **Phones: the card fits the slide.** Below 700px each slide is as tall as its content (at least ~half a screen, content centred), no inner scroll. Text is 16px+ (lines 1.05rem). Code boxes are the only things that scroll sideways or (the practice app) inside a capped height.
+25. **Thumb-friendly controls.** The ‹ › bar sticks to the bottom of the screen with a progress bar + "14 / 26" (the dots are hidden on phones). Tapping a slide no longer skips it on touch screens — swipe or ‹ ›. Swipes that start inside code or a table don't change slides. Moving to the next slide scrolls back up to its title. Tap targets are 44px+.
+26. **Accessible by default.** The deck is a labelled region; each slide is "n of N"; the counter is announced (aria-live); the dots are real buttons with the slide's name ("Slide 7: 💬 …") and aria-current; a yellow + dark focus ring shows on purple and on white; Space on a focused button presses the button (it doesn't skip the slide); reduced motion turns slide and demo animations off.

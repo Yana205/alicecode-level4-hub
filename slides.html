@@ -17,17 +17,19 @@
   <header class="hero" id="lesson-head" style="padding:30px 10px 18px"></header>
 
   <div class="stage-wrap">
-    <div class="stage" id="stage"></div>
+    <div class="stage" id="stage" role="region" aria-roledescription="slideshow" aria-label="Lesson slides"></div>
     <div class="slide-controls">
       <button id="prev" aria-label="Previous slide">‹</button>
-      <div style="display:flex; flex-direction:column; align-items:center; gap:8px">
-        <div class="progress-dots" id="dots"></div>
-        <span id="counter" style="font-size:.85rem; opacity:.9"></span>
+      <div class="sc-mid">
+        <div class="progress-dots" id="dots" role="group" aria-label="Go to a slide"></div>
+        <div class="progress-bar" aria-hidden="true"><i id="pbar"></i></div>
+        <span id="counter" aria-live="polite" aria-atomic="true"></span>
       </div>
       <button id="next" aria-label="Next slide">›</button>
     </div>
-    <p class="center lesson-tip" style="color:rgba(255,255,255,.75); font-size:.85rem; margin-bottom:26px">
-      Tip: tap or swipe the slide · ← → keys · press F for fullscreen 😉
+    <p class="center lesson-tip">
+      <span class="tip-keys">Tip: click the slide · ← → keys · press F for fullscreen 😉</span>
+      <span class="tip-touch">Swipe the slide or tap ‹ › to move 😉</span>
     </p>
   </div>
 

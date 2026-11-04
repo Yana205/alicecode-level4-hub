@@ -152,20 +152,30 @@
 
   const stage = document.getElementById("stage");
   stage.innerHTML = lesson.slides.map((s, i) => `
-    <div class="slide k-${s.kind} ${i === 0 ? "on" : ""}" data-i="${i}">${slideHTML(s)}</div>`).join("");
+    <div class="slide k-${s.kind} ${i === 0 ? "on" : ""}" data-i="${i}" role="group" aria-roledescription="slide"
+      aria-label="${i + 1} of ${lesson.slides.length}">${slideHTML(s)}</div>`).join("");
 
   /* ---------- controls ---------- */
   const slides = [...stage.querySelectorAll(".slide")];
   const dots = document.getElementById("dots");
-  dots.innerHTML = slides.map((_, i) => `<span data-i="${i}" class="${i === 0 ? "on" : ""}"></span>`).join("");
-  const counter = document.getElementById("counter");
-  let cur = 0;
+  const label = s => s.title || (s.kind === "discuss" ? "💬 " + s.q : s.kind === "newword" ? "✨ " + s.term : "");
+  dots.innerHTML = lesson.slides.map((s, i) =>
+    `<button data-i="${i}" class="${i === 0 ? "on" : ""}" aria-label="Slide ${i + 1}: ${esc(label(s))}"></button>`).join("");
+  const counter = document.getElementById("counter"), pbar = document.getElementById("pbar");
+  const touch = matchMedia("(hover: none)").matches;
+  let cur = 0, started = false;
 
   function go(i) {
+    const was = cur;
     cur = Math.max(0, Math.min(slides.length - 1, i));
     slides.forEach((s, j) => s.classList.toggle("on", j === cur));
-    dots.querySelectorAll("span").forEach((d, j) => d.classList.toggle("on", j === cur));
+    dots.querySelectorAll("button").forEach((d, j) => { d.classList.toggle("on", j === cur); d.toggleAttribute("aria-current", j === cur); });
     counter.textContent = `${cur + 1} / ${slides.length}`;
+    pbar.style.width = `${(cur + 1) / slides.length * 100}%`;
+    /* on a phone a slide can be taller than the screen: start the new one at its title */
+    if (started && cur !== was && stage.getBoundingClientRect().top < 0)
+      stageWrap.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    started = true;
     document.getElementById("prev").disabled = cur === 0;
     document.getElementById("next").disabled = cur === slides.length - 1;
     slides[cur].dispatchEvent(new CustomEvent("slide-on")); // live demos replay when shown
@@ -174,19 +184,20 @@
   document.getElementById("next").onclick = () => go(cur + 1);
   dots.onclick = e => { if (e.target.dataset.i) go(+e.target.dataset.i); };
   document.addEventListener("keydown", e => {
-    if (e.target.closest && e.target.closest("textarea, input")) return; // typing in the Lab
+    if (e.target.closest && e.target.closest("textarea, input, select, [contenteditable]")) return; // typing in the Lab
+    if (e.key === " " && e.target.closest && e.target.closest("button, a")) return; // Space presses the focused button
     if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); go(cur + 1); }
     if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(cur - 1); }
     if (e.key === "f" || e.key === "F") toggleFS();
     if ((e.key === "g" || e.key === "G") && !document.getElementById("gal-modal")) openGallery();
   });
   stage.addEventListener("click", e => {
+    if (touch) return; // phones: a tap while reading must not skip the slide — swipe or ‹ › instead
     if (e.target.closest("a, .lab-embed, .demo-embed, button, textarea, input")) return;
     go(cur + 1);
   });
 
   /* ---------- gallery: every slide as a small picture; tap one to jump there ---------- */
-  const label = s => s.title || (s.kind === "discuss" ? "💬 " + s.q : s.kind === "newword" ? "✨ " + s.term : "");
   const thumbHTML = s => (s.kind === "demo" || s.kind === "lab") ? `
       <h2 class="s-title">${esc(s.title)}</h2>
       ${s.sub ? `<div class="s-lead">${esc(s.sub)}</div>` : ""}
@@ -257,6 +268,8 @@
   /* swipe */
   let tx = null, ty = null;
   stage.addEventListener("touchstart", e => {
+    /* sideways scrolling inside code, tables or inputs is not a swipe */
+    if (e.target.closest("pre, textarea, input, table, .lab-embed, .cp-box, .ex-code")) { tx = null; return; }
     tx = e.touches[0].clientX; ty = e.touches[0].clientY;
   }, { passive: true });
   stage.addEventListener("touchend", e => {

@@ -410,9 +410,16 @@ p  { line-height: 1.65; }
 }
 .slide-controls button:hover { transform: scale(1.12); }
 .slide-controls button:disabled { opacity: .35; cursor: default; transform: none; }
+.sc-mid { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+#counter { font-size: .9rem; font-variant-numeric: tabular-nums; }
 .progress-dots { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; max-width: 480px; }
-.progress-dots span { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.4); cursor: pointer; transition: all .2s; }
-.progress-dots span.on { background: #fff; transform: scale(1.35); }
+.progress-dots button { width: 9px; height: 9px; padding: 0; border: none; border-radius: 50%; background: rgba(255,255,255,.45); cursor: pointer; transition: all .2s; }
+.progress-dots button.on { background: #fff; transform: scale(1.35); }
+.progress-bar { display: none; width: 120px; height: 6px; border-radius: 99px; background: rgba(255,255,255,.3); overflow: hidden; }
+.progress-bar i { display: block; height: 100%; width: 0; background: #fff; border-radius: 99px; transition: width .3s; }
+.lesson-tip { color: rgba(255,255,255,.85); font-size: .85rem; margin-bottom: 26px; }
+.lesson-tip .tip-touch { display: none; }
+@media (hover: none) { .lesson-tip .tip-keys { display: none; } .lesson-tip .tip-touch { display: inline; } }
 
 /* ---------- checklists ---------- */
 .check-list { list-style: none; }
@@ -1457,4 +1464,59 @@ kbd { background: #fff; border: 1px solid #CFC9D6; border-bottom-width: 2px; bor
   .lab-panel.on { height: auto; min-height: 640px; }
   .lab-panel .lab-split { min-height: 420px; }
   .labs-arrow { width: 38px; height: 38px; font-size: 1.3rem; }
+}
+
+
+/* ============================================================
+   Mobile + accessibility pass (applies to every deck)
+   ============================================================ */
+/* a focus ring you can see on purple AND on white (keyboard users) */
+:focus-visible { outline: 3px solid #FFD166; outline-offset: 2px; box-shadow: 0 0 0 2px #241436; }
+.progress-dots button:focus-visible { outline-offset: 3px; }
+.stage-wrap { scroll-margin-top: 96px; }
+@media (prefers-reduced-motion: reduce) {
+  .slide, .slide * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+@media (max-width: 700px) {
+  /* each slide is as tall as its content — no giant empty card, no scroll box inside the page */
+  .stage { aspect-ratio: auto; min-height: 0; height: auto; }
+  .slide, .slide.k-demo, .slide.k-lab, .stage-wrap:fullscreen .slide {
+    position: relative; inset: auto; min-height: min(56dvh, 480px); overflow: visible;
+    padding: 22px 16px 26px;
+  }
+  .slide.k-title, .slide.k-section { min-height: 300px; padding: 28px 18px; }
+  .slide .s-body { justify-content: center; padding-top: 4px; }
+  .slide.k-demo .demo-embed { flex: none; min-height: 0; font-size: .9rem; }
+  .slide.k-lab .lab-embed { flex: none; }
+
+  /* readable sizes (16px+ body) */
+  .slide .s-title { font-size: 1.45rem; line-height: 1.25; }
+  .slide .s-lead { font-size: 1rem; }
+  .s-lines li { font-size: 1.05rem; line-height: 1.45; }
+  .s-card p { font-size: 1rem; }
+  .s-note { font-size: .98rem; }
+  .s-rows td { font-size: .95rem; padding: 8px 6px; vertical-align: top; }
+  .s-rows td:first-child { white-space: normal; }
+  .s-discuss .dq-q { font-size: 1.4rem; }
+  .s-newword .nw-term { font-size: 2.2rem; word-break: break-word; }
+  .s-code, pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* thumb-friendly controls stay at the bottom of the screen */
+  .slide-controls {
+    position: sticky; bottom: max(10px, env(safe-area-inset-bottom)); z-index: 30;
+    width: fit-content; margin: 12px auto; padding: 6px 10px; gap: 14px;
+    background: rgba(36,20,54,.86); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border-radius: 999px; box-shadow: 0 8px 24px rgba(0,0,0,.25);
+  }
+  .slide-controls button { width: 48px; height: 48px; font-size: 1.4rem; }
+  .progress-dots { display: none; }
+  .progress-bar { display: block; }
+  #counter { font-size: .95rem; }
+  .stage-tools { flex-wrap: wrap; justify-content: center; }
+
+  /* tap targets: at least 44px */
+  .btn.small, .cp-copy, .dq-timer, .labs-chip, .dm-tab, .sk-mode, .ex-tab, .rd-try { min-height: 44px; }
+  .cp-copy { padding: 8px 14px; }
+  .oca-code pre { max-height: 50dvh; }
 }
