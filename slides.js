@@ -175,9 +175,13 @@
     dots.querySelectorAll("button").forEach((d, j) => { d.classList.toggle("on", j === cur); d.toggleAttribute("aria-current", j === cur); });
     counter.textContent = `${cur + 1} / ${slides.length}`;
     pbar.style.width = `${(cur + 1) / slides.length * 100}%`;
-    /* on a phone a slide can be taller than the screen: start the new one at its title */
-    if (started && cur !== was && stage.getBoundingClientRect().top < 0)
-      stageWrap.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    /* phones: keep the whole card on screen (under the menu bar), and start each slide at its top */
+    if (started && cur !== was) {
+      slides[cur].scrollTop = 0;
+      const r = stage.getBoundingClientRect();
+      if (!stageWrap.classList.contains("fs-on") && (r.top < 0 || (innerWidth <= 700 && r.bottom > innerHeight)))
+        stageWrap.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    }
     started = true;
     document.getElementById("prev").disabled = cur === 0;
     document.getElementById("next").disabled = cur === slides.length - 1;
@@ -284,12 +288,25 @@
   }, { passive: true });
 
   /* fullscreen */
-  function toggleFS() {
-    if (document.fullscreenElement) document.exitFullscreen();
-    else if (stageWrap.requestFullscreen) stageWrap.requestFullscreen();
-    else stageWrap.webkitRequestFullscreen && stageWrap.webkitRequestFullscreen();
+  /* iPhones can't put a page element in fullscreen: there the deck just fills the screen (.fs-fake) */
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+  const realFS = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+  const markFS = on => stageWrap.classList.toggle("fs-on", on);
+  function setFake(on) {
+    stageWrap.classList.toggle("fs-fake", on);
+    document.documentElement.classList.toggle("fs-lock", on);
+    markFS(on);
   }
+  function toggleFS() {
+    if (stageWrap.classList.contains("fs-fake")) return setFake(false);
+    if (fsEl()) return (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    if (!realFS) return setFake(true);
+    (stageWrap.requestFullscreen || stageWrap.webkitRequestFullscreen).call(stageWrap);
+  }
+  ["fullscreenchange", "webkitfullscreenchange"].forEach(ev => document.addEventListener(ev, () => markFS(fsEl() === stageWrap)));
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && stageWrap.classList.contains("fs-fake")) setFake(false); });
   document.getElementById("fs-btn").addEventListener("click", toggleFS);
+  document.getElementById("fs-exit").addEventListener("click", toggleFS);
   go(0);
 
   /* ---------- below the deck ---------- */
