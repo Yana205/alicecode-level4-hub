@@ -164,3 +164,11 @@ Every lesson page lists **all** its labs and live demos (any `kind: "lab"` or `k
 | **"Why could she ask like that?"**: 4 lines + a note repeating Lesson 1's superpower | 2 lines (the words) + "No words → the AI guesses. Your words → YOUR design." |
 | **"Want more?"**: 5 text rows | 4 clickable link cards: opencode docs · tokenizer · Karpathy's LLM intro · our Setup page |
 | Wrap-up order: Explain · Next time · Prompts · Want more · Glossary | Explain · Glossary · Prompts · Want more · **Next time last** (same as Lesson 1) |
+
+---
+
+## 💬 "Let's talk" slides: no spoiler hints
+
+The purple hint chips under a 💬 question pointed at the answer ("Or what it guessed?", "A loop?", "Model? Prompt?"), so the class repeated the hint instead of thinking. Removed from 28 of 31 💬 slides in all 6 lessons.
+
+22. **Their ideas first.** A 💬 slide is the question alone. A hint chip is only OK when it says *how* to answer, not *what* ("In your own words", "Predict: … = ?") or gives the rules of a brainstorm ("Small enough for 3 days?"). If students go quiet, the instructor asks a follow-up out loud. It is never printed on the slide.

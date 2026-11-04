@@ -48,8 +48,7 @@ const LESSONS = [
       { note: "💬 A \"Let's talk\" slide? You answer FIRST!" }
     ]},
     { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then we build" },
-    { kind: "discuss", q: "This summer — how did YOU use AI?",
-      hints: ["Did you just chat with it?", "Did it ever do the whole job FOR you?"] },
+    { kind: "discuss", q: "This summer — how did YOU use AI?" },
     { kind: "demo", demo: "agentRace", title: "Chatting vs. building 🤖",
       sub: "Same job. Left: you click for 20 minutes. Right: your agent does it at 8 AM.",
       offline: [
@@ -57,8 +56,7 @@ const LESSONS = [
         "🤖 Agent builder: your script wakes up at 8 AM, finds trends with an API,",
         "writes the script, makes the image and emails it to you — before your coffee is done. ☕"
       ] },
-    { kind: "discuss", q: "Robots that make TikToks for you: what jobs would you give them?",
-      hints: ["Find the trend?", "Write the idea?", "Make the video?"] },
+    { kind: "discuss", q: "Robots that make TikToks for you: what jobs would you give them?" },
     { kind: "demo", demo: "studioLoop", title: "The big build: TikTok Studio 📱",
       sub: "One shared project. We build it together, all year. Click to run it!",
       offline: [
@@ -76,8 +74,7 @@ const LESSONS = [
       ]},
       { note: "7–9 December: HACKATHON! You build something like this. 🔥" }
     ]},
-    { kind: "discuss", q: "Same AI, same button. One gets amazing code, one gets junk. Why?",
-      hints: ["Luck?", "Or… the words they used? 🤔"] },
+    { kind: "discuss", q: "Same AI, same button. One gets amazing code, one gets junk. Why?" },
     { kind: "content", title: "Your secret superpower 🦸‍♀️",
       lead: "You already speak code. Most AI users don't.", items: [
       { cards: [
@@ -89,8 +86,7 @@ const LESSONS = [
     ]},
     { kind: "lab", title: "🧪 The Button Lab",
       sub: "Vague prompt vs. pro prompt — live. Then YOUR turn." },
-    { kind: "discuss", q: "Do you remember what an API is? 🤔",
-      hints: ["In your own words", "What does GET mean?"] },
+    { kind: "discuss", q: "Do you remember what an API is? 🤔", hints: ["In your own words"] },
     { kind: "content", title: "Quick refresh: what is an API? 🌐",
       lead: "Did you remember? Here's the answer. 🎯", items: [
       { cards: [
@@ -100,8 +96,7 @@ const LESSONS = [
       ]},
       { note: "GET = \"please give me data\". The answer comes as JSON." }
     ]},
-    { kind: "discuss", q: "You type \"pikachu\" and press a button. What comes back?",
-      hints: ["A web address?", "A picture? Text? A box of data?"] },
+    { kind: "discuss", q: "You type \"pikachu\" and press a button. What comes back?" },
     { kind: "demo", demo: "liveFetch", title: "Live: fetch a real API ⚡",
       sub: "Type a Pokémon. Press the button. The internet answers.",
       offline: [
@@ -119,8 +114,7 @@ const LESSONS = [
         "JSON = JavaScript Object Notation: the universal box APIs pack data in.",
         "Messy one-line JSON → auto-format → neat keys and values (like a recipe card)."
       ] },
-    { kind: "discuss", q: "Close Instagram. Open it again. Your likes are still there. HOW? 🤔",
-      hints: ["Where does the app keep your stuff?", "Predict: a to-do app + refresh = ?"] },
+    { kind: "discuss", q: "Close Instagram. Open it again. Your likes are still there. HOW? 🤔", hints: ["Predict: a to-do app + refresh = ?"] },
     { kind: "demo", demo: "dbBefore", title: "Before: variables forget 😱",
       sub: "Add 2 tasks. Then press the red button. Watch closely…",
       offline: [
@@ -162,8 +156,7 @@ const LESSONS = [
         "🕸️ Graph: dots + lines, who follows who — e.g. Neo4j",
         "⭐ Bonus: freeCodeCamp · SQL vs NoSQL → freecodecamp.org/news/sql-vs-nosql-tutorial"
       ] },
-    { kind: "discuss", q: "1,000 TikTok videos. What do you save about EACH one?",
-      hints: ["title? likes? …", "Same title twice — how do you tell them apart?"], sec: 90 },
+    { kind: "discuss", q: "1,000 TikTok videos. What do you save about EACH one?", sec: 90 },
     { kind: "content", title: "What does a good table look like?", items: [
       { code: [
         '{ "id": 1, "title": "cat dance", "likes": 5021 }',
@@ -176,8 +169,7 @@ const LESSONS = [
         "All rows share the same fields"
       ]}
     ]},
-    { kind: "discuss", q: "30 videos. Which has the most likes — without scrolling?",
-      hints: ["Ask the data a question?", "Sort by…?"] },
+    { kind: "discuss", q: "30 videos. Which has the most likes — without scrolling?" },
     { kind: "demo", demo: "sqlAsk", title: "Part 1 · Ask the data 🔍",
       sub: "Pick a question. Read the query. Guess the answer — then ▶ Run.",
       offline: [
@@ -188,8 +180,7 @@ const LESSONS = [
         "4 · 🏆 Sort: the most likes → SELECT title, likes FROM videos ORDER BY likes DESC LIMIT 1;  (🍃 db.videos.find().sort({ likes: -1 }).limit(1))"
       ] },
     { kind: "section", title: "Break ☕", sub: "30 minutes — you earned it" },
-    { kind: "discuss", q: "The app that forgot everything: what does it need?",
-      hints: ["Save it where?", "Read it back how?"] },
+    { kind: "discuss", q: "The app that forgot everything: what does it need?" },
     { kind: "demo", demo: "dbExercise", title: "Watch: connect the wires 🔌",
       sub: "Teacher demo. An app that forgets → 3 steps → it remembers.",
       offline: [
@@ -199,8 +190,7 @@ const LESSONS = [
         "   server.js → const all = await db.collection(\"ideas\").find().sort({ createdAt: -1 }).toArray();",
         "3 · Test: npm start → add an idea → Ctrl+C → npm start → refresh. Still there? 🎉"
       ] },
-    { kind: "discuss", q: "Your app has a key to the database. What if a stranger finds it? 😬",
-      hints: ["Can they read your data?", "Can they DELETE it?"] },
+    { kind: "discuss", q: "Your app has a key to the database. What if a stranger finds it? 😬" },
     { kind: "demo", demo: "secretKey", title: "Your key is a secret 🔒",
       sub: "Click the parts of the key. Then: key in the code vs. key in .env.",
       offline: [
@@ -302,8 +292,7 @@ const LESSONS = [
       ]}
     ]},
     { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then the AI gets to work" },
-    { kind: "discuss", q: "Last time we built with APIs + MongoDB. What do you remember?",
-      hints: ["What is JSON?","Why do apps need a database?"] },
+    { kind: "discuss", q: "Last time we built with APIs + MongoDB. What do you remember?" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "We warmed up APIs: GET, JSON.",
@@ -311,8 +300,7 @@ const LESSONS = [
         "You saw an app connect to MongoDB — and kept its key secret. 🔒"
       ]}
     ]},
-    { kind: "discuss", q: "Can an AI write code for you? Then who is the boss?",
-      hints: ["Does it always get it right?","Who checks?"] },
+    { kind: "discuss", q: "Can an AI write code for you? Then who is the boss?" },
     { kind: "content", title: "Today's big idea 💡", items: [
       { lines: [
         "AI can write code with you.",
@@ -322,8 +310,7 @@ const LESSONS = [
       ]},
       { note: "Vibe coding = leading the AI, not typing every line." }
     ]},
-    { kind: "discuss", q: "You tell an AI: \"build me a website\". What do you get?",
-      hints: ["What YOU wanted?","Or what it guessed?"] },
+    { kind: "discuss", q: "You tell an AI: \"build me a website\". What do you get?" },
     { kind: "beforeafter", title: "The flower shop test 🌸",
       before: ["\"Build me a website", "for my flower shop.\"", "The AI guesses EVERYTHING. 😬"],
       after: ["\"Navbar + hero + a grid of 6", "flower cards with hover, pink", "#D83474, contact form, responsive.\"", "Her exact vision. 💅"],
@@ -356,8 +343,7 @@ const LESSONS = [
       ]},
       { note: "📸 Screenshot the error + the fix — proof #1 today." }
     ]},
-    { kind: "discuss", q: "The AI was fast. Was it always right? What did it miss?",
-      hints: ["Your other files?","Things it forgot?"] },
+    { kind: "discuss", q: "The AI was fast. Was it always right? What did it miss?" },
     { kind: "content", title: "But the AI misses things 🙈", items: [
       { cards: [
         { h: "It can't see", lines: ["Only what you paste.", "Your project? Invisible."], color: "red" },
@@ -375,8 +361,7 @@ const LESSONS = [
       meaning: "The AI's job description, set before the chat starts.",
       extra: "Example: \"You are a patient coding teacher. Use simple English.\"" },
     { kind: "section", title: "Break ☕", sub: "30 minutes" },
-    { kind: "discuss", q: "Copy-paste is getting old 😩 What if the AI could open your WHOLE project?",
-      hints: ["Read all the files?","Run and test the code?"] },
+    { kind: "discuss", q: "Copy-paste is getting old 😩 What if the AI could open your WHOLE project?" },
     { kind: "content", title: "Meet the coding agent 🤝", items: [
       { lines: [
         "A coding agent reads your files.",
@@ -498,8 +483,7 @@ const LESSONS = [
       ]}
     ]},
     { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then we switch sides" },
-    { kind: "discuss", q: "Last time an LLM solved your old exercise. What can't a chat AI do?",
-      hints: ["See your files?","Remember everything?"] },
+    { kind: "discuss", q: "Last time an LLM solved your old exercise. What can't a chat AI do?" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "An LLM solved your old exercise in seconds.",
@@ -507,8 +491,7 @@ const LESSONS = [
         "You installed opencode and fixed a real bug."
       ]}
     ]},
-    { kind: "discuss", q: "Which AI agents did you meet this week? Who built them?",
-      hints: ["Support bots?","Recommendations?"] },
+    { kind: "discuss", q: "Which AI agents did you meet this week? Who built them?" },
     { kind: "content", title: "Agents are everywhere 🌍", items: [
       { cards: [
         { h: "Support bots", lines: ["Cancel your order.", "For real, in the system."] },
@@ -525,8 +508,7 @@ const LESSONS = [
         "Your agent = your product. 💼"
       ]}
     ]},
-    { kind: "discuss", q: "You build a robot helper. What parts does it need?",
-      hints: ["A brain?","Hands? A job description?"] },
+    { kind: "discuss", q: "You build a robot helper. What parts does it need?" },
     { kind: "content", title: "What is an agent made of? 🧩", items: [
       { cards: [
         { h: "🧠 Model", lines: ["The brain.", "Ours: Gemini."] },
@@ -566,8 +548,7 @@ const LESSONS = [
       after: ["Agent introduces itself,", "uses its tool,", "answers like a pro. 🎉"],
       note: "📸 Screenshot both answers — that's your proof." },
     { kind: "section", title: "Break ☕", sub: "30 minutes" },
-    { kind: "discuss", q: "How would an agent find TODAY's TikTok trends?",
-      hints: ["Guess?","Search the internet?"] },
+    { kind: "discuss", q: "How would an agent find TODAY's TikTok trends?" },
     { kind: "content", title: "The TikTok Studio starts NOW 📱", items: [
       { lines: [
         "Remember the pipeline? Trends → idea → video.",
@@ -681,8 +662,7 @@ const LESSONS = [
       ]}
     ]},
     { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then we open the toolbox" },
-    { kind: "discuss", q: "Last time you built your first agent. What 4 parts make an agent?",
-      hints: ["Model? Prompt?","Tools? Access?"] },
+    { kind: "discuss", q: "Last time you built your first agent. What 4 parts make an agent?" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "You built your first agent with createAgent.",
@@ -690,8 +670,7 @@ const LESSONS = [
         "Model + prompt + tools + access = agent."
       ]}
     ]},
-    { kind: "discuss", q: "When did bad instructions ruin a task for you?",
-      hints: ["More effort?","Or clearer words?"] },
+    { kind: "discuss", q: "When did bad instructions ruin a task for you?" },
     { kind: "content", title: "A tool is a promise 🤝",
       lead: "You tell the agent: \"this tool does X\". It believes you.", items: [
       { cards: [
@@ -719,8 +698,7 @@ const LESSONS = [
     { kind: "newword", term: "Zod",
       meaning: "A JS library that describes the shape of data: \"this must be text\", \"this must be a number\".",
       extra: ".describe() adds a note the agent reads to understand each field." },
-    { kind: "discuss", q: "An agent has the right tools — but picks the wrong one. Why?",
-      hints: ["A bad tool?","A bad description?"] },
+    { kind: "discuss", q: "An agent has the right tools — but picks the wrong one. Why?" },
     { kind: "content", title: "The confused agent 😵‍💫",
       lead: "This agent has tools… and no idea how to use them.", items: [
       { lines: [
@@ -754,8 +732,7 @@ const LESSONS = [
       after: ["Clear describes + clean prompt.", "Right tool, every time. 🎉"],
       note: "📸 This before/after is GOLD for your portfolio." },
     { kind: "section", title: "Break ☕", sub: "30 minutes" },
-    { kind: "discuss", q: "A trend is just one word. How do you turn it into a video idea?",
-      hints: ["What happens in it?","How does it look?"] },
+    { kind: "discuss", q: "A trend is just one word. How do you turn it into a video idea?" },
     { kind: "content", title: "Part 2 · Agent 2: the idea maker 💡",
       lead: "The Studio grows. Trend in → video idea out.", items: [
       { lines: [
@@ -851,8 +828,7 @@ const LESSONS = [
       ]}
     ]},
     { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then we look inside the magic" },
-    { kind: "discuss", q: "Last time: tools + Zod. Why do tool descriptions matter so much?",
-      hints: ["Who reads them?","What if they're empty?"] },
+    { kind: "discuss", q: "Last time: tools + Zod. Why do tool descriptions matter so much?" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "Tools = function + schema + description.",
@@ -860,8 +836,7 @@ const LESSONS = [
         "Agent 2 turns trends into video ideas."
       ]}
     ]},
-    { kind: "discuss", q: "createAgent feels like magic. What do you think is inside?",
-      hints: ["A loop?","1,000 lines of code?"] },
+    { kind: "discuss", q: "createAgent feels like magic. What do you think is inside?" },
     { kind: "content", title: "What's inside createAgent? 🔍",
       lead: "Time to open the magic box. It's… a loop.", items: [
       { lines: [
@@ -884,8 +859,7 @@ const LESSONS = [
       ]},
       { note: "When it runs, say it with me: \"createAgent is exactly this.\"" }
     ]},
-    { kind: "discuss", q: "What does a good team leader do?",
-      hints: ["Does all the work?","Or gives out the jobs?"] },
+    { kind: "discuss", q: "What does a good team leader do?" },
     { kind: "newword", term: "supervisor",
       meaning: "An agent whose tools are… other agents. It decides who works next.",
       extra: "Like a team lead: doesn't do the tasks, assigns them." },
@@ -898,8 +872,7 @@ const LESSONS = [
       { note: "To the supervisor, each agent is just… a tool. Mind blown. 🤯" }
     ]},
     { kind: "section", title: "Break ☕", sub: "30 minutes" },
-    { kind: "discuss", q: "Two agents on one team. How do they share what they know?",
-      hints: ["Copy-paste?","A shared database?"] },
+    { kind: "discuss", q: "Two agents on one team. How do they share what they know?" },
     { kind: "content", title: "Part 2 · Shared memory 🧠",
       lead: "Agents on a team need to share what they know.", items: [
       { lines: [
@@ -1002,8 +975,7 @@ const LESSONS = [
       ]}
     ]},
     { kind: "section", title: "First: a game! 🎮", sub: "20 minutes · then: opening night 🎬" },
-    { kind: "discuss", q: "Last time: the loop + the supervisor. Who does what in our agent team?",
-      hints: ["Agent 1? Agent 2?","The supervisor?"] },
+    { kind: "discuss", q: "Last time: the loop + the supervisor. Who does what in our agent team?" },
     { kind: "content", title: "Last time", items: [
       { lines: [
         "You built the agent loop by hand. No more magic.",
@@ -1011,8 +983,7 @@ const LESSONS = [
         "Mongo is the team's shared memory."
       ]}
     ]},
-    { kind: "discuss", q: "Our pipeline stops at an idea. What's missing?",
-      hints: ["A video?","Who makes it?"] },
+    { kind: "discuss", q: "Our pipeline stops at an idea. What's missing?" },
     { kind: "content", title: "The missing piece 🧩",
       lead: "Our pipeline stops at an idea. Time to SHIP.", items: [
       { cards: [
@@ -1022,8 +993,7 @@ const LESSONS = [
       ]},
       { note: "Agent 3 talks to an outside service — through an API. Week 1 knowledge!" }
     ]},
-    { kind: "discuss", q: "What makes a video idea \"doable\" for an AI?",
-      hints: ["Vibes?","Or details?"] },
+    { kind: "discuss", q: "What makes a video idea \"doable\" for an AI?" },
     { kind: "content", title: "A prompt for video 🎥",
       lead: "Video services want DETAILS, not vibes.", items: [
       { lines: [
