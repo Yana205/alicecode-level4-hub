@@ -1370,8 +1370,8 @@ const FLOWS = {
    VISUALS — illustration slots per slide (Upgrade B).
    Keyed by lesson number → exact slide title.
    Image file convention: assets/lesson-N/<id>.png
-   Until the image exists, instructors see a placeholder with the
-   Gemini prompt; students see a subtle "coming soon" chip.
+   Until the image exists the slide shows nothing extra. The prompt
+   (VISUAL_STYLE + prompt) is here for generating it with Gemini.
    ============================================================ */
 
 const VISUAL_STYLE = "Flat friendly cartoon illustration, rounded shapes, purple-to-magenta gradient (#674C9B to #A43F86), hot pink accents (#D83474), soft pink details, diverse teen girls when people appear, NO text in the image, 16:9.";

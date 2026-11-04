@@ -65,18 +65,13 @@
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
   const colorClass = c => "c-" + (c || "pink");
 
-  /* visual slot (Upgrade B): real image if it exists, else placeholder */
+  /* visual slot (Upgrade B): the image if it exists, otherwise nothing at all */
   function visualHTML(title) {
     const v = (typeof VISUALS !== "undefined") && VISUALS[n] && VISUALS[n][title];
     if (!v) return "";
     const src = `assets/lesson-${n}/${v.id}.png`;
-    const ph = canView()
-      ? `<div class="s-vis-ph"><b>🎨 Visual placeholder · ${v.id}</b>
-           <span>${esc(VISUAL_STYLE)} ${esc(v.prompt)}</span>
-           <i>Generate with Gemini → upload as <code>${src}</code> (GitHub → Add file → Upload files inside that folder)</i></div>`
-      : `<div class="s-vis-chip">🎨 illustration coming soon</div>`;
     return `<div class="s-visual"><img src="${src}" alt="" loading="lazy"
-      onerror="this.closest('.s-visual').classList.add('missing')">${ph}</div>`;
+      onerror="this.closest('.s-visual').classList.add('missing')"></div>`;
   }
 
   function slideHTML(s) {

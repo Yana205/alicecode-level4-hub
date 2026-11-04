@@ -821,7 +821,7 @@ a.cal-ev:hover, button.cal-ev:hover { transform: translateX(4px); }
 /* ---------- visual slots (Upgrade B) ---------- */
 .s-visual { text-align: center; }
 .s-visual img { max-height: 34vh; max-width: 70%; border-radius: 14px; box-shadow: 0 6px 20px rgba(43,16,74,.18); }
-.s-visual.missing img { display: none; }
+.s-visual.missing { display: none; }
 /* a loaded picture takes only the space the text leaves, so nothing spills off the card */
 .s-body.vis-top > .s-visual:not(.missing) { flex: 1 1 0; min-height: 70px; display: flex; justify-content: center; }
 .s-body.vis-top > .s-visual:not(.missing) img { height: 100%; max-height: none; max-width: 100%; width: auto; object-fit: contain; }
@@ -839,21 +839,6 @@ a.cal-ev:hover, button.cal-ev:hover { transform: translateX(4px); }
   .s-body.vis-row:has(> .s-visual:not(.missing)) { grid-template-columns: 1fr; }
   .s-body.vis-row > .s-visual:not(.missing) img { max-height: 28vh; }
 }
-.s-visual:not(.missing) .s-vis-ph, .s-visual:not(.missing) .s-vis-chip { display: none; }
-.s-vis-ph {
-  border: 2.5px dashed var(--pink-soft); border-radius: 14px;
-  padding: 12px 16px; text-align: left;
-  background: #FDF7FB; font-size: .78rem; line-height: 1.5;
-}
-.s-vis-ph b { color: var(--pink); display: block; margin-bottom: 4px; }
-.s-vis-ph span { color: var(--ink-soft); display: block; }
-.s-vis-ph i { color: var(--ink); display: block; margin-top: 6px; font-style: normal; font-weight: 700; }
-.s-vis-ph code { background: #F3EAF7; padding: 1px 6px; border-radius: 6px; }
-.s-vis-chip {
-  display: inline-block; background: #F6EDF9; color: var(--ink-soft);
-  border-radius: 999px; padding: 5px 14px; font-size: .78rem; font-weight: 700;
-}
-
 /* ---------- Button Lab (Upgrade C) ---------- */
 .lab-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
 .lab-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; min-height: 340px; }
