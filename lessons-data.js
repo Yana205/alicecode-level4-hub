@@ -271,7 +271,8 @@ const LESSONS = [
     { label: "No VS Code? opencode in the terminal (TUI)", url: "https://opencode.ai/docs/tui/" },
     { label: "⭐ Bonus course: Claude Code basics — Master.dev (free)", url: "https://master.dev/courses/claude-code/" },
     { label: "⭐ Bonus: today's free models (opencode)", url: "https://opencode.ai/docs/zen/" },
-    { label: "⭐ Bonus lecture in Hebrew: The Dark Arts of AI Coding — Nir Ayalon (from 40:15)", url: "https://www.youtube.com/watch?v=6mfzPoBUmhc&t=2415s" }
+    { label: "⭐ Bonus lecture in Hebrew: The Dark Arts of AI Coding — Nir Ayalon (from 40:15)", url: "https://www.youtube.com/watch?v=6mfzPoBUmhc&t=2415s" },
+    { label: "⭐ Peek ahead: the Compound Engineering plugin (brainstorm → plan → work → compound)", url: "https://github.com/EveryInc/compound-engineering-plugin" }
   ],
   missions: [
     "Name 3 differences between an AI chat and a coding agent.",
@@ -422,6 +423,20 @@ const LESSONS = [
       ]},
       { note: "Too long? It forgets. Next lesson we dig in. 👀" }
     ]},
+    { kind: "content", tag: "⭐ Peek ahead", title: "The pro loop 🔁",
+      lead: "Tools change. The engineering stays.", items: [
+      { cards: [
+        { h: "1 · /ce-brainstorm", lines: ["What exactly?"] },
+        { h: "2 · /ce-plan", lines: ["The steps"], color: "orange" },
+        { h: "3 · /ce-work", lines: ["Build it"], color: "green" },
+        { h: "4 · /ce-compound", lines: ["Remember the lesson"] }
+      ]},
+      { note: "Today you did 2 + 3. Step 4 = it never makes the same mistake twice." },
+      { links: [
+        { h: "🧩 Compound Engineering", url: "https://github.com/EveryInc/compound-engineering-plugin", color: "green",
+          text: "A free plugin that adds this loop to opencode (and Claude Code)." }
+      ]}
+    ]},
     { kind: "content", title: "Explain to me 🗣️", items: [
       { lines: [
         "Pick: coding agent · Plan · Build.",
@@ -479,9 +494,10 @@ const LESSONS = [
     ]},
     { kind: "content", title: "Next time 👀", items: [
       { lines: [
-        "Inside the agent's head: tokens + context.",
-        "We BUILD our own agent.",
-        "The Studio begins: Agent 1."
+        "What is a harness?",
+        "Keep the context clean",
+        "Test prompts with outside tools",
+        "Experiment → Agent 1"
       ]},
       { note: "From now until the hackathon: opencode every lesson. 🛠️" }
     ]}
@@ -537,6 +553,9 @@ const LESSONS = [
     { kind: "newword", term: "system prompt",
       meaning: "The AI's job description, set before the chat starts.",
       extra: "Today YOUR agent gets one." },
+    { kind: "newword", term: "harness",
+      meaning: "Everything around the model: prompt, tools, memory, the loop.",
+      extra: "opencode is a harness. Same model + a better harness = a better agent." },
     { kind: "discuss", q: "Which AI agents did you meet this week? Who built them?" },
     { kind: "content", title: "Agents are everywhere 🌍", items: [
       { cards: [
@@ -1272,9 +1291,10 @@ const FLOWS = {
         { k: "do", text: "Mission 2 · Build: \"Looks good. Build it.\" → Allow → refresh → type ro." } ] },
       { t: "2:30", icon: "🐞", name: "Fix the bug", min: 10, slides: "19", steps: [
         { k: "do", text: "Mission 3 · the ❤️ never counts. The agent finds it (like vs. likes) + explains. 📸" } ] },
-      { t: "2:40", icon: "🧠", name: "What the agent remembers", min: 5, slides: "20", steps: [
-        { k: "show", text: "token = a word piece · context window = what it can see. 1 minute — the deep dive is lesson 3." } ] },
-      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "21–26", steps: [
+      { t: "2:40", icon: "🧠", name: "Memory + the pro loop", min: 5, slides: "20–21", steps: [
+        { k: "show", text: "token = a word piece · context window = what it can see. 1 minute — the deep dive is lesson 3." },
+        { k: "glimpse", text: "The pro loop: brainstorm → plan → work → compound (the Compound Engineering plugin). Tools change, the engineering stays." } ] },
+      { t: "2:45", icon: "🗣️", name: "Explain to me", min: 15, slides: "22–27", steps: [
         { k: "do", text: "Pick coding agent · Plan · Build → 2 sentences + their plan and fix." },
         { k: "show", text: "Glossary (each word links to the docs), prompts to try, ⭐ after-the-lesson bonus (Lydia's course → the docs → Nir Ayalon's Hebrew lecture, which model), next time." } ] }
     ]
@@ -1286,27 +1306,27 @@ const FLOWS = {
       { t: "0:05", icon: "🎮", name: "Game", min: 15, slides: "3",
         game: { name: "Robot & Operator (or Skribbl)", url: "https://skribbl.io" }, steps: [
         { k: "do", text: "In pairs: one is the robot, one gives exact commands. Bad instructions = funny robot." } ] },
-      { t: "0:20", icon: "🔁", name: "Last time + inside the agent's head", min: 15, slides: "4–8", steps: [
+      { t: "0:20", icon: "🔁", name: "Last time + inside the agent's head", min: 15, slides: "4–9", steps: [
         { k: "talk", text: "Last time you used opencode. What did it do that a chat AI can't?" },
-        { k: "show", text: "Recap, then 3 new words, one slide each: token · context window (/new = fresh start) · system prompt. The deep dive promised in lesson 2." } ] },
-      { t: "0:35", icon: "🌍", name: "Agents everywhere", min: 5, slides: "9–11", steps: [
+        { k: "show", text: "Recap, then 4 new words, one slide each: token · context window (/new = fresh start) · system prompt · harness. The deep dive promised in lesson 2." } ] },
+      { t: "0:35", icon: "🌍", name: "Agents everywhere", min: 5, slides: "10–12", steps: [
         { k: "talk", text: "Which AI agents did you meet this week? Who built them?" },
         { k: "show", text: "Agents are everywhere — and today we switch sides: from USING to BUILDING." } ] },
-      { t: "0:40", icon: "🧩", name: "What's an agent made of", min: 20, slides: "12–15", steps: [
+      { t: "0:40", icon: "🧩", name: "What's an agent made of", min: 20, slides: "13–16", steps: [
         { k: "talk", text: "You build a robot helper. What parts does it need?" },
         { k: "show", text: "Model + system prompt + tools + access = an agent." },
         { k: "demo", concept: "createAgent", before: "3 parts on the table: model, prompt, tool", after: "7 lines of code → an agent that talks" } ] },
-      { t: "1:00", icon: "✅", name: "Part 1 · wake it up", min: 30, slides: "16–17", steps: [
+      { t: "1:00", icon: "✅", name: "Part 1 · wake it up", min: 30, slides: "17–18", steps: [
         { k: "do", text: "Complete the half-built agent: add a system prompt + one tool. Run it. Try to break it." },
         { k: "do", text: "📸 Proof: the answer before vs. after." } ] },
-      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "18", steps: [] },
-      { t: "2:00", icon: "🔎", name: "Agent 1 · trend finder", min: 10, slides: "19–21", steps: [
+      { t: "1:30", icon: "☕", name: "Break", min: 30, slides: "19", steps: [] },
+      { t: "2:00", icon: "🔎", name: "Agent 1 · trend finder", min: 10, slides: "20–22", steps: [
         { k: "talk", text: "How would an agent find TODAY's TikTok trends?" },
         { k: "show", text: "Our first real agent searches the internet. New word: Tavily — search made for agents." } ] },
-      { t: "2:10", icon: "🔧", name: "Part 2 · finish Agent 1", min: 30, slides: "22–24", steps: [
+      { t: "2:10", icon: "🔧", name: "Part 2 · finish Agent 1", min: 30, slides: "23–25", steps: [
         { k: "do", text: "In pairs (driver + navigator, switch every 20 min): pull the repo, add the Tavily tool, prompt: \"find 3 trends from today\"." },
         { k: "demo", concept: "Tools", before: "\"I cannot browse the internet.\"", after: "3 real trends from today, found by YOUR agent" } ] },
-      { t: "2:40", icon: "🗣️", name: "Explain to me", min: 20, slides: "25–29", steps: [
+      { t: "2:40", icon: "🗣️", name: "Explain to me", min: 20, slides: "26–30", steps: [
         { k: "do", text: "Pick agent · tool · system prompt · Tavily → 2 sentences + their before/after." },
         { k: "do", text: "💾 Save the trends — Agent 2 needs them next week." },
         { k: "show", text: "Next time, prompts to try, glossary." } ] }
